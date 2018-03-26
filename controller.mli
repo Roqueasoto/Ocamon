@@ -1,4 +1,3 @@
-
 (* [command] represents a command input by a player. Parsed into one of the 7
  *  main "button" inputs.*)
 type command =
