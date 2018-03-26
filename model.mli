@@ -1,8 +1,8 @@
 type overworld_info = {
-  mutable player_loc : int*int;
+  player_loc : int*int;
   map_id : int;
-  mutable random_enc : bool;
-  mutable infront : object_info option;
+  random_enc : bool;
+  infront : object_info option;
 }
 
 type combat_info = {
