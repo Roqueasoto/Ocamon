@@ -1,13 +1,22 @@
-
-type object_info = unit (*implement*)
-
 type coordinate = int * int
+
+type direction = | North | South | East | West
+
+type effect = | Combat | Pickup | Talk | PC | Store | PokeCenter | Special
+
+type object_info = {
+  obj_location : coordinate;
+  facing : direction;
+  interact : effect;
+}
 
 type overworld_info = {
   user_location : coordinate;
   map_id : string;
   random_enc : bool;
   infront : object_info option;
+  facing : direction;
+  obj_list : object_info list;
 }
 
 type index = int
@@ -41,18 +50,27 @@ type person = (person_id * person_info)
 
 type user_info ={
   milestones : string list;
-
+  poke_storage : poke list;
 }
 
 type gui_info = {
   overworld_info : overworld_info;
   combat_info : combat_info;
+  in_combat : bool;
+  user : user_info;
 }
 
 type game_info = {
   persons : person list;
+  user : user_info;
 }
 
 type t
 
 val get_game_info : t -> game_info
+
+val get_ai_info : t -> ai_info
+
+val get_gui_info : t -> gui_info
+
+val do' : t -> t
