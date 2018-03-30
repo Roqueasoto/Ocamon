@@ -1,11 +1,9 @@
 (* [command] represents a command input by a player. Parsed into one of the 7
  *  main "button" inputs.*)
 type command =
-  | Up
-  | Down
-  | Left
-  | Right
+  | Move of string
   | Interact
+  | CombatAction of string
   | Back
   | Start
 
