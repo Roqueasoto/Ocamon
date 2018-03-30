@@ -67,9 +67,10 @@ type person_info = {
 type person = (person_id * person_info)
 
 (* [user_info] represents additional information about the user play history. *)
-type user_info ={
+type user_info = {
   milestones : string list;
   poke_storage : poke list;
+  game_stats : (string * string list)
 }
 
 (* [gui_info] represents the set of information about the game state that the
@@ -81,19 +82,8 @@ type gui_info = {
   user : user_info;
 }
 
-(* [game_info] represents the current information about the user and enemy
- * trainers in the game.*)
-type game_info = {
-  persons : person list;
-  user : user_info;
-}
-
 (* [t] the abstract game state type*)
 type t
-
-(* [get_game_info game] takes in a game state [game] and produces a
- * game_info type that describes the users and enemy trainers in the game. *)
-val get_game_info : t -> game_info
 
 (* [get_ai_info game] takes in a game state [game] and produces an ai_info type
  * that describes the game information required for the ai to make a move. The
