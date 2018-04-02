@@ -34,13 +34,17 @@ type overworld_info = {
 type index = int
 
 (* [poke] represents a pokemon and their position in the party.*)
-type poke = (index * poke_info)
+type poke = (index * Pokemon.pokemon)
+
+(* [enemy] represents the enemy trainer or wild pokemon and their difficulty. *)
+type enemy = | WildPoke of int| Trainer of int
 
 (* [ai_info] represents the information about combat the AI module requires. *)
 type ai_info = {
   user_poke_inv : poke list;
   enemy_poke_inv : poke list;
   user_item_lst : int list;
+  enemy_type : enemy;
 }
 
 (* [combat_info] represents the combat information for needed for the GUI. *)
@@ -84,6 +88,7 @@ type gui_info = {
 
 (* [t] the abstract game state type*)
 type t
+
 
 (* [get_ai_info game] takes in a game state [game] and produces an ai_info type
  * that describes the game information required for the ai to make a move. The
