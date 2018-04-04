@@ -1,5 +1,5 @@
-type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting | Poison | Ground | Flying | Psychic
-                | Bug | Rock | Ghost | Dragon | Dark | Steel | Fairy
+type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
+           | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
 
 type status_effect = None | Sleep | Paralyze | Burn | Frozen | Poison
 
@@ -8,8 +8,9 @@ type item = Apicot Berry | Babiri Berry
 
 type pokemon = {poketype : ptype list; name : string;
                 level : int; HP : int; XP : int; ATK : int; DEF : int;
-                SPD : int; MAXHP : int; EXP : int; catch_rate : float; rate_occ : float;
-                item_holding : item; actions : list}
+                SPD : int; MAXHP : int; EXP : int; catch_rate : float;
+                rate_occ : float; item_holding : item;
+                actions : int*Controller.command list}
 
 let ptype poke = poke.poketype
 
