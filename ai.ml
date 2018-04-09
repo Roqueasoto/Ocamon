@@ -40,8 +40,12 @@ let valid_moves pokes items =
     else
       (Controller.CombatAction "switch "^(asc_poke|>fst|>string_of_int))::acc in
   let item_moves = List.fold_left item_moves_fun [] items in
-  let action_moves = (pokes|>List.assoc 0|>actions|>snd)::item_moves in
+  let action_moves = (pokes |> List.assoc 0 |> actions |> snd)::item_moves in
   List.fold_left switch_move_fun action_moves (pokes |> List.remove_assoc 0)
+
+(* [valid_moves pokes items] returns a list of valid commands for the player
+ * with party [pokes] and inventory [items]. *)
+let gamma_A
 
 (* [take_turn ai_inf]*)
 let take_turn ai_inf = Controller.Move "up"
