@@ -1,5 +1,6 @@
 (* [coordinate] represents the player or object's current location in the
- * overworld as an int pair. Changes when the player moves in the overworld. *)
+ * overworld as an int pair. Changes when the player moves in the overworld.
+* The origin represents the bottom-left corner. *)
 type coordinate = int * int
 
 (* [direction] represents cardinal the direction the player or object is facing
