@@ -1,4 +1,7 @@
 open Pokemon
+open Model
+open Command
+open Controller
 
 (* [team_points pokes1 pokes2] evaluates the current combat situation to
  * a score for the team of [pokes1] vs [pokes2]. The score is based off of the
@@ -35,17 +38,24 @@ let evaluate user_pokes enemy_pokes =
  * with party [pokes] and inventory [items]. *)
 let valid_moves pokes items =
   let item_moves_fun acc item = let cmd = item_use_combat item in if cmd == None
-    then acc else cmd::acc in
+    then acc else ('i',cmd)::acc in
   let switch_move_fun acc asc_poke = if (asc_poke |> snd |> hp) = 0 then acc
-    else
-      (Controller.CombatAction "switch "^(asc_poke|>fst|>string_of_int))::acc in
+    else ('s',(CombatAction(Switch(asc_poke|>fst))))::acc in
   let item_moves = List.fold_left item_moves_fun [] items in
-  let action_moves = (pokes |> List.assoc 0 |> actions |> snd)::item_moves in
+  let action_moves =
+    ('a',(pokes |> List.assoc 0 |> actions |> snd)::item_moves) in
   List.fold_left switch_move_fun action_moves (pokes |> List.remove_assoc 0)
 
-(* [valid_moves pokes items] returns a list of valid commands for the player
- * with party [pokes] and inventory [items]. *)
-let gamma_A
+(* [gamma_A state] *)
+let rec gamma_A state =
+  let score = min_int in
+  let moves = valid_moves state.enemy_poke_lst state.enemy_item_lst in
+  state
+
+and chance_layer move_lst =
+  match move_lst with
+  |
+
 
 (* [take_turn ai_inf]*)
 let take_turn ai_inf = Controller.Move "up"
