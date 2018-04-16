@@ -24,10 +24,8 @@ type effect =
  * effect should be the main effect of the pokemon move.*)
 type command =
   | Move of string
-  | Interact
+  | Interact 
   | CombatAction of effect list
-  | Back
-  | Start
 
 (* [parse key] is the command that represents player input [key].
  * requires: [key] is a valid single keyboard input as described in the game's
