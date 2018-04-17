@@ -1,35 +1,20 @@
-(* [coordinate] represents the player or object's current location in the
- * overworld as an int pair. Changes when the player moves in the overworld.
-* The origin represents the bottom-left corner. *)
-type coordinate = int * int
 
-(* [direction] represents cardinal the direction the player or object is facing
- * in the overworld. *)
-type direction = | North | South | East | West
+(* [t] is the state of the game. *)
+type t
+
+(* [mode] is which mode we are in. *)
+type mode =
+  | MStart
+  | MMap
+  | MBattle of int
+  | MWin
+  | MLose
 
 (* [effect] represents the effect on the game UI that is intiated when
  * the user interacts with an object in the overworld.*)
 type effect = | Combat | Pickup | Talk | PC | Store | PokeCenter | Special
 
-(* [object_info] represents an object that is located in the overworld. An
- * Defined as an item in the overworld that the user can interact with. *)
-type object_info = {
-  obj_location : coordinate;
-  facing : direction;
-  interact : effect;
-  map_id : string;
-}
-
-(* [overworld_info] represets the current overworld map that the player is
- * traversing.*)
-type overworld_info = {
-  user_location : coordinate;
-  map_id : string;
-  random_enc : bool;
-  infront : object_info option;
-  facing : direction;
-  obj_list : object_info list;
-}
+type
 
 (* [index] represents the position of a particular pokemon in the party. *)
 type index = int
