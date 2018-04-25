@@ -14,9 +14,6 @@ val ptype : t -> ptype list
 (* [name p] is the name of the pokemon p. *)
 val name : t -> string
 
-(* [level p] is the current level of the pokemon p.
-val level : t -> int *)
-
 (* [hp p] is the current hp value of the pokemon p. *)
 val hp : t -> int
 
@@ -47,20 +44,20 @@ val item_holding : poke -> item option
 
 (* [actions p] is the current list of CombatAction commands that the pokemon p
  * can perform. *)
-val actions : poke -> int*int list
+val actions : poke -> (int*Types.command) list
 
-(* [build_poke j s] builds a pokemon of the name s from the json file j,
+(* [build_poke s] builds a pokemon of the name s from the json file j,
  * which contains info about all of the possible pokemons.
  * requires: s must be a valid name of a pokemon.*)
-val build_poke : Yojson.Basic.json -> string -> poke
+val build_poke : string -> poke
 
-(* [random_poke j] builds a random pokemon from the json file j,
+(* [random_poke] builds a random pokemon from the json file j,
  * which contains info about all of the possible pokemons.
  *)
-val random_poke : Yojson.Basic.json -> poke
+val random_poke : unit -> poke
 
-(* [build_action j id] builds an action object of with the id [id] in the json file.*)
-val build_action : Yojson.Basic.json -> int -> action
+(* [build_inventory] gives a random list of items*)
+val build_inventory : unit -> item list
 
 (* [type_compare ptype1 ptype2] returns a float that describes how effective an
  * attack of type [ptype1] is against a pokemon of [ptype2].
@@ -69,13 +66,4 @@ val type_compare : ptype -> ptype -> float
 
 (* [item_use_combat item] returns a CombatAction command that a valid [item]
  * can perform if it has one, otherwise returns None.*)
-val item_use_combat : item -> Controller.command option
-
-(*Graveyard*)
-(*  [level_up p] returns a leveled-up pokemon from pokemon p
-val level_up : poke -> poke *)
-
-(* [learn_move p m] returns a pokemon that has learned the move m
- * requires: m must be a valid move name that the pokemon p is allowed to learn
-
-val learn_move : poke -> int -> Controller.command -> poke *)
+val item_use_combat : item -> Types.command option
