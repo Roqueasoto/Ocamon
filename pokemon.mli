@@ -1,6 +1,6 @@
 
 (* [pokemon] is an abstract type representing an instance of a pokemon in the game *)
-type pokemon
+type t
 
 (* [ptype p] is the type of the pokemon p. *)
 type ptype
@@ -9,66 +9,61 @@ type ptype
 type item
 
 (* [ptype p] is the type of the pokemon p. *)
-val ptype : pokemon -> ptype list
+val ptype : t -> ptype list
 
 (* [name p] is the name of the pokemon p. *)
-val name : pokemon -> string
-
-(* [leve p] is the current level of the pokemon p. *)
-val level : pokemon -> int
+val name : t -> string
 
 (* [hp p] is the current hp value of the pokemon p. *)
-val hp : pokemon -> int
+val hp : t -> int
 
 (* [xp p] is the current xp value of the pokemon p. *)
-val xp : pokemon -> int
+val xp : t -> int
 
-(* [atk p] is the current atk value of the pokemon p. *)
-val atk : pokemon -> int
+(* [atk p] is the current atk value and stat stage of the pokemon p. *)
+val atk : t -> int * int 
 
-(* [def p] is the current def value of the pokemon p. *)
-val def : pokemon -> int
+(* [def p] is the current def value and stat stage of the pokemon p. *)
+val def : t -> int * int
 
-(* [spd p] is the current spd value of the pokemon p. *)
-val spd : pokemon -> int
+(* [spd p] is the current spd value and stat stage of the pokemon p. *)
+val spd : t -> int * int
 
 (* [maxhp p] is the maxiumum hp value of the pokemon p. *)
-val maxhp : pokemon -> int
-
-(* [exp p] is the current maxiumum hp value of the pokemon p. *)
-val exp : pokemon -> int
+val maxhp : t -> int
 
 (* [catch_rate p] is the catch rate of the pokemon p. *)
-val catch_rate : pokemon -> float
+val catch_rate : t -> float
 
 (* [rate_occ p] is the rate of occurance of the pokemon p in the wild. *)
-val rate_occ : pokemon -> float
+val rate_occ : t -> float
 
 (* [item_holding p] is the item the pokemon p is holding. None if the pokemon
  * isn't holding anything*)
-val item_holding : pokemon -> item option
+val item_holding : t -> item option
 
 (* [actions p] is the current list of CombatAction commands that the pokemon p
  * can perform. *)
-val actions : pokemon -> (int*Controller.command) list
+val actions : t -> (int*Types.command) list
 
-(* [build_poke j s] builds a pokemon of the name s from the json file j,
+(* [build_poke s] builds a pokemon of the name s from the json file j,
  * which contains info about all of the possible pokemons.
  * requires: s must be a valid name of a pokemon.*)
-val build_poke : Yojson.Basic.json -> string -> pokemon
+val build_poke : string -> t
 
-(* [random_poke j] builds a random pokemon from the json file j,
+(* [random_poke] builds a random pokemon from the json file j,
  * which contains info about all of the possible pokemons.
  *)
-val random_poke : Yojson.Basic.json -> pokemon
+val random_poke : unit -> t
 
-(* [level_up p] returns a leveled-up pokemon from pokemon p*)
-val level_up : pokemon -> pokemon
+(* [build_inventory] gives a random list of items*)
+val build_inventory : unit -> item list
 
-(* [learn_move p m] returns a pokemon that has learned the move m
- * requires: m must be a valid move name that the pokemon p is allowed to learn
- *)
-val learn_move : pokemon -> string -> pokemon
+(* [pokemon_damage p e] process effect e on the pokemon p and returns a new pokemon *)
+val poke_effect : poke -> effect -> t
+
+(* Set all stat stages to zero*)
+val clear_buff : poke -> t
 
 (* [type_compare ptype1 ptype2] returns a float that describes how effective an
  * attack of type [ptype1] is against a pokemon of [ptype2].
@@ -77,4 +72,4 @@ val type_compare : ptype -> ptype -> float
 
 (* [item_use_combat item] returns a CombatAction command that a valid [item]
  * can perform if it has one, otherwise returns None.*)
-val item_use_combat : item -> Controller.command option
+val item_use_combat : item -> Types.command option
