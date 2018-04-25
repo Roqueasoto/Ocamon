@@ -6,12 +6,18 @@ type index = int
 (* [poke] represents a pokemon and their position in the party.*)
 type poke = (index * Pokemon.pokemon)
 
+(* [item] represents an item *)
+type item = string
+
+(* [itemQ] represents an item and quantity pair in the inventory. *)
+type itemQ = (item * int)
+
 (* [ai_info] represents the information about combat the AI module requires. *)
 type ai_info = {
   user_poke_inv : poke list;
   enemy_poke_inv : poke list;
-  user_item_lst : int list;
-  enemy_item_lst : int list;
+  user_item_inv : itemQ list;
+  enemy_item_inv : itemQ list;
 }
 
 (* [person_id] represents the id of a trainer (enemer or user) in the game. *)
@@ -21,7 +27,7 @@ type person_id = string
 type person_info = {
   id : person_id;
   poke_inv : poke list;
-  item_lst : int list;
+  item_inv : itemQ list; (* RI: Keys in item_inv contain no duplicates. *)
   person_image : string;
   message : string;
 }

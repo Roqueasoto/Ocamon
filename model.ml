@@ -11,15 +11,28 @@ type t = {
   game_stats : (string * string list) list;
 }
 
-module Initiate_Population = struct
+module Blanks = struct
   let blank_person_info =
     {
       id = "";
       poke_inv = [];
-      item_lst = [];
+      item_inv = [];
       person_image = "";
       message = "";
     }
+
+  let blank_state = {
+    population = [];
+    mode = failwith "uninitated game";
+    milestones = [];
+    poke_storage = [];
+    game_stats = [];
+  }
+
+end
+
+module Initiate_Population = struct
+  open Blanks
 
   let initial_user = {blank_person_info with id = "user"}
 
@@ -71,14 +84,75 @@ module MakeGuiInfo = struct
     }
 end
 
+module MakeAIInfo = struct
+  let get_person_info id t = List.assoc id t.population
+
+  let get_poke_inv id t =
+    (get_person_info id t).poke_inv
+
+  let get_item_inv id t =
+    (get_person_info id t).item_inv
+
+  let make_ai_info_h enemy_id t = {
+    user_poke_inv = get_poke_inv "user" t;
+    user_item_inv = get_item_inv "user" t;
+    enemy_poke_inv = get_poke_inv enemy_id t;
+    enemy_item_inv = get_item_inv enemy_id t;
+  }
+
+  (* requires mode be combat.*)
+  let make_ai_info t =
+    match t.mode with
+    | MCombat enemy_id -> make_ai_info_h enemy_id t
+    | _ -> failwith "unreachable make_ai_info"
+
+end
+
+module MakeHypotheticalState = struct
+  open Blanks
+
+  let user_simulated_name = "user_simulated"
+  let enemy_simulated_name = "enemy_simulated"
+
+  let make_user_person_info ai_info =
+    {
+      blank_person_info with
+      id = user_simulated_name;
+      poke_inv = ai_info.user_poke_inv;
+      item_inv = ai_info.user_item_inv;
+    }
+
+  let make_enemy_person_info ai_info =
+    {
+      blank_person_info with
+      id = enemy_simulated_name;
+      poke_inv = ai_info.enemy_poke_inv;
+      item_inv = ai_info.enemy_item_inv;
+    }
+
+  let make_hypothetical_state ai_info =
+    let user_person_info = make_user_person_info ai_info in
+    let enemy_person_info = make_enemy_person_info ai_info in
+    {
+      blank_state with
+      population = [(user_simulated_name, user_person_info); (enemy_simulated_name, enemy_person_info)];
+      mode = MCombat (enemy_simulated_name)
+    }
+end
+
 let initiate_state = fun () ->
   {
+    Blanks.blank_state with
     population = Initiate_Population.initial_population;
     mode = MStart;
-    milestones = [];
-    poke_storage = [];
-    game_stats = [];
   }
 
 let get_gui_info t =
   MakeGuiInfo.make_gui_info t
+
+(* Requires mode be combat mode. *)
+let get_ai_info t =
+  MakeAIInfo.make_ai_info t
+
+let make_hypothetical_state ai_info =
+  MakeHypotheticalState.make_hypothetical_state ai_info
