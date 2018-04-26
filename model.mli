@@ -37,7 +37,7 @@ val make_hypothetical_state : ai_info -> t
  *      within the overworld or combat, then the GUI will handle the command
  *      and this will not be passed to do'.
  *   - The "CombatAction" command will perform the command as indicated. This
- *      command is only produceable by the GUI, which will interpret an
+ *      command is only produceable by the GUI or AI, which will interpret an
  *      interact command within the combat menu to mean a certain "CombatAction"
  *      type command that is then passed to the model. The command will result
  *      in an updated state [game'].
