@@ -50,7 +50,7 @@ val item_holding : pokemon -> item option
 
 (* [actions p] is the current list of CombatAction commands that the pokemon p
  * can perform. *)
-val actions : pokemon -> (int*Controller.command) list
+val actions : pokemon -> (int*Types.command) list
 
 (* [build_poke j s] builds a pokemon of the name s from the json file j,
  * which contains info about all of the possible pokemons.
@@ -77,4 +77,4 @@ val type_compare : ptype -> ptype -> float
 
 (* [item_use_combat item] returns a CombatAction command that a valid [item]
  * can perform if it has one, otherwise returns None.*)
-val item_use_combat : item -> Controller.command option
+val item_use_combat : item -> Types.command option

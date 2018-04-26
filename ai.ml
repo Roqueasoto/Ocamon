@@ -1,6 +1,6 @@
 open Pokemon
 open Model
-open Controller
+open Types
 
 (* [team_points pokes1 pokes2] evaluates the current combat situation to
  * a score for the team of [pokes1] vs [pokes2]. The score is based off of the
@@ -55,7 +55,7 @@ let valid_moves pokes items =
     else ('s',(CombatAction(Switch(asc_poke|>fst))))::acc in
   let item_moves = List.fold_left item_moves_fun [] items in
   let action_moves =
-    ('a',(pokes |> List.assoc 0 |> actions |> snd)::item_moves) in
+    ('a',(pokes |> List.assoc 0 |> snd |> actions |> snd))::item_moves in
   List.fold_left switch_move_fun action_moves (pokes |> List.remove_assoc 0)
 
 (* [accuracy move] returns the accuracy of a given effect [move].*)
@@ -173,7 +173,12 @@ and chance_br branch s p min_max dep_max dep path
     else chance_br t s p min_max dep_max dep path
         comb_act sc_mnmx score (truncate n_alphbet) false res_path st
 
-(* [take_turn ai_inf]*)
+(* [take_turn state]*)
 let take_turn state =
-  (*TODO: take the desired ai command from here, and give a chance to mistake. *)
-  gamma state "max" 1 (-1) [] (-1200.,1200.)
+  let act_lst = gamma state "max" 1 (-1) [] (-1200.,1200.) in
+  let choice = (act_lst |> fst |> List.rev |> List.hd |> fst) in
+  let ai_inf = get_ai_info state in
+  let moves = valid_moves ai_inf.enemy_poke_inv ai_inf.enemy_item_lst in
+  let wrong = if Random.int 5 > ai_inf.enemy_level then true else false in
+  if wrong then ((List.length moves - 1) |> Random.int |> List.nth moves |> snd)
+  else choice
