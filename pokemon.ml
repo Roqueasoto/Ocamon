@@ -1,24 +1,25 @@
 type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
            | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
 
-type status_effect = None | Sleep | Paralyze | Burn | Frozen | Poison
+type status = None | Sleep | Paralyze | Burn | Frozen | Poison 
+           | Confused | Flinch | Substitute | Uncontrollable | Focused 
+           | LeechSeed | Missed
 
-(*This is just an example, more items to include after we decide*)
-type item = Apicot Berry | Babiri Berry
+type item = {name: string; descript : string; effect : Controller.command; quantity: int}
 
-type pokemon = {poketype : ptype list; name : string;
+type action = {act_name : string; id : int; pp : int;}
+
+type poke = {poketype : ptype list; name : string;
                 level : int; HP : int; XP : int; ATK : int; DEF : int;
                 SPD : int; MAXHP : int; EXP : int; catch_rate : float;
                 rate_occ : float; item_holding : item;
-                actions : int*Controller.command list}
+                actions : int*int*int list} (*order, id, number*)
 
 let ptype poke = poke.poketype
 
 let name poke = poke.name
 
 let nature poke = poke.nature
-
-let level poke = poke.level
 
 let hp poke = poke.hp
 
@@ -39,6 +40,9 @@ let rate_occ poke = poke.rate_occ
 let item_holding poke = poke.item_holding
 
 let actions poke = poke.actions
+
+let build_item poke =
+  failwith "unimplemented"
 
 let type_compare ptype1 ptype2 =
   match ptype1,ptype2 with
@@ -88,3 +92,8 @@ let type_compare ptype1 ptype2 =
   | Ghost,_ -> 1.
   | Dragon,Dragon -> 2.
   | Dragon,_ -> 1.
+
+
+(*Graveyard*)
+(* let level poke = poke.level
+ *)
