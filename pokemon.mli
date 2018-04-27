@@ -17,9 +17,6 @@ val name : t -> string
 (* [hp p] is the current hp value of the pokemon p. *)
 val hp : t -> int
 
-(* [xp p] is the current xp value of the pokemon p. *)
-val xp : t -> int
-
 (* [atk p] is the current atk value and stat stage of the pokemon p. *)
 val atk : t -> int * int 
 
@@ -44,8 +41,7 @@ val item_holding : t -> item option
 
 (* [actions p] is the current list of CombatAction commands that the pokemon p
  * can perform. *)
-
-val actions : t -> (int*Types.command) list
+val actions : t -> (int*Controller.command) list
 
 (* [build_poke s] builds a pokemon of the name s from the json file j,
  * which contains info about all of the possible pokemons.
@@ -73,4 +69,4 @@ val type_compare : ptype -> ptype -> float
 
 (* [item_use_combat item] returns a CombatAction command that a valid [item]
  * can perform if it has one, otherwise returns None.*)
-val item_use_combat : item -> Types.command option
+val item_use_combat : item -> Controller.command option
