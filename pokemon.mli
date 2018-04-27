@@ -1,3 +1,4 @@
+open Controller
 
 (* [pokemon] is an abstract type representing an instance of a pokemon in the game *)
 type t
@@ -17,11 +18,8 @@ val name : t -> string
 (* [hp p] is the current hp value of the pokemon p. *)
 val hp : t -> int
 
-(* [xp p] is the current xp value of the pokemon p. *)
-val xp : t -> int
-
 (* [atk p] is the current atk value and stat stage of the pokemon p. *)
-val atk : t -> int * int 
+val atk : t -> int * int
 
 (* [def p] is the current def value and stat stage of the pokemon p. *)
 val def : t -> int * int
@@ -44,8 +42,7 @@ val item_holding : t -> item option
 
 (* [actions p] is the current list of CombatAction commands that the pokemon p
  * can perform. *)
-
-val actions : t -> (int*Types.command) list
+val actions : t -> (int*command) list
 
 (* [build_poke s] builds a pokemon of the name s from the json file j,
  * which contains info about all of the possible pokemons.
@@ -61,10 +58,10 @@ val random_poke : unit -> t
 val build_inventory : unit -> item list
 
 (* [pokemon_damage p e] process effect e on the pokemon p and returns a new pokemon *)
-val poke_effect : poke -> effect -> t
+val poke_effect : t -> effect -> t
 
 (* Set all stat stages to zero*)
-val clear_buff : poke -> t
+val clear_buff : t -> t
 
 (* [type_compare ptype1 ptype2] returns a float that describes how effective an
  * attack of type [ptype1] is against a pokemon of [ptype2].
@@ -73,4 +70,4 @@ val type_compare : ptype -> ptype -> float
 
 (* [item_use_combat item] returns a CombatAction command that a valid [item]
  * can perform if it has one, otherwise returns None.*)
-val item_use_combat : item -> Types.command option
+val item_use_combat : item -> command option
