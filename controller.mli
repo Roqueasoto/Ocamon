@@ -1,4 +1,8 @@
-(* [BuffType] are types for the Buff effect. The int it carries indicate how much to 
+type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison
+           | Confused | Flinch | Substitute | Uncontrollable | Focused
+           | LeechSeed | Missed | Toxic
+
+(* [BuffType] are types for the Buff effect. The int it carries indicate how much to
    increase/decrease the stages of certain stats*)
 type bufftype = HPBuff of int | ATKBuff of int | DEFBuff of int | SPDBuff of int
 
@@ -17,7 +21,7 @@ type effect =
   | Switch of int
   | Heal of string    * int * int
   | Damage of string  * int * int * (int * int)
-  | Status of string  * int * string
+  | Status of string  * int * status
   | Buff of string    * int * bufftype
   | Special of string * int * string
   | Nothing

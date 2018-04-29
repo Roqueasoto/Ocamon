@@ -2,16 +2,11 @@ open Controller
 type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
            | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
 
-type status = None | Sleep | Paralyze | Burn | Frozen | Poison
-           | Confused | Flinch | Substitute | Uncontrollable | Focused
-           | LeechSeed | Missed | Toxic
-
 type item = {name: string; descript : string; effect : Controller.command; quantity: int}
 
-type action = {name : string; descript : string;
-               pp : int; effect : effect list}
+type action = {name : string; descript : string; effect : effect list}
 
-type poke = {poketype : ptype list; name : string; status : status;
+type poke = {poketype : ptype list; name : string; status : Controller.status;
                 hp : int*int; atk : int*int; def : int*int;
                 spd : int*int; maxhp : int; catch_rate : int;
                 actions : (int*Controller.command) list; sprite_back : string;
@@ -33,40 +28,71 @@ let maxhp poke = poke.maxhp
 
 let catch_rate poke = poke.catch_rate
 
-let actions poke = poke.actions
+let rec parse_actions lst ind acc =
+  match lst with
+  | [] -> acc
+  | h::t -> parse_actions t (ind+1) (acc@[(ind, CombatAction h.effect)])
+
+let actions poke =
+  let actlst = poke.actions in
+  parse_actions actlst 0 []
 
 let build_poke s =
-  let act = [
-    (0, CombatAction[Damage("other", 75, 80, (20, 32))]);
-    (1, CombatAction[Damage("other", 100, 90, (15, 24))]);
-    (2, CombatAction[Buff("self", 0, SPDBuff 2)]);
-    (3, CombatAction[Damage("other", 100, 90, (15, 24)); Damage ("self", 45, 100, (15, 24))])
-    ] in
-
-  {poketype = [Electric]; name = "Pikachu"; status = None;
+let act =
+  [{name = "Slam";
+    descript = "Slam deals damage of 80 with 75 accuracy";
+    effect = [Damage("other", 75, 80, (20, 32))]};
+   {name = "Tunderbolt";
+    descript = "Thunderbolt deals damage of 70 with 100 accuracy and has a 10% chance of paralyzing the target";
+    effect = [Damage("other", 100, 70, (15, 24));Status("other",10, Paralyze)]};
+   {name = "Agility";
+    descript = "Agility raises the user's Speed by two stages";
+    effect = [Buff("self", 100, SPDBuff 2)]};
+   {name = "Wild Charge";
+    descript = "Wild Charge deals damage, but the user receives 1⁄4 of the damage it inflicted in recoil";
+    effect = [Damage("other", 100, 90, (15, 24)); Damage ("self", 100, 22, (15, 24))]}]
+in
+  {poketype = [Electric]; name = "Pikachu"; status = StatusNone;
    hp = (35, 0); atk = (55, 0); def = (40, 0);
    spd = (90, 0); maxhp = 274; catch_rate = 190; actions = act;
    sprite_back = "PokeSpriteBack/pikachu.png";
    sprite_front = "PokeSpriteFront/pikachu.png"}
 
 let random_poke () =
-  let act = [
-    (0, CombatAction[Damage("other", 75, 80, (20, 32))]);
-    (1, CombatAction[Damage("other", 100, 90, (15, 24))]);
-    (2, CombatAction[Buff("self", 0, SPDBuff 2)]);
-    (3, CombatAction[Damage("other", 100, 90, (15, 24)); Damage ("self", 45, 100, (15, 24))])
-  ] in
+  let act =
+    [{name = "Fire Fang";
+      descript = "Deals damage of 65 with 95 accuracy,
+has a 10% chance of burning the target and
+has a 10% chance of causing the target to flinch";
+      effect = [Damage("other", 95, 65, (15, 24)); Status("other",10, Burn); Status("other",10, Flinch)]};
+     {name = "Flame Burst";
+      descript = "Deals damage of 70 with 100 accuracy";
+      effect = [Damage("other", 100, 70, (15, 24))]};
+     {name = "Slash";
+      descript = "Slash deals damage of 70 with 100 accuracy";
+      effect = [Damage("other", 100, 70, (20, 32))]};
+     {name = "Flamethrower";
+      descript = "Deals damage of 90 with 100 accuracy,
+has a 10% chance of burning the target";
+      effect = [Damage("other", 100, 90, (15, 24));Status("other",10, Burn)]};
+in
 
-  {poketype = [Electric]; name = "Pikachu"; status = None;
-   hp = (35, 0); atk = (55, 0); def = (40, 0);
-   spd = (90, 0); maxhp = 274; catch_rate = 190; actions = act;
-   sprite_back = "PokeSpriteBack/pikachu.png";
-   sprite_front = "PokeSpriteFront/pikachu.png"}
+  {poketype = [Fire;Flying]; name = "Charizard"; status = StatusNone;
+   hp = (78, 0); atk = (84, 0); def = (78, 0);
+   spd = (100, 0); maxhp = 360; catch_rate = 45; actions = act;
+   sprite_back = "PokeSpriteBack/charizard.png";
+   sprite_front = "PokeSpriteFront/charizard.png"}
 
 
 let build_inventory poke =
-  []
+  [{name = "Antidote";descript = "heals pokemon from poisoning";
+   effect = }
 
+  ]
+
+let move_true acc =
+  let rand = Random.int 0 101 in
+  if rand >= (100-acc) then true else false
 
 let poke_spd_buff poke i=
   if i < 0 then
@@ -146,14 +172,14 @@ let poke_damage poke acc pts =
 let poke_effect poke effect =
   match effect with
   | Switch _ -> failwith "should not reach"
-  | Heal (s, i1, i2) -> poke_heal poke i1 i2
-  | Damage (s, i1, i2, (r1, r2)) -> poke_damage poke i1 i2
+  | Heal (s, i1, i2) -> if move_true i1 then poke_heal poke i1 i2 else poke
+  | Damage (s, i1, i2, (r1, r2)) -> if move_true i1 then poke_damage poke i1 i2 else poke
   | Buff (s, i1, b) -> begin
       match b with
-      | HPBuff i -> poke_hp_buff poke i
-      | ATKBuff i -> poke_atk_buff poke i
-      | DEFBuff i -> poke_def_buff poke i
-      | SPDBuff i -> poke_spd_buff poke i
+      | HPBuff i -> if move_true i1 then poke_hp_buff poke i else poke
+      | ATKBuff i -> if move_true i1 then poke_atk_buff poke i else poke
+      | DEFBuff i -> if move_true i1 then poke_def_buff poke i else poke
+      | SPDBuff i -> if move_true i1 then poke_spd_buff poke i else poke
     end
   | Special (_,_,_) -> failwith "unimplemented"
   | Status (_,_,_) -> failwith "unimplemented"
