@@ -1,29 +1,27 @@
+open Controller
 type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
            | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
 
-type status = None | Sleep | Paralyze | Burn | Frozen | Poison 
-           | Confused | Flinch | Substitute | Uncontrollable | Focused 
-           | LeechSeed | Missed
+type status = None | Sleep | Paralyze | Burn | Frozen | Poison
+           | Confused | Flinch | Substitute | Uncontrollable | Focused
+           | LeechSeed | Missed | Toxic
 
 type item = {name: string; descript : string; effect : Controller.command; quantity: int}
 
-type action = {act_name : string; id : int; pp : int;}
+type action = {name : string; descript : string;
+               pp : int; effect : effect list}
 
-type poke = {poketype : ptype list; name : string;
-                level : int; HP : int; XP : int; ATK : int; DEF : int;
-                SPD : int; MAXHP : int; EXP : int; catch_rate : float;
-                rate_occ : float; item_holding : item;
-                actions : int*int*int list} (*order, id, number*)
+type poke = {poketype : ptype list; name : string; status : status;
+                hp : int*int; atk : int*int; def : int*int;
+                spd : int*int; maxhp : int; catch_rate : int;
+                actions : (int*Controller.command) list; sprite_back : string;
+                sprite_front : string}
 
 let ptype poke = poke.poketype
 
 let name poke = poke.name
 
-let nature poke = poke.nature
-
 let hp poke = poke.hp
-
-let xp poke = poke.xp
 
 let atk poke = poke.atk
 
@@ -35,14 +33,145 @@ let maxhp poke = poke.maxhp
 
 let catch_rate poke = poke.catch_rate
 
-let rate_occ poke = poke.rate_occ
-
-let item_holding poke = poke.item_holding
-
 let actions poke = poke.actions
 
-let build_item poke =
-  failwith "unimplemented"
+let build_poke s =
+  let act = [
+    (0, CombatAction[Damage("other", 75, 80, (20, 32))]);
+    (1, CombatAction[Damage("other", 100, 90, (15, 24))]);
+    (2, CombatAction[Buff("self", 0, SPDBuff 2)]);
+    (3, CombatAction[Damage("other", 100, 90, (15, 24)); Damage ("self", 45, 100, (15, 24))])
+    ] in
+
+  {poketype = [Electric]; name = "Pikachu"; status = None;
+   hp = (35, 0); atk = (55, 0); def = (40, 0);
+   spd = (90, 0); maxhp = 274; catch_rate = 190; actions = act;
+   sprite_back = "PokeSpriteBack/pikachu.png";
+   sprite_front = "PokeSpriteFront/pikachu.png"}
+
+let random_poke () =
+  let act = [
+    (0, CombatAction[Damage("other", 75, 80, (20, 32))]);
+    (1, CombatAction[Damage("other", 100, 90, (15, 24))]);
+    (2, CombatAction[Buff("self", 0, SPDBuff 2)]);
+    (3, CombatAction[Damage("other", 100, 90, (15, 24)); Damage ("self", 45, 100, (15, 24))])
+  ] in
+
+  {poketype = [Electric]; name = "Pikachu"; status = None;
+   hp = (35, 0); atk = (55, 0); def = (40, 0);
+   spd = (90, 0); maxhp = 274; catch_rate = 190; actions = act;
+   sprite_back = "PokeSpriteBack/pikachu.png";
+   sprite_front = "PokeSpriteFront/pikachu.png"}
+
+
+let build_inventory poke =
+  []
+
+
+let poke_spd_buff poke i=
+  if i < 0 then
+    {poketype = poke.poketype; name = poke.name; status = poke.status;
+     hp = poke.hp; atk = poke.atk; def = poke.def;
+     spd = (fst(poke.spd), (min (-6) (snd poke.spd)+i)); maxhp = poke.maxhp;
+     catch_rate = poke.catch_rate;
+     actions = poke.actions; sprite_back = poke.sprite_back;
+     sprite_front = poke.sprite_front}
+  else
+    {poketype = poke.poketype; name = poke.name; status = poke.status;
+     hp = poke.hp; atk = poke.atk; def = poke.def;
+     spd = (fst(poke.spd), (max (6) (snd poke.spd)+i)); maxhp = poke.maxhp;
+     catch_rate = poke.catch_rate; actions = poke.actions;
+     sprite_back = poke.sprite_back; sprite_front = poke.sprite_front}
+
+let poke_hp_buff poke i =
+    if i < 0 then
+      {poketype = poke.poketype; name = poke.name; status = poke.status;
+       hp = (fst(poke.hp), (min (-6) (snd poke.hp)+i));atk = poke.atk; def = poke.def;
+      spd = poke.spd; maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+      actions = poke.actions; sprite_back = poke.sprite_back; sprite_front = poke.sprite_front}
+    else
+      {poketype = poke.poketype; name = poke.name; status = poke.status;
+       hp = (fst(poke.hp), (max (6) (snd poke.hp)+i)); atk = poke.atk; def = poke.def;
+      spd = poke.spd; maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+      actions = poke.actions; sprite_back = poke.sprite_back;
+      sprite_front = poke.sprite_front}
+
+let poke_atk_buff poke i =
+    if i < 0 then {poketype = poke.poketype; name = poke.name; status = poke.status;
+                   hp = poke.hp; atk = (fst(poke.atk), (min (-6) (snd poke.atk)+i)); def = poke.def;
+                   spd = poke.spd; maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+                   actions = poke.actions; sprite_back = poke.sprite_back;
+                   sprite_front = poke.sprite_front}
+    else
+      {poketype = poke.poketype; name = poke.name; status = poke.status; hp = poke.hp;
+       atk = (fst(poke.atk), (max (6) (snd poke.atk)+i)); def = poke.def;
+      spd = poke.spd; maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+      actions = poke.actions; sprite_back = poke.sprite_back;
+      sprite_front = poke.sprite_front}
+
+let poke_def_buff poke i =
+    if i < 0 then
+      {poketype = poke.poketype; name = poke.name; status = poke.status; hp = poke.hp;
+       atk = poke.atk; def = (fst(poke.def), (min (-6) (snd poke.def)+i));
+      spd = poke.spd; maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+      actions = poke.actions; sprite_back = poke.sprite_back;
+      sprite_front = poke.sprite_front}
+    else
+      {poketype = poke.poketype; name = poke.name; status = poke.status; hp = poke.hp;
+       atk = poke.atk; def = (fst(poke.def),(max (6) (snd poke.def)+i));
+       spd = poke.spd; maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+       actions = poke.actions; sprite_back = poke.sprite_back;
+       sprite_front = poke.sprite_front}
+
+let poke_heal poke acc pts =
+  {poketype = poke.poketype; name = poke.name; status = poke.status;
+   hp = ((max (fst(poke.hp)+pts) poke.maxhp), snd(poke.hp));
+   atk = poke.atk; def = poke.def;
+   spd = poke.spd; maxhp = poke.maxhp;
+   catch_rate = poke.catch_rate;
+   actions = poke.actions;
+   sprite_back = poke.sprite_back;
+   sprite_front = poke.sprite_front}
+
+let poke_damage poke acc pts =
+  {poketype = poke.poketype; name = poke.name; status = poke.status;
+   hp = ((min (fst(poke.hp)-pts) 0), snd(poke.hp));
+   atk = poke.atk; def = poke.def;
+   spd = poke.spd; maxhp = poke.maxhp;
+   catch_rate = poke.catch_rate;
+   actions = poke.actions;
+   sprite_back = poke.sprite_back;
+   sprite_front = poke.sprite_front}
+
+let poke_effect poke effect =
+  match effect with
+  | Switch _ -> failwith "should not reach"
+  | Heal (s, i1, i2) -> poke_heal poke i1 i2
+  | Damage (s, i1, i2, (r1, r2)) -> poke_damage poke i1 i2
+  | Buff (s, i1, b) -> begin
+      match b with
+      | HPBuff i -> poke_hp_buff poke i
+      | ATKBuff i -> poke_atk_buff poke i
+      | DEFBuff i -> poke_def_buff poke i
+      | SPDBuff i -> poke_spd_buff poke i
+    end
+  | Special (_,_,_) -> failwith "unimplemented"
+  | Status (_,_,_) -> failwith "unimplemented"
+  | Nothing -> poke
+
+let clear_buff poke =
+  {poketype = poke.poketype;
+  name = poke.name;
+  status = poke.status;
+  hp = (fst(poke.hp), 0);
+  atk = (fst(poke.atk), 0);
+  def = (fst(poke.def), 0);
+  spd = (fst(poke.spd), 0);
+  maxhp = poke.maxhp;
+  catch_rate = poke.catch_rate;
+  actions = poke.actions;
+  sprite_back = poke.sprite_back;
+  sprite_front = poke.sprite_front}
 
 let type_compare ptype1 ptype2 =
   match ptype1,ptype2 with
@@ -93,7 +222,11 @@ let type_compare ptype1 ptype2 =
   | Dragon,Dragon -> 2.
   | Dragon,_ -> 1.
 
+ let item_use_combat item =
+  failwith "unimplemented"
+
 
 (*Graveyard*)
 (* let level poke = poke.level
  *)
+ (*let xp poke = poke.xp*)
