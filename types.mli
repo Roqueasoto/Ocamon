@@ -4,7 +4,7 @@
 type index = int
 
 (* [poke] represents a pokemon and their position in the party.*)
-type poke = (index * Pokemon.pokemon)
+type poke = (index * Pokemon.t)
 
 (* [item] represents an item *)
 type item = string
