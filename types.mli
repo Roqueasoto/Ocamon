@@ -92,4 +92,4 @@ type command =
   | Move of string
   | Interact
   | CombatAction of effect list
-  | Round of command * command
+  | Round of (effect list) * (effect list)

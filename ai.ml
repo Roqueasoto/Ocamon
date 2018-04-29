@@ -1,6 +1,7 @@
 open Pokemon
 open Model
 open Types
+open Controller
 
 (* [team_points pokes1 pokes2] evaluates the current combat situation to
  * a score for the team of [pokes1] vs [pokes2]. The score is based off of the
@@ -28,7 +29,8 @@ let team_points pokes1 pokes2 =
 (* [update_combat state moves] produces a Model state after application of all
  * commands within the CombatAction list [moves].*)
 let rec update_combat state = function
-  | h1::h2::t -> update_combat (do' Round (h1,h2) state) t
+  | (CombatAction h1)::(CombatAction h2)::t ->
+    update_combat (do' Round (h1,h2) state) t
   | _ -> state
 
 (* [evaluate state user_pokes enemy_pokes moves] evaluates the current combat to
@@ -64,7 +66,7 @@ let accuracy = function
   | Heal (_,i1,_) | Damage (_,i1,_,_) | Status (_,i1,_) | Buff (_,i1,_)
   | Special (_,i1,_) -> float i1
 
-(* [move_acy_set acy move] returns effect [move] with accurace set to [acy] if
+(* [move_acy_set acy move] returns effect [move] with accuracy set to [acy] if
  * possible for the effect type of [move].*)
 let move_acy_set acy move =
   match move with
@@ -124,7 +126,7 @@ let rec gamma state min_max depth_max depth path score_minmax =
   else let _,moves_up = List.split path in
          path,(evaluate state moves_up)
 
-and chance_layer lst rootp bestp score min_max dep_max dep sc_mnmx st=
+and chance_layer lst rootp bestp score min_max dep_max dep sc_mnmx st =
   let s = 0. in let p = 0. in
   match lst with
     | [] -> bestp,score
