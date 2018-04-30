@@ -1,6 +1,6 @@
-type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison | Toxic
+type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison
            | Confused | Flinch | Substitute | Uncontrollable | Focused
-           | LeechSeed | Missed
+           | LeechSeed | Missed | Toxic
 
 (* [BuffType] are types for the Buff effect. The int it carries indicate how much to
    increase/decrease the stages of certain stats*)
