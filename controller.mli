@@ -1,5 +1,10 @@
-(* [effect_on] represents whether an effect should occur on self or other.  *)
-type effect_on = Self | Other
+type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison
+           | Confused | Flinch | Substitute | Uncontrollable | Focused
+           | LeechSeed | Missed | Toxic
+
+(* [BuffType] are types for the Buff effect. The int it carries indicate how much to
+   increase/decrease the stages of certain stats*)
+type bufftype = HPBuff of int | ATKBuff of int | DEFBuff of int | SPDBuff of int
 
 (* [effect] represents a combat effect on the game state. For type Switch, the
  * int carried represents the position of the Pokemon in the party that will be
