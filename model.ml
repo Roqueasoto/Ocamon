@@ -260,15 +260,22 @@ module DoHelp = struct
     let population'' = update_assoc other_id state_info.person_info_other population' in
     {st with population = population''}
 
+(* Returns state updated with pokes, using state info.  *)
   let update_state_with_pokes_and_state_info st (state_info, poke_self', poke_other') =
     let state_info' = update_state_info_with_pokes state_info (poke_self', poke_other') in
     update_state_with_state_info st state_info'
 
+(* Returns state updated with pokes, using state info *)
   let update_state_with_poke_invs_and_state_info st (state_info, poke_inv_self', poke_inv_other') =
     let state_info' = update_state_info_with_poke_invs state_info (poke_inv_self', poke_inv_other') in
     update_state_with_state_info st state_info'
 
+(* [do_eff_try (self_id, other_id) eff] returns (st', is_success) which is a tuple
+   whose first element is the updated state and the second element is whether
+   the effect was successful or not. *)
   let do_eff_try (self_id, other_id, st) eff =
+    (* Based on accuracy, return a boolean that represents whether this effect is
+       successful or not. *)
     let get_is_success accuracy =
       let random = Random.int 100 in
       random < accuracy in
@@ -320,7 +327,9 @@ module DoHelp = struct
     | Special (effect_on, accuracy, _) ->  do_stuff effect_on accuracy
     | Nothing -> (st, true)
 
-  (* Requires that elist be expanded. *)
+(* Requires that elist be expanded.
+   First try the first effect. If it succeeds, proceed with resolving the rest of
+   the effect list. Otherwise, no other effects are resolved.  *)
   let do_eff_lst (self_id, other_id, st) elist =
     match elist with
     | [] -> failwith "unreachable, empty eff list"
@@ -367,10 +376,19 @@ module DoHelp = struct
         | _ -> elst
       end
 
+  (* Returns whether the user effect list should be resolved first or not,
+   based on pokemon rules.  *)
   let is_user_first user_elist enemy_elist st =
-    true (* TODO failiwth "unimplemented"*)
+    let get_speed poke = 10 in (*TODO failwith "unimplemented" *)
+    let enemy_id = get_enemy_id st in
+    let state_info = expand_state "user" enemy_id st in
+    let poke_user = state_info.poke_self in
+    let poke_enemy = state_info.poke_other in
+    let poke_user_speed = get_speed poke_user in
+    let poke_enemy_speed = get_speed poke_enemy in
+    poke_user_speed >= poke_enemy_speed (* TODO incorporate other facors.*)
 
-(* AF: Represents the order in which the two players moves occcur. *)
+  (* AF: Represents the order in which the two players moves occcur. *)
   type order_info = {
     first_id : person_id;
     second_id : person_id;
@@ -378,7 +396,7 @@ module DoHelp = struct
     second_elist : effect list;
   }
 
-(* Generates correct order_info. *)
+  (* Generates correct order_info. *)
   let get_order_info user_elist enemy_elist enemy_id st =
     let is_user_first = is_user_first user_elist enemy_elist st in
     {
@@ -399,7 +417,6 @@ module DoHelp = struct
     let st' = do_eff_lst (first_id, second_id, st) order.first_elist in
     let st'' = do_eff_lst (second_id, first_id, st') order.second_elist in
     st''
-
 end
 
 let initiate_state = fun () ->
