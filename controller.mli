@@ -1,3 +1,6 @@
+(* [effect_on] represents whether an effect should occur on self or other.  *)
+type effect_on = Self | Other
+
 (* [effect] represents a combat effect on the game state. For type Switch, the
  * int carried represents the position of the Pokemon in the party that will be
  * swapped to the front. For all other types, string indicates the Pokemon being
@@ -11,11 +14,11 @@
  * is used for an action with no effect. *)
 type effect =
   | Switch of int
-  | Heal of string    * int * int
-  | Damage of string  * int * int * (int * int)
-  | Status of string  * int * string
-  | Buff of string    * int * string
-  | Special of string * int * string
+  | Heal of effect_on    * int * int
+  | Damage of effect_on  * int * int * (int * int)
+  | Status of effect_on  * int * string
+  | Buff of effect_on    * int * string
+  | Special of effect_on * int * string
   | Nothing
 
 
@@ -28,7 +31,7 @@ type command =
   | Move of string
   | Interact
   | CombatAction of effect list
-  | Round of command * command
+  | Round of effect list * effect list
 
 (* [parse key] is the command that represents player input [key].
  * requires: [key] is a valid single keyboard input as described in the game's
