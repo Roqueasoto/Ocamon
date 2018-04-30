@@ -100,6 +100,7 @@ module MakeGuiInfo = struct
     }
 end
 
+(* Helper functions to make ai_info from current state. *)
 module MakeAIInfo = struct
   let get_person_info id t = List.assoc id t.population
 
@@ -185,22 +186,18 @@ module MakeHypotheticalState = struct
     }
 end
 
+(* Helper functions for Do *)
 module DoHelp = struct
   open Controller
 
-  let do_move s st = failwith ""
-  let do_interact st = failwith ""
-
-  let do_combat_action eff_lst st = failwith ""
+  let do_move s st = failwith "unimplemented"
+  let do_interact st = failwith "unimplemented"
 
   (* If k in lst, updates binding of k to v in lst, else creates new binding
      k to v in lst. *)
   let update_assoc k v lst =
     let lst' = List.remove_assoc k lst in
     (k, v)::lst'
-
-  (* let eff_lst_on_poke eff_lst poke =
-    failwith "" *)
 
 (*
   AF:
@@ -271,35 +268,10 @@ module DoHelp = struct
     let state_info' = update_state_info_with_poke_invs state_info (poke_inv_self', poke_inv_other') in
     update_state_with_state_info st state_info'
 
-
-
-  (* let do_eff self_id other_id st eff =
-
-    let open Controller in
-
-    match eff with
-    | Switch i -> failwith ""
-    | Heal (s, _, i) -> failwith ""
-    | Damage (s, _, i, (i1, i2)) -> failwith ""
-    | Status (s, _, s2) -> failwith ""
-    | Buff (s, _, s2) -> failwith ""
-    | Special (s, _, s2) -> failwith ""
-    | Nothing -> st in
-
-
-
-    let poke' = eff_lst_on_poke poke e_lst in
-    let poke_inv' = update_assoc 0 poke' poke_inv in
-    let person_info' = {person_info with poke_inv = poke_inv'} in
-    let population' = update_assoc id person_info' st.population in
-    {st with population = population'} *)
-
-
-
-
-
   let do_eff_try (self_id, other_id, st) eff =
-    let get_is_success accuracy : bool = failwith "" in
+    let get_is_success accuracy =
+      let random = Random.int 100 in
+      random < accuracy in
 
     (* Swap poke_0 with poke_i *)
     let do_switch i =
@@ -315,6 +287,7 @@ module DoHelp = struct
       let st' = update_state_with_poke_invs_and_state_info st (state_info, poke_inv_self_new, poke_inv_other_new) in
       (st', true) in
 
+    (* For Heal, Damage, Status, Buff, and Special *)
     let do_stuff effect_on accuracy =
       let is_success = get_is_success accuracy in
       let state_info = expand_state self_id other_id st in
@@ -338,27 +311,16 @@ module DoHelp = struct
         (st', true)
       end in
 
-
-    let do_damage (s, accuracy, amount, (min, max)) = failwith "" in
-
     match eff with
     | Switch i -> do_switch i
     | Heal (effect_on, accuracy, _) -> do_stuff effect_on accuracy
-    | Damage (d0, d1, d2, d3) -> do_damage (d0, d1, d2, d3)
+    | Damage (effect_on, accuracy, _, _) -> do_stuff effect_on accuracy
     | Status (effect_on, accuracy, _) -> do_stuff effect_on accuracy
     | Buff (effect_on, accuracy, _) ->  do_stuff effect_on accuracy
     | Special (effect_on, accuracy, _) ->  do_stuff effect_on accuracy
     | Nothing -> (st, true)
 
-    (* let is_success = failwith "" in
-    let st' =
-      if is_success then do_eff self_id other_id st eff
-      else st in
-    (st', is_success) *)
-(*
-  let do_fold_op self_id other_id st eff =
-    fst (do_eff_try self_id other_id st eff) *)
-
+  (* Requires that elist be expanded. *)
   let do_eff_lst (self_id, other_id, st) elist =
     match elist with
     | [] -> failwith "unreachable, empty eff list"
@@ -371,15 +333,42 @@ module DoHelp = struct
           st'
       end
 
-
   (* Requires to be in battle mode *)
   let get_enemy_id st =
     match st.mode with
     | MCombat enemy_id -> enemy_id
     | _ -> failwith "unreachable get_enemy_id"
 
-  let is_user_first user_elist enemy_elist st : bool =
-    failwith "UNIMPLEMENTED"
+  (* Elist is expanded to reflect damage multiplier.
+     Example: elist is (damage (min 3, max 5), effect 2, efect 3) an
+     random number between 3 and 5 is 4, expanded elist is:
+     (dam1, dam2, dam3, dam4, effect2, effect3). *)
+  let expand_effect_lst elst =
+    (* Returns a random number between mini and maxi (inclusive) *)
+    let get_random_in_range mini maxi =
+      let bound = maxi - mini + 1 in
+      let random = Random.int bound in
+      random + mini in
+
+    (* Example: multipley elt 3 evaluates to [elt; elt; elt] *)
+    let rec multiply elt n =
+      if n = 0 then []
+      else elt::(multiply elt (n - 1)) in
+
+    match elst with
+    | [] -> failwith "unreachable empty elist"
+    | h::t -> begin
+        match h with
+        | Damage (effect_on, accuracy, amount, (mini, maxi)) -> begin
+            let damage = Damage (effect_on, accuracy, amount, (1, 1)) in
+            let n = get_random_in_range mini maxi in
+            (multiply damage n)@t
+          end
+        | _ -> elst
+      end
+
+  let is_user_first user_elist enemy_elist st =
+    true (* TODO failiwth "unimplemented"*)
 
 (* AF: Represents the order in which the two players moves occcur. *)
   type order_info = {
@@ -402,7 +391,9 @@ module DoHelp = struct
   (* Performs do on Round command.  *)
   let do_round user_elist enemy_elist st =
     let enemy_id = get_enemy_id st in
-    let order = get_order_info user_elist enemy_elist enemy_id st in
+    let user_elist_x = expand_effect_lst user_elist in
+    let enemy_elist_x = expand_effect_lst enemy_elist in
+    let order = get_order_info user_elist_x enemy_elist_x enemy_id st in
     let first_id = order.first_id in
     let second_id = order.second_id in
     let st' = do_eff_lst (first_id, second_id, st) order.first_elist in
@@ -434,5 +425,5 @@ let do' cmd st =
   match cmd with
   | Move s -> do_move s st
   | Interact -> do_interact st
-  | CombatAction eff_lst -> do_combat_action eff_lst st
+  | CombatAction eff_lst -> failwith "unreachable: main will never ask model to do this"
   | Round (user_elist, enemy_elist) -> do_round user_elist enemy_elist st
