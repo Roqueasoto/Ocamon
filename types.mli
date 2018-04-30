@@ -6,11 +6,8 @@ type index = int
 (* [poke] represents a pokemon and their position in the party.*)
 type poke = (index * Pokemon.t)
 
-(* [item] represents an item *)
-type item = string
-
 (* [itemQ] represents an item and quantity pair in the inventory. *)
-type itemQ = (item * int)
+type itemQ = (Pokemon.item * int)
 
 (* [ai_info] represents the information about combat the AI module requires. *)
 type ai_info = {

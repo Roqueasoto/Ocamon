@@ -10,27 +10,29 @@ open Controller
  * advantage of [pokes1] vs. [pokes2]. And finally, the score is also based on
  * how many pokemon have 0 remaining hit points in [pokes2] with more points
  * awarded for more pokemon with 0 hit points.*)
-let team_points pokes1 pokes2 =
+let team_points (pokes1 : poke list) (pokes2 : poke list) =
+  let poke1 = (pokes1 |> List.split |> snd) in
+  let poke2 = (pokes2 |> List.split |> snd) in
   let hp_points_fun acc poke =
     (1. -. float (hp poke) /. float (maxhp poke)) *. 100. +. acc in
   let type_points_fun tp_lst sum poketp =
     ((List.fold_left (fun acc tp_elt -> (type_compare poketp tp_elt) +. acc) 0.
         tp_lst) /. float (List.length tp_lst) -. 1.) *. 50. +. sum in
   let faint_points_fun acc poke = if hp poke == 0 then acc + 100 else acc in
-  let hp_points = int_of_float (List.fold_left hp_points_fun 0. (snd pokes2)) in
+  let hp_points = int_of_float (List.fold_left hp_points_fun 0. (poke2)) in
   let poke_types pokes =
-    List.fold_left (fun acc poke -> ptype poke::acc) [] pokes in
+    List.fold_left (fun acc poke -> (ptype poke)@acc) [] pokes in
   let type_points = int_of_float
-      (pokes1 |> snd |> poke_types |> List.fold_left
-         (type_points_fun (pokes2 |> snd |> poke_types)) 0.) in
-  let faint_points = List.fold_left faint_points_fun 0 (snd pokes2) in
+      (poke1 |> poke_types |> List.fold_left
+         (type_points_fun (poke2 |> poke_types)) 0.) in
+  let faint_points = List.fold_left faint_points_fun 0 (poke2) in
   hp_points + type_points + faint_points
 
 (* [update_combat state moves] produces a Model state after application of all
  * commands within the CombatAction list [moves].*)
 let rec update_combat state = function
   | (CombatAction h1)::(CombatAction h2)::t ->
-    update_combat (do' Round (h1,h2) state) t
+    update_combat (do' (Round (h1,h2)) state) t
   | _ -> state
 
 (* [evaluate state user_pokes enemy_pokes moves] evaluates the current combat to
@@ -46,18 +48,24 @@ let evaluate state moves =
   let ai_inf = get_ai_info new_state in
   let user_pokes = ai_inf.user_poke_inv in
   let enemy_pokes = ai_inf.enemy_poke_inv in
-  team_points enemy_pokes user_pokes - team_points user_pokes enemy_pokes
+  (team_points enemy_pokes user_pokes) - (team_points user_pokes enemy_pokes)
 
 (* [valid_moves pokes items] returns a list of valid commands for the player
  * with party [pokes] and inventory [items]. *)
-let valid_moves pokes items =
-  let item_moves_fun acc item = let cmd = item_use_combat item in if cmd == None
-    then acc else ('i',cmd)::acc in
+let valid_moves (pokes : poke list) (items : Pokemon.item list) =
+  let append_char ch lst = List.rev_map (fun m -> (ch,m)) lst in
+  let item_moves_fun acc item =
+    let cmd = item_use_combat item in
+    begin match cmd with
+      | None -> acc
+      | Some mv -> ('i',mv)::acc
+    end in
   let switch_move_fun acc asc_poke = if (asc_poke |> snd |> hp) = 0 then acc
-    else ('s',(CombatAction(Switch(asc_poke|>fst))))::acc in
+    else ('s',(CombatAction([Switch(asc_poke|>fst)])))::acc in
   let item_moves = List.fold_left item_moves_fun [] items in
   let action_moves =
-    ('a',(pokes |> List.assoc 0 |> snd |> actions |> snd))::item_moves in
+    let move_list = (pokes |> List.assoc 0 |> actions |> List.split |> snd) in
+    (append_char 'a' move_list)@item_moves in
   List.fold_left switch_move_fun action_moves (pokes |> List.remove_assoc 0)
 
 (* [accuracy move] returns the accuracy of a given effect [move].*)
@@ -116,7 +124,7 @@ let rec gamma state min_max depth_max depth path score_minmax =
   let depth = if min_max = "max" then depth + 1 else depth in
   let ai_inf = get_ai_info state in
   if min_max = "max" && depth < depth_max then let score_A = min_int in
-    let moves = valid_moves ai_inf.enemy_poke_inv ai_inf.enemy_item_lst in
+    let moves = valid_moves ai_inf.enemy_poke_inv ai_inf.enemy_item_inv in
     chance_layer moves path path score_A
       "max" depth_max depth score_minmax state
   else if min_max = "min" && depth < depth_max then let score_B = max_int in
@@ -142,14 +150,15 @@ and chance_layer lst rootp bestp score min_max dep_max dep sc_mnmx st =
       else chance_layer t rootp n_path n_score min_max dep_max dep sc_mnmx st
 
 and chance_move move s p score min_max dep_max dep path sc_mnmx st =
-  let eff = match move with
-    | _,Interact | _,Move -> failwith "Combat moves should be CombatActions"
+  let eff = begin match move with
+    | _,Interact | _,Move _ -> failwith "Combat moves should be CombatActions"
     | 'i',(CombatAction effs) -> expand_move effs []
     | 's',(CombatAction effs) -> expand_move effs []
     | 'a',(CombatAction effs) -> expand_move effs []
-    | _,_ -> failwith "Something wrong with move list definition" in
+    | _,_ -> failwith "Something wrong with move list definition"
+    end in
   chance_br eff s p min_max dep_max dep path
-    (CombatAction effs) sc_mnmx score score false path st
+    (snd move) sc_mnmx score score false path st
 
 and chance_br branch s p min_max dep_max dep path
     comb_act sc_mnmx score alphbet skip prev_path st =
@@ -180,7 +189,7 @@ let take_turn state =
   let act_lst = gamma state "max" 1 (-1) [] (-1200.,1200.) in
   let choice = (act_lst |> fst |> List.rev |> List.hd |> fst) in
   let ai_inf = get_ai_info state in
-  let moves = valid_moves ai_inf.enemy_poke_inv ai_inf.enemy_item_lst in
+  let moves = valid_moves ai_inf.enemy_poke_inv ai_inf.enemy_item_inv in
   let wrong = if Random.int 5 > ai_inf.enemy_level then true else false in
   if wrong then ((List.length moves - 1) |> Random.int |> List.nth moves |> snd)
   else choice

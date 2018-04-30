@@ -42,7 +42,7 @@ val item_holding : t -> item option
 
 (* [actions p] is the current list of CombatAction commands that the pokemon p
  * can perform. *)
-val actions : t -> (int*command) list
+val actions : t -> (int * command) list
 
 (* [build_poke s] builds a pokemon of the name s from the json file j,
  * which contains info about all of the possible pokemons.
