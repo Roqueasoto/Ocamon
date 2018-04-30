@@ -19,7 +19,7 @@ val update_combat : Model.t -> command list -> Model.t
 
 val evaluate : Model.t -> command list -> int
 
-val valid_moves : poke list -> Pokemon.item list -> command list
+val valid_moves : poke list -> Pokemon.item list -> (char * command) list
 
 val accuracy : effect -> float
 
@@ -31,11 +31,11 @@ val expand_move : effect list -> ((effect list) * float) list ->
 val gamma : Model.t -> string -> int -> int -> (command * command) list ->
   float * float -> ((command * command) list) * int
 
-val chance_layer : command list -> (command * command) list ->
+val chance_layer : (char * command) list -> (command * command) list ->
   (command * command) list -> int -> string -> int -> int -> float * float ->
   Model.t -> ((command * command) list) * int
 
-val chance_move : command list -> float -> float -> int -> string -> int ->
+val chance_move : char * command -> float -> float -> int -> string -> int ->
   int -> (command * command) list -> float * float -> Model.t ->
   ((command * command) list) * int
 

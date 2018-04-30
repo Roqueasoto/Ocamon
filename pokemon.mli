@@ -42,7 +42,7 @@ val item_holding : t -> item option
 
 (* [actions p] is the current list of CombatAction commands that the pokemon p
  * can perform. *)
-val actions : t -> (int*command) list
+val actions : t -> (int * command) list
 
 (*[status p] returns the status list of pokemon p*)
 val status : t -> Controller.status list

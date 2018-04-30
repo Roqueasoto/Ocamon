@@ -6,17 +6,14 @@ type index = int
 (* [poke] represents a pokemon and their position in the party.*)
 type poke = (index * Pokemon.t)
 
-(* [item] represents an item *)
-type item = string
-
 (* [itemQ] represents an item and quantity pair in the inventory. *)
-type itemQ = (item * int)
+type itemQ = (Pokemon.item * int)
 
 (* [ai_info] represents the information about combat the AI module requires. *)
 type ai_info = {
   user_poke_inv : poke list;
   enemy_poke_inv : poke list;
-  enemy_item_inv : Pokemon.item list;
+  enemy_item_lst : Pokemon.item list;
   enemy_level : int
 }
 
@@ -54,8 +51,10 @@ type mode =
   | MLose
   | MSimulation
 
-(* [gui_info] represents the set of information about the game state that the
- * GUI needs in order to produce the graphics.*)
+(* AF: [gui_info] represents the set of information about the game state that the
+ * GUI needs in order to produce the graphics.
+   RI: combat_info must be None if mode is not MCombat. combat_info must be Some
+   gui_combat_info is mode is MCombat. *)
 type gui_info = {
   mode : mode;
   combat_info : gui_combat_info option;
