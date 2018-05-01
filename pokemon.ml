@@ -111,7 +111,7 @@ in
 
 {poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
    hp = 78; atk = (84, 0); def = (78, 0);
-   spd = (100, 0); maxhp = 360; catch_rate = 45; actions = act;
+   spd = (100, 0); maxhp = 161; catch_rate = 45; actions = act;
    sprite_back = "PokeSpriteBack/6.png";
    sprite_front = "PokeSpriteFront/Spr_1y_006.png"}
 
@@ -179,7 +179,13 @@ let poke_heal poke pts =
    sprite_front = poke.sprite_front}
 
 let poke_damage poke pts =
-  let damage = ((2*50/5)+2)*fst(poke.atk)*pts / fst(poke.def)/50 in
+  let astage = float_of_int (snd poke.atk) in
+  let amul = max (2.0) (2.0 +. astage) /. max (2.0) (2.0 -. astage) in
+  let dstage = float_of_int (snd poke.def) in
+  let dmul = max (2.0) (2.0 +. dstage) /. max (2.0) (2.0 -. dstage) in
+  let def = float_of_int (fst(poke.atk)) *. dmul in
+  let atk = float_of_int (fst(poke.def)) *. amul in
+  let damage = int_of_float (((2.0 *. 50.0 /. 5.0) +. 2.0)*. atk *. (float_of_int pts) /. def /. 50.0) in
   {poketype = poke.poketype; name = poke.name; status = poke.status;
    hp = (min (poke.hp-damage) 0);
    atk = poke.atk; def = poke.def;
