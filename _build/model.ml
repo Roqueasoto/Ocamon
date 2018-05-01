@@ -442,6 +442,6 @@ let do' cmd st =
   let open Controller in
   match cmd with
   | Move s -> do_move s st
-  | Interact -> do_interact st
+  | Interact i -> do_interact st
   | CombatAction eff_lst -> failwith "unreachable: main will never ask model to do this"
   | Round (user_elist, enemy_elist) -> do_round user_elist enemy_elist st

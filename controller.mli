@@ -29,8 +29,8 @@ type effect =
   | Switch of int
   | Heal of effect_on    * int * int
   | Damage of effect_on  * int * int * (int * int)
-  | Status of effect_on  * int * string
-  | Buff of effect_on    * int * string
+  | Status of effect_on  * int * status
+  | Buff of effect_on    * int * bufftype
   | Special of effect_on * int * string
   | Nothing
 

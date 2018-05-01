@@ -32,7 +32,7 @@ let rec play_game st =
   let nmode = get_mode new_st in
   match nmode with
   | MQuit -> ()
-  | MStart | MMap | MCombat _ | MWin | MLose | MSimulation -> play_game new_st
+  | MStart | MMap | MCombat _ | MWin | MLose -> play_game new_st
 
 (* [main ()] starts the REPL, which initializes the game and starts the GUI. *)
 let main () =

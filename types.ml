@@ -37,6 +37,7 @@ type mode =
   | MCombat of person_id
   | MWin
   | MLose
+  | MQuit
 
 type gui_info = {
   mode : mode;

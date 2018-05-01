@@ -6,8 +6,13 @@ type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison
            | LeechSeed | Missed | Toxic
 
 (* [BuffType] are types for the Buff effect. The int it carries indicate how much to
-   increase/decrease the stages of certain stats*)
+   increase/decrease the stages of certain stats. *)
 type bufftype = HPBuff of int | ATKBuff of int | DEFBuff of int | SPDBuff of int
+
+(* [choices] are types for the Interact command. These indicate what choices are
+ * made and at what stage of the game they were made. CStart carries an int that
+ * represents the choice of Pokemon at the outset of the game. *)
+type choices = CStart of int | CMap | CWin | CLose | CQuit
 
 (* [effect] represents a combat effect on the game state. For type Switch, the
  * int carried represents the position of the Pokemon in the party that will be
@@ -24,11 +29,10 @@ type effect =
   | Switch of int
   | Heal of effect_on    * int * int
   | Damage of effect_on  * int * int * (int * int)
-  | Status of effect_on  * int * string
-  | Buff of effect_on    * int * string
+  | Status of effect_on  * int * status
+  | Buff of effect_on    * int * bufftype
   | Special of effect_on * int * string
   | Nothing
-
 
 (* [command] represents a command input by a player. Parsed into one of the 7
  * main "button" inputs. CombatAction is implemented as an effect list because
@@ -37,7 +41,7 @@ type effect =
  * effect should be the main effect of the pokemon move.*)
 type command =
   | Move of string
-  | Interact
+  | Interact of choices
   | CombatAction of effect list
   | Round of effect list * effect list
 

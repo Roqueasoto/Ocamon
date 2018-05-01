@@ -10,11 +10,11 @@ type choices = CStart of int | CMap | CWin | CLose | CQuit
 
 type effect =
   | Switch of int
-  | Heal of string    * int * int
-  | Damage of string  * int * int * (int * int)
-  | Status of string  * int * status
-  | Buff of string    * int * bufftype
-  | Special of string * int * string
+  | Heal of effect_on   * int * int
+  | Damage of effect_on  * int * int * (int * int)
+  | Status of effect_on  * int * status
+  | Buff of effect_on   * int * bufftype
+  | Special of effect_on * int * string
   | Nothing
 
 type command =
