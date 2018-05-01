@@ -50,7 +50,7 @@ val actions : t -> (int * command) list
 val status : t -> status list
 
 (*[check_sub p] returns true if the pokemon's current status is Substitute*)
-val check_sub : t -> boolean
+val check_sub : t -> bool
 
 (*[clear_stat p s] returns a pokemon without the status s*)
 val clear_stat: t -> status -> t
