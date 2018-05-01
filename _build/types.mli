@@ -48,7 +48,6 @@ type mode =
   | MCombat of person_id
   | MWin
   | MLose
-  | MQuit
 
 (* AF: [gui_info] represents the set of information about the game state that the
  * GUI needs in order to produce the graphics.

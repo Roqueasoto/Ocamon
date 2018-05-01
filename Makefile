@@ -3,3 +3,6 @@ compile:
 
 clean:
 	ocamlbuild -clean
+
+test:
+	ocamlbuild -use-ocamlfind test.byte && ./test.byte
