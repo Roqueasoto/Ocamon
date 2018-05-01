@@ -47,9 +47,14 @@ type mode =
   | MStart
   | MMap
   | MCombat of person_id
+<<<<<<< HEAD
   | MWin (* win battle *)
   | MLose (* lost battle *)
   | MWinGame
+=======
+  | MWin
+  | MLose
+>>>>>>> master
   | MQuit
 
 (* AF: [gui_info] represents the set of information about the game state that the
