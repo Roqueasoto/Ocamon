@@ -13,7 +13,7 @@ type itemQ = (Pokemon.item * int)
 type ai_info = {
   user_poke_inv : poke list;
   enemy_poke_inv : poke list;
-  enemy_item_lst : Pokemon.item list;
+  enemy_item_inv : Pokemon.item list;
   enemy_level : int
 }
 
@@ -23,6 +23,7 @@ type person_id = string
 (* [person_info] represents infromation about the enemy or user in the game. *)
 type person_info = {
   id : person_id;
+  name : string;
   poke_inv : poke list;
   item_inv : itemQ list; (* RI: Keys in item_inv contain no duplicates. *)
   person_image : string;
@@ -38,7 +39,6 @@ type gui_combat_info = {
 (* [gui_history_info] represents additional information about the user play history. *)
 type gui_history_info = {
   milestones : string list;
-  poke_storage : poke list;
   game_stats : (string * string list) list
 }
 
@@ -47,9 +47,10 @@ type mode =
   | MStart
   | MMap
   | MCombat of person_id
-  | MWin
-  | MLose
-  | MSimulation
+  | MWin (* win battle *)
+  | MLose (* lost battle *)
+  | MWinGame
+  | MQuit
 
 (* AF: [gui_info] represents the set of information about the game state that the
  * GUI needs in order to produce the graphics.

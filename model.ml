@@ -21,15 +21,24 @@ type t = {
   population : person list;
   mode : mode;
   milestones : string list;
-  poke_storage : poke list;
   game_stats : (string * string list) list;
 }
+
+(* Module for common helper methods *)
+module CommonHelp = struct
+  (* If k in lst, updates binding of k to v in lst, else creates new binding
+     k to v in lst. *)
+  let update_assoc k v lst =
+    let lst' = List.remove_assoc k lst in
+    (k, v)::lst'
+end
 
 (* Blank types to be used by helper functions. *)
 module Blanks = struct
   let blank_person_info =
     {
       id = "";
+      name = "";
       poke_inv = [];
       item_inv = [];
       person_image = "";
@@ -40,7 +49,6 @@ module Blanks = struct
     population = [];
     mode = failwith "uninitated game";
     milestones = [];
-    poke_storage = [];
     game_stats = [];
   }
 end
@@ -60,12 +68,30 @@ module Initiate_Population = struct
 
   let enemy_id n = List.nth enemy_id_list n
 
-  let initial_enemy_0 = {blank_person_info with id = enemy_id 0}
-  let initial_enemy_1 = {blank_person_info with id = enemy_id 1}
-  let initial_enemy_2 = {blank_person_info with id = enemy_id 2}
-  let initial_enemy_3 = {blank_person_info with id = enemy_id 3}
-  let initial_enemy_4 = {blank_person_info with id = enemy_id 4}
-  let initial_enemy_5 = {blank_person_info with id = enemy_id 5}
+  let initial_enemy_0 = {blank_person_info with
+                         id = enemy_id 0;
+                        }
+
+  let initial_enemy_1 = {blank_person_info with
+                         id = enemy_id 1;
+                        }
+
+  let initial_enemy_2 = {blank_person_info with
+                         id = enemy_id 2;
+                        }
+
+  let initial_enemy_3 = {blank_person_info with
+                         id = enemy_id 3;
+                        }
+
+  let initial_enemy_4 = {blank_person_info with
+                         id = enemy_id 4;
+                        }
+
+  let initial_enemy_5 = {blank_person_info with
+                         id = enemy_id 5;
+                         poke_inv = [(0, Pokemon.random_poke ())];
+                        }
 
   let initial_population =
     [("user", initial_user);
@@ -142,7 +168,7 @@ module MakeAIInfo = struct
   let make_ai_info_h enemy_id t = {
     user_poke_inv = get_poke_inv "user" t;
     enemy_poke_inv = get_poke_inv enemy_id t;
-    enemy_item_lst = get_item_lst enemy_id t;
+    enemy_item_inv = get_item_lst enemy_id t;
     enemy_level = ints_of_id enemy_id;
   }
 
@@ -173,7 +199,7 @@ module MakeHypotheticalState = struct
       blank_person_info with
       id = enemy_simulated_name;
       poke_inv = ai_info.enemy_poke_inv;
-      item_inv = List.map (fun elt -> (elt, 1)) ai_info.enemy_item_lst;
+      item_inv = List.map (fun elt -> (elt, 1)) ai_info.enemy_item_inv;
     }
 
   let make_hypothetical_state ai_info =
@@ -187,17 +213,9 @@ module MakeHypotheticalState = struct
 end
 
 (* Helper functions for Do *)
-module DoHelp = struct
+module DoRoundHelp = struct
+  open CommonHelp
   open Controller
-
-  let do_move s st = failwith "unimplemented"
-  let do_interact st = failwith "unimplemented"
-
-  (* If k in lst, updates binding of k to v in lst, else creates new binding
-     k to v in lst. *)
-  let update_assoc k v lst =
-    let lst' = List.remove_assoc k lst in
-    (k, v)::lst'
 
 (*
   AF:
@@ -235,7 +253,6 @@ module DoHelp = struct
       poke_other = poke_other;
     }
 
-
 (* Updates state_info given new poke_invs  *)
   let update_state_info_with_poke_invs state_info (poke_inv_self', poke_inv_other') =
     let person_info_self' = {state_info.person_info_self with poke_inv = poke_inv_self'} in
@@ -250,7 +267,6 @@ module DoHelp = struct
     let poke_inv_self' = update_assoc 0 poke_self' state_info.poke_inv_self in
     let poke_inv_other' = update_assoc 0 poke_other' state_info.poke_inv_other in
     update_state_info_with_poke_invs state_info (poke_inv_self', poke_inv_other')
-
 
   (* Returns state updated with state_info. *)
   let update_state_with_state_info st state_info =
@@ -379,7 +395,7 @@ module DoHelp = struct
   (* Returns whether the user effect list should be resolved first or not,
    based on pokemon rules.  *)
   let is_user_first user_elist enemy_elist st =
-    let get_speed poke = 10 in (*TODO failwith "unimplemented" *)
+    let get_speed poke = poke |> Pokemon.spd |> fst in
     let enemy_id = get_enemy_id st in
     let state_info = expand_state "user" enemy_id st in
     let poke_user = state_info.poke_self in
@@ -419,6 +435,44 @@ module DoHelp = struct
     st''
 end
 
+module DoInteractHelp = struct
+  open CommonHelp
+  open Controller
+
+(* Normally, i represents which pokemon the user wants to start with.
+   For protoype, we default to pikachu. TODO failwith "alpha set" *)
+  let do_csart i st =
+    let user_poke_new = Pokemon.build_poke ":)" in (*TODO failwith "implement pokemon picking" alpha set *)
+    let user_info = List.assoc "user" st.population in
+    let user_info' = {user_info with poke_inv = [0, user_poke_new]} in
+    let population' = update_assoc "user" user_info' st.population in
+    {st with population = population'}
+
+(* Normally, go to next available level. In prototype, we go to level 6. *)
+  let do_cmap st =
+    {st with mode = MCombat "enemy_05"}
+
+(* Go back to map. TODO inform state that next level is one higher. *)
+  let do_cwin st =
+    {st with mode = MMap}
+
+  (* Go back to map. TODO inform state that next level is same.  *)
+  let do_close st =
+    {st with mode = MMap}
+
+(* Let mode be MQuit, so that main knows that we have quit.*)
+  let do_cquit st =
+    {st with mode = MQuit}
+
+  let do_interact choices st =
+    match choices with
+    | CStart i -> do_csart i st
+    | CMap -> do_cmap st
+    | CWin -> do_cwin st
+    | CLose -> do_close st
+    | CQuit -> do_cquit st
+end
+
 let initiate_state = fun () ->
   {
     Blanks.blank_state with
@@ -436,11 +490,13 @@ let get_ai_info t =
 let make_hypothetical_state ai_info =
   MakeHypotheticalState.make_hypothetical_state ai_info
 
+let get_mode st =
+  st.mode
+
 let do' cmd st =
-  let open DoHelp in
   let open Controller in
   match cmd with
-  | Move s -> do_move s st
-  | Interact -> do_interact st
+  | Move s -> failwith "unreachable: handled by gui"
+  | Interact choices -> DoInteractHelp.do_interact choices st
   | CombatAction eff_lst -> failwith "unreachable: main will never ask model to do this"
-  | Round (user_elist, enemy_elist) -> do_round user_elist enemy_elist st
+  | Round (user_elist, enemy_elist) -> DoRoundHelp.do_round user_elist enemy_elist st

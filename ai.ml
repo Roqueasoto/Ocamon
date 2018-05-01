@@ -155,7 +155,7 @@ and chance_layer lst rootp bestp score min_max dep_max dep sc_mnmx st =
 
 and chance_move move s p score min_max dep_max dep path sc_mnmx st =
   let eff = begin match move with
-    | _,Interact | _,Move _ -> failwith "Combat moves should be CombatActions"
+    | _,Interact _ | _,Move _ -> failwith "Combat moves should be CombatActions"
     | 'i',(CombatAction effs) -> expand_move effs []
     | 's',(CombatAction effs) -> expand_move effs []
     | 'a',(CombatAction effs) -> expand_move effs []
