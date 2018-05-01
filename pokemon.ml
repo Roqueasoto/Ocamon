@@ -86,7 +86,7 @@ let act =
 in
 {poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
    hp = 35; atk = (55, 0); def = (40, 0);
-   spd = (90, 0); maxhp = 274; catch_rate = 190; actions = act;
+   spd = (90, 0); maxhp = 118; catch_rate = 190; actions = act;
    sprite_back = "./PokeSpriteBack/25.png";
    sprite_front = "./PokeSpriteFront/Spr_1y_025.png"}
 
@@ -123,7 +123,7 @@ let build_inventory poke =
 
      ]
   *)
-  failwith "unimplemented"
+  []
 
 
 let poke_spd_buff poke i=
