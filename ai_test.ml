@@ -37,7 +37,7 @@ let tests_g =
     enemy_item_inv = [];
     enemy_level = 5; } in
   let st1 = make_hypothetical_state ai_inf_1 in
-  let no_mv1 = (CombatAction Nothing)::(CombatAction Nothing)::[] in
+  let no_mv1 = (CombatAction [Nothing])::(CombatAction [Nothing])::[] in
   let dmg2 = Damage ("other",100,30,(1,1)) in
   let user_poke2 = poke_effect ("Pikachu" |> build_poke) dmg2 in
   let user_pty2 = [ (1,user_poke2) ] in
@@ -106,7 +106,7 @@ let tests_g =
                   (effSta |> move_acy_set 95 |> accuracy));
   "naccBF" >:: (fun _ -> assert_equal (accuracy n_effBf)
                   (effBf |> move_acy_set 10 |> accuracy));
-  "naccN" >:: (fun _ -> assert_equal (accuracy effN) 
+  "naccN" >:: (fun _ -> assert_equal (accuracy effN)
                   (effN |> move_acy_set 35 |> accuracy));
 ]
 
