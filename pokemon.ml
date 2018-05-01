@@ -44,6 +44,15 @@ let actions poke =
   let actlst = poke.actions in
   parse_actions actlst 0 []
 
+let rec parse_action_names lst ind acc =
+  match lst with
+  | [] -> acc
+  | h::t -> parse_action_names t (ind+1) {acc@[h.name]}
+
+let action_names poke =
+  let atlst = poke.actions in
+  parse_action_names actlist 1 []
+
 let rec clear_helper stats stat acc =
   match stats with
   | [] -> if acc == [] then [StatusNone] else acc
