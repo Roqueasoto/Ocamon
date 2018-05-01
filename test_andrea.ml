@@ -1,13 +1,18 @@
 (* PUT YOUR TEST CASES HERE *)
 open OUnit2
+open Pokemon
+open Controller
+
+let pkc = build_poke "Pikachu"
+let rand = random_poke ()
 
 let test000_name            = "Andrea 000"
-let test000_expression      = 0
-let test000_expected_result = 1
+let test000_expression      = name pkc
+let test000_expected_result = "Pikachu"
 
 let test001_name            = "Andrea 001"
-let test001_expression      = 0
-let test001_expected_result = 1
+let test001_expression      = status pkc
+let test001_expected_result = [StatusNone]
 
 let test002_name            = "Andrea 002"
 let test002_expression      = 0
@@ -409,9 +414,9 @@ let test100_expected_result = 1
 
 
 let tests = [
-  (* test000_name >:: (fun _ -> assert_equal test000_expected_result test000_expression);
+  test000_name >:: (fun _ -> assert_equal test000_expected_result test000_expression);
   test001_name >:: (fun _ -> assert_equal test001_expected_result test001_expression);
-  test002_name >:: (fun _ -> assert_equal test002_expected_result test002_expression);
+  (*test002_name >:: (fun _ -> assert_equal test002_expected_result test002_expression);
   test003_name >:: (fun _ -> assert_equal test003_expected_result test003_expression);
   test004_name >:: (fun _ -> assert_equal test004_expected_result test004_expression);
   test005_name >:: (fun _ -> assert_equal test005_expected_result test005_expression);
