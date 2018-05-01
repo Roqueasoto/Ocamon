@@ -2,7 +2,7 @@ open Types
 open Model
 open Ai
 open Controller
-open Gui_text
+open Guitext
 
 (* [step st gmode] returns new game state when the GUI returns, indicating the
  * a command was given. If the mode is Quit, then no stepping takes place.
