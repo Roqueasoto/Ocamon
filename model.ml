@@ -21,7 +21,6 @@ type t = {
   population : person list;
   mode : mode;
   milestones : string list;
-  poke_storage : poke list;
   game_stats : (string * string list) list;
 }
 
@@ -435,6 +434,9 @@ let get_ai_info t =
 
 let make_hypothetical_state ai_info =
   MakeHypotheticalState.make_hypothetical_state ai_info
+
+let get_mode st =
+  st.mode 
 
 let do' cmd st =
   let open DoHelp in

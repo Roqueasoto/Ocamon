@@ -38,7 +38,6 @@ type gui_combat_info = {
 (* [gui_history_info] represents additional information about the user play history. *)
 type gui_history_info = {
   milestones : string list;
-  poke_storage : poke list;
   game_stats : (string * string list) list
 }
 
