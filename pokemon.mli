@@ -46,6 +46,9 @@ val sprite_back : t -> string
  * can perform. *)
 val actions : t -> (int * command) list
 
+(*[action_names] returns an association list of (index, action_name)*)
+val action_names : t -> (int * string) list
+
 (*[status p] returns the status list of pokemon p*)
 val status : t -> status list
 
