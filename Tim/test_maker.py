@@ -9,11 +9,11 @@ def make_line1(n):
 
 def make_line2(n):
     num = string_of_int(n)
-    return "let test"+num+"_expression      = ()\n"
+    return "let test"+num+"_expression      = 0\n"
 
 def make_line3(n):
     num = string_of_int(n)
-    return "let test"+num+"_expected_result = ()\n"
+    return "let test"+num+"_expected_result = 1\n"
 
 def make_bottom_line(n):
     num = string_of_int(n)
