@@ -38,7 +38,6 @@ type gui_combat_info = {
 (* [gui_history_info] represents additional information about the user play history. *)
 type gui_history_info = {
   milestones : string list;
-  poke_storage : poke list;
   game_stats : (string * string list) list
 }
 
@@ -51,8 +50,10 @@ type mode =
   | MLose
   | MQuit
 
-(* [gui_info] represents the set of information about the game state that the
- * GUI needs in order to produce the graphics.*)
+(* AF: [gui_info] represents the set of information about the game state that the
+ * GUI needs in order to produce the graphics.
+   RI: combat_info must be None if mode is not MCombat. combat_info must be Some
+   gui_combat_info is mode is MCombat. *)
 type gui_info = {
   mode : mode;
   combat_info : gui_combat_info option;

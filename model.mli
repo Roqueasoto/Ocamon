@@ -19,6 +19,9 @@ val get_ai_info : t -> ai_info
    state from ai_info which AI module may use to run do' simulations. *)
 val make_hypothetical_state : ai_info -> t
 
+(* [get_mode st] returns which mode the state of the game is in. *)
+val get_mode : t -> mode
+
 (* [do' cmd game] is [game'] if doing command [cmd] in state [game] results in a
  * new state [game'] the function name [do'] is used, similarly to A2, as [do]
  * is a reserved keyword.
