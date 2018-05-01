@@ -123,7 +123,7 @@ let build_inventory poke =
 
      ]
   *)
-  failwith "unimplemented"
+  []
 
 
 let poke_spd_buff poke i=
