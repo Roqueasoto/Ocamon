@@ -13,7 +13,7 @@ type itemQ = (Pokemon.item * int)
 type ai_info = {
   user_poke_inv : poke list;
   enemy_poke_inv : poke list;
-  enemy_item_inv : Pokemon.item list; 
+  enemy_item_inv : Pokemon.item list;
   enemy_level : int
 }
 
@@ -48,7 +48,6 @@ type mode =
   | MCombat of person_id
   | MWin
   | MLose
-  | MSimulation
 
 (* AF: [gui_info] represents the set of information about the game state that the
  * GUI needs in order to produce the graphics.

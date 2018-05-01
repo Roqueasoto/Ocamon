@@ -39,7 +39,6 @@ module Blanks = struct
     population = [];
     mode = failwith "uninitated game";
     milestones = [];
-    poke_storage = [];
     game_stats = [];
   }
 end
@@ -436,7 +435,7 @@ let make_hypothetical_state ai_info =
   MakeHypotheticalState.make_hypothetical_state ai_info
 
 let get_mode st =
-  st.mode 
+  st.mode
 
 let do' cmd st =
   let open DoHelp in
