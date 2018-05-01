@@ -23,6 +23,7 @@ type person_id = string
 (* [person_info] represents infromation about the enemy or user in the game. *)
 type person_info = {
   id : person_id;
+  name : string;
   poke_inv : poke list;
   item_inv : itemQ list; (* RI: Keys in item_inv contain no duplicates. *)
   person_image : string;
@@ -46,8 +47,14 @@ type mode =
   | MStart
   | MMap
   | MCombat of person_id
+<<<<<<< HEAD
+  | MWin (* win battle *)
+  | MLose (* lost battle *)
+  | MWinGame
+=======
   | MWin
   | MLose
+>>>>>>> master
   | MQuit
 
 (* AF: [gui_info] represents the set of information about the game state that the
