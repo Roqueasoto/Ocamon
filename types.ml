@@ -15,6 +15,7 @@ type person_id = string
 
 type person_info = {
   id : person_id;
+  name : string;
   poke_inv : poke list;
   item_inv : itemQ list; (* RI: Keys in item_inv contain no duplicates. *)
   person_image : string;
@@ -37,6 +38,8 @@ type mode =
   | MCombat of person_id
   | MWin
   | MLose
+  | MWinGame
+  | MQuit
 
 type gui_info = {
   mode : mode;

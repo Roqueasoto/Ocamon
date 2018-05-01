@@ -29,6 +29,16 @@ type effect =
   | Special of effect_on * int * string
   | Nothing
 
+(* [choices] are types for the Interact command. These indicate what choices are
+ * made and at what stage of the game they were made. CStart carries an int that
+ * represents the choice of Pokemon at the outset of the game.
+   However, CQuit can happen in any mode of the game, to quit. *)
+type choices =
+  | CStart of int
+  | CMap
+  | CWin
+  | CLose
+  | CQuit
 
 (* [command] represents a command input by a player. Parsed into one of the 7
  * main "button" inputs. CombatAction is implemented as an effect list because
@@ -37,7 +47,7 @@ type effect =
  * effect should be the main effect of the pokemon move.*)
 type command =
   | Move of string
-  | Interact
+  | Interact of choices
   | CombatAction of effect list
   | Round of effect list * effect list
 

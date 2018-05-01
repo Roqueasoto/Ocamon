@@ -15,12 +15,14 @@ type effect =
   | Special of effect_on * int * string
   | Nothing
 
+type choices = CStart of int | CMap | CWin | CLose | CQuit
 
 type command =
   | Move of string
-  | Interact
+  | Interact of choices
   | CombatAction of effect list
   | Round of effect list * effect list
+
 
 (* [parse key] is the command that represents player input [key].
  * requires: [key] is a valid single keyboard input as described in the game's
