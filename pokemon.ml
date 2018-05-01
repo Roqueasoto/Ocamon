@@ -1,10 +1,13 @@
 open Controller
 
-type item = {name: string; descript : string; effect : effect list; quantity: int}
+type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
+           | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
 
-type action = {name : string; descript : string; effect : effect list}
+type item = {name: string; descript : string; itemeffect : effect list; quantity: int}
 
-type poke = {poketype : ptype list; name : string; status : status list;
+type action = {actname : string; descript : string; effect : effect list}
+
+type t = {poketype : ptype list; name : string; status : status list;
                 hp : int; atk : int*int; def : int*int;
                 spd : int*int; maxhp : int; catch_rate : int;
                 actions : action list; sprite_back : string;
@@ -42,23 +45,23 @@ let rec parse_actions lst ind acc =
 
 let actions poke =
   let actlst = poke.actions in
-  parse_actions actlst 0 []
+  parse_actions actlst 1 []
 
 let rec parse_action_names lst ind acc =
   match lst with
   | [] -> acc
-  | h::t -> parse_action_names t (ind+1) {acc@[h.name]}
+  | h::t -> parse_action_names t (ind+1) (acc@[(ind, h.actname)])
 
 let action_names poke =
-  let atlst = poke.actions in
-  parse_action_names actlist 1 []
+  let actlst = poke.actions in
+  parse_action_names actlst 1 []
 
 let rec clear_helper stats stat acc =
   match stats with
   | [] -> if acc == [] then [StatusNone] else acc
-  | h::t -> if h = stat then acc@t else clear_helper stats stat h::acc
+  | h::t -> if h = stat then acc@t else clear_helper stats stat (h::acc)
 
-let clear_status poke stat =
+let clear_stat poke stat =
   {poketype = poke.poketype; name = poke.name; status = clear_helper poke.status stat [];
    hp = poke.hp; atk = poke.atk; def = poke.def;
    spd = poke.spd; maxhp = poke.maxhp;
@@ -68,20 +71,20 @@ let clear_status poke stat =
 
 let build_poke s =
 let act =
-  [{name = "Slam";
+  [{actname = "Slam";
     descript = "Slam deals damage of 80 with 75 accuracy";
     effect = [Damage(Other, 75, 80, (20, 32))]};
-   {name = "Tunderbolt";
+   {actname = "Tunderbolt";
     descript = "Thunderbolt deals damage of 70 with 100 accuracy and has a 10% chance of paralyzing the target";
     effect = [Damage(Other, 100, 70, (15, 24));Status(Other,10, Paralyze)]};
-   {name = "Agility";
+   {actname = "Agility";
     descript = "Agility raises the user's Speed by two stages";
     effect = [Buff(Self, 100, SPDBuff 2)]};
-   {name = "Wild Charge";
+   {actname = "Wild Charge";
     descript = "Wild Charge deals damage, but the user receives 1⁄4 of the damage it inflicted in recoil";
     effect = [Damage(Self, 100, 90, (15, 24)); Damage (Self, 100, 22, (15, 24))]}]
 in
-  {poketype = [Electric]; name = "Pikachu"; status = StatusNone;
+{poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
    hp = 35; atk = (55, 0); def = (40, 0);
    spd = (90, 0); maxhp = 274; catch_rate = 190; actions = act;
    sprite_back = "PokeSpriteBack/25.png";
@@ -89,24 +92,24 @@ in
 
 let random_poke () =
   let act =
-    [{name = "Fire Fang";
+    [{actname = "Fire Fang";
       descript = "Deals damage of 65 with 95 accuracy,
 has a 10% chance of burning the target and
 has a 10% chance of causing the target to flinch";
       effect = [Damage(Other, 95, 65, (15, 24)); Status(Other,10, Burn); Status(Other,10, Flinch)]};
-     {name = "Flame Burst";
+     {actname = "Flame Burst";
       descript = "Deals damage of 70 with 100 accuracy";
       effect = [Damage(Other, 100, 70, (15, 24))]};
-     {name = "Slash";
+     {actname = "Slash";
       descript = "Slash deals damage of 70 with 100 accuracy";
       effect = [Damage(Other, 100, 70, (20, 32))]};
-     {name = "Flamethrower";
+     {actname = "Flamethrower";
       descript = "Deals damage of 90 with 100 accuracy,
 has a 10% chance of burning the target";
       effect = [Damage(Other, 100, 90, (15, 24)); Status(Other,10, Burn)]}]
 in
 
-  {poketype = [Fire;Flying]; name = "Charizard"; status = StatusNone;
+{poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
    hp = 78; atk = (84, 0); def = (78, 0);
    spd = (100, 0); maxhp = 360; catch_rate = 45; actions = act;
    sprite_back = "PokeSpriteBack/6.png";
@@ -167,7 +170,7 @@ let poke_def_buff poke i =
 
 let poke_heal poke pts =
   {poketype = poke.poketype; name = poke.name; status = poke.status;
-   hp = (max (fst(poke.hp)+pts) poke.maxhp);
+   hp = (max (poke.hp+pts) poke.maxhp);
    atk = poke.atk; def = poke.def;
    spd = poke.spd; maxhp = poke.maxhp;
    catch_rate = poke.catch_rate;
@@ -176,9 +179,9 @@ let poke_heal poke pts =
    sprite_front = poke.sprite_front}
 
 let poke_damage poke pts =
-  let damage = int(int(int(2*50/5+2)*fst(poke.atk)*pts / fst(poke.def))/50) in
+  let damage = ((2*50/5)+2)*fst(poke.atk)*pts / fst(poke.def)/50 in
   {poketype = poke.poketype; name = poke.name; status = poke.status;
-   hp = (min (fst(poke.hp)-damage) 0);
+   hp = (min (poke.hp-damage) 0);
    atk = poke.atk; def = poke.def;
    spd = poke.spd; maxhp = poke.maxhp;
    catch_rate = poke.catch_rate;
@@ -237,7 +240,7 @@ let clear_buff poke =
   {poketype = poke.poketype;
   name = poke.name;
   status = poke.status;
-  hp = (fst(poke.hp), 0);
+  hp = poke.hp;
   atk = (fst(poke.atk), 0);
   def = (fst(poke.def), 0);
   spd = (fst(poke.spd), 0);
@@ -258,7 +261,7 @@ let type_compare ptype1 ptype2 =
   | Water,Grass | Water,Ice | Water,Water | Water,Dragon -> 0.5
   | Water,_ -> 1.
   | Electric,Flying | Electric,Water -> 2.
-  | Electric,Dragon | Electric,Grass | Electric,Dragon -> 0.5
+  | Electric,Dragon | Electric,Grass | Electric, Electric-> 0.5
   | Electric,Ground -> 0.
   | Electric,_ -> 1.
   | Grass,Ground | Grass,Rock | Grass,Water -> 2.
@@ -266,22 +269,22 @@ let type_compare ptype1 ptype2 =
   | Grass,_ -> 1.
   | Ice,Grass | Ice,Ground | Ice,Flying | Ice,Dragon -> 2.
   | Ice,Water | Ice,Ice -> 0.5
-  | Ice,_ -> 1
+  | Ice,_ -> 1.
   | Fighting,Normal | Fighting,Rock | Fighting,Ice -> 2.
   | Fighting,Poison | Fighting,Flying | Fighting,Psychic | Fighting,Bug -> 0.5
   | Fighting,Ghost -> 0.
-  | Fighing,_ -> 1.
+  | Fighting,_ -> 1.
   | Poison,Grass | Poison,Bug -> 2.
-  | Poison,Poison | Poison,Rock | Posion,Ghost | Poison,Rock -> 0.5
-  | Posion,_ -> 1.
-  | Ground,Fire | Ground,Electic | Ground,Poison | Ground,Rock -> 2.
+  | Poison,Poison | Poison,Rock | Poison,Ghost | Poison,Ground -> 0.5
+  | Poison,_ -> 1.
+  | Ground,Fire | Ground,Electric | Ground,Poison | Ground,Rock -> 2.
   | Ground,Grass | Ground,Bug -> 0.5
   | Ground,Flying -> 0.
   | Ground,_ -> 1.
   | Flying,Grass | Flying,Bug | Flying,Fighting -> 2.
   | Flying,Electric | Flying,Rock -> 0.5
   | Flying,_ -> 1.
-  | Psychic,Poison | Psychic,Psychic -> 2.
+  | Psychic,Poison | Psychic,Fighting -> 2.
   | Psychic,Psychic -> 0.5
   | Psychic,_ -> 1.
   | Bug,Grass | Bug,Poison | Bug,Psychic -> 2.
@@ -297,5 +300,5 @@ let type_compare ptype1 ptype2 =
   | Dragon,_ -> 1.
 
 let item_use_combat item =
-  if item.effect = [] then None
-  else Some (CombatAction item.effect)
+  if item.itemeffect = [] then None
+  else Some (CombatAction item.itemeffect)
