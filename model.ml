@@ -142,7 +142,7 @@ module MakeAIInfo = struct
   let make_ai_info_h enemy_id t = {
     user_poke_inv = get_poke_inv "user" t;
     enemy_poke_inv = get_poke_inv enemy_id t;
-    enemy_item_lst = get_item_lst enemy_id t;
+    enemy_item_inv = get_item_lst enemy_id t;
     enemy_level = ints_of_id enemy_id;
   }
 
@@ -173,7 +173,7 @@ module MakeHypotheticalState = struct
       blank_person_info with
       id = enemy_simulated_name;
       poke_inv = ai_info.enemy_poke_inv;
-      item_inv = List.map (fun elt -> (elt, 1)) ai_info.enemy_item_lst;
+      item_inv = List.map (fun elt -> (elt, 1)) ai_info.enemy_item_inv;
     }
 
   let make_hypothetical_state ai_info =

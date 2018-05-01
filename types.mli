@@ -13,7 +13,7 @@ type itemQ = (Pokemon.item * int)
 type ai_info = {
   user_poke_inv : poke list;
   enemy_poke_inv : poke list;
-  enemy_item_lst : Pokemon.item list;
+  enemy_item_inv : Pokemon.item list; 
   enemy_level : int
 }
 
