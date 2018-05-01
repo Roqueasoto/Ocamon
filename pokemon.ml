@@ -87,8 +87,8 @@ in
 {poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
    hp = 35; atk = (55, 0); def = (40, 0);
    spd = (90, 0); maxhp = 274; catch_rate = 190; actions = act;
-   sprite_back = "PokeSpriteBack/25.png";
-   sprite_front = "PokeSpriteFront/Spr_1y_025.png"}
+   sprite_back = "./PokeSpriteBack/25.png";
+   sprite_front = "./PokeSpriteFront/Spr_1y_025.png"}
 
 let random_poke () =
   let act =
@@ -112,8 +112,8 @@ in
 {poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
    hp = 78; atk = (84, 0); def = (78, 0);
    spd = (100, 0); maxhp = 161; catch_rate = 45; actions = act;
-   sprite_back = "PokeSpriteBack/6.png";
-   sprite_front = "PokeSpriteFront/Spr_1y_006.png"}
+   sprite_back = "./PokeSpriteBack/6.png";
+   sprite_front = "./PokeSpriteFront/Spr_1y_006.png"}
 
 
 let build_inventory poke =
