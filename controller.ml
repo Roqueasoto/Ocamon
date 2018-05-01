@@ -1,3 +1,4 @@
+
 type effect_on = Self | Other
 
 type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison
