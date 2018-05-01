@@ -1,5 +1,5 @@
 compile:
-	ocamlbuild -use-ocamlfind ai.cmo controller.cmo GUI.cmo model.cmo pokemon.cmo gui_text.cmo types.cmo
+	ocamlbuild -use-ocamlfind guitext.cmo ai.cmo controller.cmo model.cmo pokemon.cmo types.cmo GUI.cmo
 
 clean:
 	ocamlbuild -clean
