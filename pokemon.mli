@@ -44,6 +44,15 @@ val item_holding : t -> item option
  * can perform. *)
 val actions : t -> (int * command) list
 
+(*[status p] returns the status list of pokemon p*)
+val status : t -> Controller.status list
+
+(*[check_sub p] returns true if the pokemon's current status is Substitute*)
+val check_sub : t -> boolean
+
+(*[clear_stat p s] returns a pokemon without the status s*)
+val clear_stat: t -> Controller.status -> t
+
 (* [build_poke s] builds a pokemon of the name s from the json file j,
  * which contains info about all of the possible pokemons.
  * requires: s must be a valid name of a pokemon.*)
