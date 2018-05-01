@@ -1,14 +1,13 @@
 (* [effect_on] represents whether an effect should occur on self or other.  *)
 type effect_on = Self | Other
 
-(* [status] are types for the Status effect. *)
-type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison
+type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison | Toxic
            | Confused | Flinch | Substitute | Uncontrollable | Focused
-           | LeechSeed | Missed | Toxic
+           | LeechSeed | Missed
 
 (* [BuffType] are types for the Buff effect. The int it carries indicate how much to
-   increase/decrease the stages of certain stats. *)
-type bufftype = HPBuff of int | ATKBuff of int | DEFBuff of int | SPDBuff of int
+   increase/decrease the stages of certain stats*)
+type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int
 
 (* [choices] are types for the Interact command. These indicate what choices are
  * made and at what stage of the game they were made. CStart carries an int that
@@ -30,8 +29,8 @@ type effect =
   | Switch of int
   | Heal of effect_on    * int * int
   | Damage of effect_on  * int * int * (int * int)
-  | Status of effect_on  * int * string
-  | Buff of effect_on    * int * string
+  | Status of effect_on  * int * status
+  | Buff of effect_on    * int * bufftype
   | Special of effect_on * int * string
   | Nothing
 

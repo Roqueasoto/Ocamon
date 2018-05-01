@@ -36,22 +36,24 @@ val catch_rate : t -> float
 (* [rate_occ p] is the rate of occurance of the pokemon p in the wild. *)
 val rate_occ : t -> float
 
-(* [item_holding p] is the item the pokemon p is holding. None if the pokemon
- * isn't holding anything*)
-val item_holding : t -> item option
+(*[sprite_front p] returns the front sprite path of the pokemon p*)
+val sprite_front : t -> string
+
+(*[sprite_back p] returns the back sprite path of the pokemon p*)
+val sprite_back : t -> string
 
 (* [actions p] is the current list of CombatAction commands that the pokemon p
  * can perform. *)
 val actions : t -> (int * command) list
 
 (*[status p] returns the status list of pokemon p*)
-val status : t -> Controller.status list
+val status : t -> status list
 
 (*[check_sub p] returns true if the pokemon's current status is Substitute*)
 val check_sub : t -> bool
 
 (*[clear_stat p s] returns a pokemon without the status s*)
-val clear_stat: t -> Controller.status -> t
+val clear_stat: t -> status -> t
 
 (* [build_poke s] builds a pokemon of the name s from the json file j,
  * which contains info about all of the possible pokemons.
