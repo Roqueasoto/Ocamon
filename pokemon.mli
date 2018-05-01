@@ -31,10 +31,7 @@ val spd : t -> int * int
 val maxhp : t -> int
 
 (* [catch_rate p] is the catch rate of the pokemon p. *)
-val catch_rate : t -> float
-
-(* [rate_occ p] is the rate of occurance of the pokemon p in the wild. *)
-val rate_occ : t -> float
+val catch_rate : t -> int
 
 (*[sprite_front p] returns the front sprite path of the pokemon p*)
 val sprite_front : t -> string
@@ -45,6 +42,9 @@ val sprite_back : t -> string
 (* [actions p] is the current list of CombatAction commands that the pokemon p
  * can perform. *)
 val actions : t -> (int * command) list
+
+(*[action_names] returns an association list of (index, action_name)*)
+val action_names : t -> (int * string) list
 
 (*[status p] returns the status list of pokemon p*)
 val status : t -> status list
