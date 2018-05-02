@@ -38,9 +38,14 @@ let tests_g =
     enemy_level = 5; } in
   let st1 = make_hypothetical_state ai_inf_1 in
   let no_mv1 = (CombatAction [Nothing])::(CombatAction [Nothing])::[] in
+<<<<<<< HEAD
   let dmg2 = Damage (Other,100,5,(1,1)) in
   let ai_poke2 = random_poke () in
   let user_poke2 = poke_effect ("Pikachu" |> build_poke) ai_poke2 dmg2 in
+=======
+  let dmg2 = Damage (Other,100,30,(1,1)) in
+  let user_poke2 = poke_effect ("Pikachu" |> build_poke) (random_poke ()) dmg2 in
+>>>>>>> 0b8444906c496e065bc79ee954db03c290402628
   let user_pty2 = [ (1,user_poke2) ] in
   let ai_pty2 = (1,ai_poke2)::[] in
   let ai_inf_2 = {
@@ -50,8 +55,12 @@ let tests_g =
     enemy_level = 5; } in
   let st2 = make_hypothetical_state ai_inf_2 in
   let dmg3 = Damage (Other,100,300,(1,1)) in
+<<<<<<< HEAD
   let ai_poke3 = random_poke () in
   let user_poke3 = poke_effect ("Pikachu" |> build_poke) ai_poke3 dmg3 in
+=======
+  let user_poke3 = poke_effect ("Pikachu" |> build_poke) (random_poke ()) dmg3 in
+>>>>>>> 0b8444906c496e065bc79ee954db03c290402628
   let user_pty3 = [ (1,build_poke "Pikachu");(2,user_poke3) ] in
   let ai_pty3 = (1,ai_poke3)::[] in
   let ai_inf_3 = {
