@@ -101,6 +101,13 @@ module Initiate_Population = struct
      (enemy_id 3, initial_enemy_3);
      (enemy_id 4, initial_enemy_4);
      (enemy_id 5, initial_enemy_5);]
+
+  let initiate_state = fun () ->
+    {
+      Blanks.blank_state with
+      population = initial_population;
+      mode = MStart;
+    }
 end
 
 (* Helper functions to make a gui_info type from
@@ -464,6 +471,24 @@ module DoInteractHelp = struct
   let do_cquit st =
     {st with mode = MQuit}
 
+  let get_is_user_winner st =
+    let open DoRoundHelp in
+    let enemy_id = get_enemy_id st in
+    let user_id = "user" in
+    let state_info = expand_state user_id enemy_id st in
+    let user_hp = Pokemon.hp state_info.poke_self in
+    user_hp <> 0
+
+  let do_cbattleend st =
+    let is_user_winner = failwith "" in
+    if is_user_winner then {st with mode = MWin}
+    else {st with mode = MLose}
+
+  let do_cwingame b st =
+    let is_quit = b in
+    if is_quit then do_cquit st
+    else Initiate_Population.initiate_state ()
+
   let do_interact choices st =
     match choices with
     | CStart i -> do_csart i st
@@ -471,15 +496,12 @@ module DoInteractHelp = struct
     | CWin -> do_cwin st
     | CLose _ -> do_close st
     | CQuit -> do_cquit st
-    | _ -> failwith"unimplemented"
+    | CBattleEnd -> do_cbattleend st
+    | CWinGame b -> do_cwingame b st
 end
 
-let initiate_state = fun () ->
-  {
-    Blanks.blank_state with
-    population = Initiate_Population.initial_population;
-    mode = MStart;
-  }
+let initiate_state =
+  Initiate_Population.initiate_state
 
 let get_gui_info t =
   MakeGuiInfo.make_gui_info t
@@ -500,4 +522,5 @@ let do' cmd st =
   | Move s -> failwith "unreachable: handled by gui"
   | Interact choices -> DoInteractHelp.do_interact choices st
   | CombatAction eff_lst -> failwith "unreachable: main will never ask model to do this"
+  (* | Round (_,_) -> st *)
   | Round (user_elist, enemy_elist) -> DoRoundHelp.do_round user_elist enemy_elist st
