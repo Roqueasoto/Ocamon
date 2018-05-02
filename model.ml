@@ -1,6 +1,6 @@
 open Types
 
-(* TODO DELETE *)
+(* TODO DELETE *) 
 (* let state_same st st' b =
   let effect = fun () ->
     if b then
