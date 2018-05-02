@@ -1,2 +1,10 @@
+S .
 B _build
+PKG oUnit
 PKG yojson
+PKG Camlimages
+PKG Camlimages.png
+PKG Camlimages.jpeg
+
+
+
