@@ -1,7 +1,0 @@
-"Rule: ocaml: mli -> cmi (%=controller )": "sf\210\011\227\2052)\029\138\151\254\174\141Q\202"
-"Rule: ocaml dependencies mli (%=controller )": "\219\242}G\159\161\247\001\156\189\188)\249><!"
-"Resource: /Users/cynthiahe/Documents/3110/final/ocamon/controller.mli": "\179)\148\016\245\215`\161\158\025\248s\012\012\236\136"
-"Rule: ocaml dependencies mli (%=GUI )": "\247@\b\215\141\2538\222\212\222\192\230\232\026\0049"
-"Resource: /Users/cynthiahe/Documents/3110/final/ocamon/GUI.mli": "(\001\218yj\139`y\219eE\200\137\214sD"
-"Resource: /Users/cynthiahe/Documents/3110/final/ocamon/GUI.ml": "a\155:\001O*\173\250\202j\224EM4\150)"
-"Rule: ocaml: mli -> cmi (%=GUI )": "\004t1\1871\253\180b>\r\191\234\166\143<2"
