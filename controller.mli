@@ -12,7 +12,8 @@ type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int
 (* [choices] are types for the Interact command. These indicate what choices are
  * made and at what stage of the game they were made. CStart carries an int that
  * represents the choice of Pokemon at the outset of the game. *)
-type choices = CStart of int | CMap | CWin | CLose | CQuit
+type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
+             | CWinGame of bool | CQuit
 
 (* [effect] represents a combat effect on the game state. For type Switch, the
  * int carried represents the position of the Pokemon in the party that will be

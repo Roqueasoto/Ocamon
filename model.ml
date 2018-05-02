@@ -47,7 +47,7 @@ module Blanks = struct
 
   let blank_state = {
     population = [];
-    mode = failwith "uninitated game";
+    mode = MStart;
     milestones = [];
     game_stats = [];
   }
@@ -469,8 +469,9 @@ module DoInteractHelp = struct
     | CStart i -> do_csart i st
     | CMap -> do_cmap st
     | CWin -> do_cwin st
-    | CLose -> do_close st
+    | CLose _ -> do_close st
     | CQuit -> do_cquit st
+    | _ -> failwith"unimplemented"
 end
 
 let initiate_state = fun () ->
@@ -499,4 +500,6 @@ let do' cmd st =
   | Move s -> failwith "unreachable: handled by gui"
   | Interact choices -> DoInteractHelp.do_interact choices st
   | CombatAction eff_lst -> failwith "unreachable: main will never ask model to do this"
-  | Round (user_elist, enemy_elist) -> DoRoundHelp.do_round user_elist enemy_elist st
+  | Round (_,_) -> st
+                     (*)
+                       | Round (user_elist, enemy_elist) -> DoRoundHelp.do_round user_elist enemy_elist st *)

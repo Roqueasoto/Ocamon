@@ -19,7 +19,7 @@ let enable_timothy = true
 
 let active_tests_andrea   = if enable_andrea  then Test_andrea.tests  else []
 let active_tests_cynthia  = if enable_cynthia then Test_cynthia.tests else []
-let active_tests_roque    = if enable_roque   then Test_roque.tests   else []
+let active_tests_roque    = if enable_roque   then Ai_test.ai_tests   else []
 let active_tests_timothy  = if enable_timothy then Test_timothy.tests else []
 
 let tests = "TESTING SUITE FOR OCAMON BY TEAM AWESOME" >:::

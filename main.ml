@@ -15,7 +15,7 @@ let step st gmode =
   let g_inf = get_gui_info st in
   match gmode with
   | MQuit -> st
-  | MStart | MMap | MWin | MLose -> do' (get_cmd g_inf gmode) st
+  | MStart | MMap | MWin | MLose | MWinGame -> do' (get_cmd g_inf gmode) st
   | MCombat _ -> let user_cmd = get_cmd g_inf gmode in
     let ai_cmd = take_turn st in
     begin match user_cmd,ai_cmd with
@@ -32,7 +32,7 @@ let rec play_game st =
   let nmode = get_mode new_st in
   match nmode with
   | MQuit -> ()
-  | MStart | MMap | MCombat _ | MWin | MLose | MSimulation -> play_game new_st
+  | MStart | MMap | MCombat _ | MWin | MLose | MWinGame -> play_game new_st
 
 (* [main ()] starts the REPL, which initializes the game and starts the GUI. *)
 let main () =

@@ -38,7 +38,7 @@ let tests_g =
     enemy_level = 5; } in
   let st1 = make_hypothetical_state ai_inf_1 in
   let no_mv1 = (CombatAction [Nothing])::(CombatAction [Nothing])::[] in
-  let dmg2 = Damage ("other",100,30,(1,1)) in
+  let dmg2 = Damage (Other,100,30,(1,1)) in
   let user_poke2 = poke_effect ("Pikachu" |> build_poke) dmg2 in
   let user_pty2 = [ (1,user_poke2) ] in
   let ai_pty2 = (1,random_poke ())::[] in
@@ -48,7 +48,7 @@ let tests_g =
     enemy_item_inv = [];
     enemy_level = 5; } in
   let st2 = make_hypothetical_state ai_inf_2 in
-  let dmg3 = Damage ("other",100,300,(1,1)) in
+  let dmg3 = Damage (Other,100,300,(1,1)) in
   let user_poke3 = poke_effect ("Pikachu" |> build_poke) dmg3 in
   let user_pty3 = [ (1,build_poke "Pikachu");(2,user_poke3) ] in
   let ai_pty3 = (1,random_poke ())::[] in
@@ -59,14 +59,14 @@ let tests_g =
     enemy_level = 5; } in
   let st3 = make_hypothetical_state ai_inf_3 in
   let effS = Switch 1 in
-  let effH = Heal ("other",90,90) in
-  let effSta = Status ("other",75,Paralyze) in
-  let effBf = Buff ("other",100,ATKBuff 2) in
+  let effH = Heal (Other,90,90) in
+  let effSta = Status (Other,75,Paralyze) in
+  let effBf = Buff (Other,100,ATKBuff 2) in
   let effN = Nothing in
-  let n_effH = Heal ("other",35,90) in
-  let n_effSta = Status ("other",95,Paralyze) in
-  let n_effBf = Buff ("other",10,ATKBuff 2) in
-  let n_effD = Damage ("other",85,300,(1,1)) in  [
+  let n_effH = Heal (Other,35,90) in
+  let n_effSta = Status (Other,95,Paralyze) in
+  let n_effBf = Buff (Other,10,ATKBuff 2) in
+  let n_effD = Damage (Other,85,300,(1,1)) in  [
   (* Test the evaluation function with teams that only have a type difference.*)
   "tp_us1" >:: (fun _ -> assert_equal 50 (team_points user_pty1 ai_pty1));
   "tp_ai1" >:: (fun _ -> assert_equal (-25) (team_points ai_pty1 user_pty1));
@@ -117,9 +117,13 @@ let gb_tests = gb_tests @ tests_g
   This section compiles all available tests.
 *)
 
+(* For use in main test file*)
+let ai_tests = bb_tests @ gb_tests
+
+(*
 let suite = "Full AI test suite" >:::
   bb_tests @ gb_tests
 
-(* The following line must be the one and only place
- * in your entire source code that calls [OUnit2.run_test_tt_main]. *)
-let _ = run_test_tt_main suite
+  The following line must be the one and only place
+ * in your entire source code that calls [OUnit2.run_test_tt_main]. 
+                   let _ = run_test_tt_main suite *)

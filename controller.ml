@@ -6,7 +6,8 @@ type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison | Toxic
 
 type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int
 
-type choices = CStart of int | CMap | CWin | CLose | CQuit
+type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
+             | CWinGame of bool | CQuit
 
 type effect =
   | Switch of int
