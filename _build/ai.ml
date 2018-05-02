@@ -22,7 +22,8 @@ let team_points (pokes1 : poke list) (pokes2 : poke list) =
   let hp_points = int_of_float (List.fold_left hp_points_fun 0. (poke2)) in
   let poke_types pokes = List.fold_left
       (fun acc pk -> if hp pk <> 0 then (ptype pk)@acc else acc) [] pokes in
-  let type_points = int_of_float(poke1 |> poke_types |> List.fold_left
+  let type_points = int_of_float
+      (poke1 |> poke_types |> List.fold_left
          (type_points_fun (poke2 |> poke_types)) 0.) in
   let faint_points = List.fold_left faint_points_fun 0 (poke2) in
   hp_points + type_points + faint_points

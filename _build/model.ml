@@ -184,7 +184,7 @@ module MakeHypotheticalState = struct
   open Blanks
 
   let user_simulated_name = "user_simulated"
-  let enemy_simulated_name = "enemy_simulated 5"
+  let enemy_simulated_name = "enemy_simulated"
 
   let make_user_person_info ai_info =
     {
