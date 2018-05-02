@@ -29,8 +29,8 @@ let bb_tests = bb_tests @ tests_b
 *)
 
 let tests_g =
-  let user_pty1 = [ (1,build_poke "Pikachu") ] in
-  let ai_pty1 = (1,random_poke ())::[] in
+  let user_pty1 = [ (0,build_poke "Pikachu") ] in
+  let ai_pty1 = (0,random_poke ())::[] in
   let ai_inf_1 = {
     user_poke_inv = user_pty1;
     enemy_poke_inv = ai_pty1;
@@ -40,8 +40,8 @@ let tests_g =
   let no_mv1 = (CombatAction [Nothing])::(CombatAction [Nothing])::[] in
   let dmg2 = Damage (Other,100,30,(1,1)) in
   let user_poke2 = poke_effect ("Pikachu" |> build_poke) dmg2 in
-  let user_pty2 = [ (1,user_poke2) ] in
-  let ai_pty2 = (1,random_poke ())::[] in
+  let user_pty2 = [ (0,user_poke2) ] in
+  let ai_pty2 = (0,random_poke ())::[] in
   let ai_inf_2 = {
     user_poke_inv = user_pty2;
     enemy_poke_inv = ai_pty2;
@@ -50,8 +50,8 @@ let tests_g =
   let st2 = make_hypothetical_state ai_inf_2 in
   let dmg3 = Damage (Other,100,300,(1,1)) in
   let user_poke3 = poke_effect ("Pikachu" |> build_poke) dmg3 in
-  let user_pty3 = [ (1,build_poke "Pikachu");(2,user_poke3) ] in
-  let ai_pty3 = (1,random_poke ())::[] in
+  let user_pty3 = [ (0,build_poke "Pikachu");(2,user_poke3) ] in
+  let ai_pty3 = (0,random_poke ())::[] in
   let ai_inf_3 = {
     user_poke_inv = user_pty3;
     enemy_poke_inv = ai_pty3;
@@ -108,8 +108,23 @@ let tests_g =
                   (effBf |> move_acy_set 10 |> accuracy));
   "naccN" >:: (fun _ -> assert_equal (accuracy effN)
                   (effN |> move_acy_set 35 |> accuracy));
-]);["up_cmbt3" >:: (fun _ -> assert_equal st3 (update_combat st3 no_mv1));
-    "eval1" >:: (fun _ -> assert_equal (-75) (evaluate st1 no_mv1));]
+]);
+
+
+  [
+    "tp_us1" >:: (fun _ -> assert_equal 50 (team_points user_pty1 ai_pty1));
+
+    (* "eval1" >:: (fun _ -> assert_equal (-75) (evaluate st1 no_mv1));
+
+
+    "tp_us2" >:: (fun _ -> assert_equal 50 (team_points user_pty2 ai_pty2));
+
+
+    "tp_ai3" >:: (fun _ -> assert_equal (75) (team_points ai_pty3 user_pty3));
+
+    "eval3" >:: (fun _ -> assert_equal (25) (evaluate st3 no_mv1)); *)
+
+  ]
 
 let gb_tests = gb_tests @ tests_g
 

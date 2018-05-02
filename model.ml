@@ -1,7 +1,8 @@
 open Types
 
 (* TODO DELETE *)
-let state_same st st' b = (*ignore (failwith "AAA"); print_endline "XXX"; *)
+let state_same st st' b = st'
+let state_same' st st' b = (*ignore (failwith "AAA"); print_endline "XXX"; *)
   let effect = fun () ->
     if b then
       begin
@@ -174,7 +175,7 @@ module MakeAIInfo = struct
   let is_digit c =
     let code_0 = Char.code '0' in
     let code_9 = Char.code '9' in
-    let code_c = Char.code 'c' in
+    let code_c = Char.code c in
     (code_c <= code_9) && (code_c >= code_0)
 
 (* Gets a string of all of the digits in id.
@@ -204,7 +205,7 @@ end
 module MakeHypotheticalState = struct
   open Blanks
 
-  let user_simulated_name = "user_simulated"
+  let user_simulated_name = "user"
   let enemy_simulated_name = "enemy_simulated5"
 
   let make_user_person_info ai_info =
@@ -257,8 +258,10 @@ module DoRoundHelp = struct
 
 (* Returns state_info representation of st.*)
   let expand_state self_id other_id st =
+
     let person_info_self = List.assoc self_id st.population in
     let person_info_other = List.assoc other_id st.population in
+
 
     let poke_inv_self = person_info_self.poke_inv in
     let poke_inv_other = person_info_other.poke_inv in
@@ -450,7 +453,6 @@ module DoRoundHelp = struct
     let b = get_b user_elist enemy_elist in (* TODO DELETE*)
     let enemy_id = get_enemy_id st in
     let user_elist_x = expand_effect_lst user_elist in
-    print_endline "BBB"; (* TODO DELETE*)
     let enemy_elist_x = expand_effect_lst enemy_elist in
     let order = get_order_info user_elist_x enemy_elist_x enemy_id st in
     let first_id = order.first_id in
