@@ -1,5 +1,16 @@
 open Types
 
+(* TODO DELETE *)
+(* let state_same st st' b =
+  let effect = fun () ->
+    if b then
+      begin
+        if st = st' then print_string "SAME" else print_string "DIFF"
+      end
+    else
+      () in
+  effect (); st'  *)
+
 (* AF: [person] represents a person and id pair.
 RI: person_id must equal person_info.id *)
 type person = (person_id * person_info)
@@ -48,6 +59,11 @@ module Blanks = struct
   let blank_state = {
     population = [];
     mode = MStart;
+    milestones = [];
+    game_stats = [];
+  }
+
+  let blank_history_info = {
     milestones = [];
     game_stats = [];
   }
@@ -122,7 +138,7 @@ module MakeGuiInfo = struct
     {
       mode = t.mode;
       combat_info = make_combat_info_opt t;
-      history_info = failwith "";
+      history_info = Blanks.blank_history_info;
     }
 end
 
@@ -184,7 +200,7 @@ module MakeHypotheticalState = struct
   open Blanks
 
   let user_simulated_name = "user_simulated"
-  let enemy_simulated_name = "enemy_simulated"
+  let enemy_simulated_name = "enemy_simulated5"
 
   let make_user_person_info ai_info =
     {
@@ -500,6 +516,6 @@ let do' cmd st =
   | Move s -> failwith "unreachable: handled by gui"
   | Interact choices -> DoInteractHelp.do_interact choices st
   | CombatAction eff_lst -> failwith "unreachable: main will never ask model to do this"
-  | Round (_,_) -> st
-                     (*)
+  | Round (user_elist, enemy_elist) -> DoRoundHelp.do_round user_elist enemy_elist st
+                     (*
                        | Round (user_elist, enemy_elist) -> DoRoundHelp.do_round user_elist enemy_elist st *)
