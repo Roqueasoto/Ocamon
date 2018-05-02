@@ -69,7 +69,7 @@ val random_poke : unit -> t
 val build_inventory : unit -> item list
 
 (* [pokemon_damage p e] process effect e on the pokemon p and returns a new pokemon *)
-val poke_effect : t -> effect -> t
+val poke_effect : t -> t -> effect -> t
 
 (* Set all stat stages to zero*)
 val clear_buff : t -> t

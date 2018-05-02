@@ -322,12 +322,12 @@ module DoRoundHelp = struct
           match effect_on with
           | Self -> begin
               let poke_other' = state_info.poke_other in
-              let poke_self' = Pokemon.poke_effect state_info.poke_self eff in
+              let poke_self' = Pokemon.poke_effect state_info.poke_self state_info.poke_other eff in
               (poke_self', poke_other')
             end
           | Other -> begin
               let poke_self' = state_info.poke_self in
-              let poke_other' = Pokemon.poke_effect state_info.poke_self eff in
+              let poke_other' = Pokemon.poke_effect state_info.poke_other state_info.poke_self eff in
               (poke_self', poke_other')
             end in
         let st' = update_state_with_pokes_and_state_info st (state_info, poke_self', poke_other') in
