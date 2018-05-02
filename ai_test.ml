@@ -39,7 +39,7 @@ let tests_g =
   let st1 = make_hypothetical_state ai_inf_1 in
   let no_mv1 = (CombatAction [Nothing])::(CombatAction [Nothing])::[] in
   let dmg2 = Damage (Other,100,30,(1,1)) in
-  let user_poke2 = poke_effect ("Pikachu" |> build_poke) dmg2 in
+  let user_poke2 = poke_effect ("Pikachu" |> build_poke) (random_poke ()) dmg2 in
   let user_pty2 = [ (1,user_poke2) ] in
   let ai_pty2 = (1,random_poke ())::[] in
   let ai_inf_2 = {
@@ -49,7 +49,7 @@ let tests_g =
     enemy_level = 5; } in
   let st2 = make_hypothetical_state ai_inf_2 in
   let dmg3 = Damage (Other,100,300,(1,1)) in
-  let user_poke3 = poke_effect ("Pikachu" |> build_poke) dmg3 in
+  let user_poke3 = poke_effect ("Pikachu" |> build_poke) (random_poke ()) dmg3 in
   let user_pty3 = [ (1,build_poke "Pikachu");(2,user_poke3) ] in
   let ai_pty3 = (1,random_poke ())::[] in
   let ai_inf_3 = {
@@ -125,5 +125,5 @@ let suite = "Full AI test suite" >:::
   bb_tests @ gb_tests
 
   The following line must be the one and only place
- * in your entire source code that calls [OUnit2.run_test_tt_main]. 
+ * in your entire source code that calls [OUnit2.run_test_tt_main].
                    let _ = run_test_tt_main suite *)

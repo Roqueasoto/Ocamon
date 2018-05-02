@@ -24,7 +24,7 @@ let test003_expression      = maxhp pkc = hp pkc
 let test003_expected_result = true
 
 let test004_name            = "Andrea 004"
-let test004_expression      = poke_effect pkc effect1
+let test004_expression      = poke_effect pkc rand effect1
 let test004_expected_result = pkc
 
 let test005_name            = "Andrea 005"
