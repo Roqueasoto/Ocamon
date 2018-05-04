@@ -101,13 +101,13 @@ module StartGUI = struct
   let make_action num comb_inf =
     List.assoc !num (actions (snd (List.hd (comb_inf.user_person_info.poke_inv))))
 
-  (*let check (num: int ref) comb_inf user_health opp_health : Controller.command = 
+  let check (num: int ref) comb_inf user_health opp_health : Controller.command = 
     if user_health <= 0 || opp_health <= 0 
     then 
       (*draw_string "Looks like the battle is over."; *)
       Interact CBattleEnd
     else 
-      make_action num comb_inf; *)
+      make_action num comb_inf 
 
   (*val draw_battle: Types.gui_info -> Controller.command*)
   let draw_battle gui_inf : command = 
@@ -170,7 +170,7 @@ module StartGUI = struct
     set_color green; 
     fill_rect 90 200 opp_health 10; (*full health is 100*)
 
-    (*check num comb_inf user_health opp_health; *)
+    check num comb_inf user_health opp_health 
 
   let rec press_map () = 
     let keep_running = ref true in 
@@ -184,8 +184,6 @@ module StartGUI = struct
         then 
           close_graph (); 
           keep_running := false
-        else 
-          keep_running := true
     done
 
   let draw_map () = 
@@ -219,7 +217,6 @@ module StartGUI = struct
         then 
           draw_map (); 
           keep_running := false; 
-        else keep_running := true 
     done 
 
   let draw_start () = 
