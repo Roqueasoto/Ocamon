@@ -85,11 +85,7 @@ let act =
     effect = [Damage(Self, 100, 90, (15, 24)); Damage (Self, 100, 22, (15, 24))]}]
 in
 {poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
-<<<<<<< HEAD
-   hp = 118; atk = (55, 0); def = (40, 0);
-=======
    hp = 118; atk = (83, 0); def = (58, 0);
->>>>>>> 0b8444906c496e065bc79ee954db03c290402628
    spd = (90, 0); maxhp = 118; catch_rate = 190; actions = act;
    sprite_back = "./PokeSpriteBack/25.png";
    sprite_front = "./PokeSpriteFront/Spr_1y_025.png"}
@@ -114,11 +110,7 @@ has a 10% chance of burning the target";
 in
 
 {poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
-<<<<<<< HEAD
-   hp = 161; atk = (84, 0); def = (78, 0);
-=======
    hp = 161; atk = (112, 0); def = (106, 0);
->>>>>>> 0b8444906c496e065bc79ee954db03c290402628
    spd = (100, 0); maxhp = 161; catch_rate = 45; actions = act;
    sprite_back = "./PokeSpriteBack/6.png";
    sprite_front = "./PokeSpriteFront/Spr_1y_006.png"}
@@ -178,11 +170,7 @@ let poke_def_buff poke i =
 
 let poke_heal poke pts =
   {poketype = poke.poketype; name = poke.name; status = poke.status;
-<<<<<<< HEAD
-   hp = (max (poke.hp+pts) poke.maxhp);
-=======
    hp = (min (poke.hp+pts) poke.maxhp);
->>>>>>> 0b8444906c496e065bc79ee954db03c290402628
    atk = poke.atk; def = poke.def;
    spd = poke.spd; maxhp = poke.maxhp;
    catch_rate = poke.catch_rate;
@@ -190,24 +178,6 @@ let poke_heal poke pts =
    sprite_back = poke.sprite_back;
    sprite_front = poke.sprite_front}
 
-<<<<<<< HEAD
-let poke_damage poke pts =
-  let astage = float_of_int (snd poke.atk) in
-  let amul = max (2.0) (2.0 +. astage) /. max (2.0) (2.0 -. astage) in
-  let dstage = float_of_int (snd poke.def) in
-  let dmul = max (2.0) (2.0 +. dstage) /. max (2.0) (2.0 -. dstage) in
-  let def = float_of_int (fst(poke.atk)) *. dmul in
-  let atk = float_of_int (fst(poke.def)) *. amul in
-  let damage = int_of_float (((2.0 *. 50.0 /. 5.0) +. 2.0)*. atk *. (float_of_int pts) /. def /. 50.0) in
-  {poketype = poke.poketype; name = poke.name; status = poke.status;
-   hp = (min (poke.hp-damage) 0);
-   atk = poke.atk; def = poke.def;
-   spd = poke.spd; maxhp = poke.maxhp;
-   catch_rate = poke.catch_rate;
-   actions = poke.actions;
-   sprite_back = poke.sprite_back;
-   sprite_front = poke.sprite_front}
-=======
 let poke_damage poke1 poke2 pts =
   let astage = float_of_int (snd poke2.atk) in
   let amul = max (2.0) (2.0 +. astage) /. max (2.0) (2.0 -. astage) in
@@ -224,7 +194,6 @@ let poke_damage poke1 poke2 pts =
    actions = poke1.actions;
    sprite_back = poke1.sprite_back;
    sprite_front = poke1.sprite_front}
->>>>>>> 0b8444906c496e065bc79ee954db03c290402628
 
 let non_overlap_stat s =
   match s with
@@ -258,22 +227,6 @@ let poke_change_status poke s =
           sprite_front = poke.sprite_front}
 
 
-<<<<<<< HEAD
-let poke_effect poke effect =
-  match effect with
-  | Switch _ -> failwith "should not reach"
-  | Heal (s, i1, i2) ->  poke_heal poke i2
-  | Damage (s, i1, i2, (r1, r2)) -> poke_damage poke i2
-  | Buff (s, i1, b) -> begin
-      match b with
-      | ATKBuff i -> poke_atk_buff poke i
-      | DEFBuff i -> poke_def_buff poke i
-      | SPDBuff i -> poke_spd_buff poke i
-    end
-  | Special (_,_,_) -> failwith "unimplemented"
-  | Status (_,_,s) -> poke_change_status poke s
-  | Nothing -> poke
-=======
 let poke_effect poke1 poke2 effect =
   match effect with
   | Switch _ -> failwith "should not reach"
@@ -288,7 +241,6 @@ let poke_effect poke1 poke2 effect =
   | Special (_,_,_) -> failwith "unimplemented"
   | Status (_,_,s) -> poke_change_status poke1 s
   | Nothing -> poke1
->>>>>>> 0b8444906c496e065bc79ee954db03c290402628
 
 let clear_buff poke =
   {poketype = poke.poketype;

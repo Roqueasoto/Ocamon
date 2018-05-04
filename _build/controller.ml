@@ -23,5 +23,3 @@ type command =
   | Interact of choices
   | CombatAction of effect list
   | Round of effect list * effect list
-
-let parse i = failwith"Unimplemented"
