@@ -17,10 +17,14 @@ let step st gmode =
   | MQuit -> st
   | MStart | MMap | MWin | MLose | MWinGame -> do' (get_cmd g_inf gmode) st
   | MCombat _ -> let user_cmd = get_cmd g_inf gmode in
-    let ai_cmd = take_turn st in
-    begin match user_cmd,ai_cmd with
-      | (CombatAction u_eff),(CombatAction ai_eff) ->
+    begin match user_cmd with
+      | (CombatAction u_eff) -> let ai_cmd = take_turn st in
+        let ai_eff = begin match ai_cmd with
+          | CombatAction a_eff -> a_eff
+          | _ -> failwith "unreachable : step"
+        end in
         do' (Round (u_eff,ai_eff)) st
+      | (Interact cmd) -> do' (Interact cmd) st
       | _ -> failwith "unreachable : step"
     end
 
