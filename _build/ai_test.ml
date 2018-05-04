@@ -29,9 +29,7 @@ let bb_tests = bb_tests @ tests_b
 *)
 
 let tests_g =
-
-  (* Testing game state evaluation.*)
-  let user_pty1 = [ (0,build_poke "25") ] in
+  let user_pty1 = [ (0,build_poke "Pikachu") ] in
   let ai_pty1 = (0,random_poke ())::[] in
   let ai_inf_1 = {
     user_poke_inv = user_pty1;
@@ -42,7 +40,7 @@ let tests_g =
   let no_mv1 = (CombatAction [Nothing])::(CombatAction [Nothing])::[] in
   let dmg2 = Damage (Other,100,5,(1,1)) in
   let ai_poke2 = random_poke () in
-  let user_poke2 = poke_effect ("25" |> build_poke) ai_poke2 dmg2 in
+  let user_poke2 = poke_effect ("Pikachu" |> build_poke) ai_poke2 dmg2 in
   let user_pty2 = [ (0,user_poke2) ] in
   let ai_pty2 = (0,ai_poke2)::[] in
   let ai_inf_2 = {
@@ -53,8 +51,8 @@ let tests_g =
   let st2 = make_hypothetical_state ai_inf_2 in
   let dmg3 = Damage (Other,100,300,(1,1)) in
   let ai_poke3 = random_poke () in
-  let user_poke3 = poke_effect ("25" |> build_poke) ai_poke3 dmg3 in
-  let user_pty3 = [ (0,build_poke "25");(1,user_poke3) ] in
+  let user_poke3 = poke_effect ("Pikachu" |> build_poke) ai_poke3 dmg3 in
+  let user_pty3 = [ (0,build_poke "Pikachu");(1,user_poke3) ] in
   let ai_pty3 = (0,ai_poke3)::[] in
   let ai_inf_3 = {
     user_poke_inv = user_pty3;
@@ -62,8 +60,6 @@ let tests_g =
     enemy_item_inv = [];
     enemy_level = 5; } in
   let st3 = make_hypothetical_state ai_inf_3 in
-
-  (* Testing getting and setting accuracy of effects. *)
   let effS = Switch 1 in
   let effH = Heal (Other,90,90) in
   let effSta = Status (Other,75,Paralyze) in
@@ -72,46 +68,7 @@ let tests_g =
   let n_effH = Heal (Other,35,90) in
   let n_effSta = Status (Other,95,Paralyze) in
   let n_effBf = Buff (Other,10,ATKBuff 2) in
-  let n_effD = Damage (Other,85,300,(1,1)) in
-
-  (* Testing expansion of moves*)
-  let fl_mv1 = [Damage (Other,85,300,(1,1))] in
-  let fl_mv2 = [Damage (Other,85,300,(1,1)) ; Switch 1 ] in
-  let fl_mv3 = [Damage (Other,85,300,(1,1)) ; Heal (Other,35,90) ] in
-  let fl_mv4 = [Damage (Other,85,90,(1,1)) ; Heal (Other,35,90) ; Switch 1] in
-  let fl_mv5 = [Damage (Other,85,90,(1,1)) ; Heal (Other,35,90) ;
-                Status (Other,30,Paralyze)] in
-  let fl_mv6 = [Damage (Other,85,90,(1,1)) ; Heal (Other,35,90) ; Switch 1 ;
-                Status (Other,30,Paralyze)] in
-  let fl_mv7 = [Damage (Other,85,90,(1,1)) ; Heal (Other,35,90) ;
-                Status (Other,30,Paralyze) ; Switch 1 ] in
-  let ex_mv1 = [([Nothing],15.);([Damage (Other,85,300,(1,1))],85.)] in
-  let ex_mv2 = [([Nothing],15.);([Switch 1;Damage (Other,85,300,(1,1))],85.)] in
-  let ex_mv3 =
-    [([Nothing],15.);([Heal (Other,35,90);Damage (Other,85,300,(1,1))],76.5);
-     ([Damage (Other,85,300,(1,1))],8.5)] in
-  let ex_mv4 =
-    [([Nothing],15.);
-     ([Switch 1;Heal (Other,35,90);Damage (Other,85,300,(1,1))],76.5);
-     ([Switch 1;Damage (Other,85,300,(1,1))],8.5)] in
-  let ex_mv5 =
-    [([Nothing],15.);([Status (Other,30,Paralyze);Heal (Other,35,90);
-                       Damage (Other,85,300,(1,1))],22.95);
-     ([Status (Other,30,Paralyze);Damage (Other,85,300,(1,1))],2.55);
-     ([Heal (Other,35,90);Damage (Other,85,300,(1,1))],53.55);
-     ([Damage (Other,85,300,(1,1))],5.95)] in
-  let ex_mv6 =
-    [([Nothing],15.);([Status (Other,30,Paralyze);Switch 1;Heal (Other,35,90);
-                       Damage (Other,85,300,(1,1))],22.95);
-     ([Status (Other,30,Paralyze);Switch 1;Damage (Other,85,300,(1,1))],2.55);
-     ([Switch 1;Heal (Other,35,90);Damage (Other,85,300,(1,1))],53.55);
-     ([Switch 1;Damage (Other,85,300,(1,1))],5.95)] in
-  let er_mv7 = try let _ = expand_move fl_mv7 [] in false
-    with _ -> true in
-
-  (* Testing valid_move generation. *)
-  let mv_gen1 = [Damage (Other,85,300,(1,1))] in
-  let fl_mv2 = [Damage (Other,85,300,(1,1)) ; Switch 1 ] in [
+  let n_effD = Damage (Other,85,300,(1,1)) in  [
   (* Test the evaluation function with teams that only have a type difference.*)
   "tp_us1" >:: (fun _ -> assert_equal 25 (team_points user_pty1 ai_pty1));
   "tp_ai1" >:: (fun _ -> assert_equal (-25) (team_points ai_pty1 user_pty1));
@@ -153,24 +110,6 @@ let tests_g =
                   (effBf |> move_acy_set 10 |> accuracy));
   "naccN" >:: (fun _ -> assert_equal (accuracy effN)
                   (effN |> move_acy_set 35 |> accuracy));
-
-  (* Test the expand_move function with various effects lists. *)
-  "exp_1" >:: (fun _ -> assert_equal ex_mv1 (expand_move fl_mv1 []));
-  "exp_2" >:: (fun _ -> assert_equal ex_mv2 (expand_move fl_mv2 []));
-  "exp_3" >:: (fun _ -> assert_equal ex_mv3 (expand_move fl_mv3 []));
-  "exp_4" >:: (fun _ -> assert_equal ex_mv4 (expand_move fl_mv4 []));
-  "exp_5" >:: (fun _ -> assert_equal ex_mv5 (expand_move fl_mv5 []));
-  "exp_6" >:: (fun _ -> assert_equal ex_mv6 (expand_move fl_mv6 []));
-  "exp_7" >:: (fun _ -> assert_equal true er_mv7);
-
-  (* Test the valid_moves function. *)
-  "exp_1" >:: (fun _ -> assert_equal ex_mv1 (expand_move fl_mv1 []));
-  "exp_2" >:: (fun _ -> assert_equal ex_mv2 (expand_move fl_mv2 []));
-  "exp_3" >:: (fun _ -> assert_equal ex_mv3 (expand_move fl_mv3 []));
-  "exp_4" >:: (fun _ -> assert_equal ex_mv4 (expand_move fl_mv4 []));
-  "exp_5" >:: (fun _ -> assert_equal ex_mv5 (expand_move fl_mv5 []));
-  "exp_6" >:: (fun _ -> assert_equal ex_mv6 (expand_move fl_mv6 []));
-  "exp_7" >:: (fun _ -> assert_equal true er_mv7);
 ]
 
 let gb_tests = gb_tests @ tests_g

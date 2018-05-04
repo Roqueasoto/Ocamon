@@ -102,23 +102,20 @@ let rec expand_move move acc =
   | h::t -> let new_h = move_acy_set 100 h in
     begin match acc with
       | (eff1,acy1)::(eff2,acy2)::[] -> let acy = accuracy h in
-        if acy <> 100. then
-          let new_acy_miss1 = (100. -. acy) *. acy1 /. 100. in
-          let new_acy_hit1 = (acy *. acy1 /. 100.) in
-          let new_acy_miss2 = (100. -. acy) *. acy2 /. 100. in
-          let new_acy_hit2 = (acy *. acy2 /. 100.) in
-          let new_hits = (new_h::eff1,new_acy_hit1)
-                        ::(new_h::eff2,new_acy_hit2)::[] in
-          let new_miss = (eff1,new_acy_miss1)::(eff2,new_acy_miss2)::[] in
-          expand_move t (new_hits@new_miss)
-        else let new_hits = (new_h::eff1,acy1)::(new_h::eff2,acy2)::[] in
-          expand_move t new_hits
-      | (eff1,acy1)::[] -> let acy = accuracy h in if acy <> 100. then
-          let new_acy_miss = (100. -. acy) *. acy1 /. 100. in
-          let new_acy_hit = (acy *. acy1 /. 100.) in
-          expand_move t (((new_h::eff1),new_acy_hit)::(eff1,new_acy_miss)::[])
-        else expand_move t (((new_h::eff1),acy1)::[])
-      | _ -> failwith "Move too large: expand_move"
+        let new_acy_miss1 = (100. -. acy) *. acy1 /. 100. in
+        let new_acy_hit1 = (acy *. acy1 /. 100.) in
+        let new_acy_miss2 = (100. -. acy) *. acy2 /. 100. in
+        let new_acy_hit2 = (acy *. acy2 /. 100.) in
+        let new_hits = (new_h::(eff2@eff1),new_acy_hit2)
+                       ::(new_h::eff1,new_acy_hit1)::[] in
+        let new_miss = ((eff2@eff1),new_acy_miss2)
+                       ::(eff1,new_acy_miss1)::[] in
+        expand_move t (new_hits@new_miss)
+      | (eff1,acy1)::[] -> let acy = accuracy h in
+        let new_acy_miss = (100. -. acy) *. acy1 /. 100. in
+        let new_acy_hit = (acy *. acy1 /. 100.) in
+        expand_move t (((new_h::eff1),new_acy_hit)::(eff1,new_acy_miss)::[])
+      | _ -> failwith "Can't happen: expand_move"
     end
 
 (* [gamma_A state] *)
