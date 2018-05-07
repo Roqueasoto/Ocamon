@@ -47,14 +47,12 @@ ocamlfind ocamlc -c -package oUnit -package yojson -package ANSITerminal -packag
 ocamlfind ocamldep -package oUnit -package yojson -package ANSITerminal -package Camlimages -package Camlimages.png -package Camlimages.jpeg -modules types.ml > types.ml.depends # cached
 # Target: types.cmo, tags: { package(ANSITerminal), package(Camlimages), package(Camlimages.jpeg), package(Camlimages.png), package(oUnit), package(yojson), byte, compile, extension:cmo, extension:ml, file:types.cmo, file:types.ml, implem, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -package oUnit -package yojson -package ANSITerminal -package Camlimages -package Camlimages.png -package Camlimages.jpeg -o types.cmo types.ml # cached
-# Target: GUI.mli.depends, tags: { package(ANSITerminal), package(Camlimages), package(Camlimages.jpeg), package(Camlimages.png), package(oUnit), package(yojson), extension:mli, file:GUI.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package oUnit -package yojson -package ANSITerminal -package Camlimages -package Camlimages.png -package Camlimages.jpeg -modules GUI.mli > GUI.mli.depends # cached
-# Target: GUI.cmi, tags: { package(ANSITerminal), package(Camlimages), package(Camlimages.jpeg), package(Camlimages.png), package(oUnit), package(yojson), byte, compile, extension:mli, file:GUI.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -package oUnit -package yojson -package ANSITerminal -package Camlimages -package Camlimages.png -package Camlimages.jpeg -o GUI.cmi GUI.mli # cached
-# Target: GUI.ml.depends, tags: { package(ANSITerminal), package(Camlimages), package(Camlimages.jpeg), package(Camlimages.png), package(oUnit), package(yojson), extension:ml, file:GUI.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package oUnit -package yojson -package ANSITerminal -package Camlimages -package Camlimages.png -package Camlimages.jpeg -modules GUI.ml > GUI.ml.depends
-+ ocamlfind ocamldep -package oUnit -package yojson -package ANSITerminal -package Camlimages -package Camlimages.png -package Camlimages.jpeg -modules GUI.ml > GUI.ml.depends
-File "GUI.ml", line 186, characters 8-12:
-Error: Syntax error
-Command exited with code 2.
-# Compilation unsuccessful.
+# Target: gui.mli.depends, tags: { package(ANSITerminal), package(Camlimages), package(Camlimages.jpeg), package(Camlimages.png), package(oUnit), package(yojson), extension:mli, file:gui.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package oUnit -package yojson -package ANSITerminal -package Camlimages -package Camlimages.png -package Camlimages.jpeg -modules gui.mli > gui.mli.depends
+# Target: gui.cmi, tags: { package(ANSITerminal), package(Camlimages), package(Camlimages.jpeg), package(Camlimages.png), package(oUnit), package(yojson), byte, compile, extension:mli, file:gui.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package oUnit -package yojson -package ANSITerminal -package Camlimages -package Camlimages.png -package Camlimages.jpeg -o gui.cmi gui.mli
+# Target: gui.ml.depends, tags: { package(ANSITerminal), package(Camlimages), package(Camlimages.jpeg), package(Camlimages.png), package(oUnit), package(yojson), extension:ml, file:gui.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package oUnit -package yojson -package ANSITerminal -package Camlimages -package Camlimages.png -package Camlimages.jpeg -modules gui.ml > gui.ml.depends
+# Target: gui.cmo, tags: { package(ANSITerminal), package(Camlimages), package(Camlimages.jpeg), package(Camlimages.png), package(oUnit), package(yojson), byte, compile, extension:cmo, extension:ml, file:gui.cmo, file:gui.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package oUnit -package yojson -package ANSITerminal -package Camlimages -package Camlimages.png -package Camlimages.jpeg -o gui.cmo gui.ml
+# Compilation successful.
