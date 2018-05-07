@@ -180,7 +180,7 @@ let rec press_map () =
       then close_graph () 
       else if s.Graphics.key = 'c' 
       then 
-        close_graph (); 
+        close_graph (); (*HOW TO GET THE GUI_INF FOR draw_battle gui_inf *)
         keep_running := false
   done
 
