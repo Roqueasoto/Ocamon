@@ -2,13 +2,6 @@ S .
 B _build
 PKG oUnit
 PKG yojson
-<<<<<<< HEAD
 PKG Camlimages
 PKG Camlimages.png
 PKG Camlimages.jpeg
-
-
-
-=======
-PKG oUnit
->>>>>>> 0b8444906c496e065bc79ee954db03c290402628
