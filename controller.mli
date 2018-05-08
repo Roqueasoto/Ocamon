@@ -33,6 +33,7 @@ type effect =
   | Status of effect_on  * int * status
   | Buff of effect_on    * int * bufftype
   | Special of effect_on * int * string
+  | ClearStatus of effect_on * status
   | Nothing
 
 (* [command] represents a command input by a player. Parsed into one of the 7
