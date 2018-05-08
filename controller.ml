@@ -16,6 +16,7 @@ type effect =
   | Status of effect_on  * int * status
   | Buff of effect_on    * int * bufftype
   | Special of effect_on * int * string
+  | ClearStatus of effect_on * status
   | Nothing
 
 type command =

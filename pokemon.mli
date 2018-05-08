@@ -55,9 +55,8 @@ val check_sub : t -> bool
 (*[clear_stat p s] returns a pokemon without the status s*)
 val clear_stat: t -> status -> t
 
-(* [build_poke s] builds a pokemon of the name s from the json file j,
- * which contains info about all of the possible pokemons.
- * requires: s must be a valid name of a pokemon.*)
+(* [build_poke s] returns a pokemon of the id s .
+ * requires: s must be a valid id of a Gen I pokemon.*)
 val build_poke : string -> t
 
 (* [random_poke] builds a random pokemon from the json file j,
