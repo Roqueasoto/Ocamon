@@ -294,7 +294,11 @@ let clear_buff poke =
   catch_rate = poke.catch_rate;
   actions = poke.actions;
   sprite_back = poke.sprite_back;
-  sprite_front = poke.sprite_front}
+   sprite_front = poke.sprite_front}
+
+let item_use_combat item =
+  if item.itemeffect = [] then None
+  else Some (CombatAction item.itemeffect)
 
 let type_compare ptype1 ptype2 =
   match ptype1,ptype2 with
@@ -344,7 +348,3 @@ let type_compare ptype1 ptype2 =
   | Ghost,_ -> 1.
   | Dragon,Dragon -> 2.
   | Dragon,_ -> 1.
-
-let item_use_combat item =
-  if item.itemeffect = [] then None
-  else Some (CombatAction item.itemeffect)
