@@ -3,9 +3,9 @@ open Camlimages
 open Images
 open Png       
 open Jpeg 
-open Pokemon
+open Pokemon 
 open Types
-open Controller 
+open Controller     
 
 (*
 #require "graphics";;
@@ -29,12 +29,19 @@ type status = {
   key : char;	(* the character for the key pressed *)
 }
 
+type global_var = {
+  info : Types.gui_info; 
+}
+
 type event = 
   |Button_down 
   |Button_up
   |Key_pressed
   |Mouse_motion
   |Poll
+
+let get_gui_info (gui_inf: gui_info) : gui_info = 
+  gui_inf 
 
 (* let rec updateStatus (l: event list) (st: status) = 
   match l with 
@@ -170,6 +177,10 @@ let draw_battle gui_inf =
 
   check num comb_inf user_health opp_health 
 
+(*HOW TO GET THE GUI_INF FOR "draw_battle gui_inf" *)
+(*HOW TO GET THE GUI_INF FOR "draw_battle gui_inf" *)
+(*HOW TO GET THE GUI_INF FOR "draw_battle gui_inf" *)
+
 let rec press_map () = 
   let keep_running = ref true in 
   while !keep_running do 
@@ -180,9 +191,13 @@ let rec press_map () =
       then close_graph () 
       else if s.Graphics.key = 'c' 
       then 
-        close_graph (); (*HOW TO GET THE GUI_INF FOR draw_battle gui_inf *)
+        close_graph ();
         keep_running := false
   done
+
+(*HOW TO GET THE GUI_INF FOR "draw_battle gui_inf" *)
+(*HOW TO GET THE GUI_INF FOR "draw_battle gui_inf" *)
+(*HOW TO GET THE GUI_INF FOR "draw_battle gui_inf" *)
 
 let draw_map () = 
   Graphics.set_window_title "OCAMON!";
@@ -210,7 +225,7 @@ let rec press_start () =
     if s.Graphics.keypressed 
     then  
       if s.Graphics.key = 'q' 
-      then close_graph () 
+      then close_graph ()  
       else if s.Graphics.key = 's' 
       then 
         draw_map (); 
@@ -288,6 +303,7 @@ let win_game () =
 
   press_win ()
 
+
 (* [get_cmd gui_inf gmode] is the command that represents the user input based
 * on the current mode [gmode] and relevant information about the state
 * [gui_inf] as defined in the Types module.
@@ -295,20 +311,21 @@ let win_game () =
 * - [gui_inf] are the state details for gui to use as defined in Types.
 * - [gmode] is the current mode of the game corresponding to the state. *)
 let get_cmd gui_inf gmode =
-match gmode with
-| MStart -> start_game (); 
-  let pick = 0
-  in Interact (CStart pick)
-| MMap -> draw_map (); 
-  Interact CMap
-| MCombat s -> draw_battle gui_inf 
-| MWinGame ->  (*continue is a boolean for play again or quit*)
-  Interact (CWinGame !continue);
-| MWin ->  
-  Interact (CWinGame !continue);
-| MLose -> 
-  Interact (CLose true);
-| MQuit -> Interact (CLose true);
+  match gmode with
+  | MStart -> start_game (); 
+    let pick = 0
+    in Interact (CStart pick)
+  | MMap -> draw_map (); 
+    Interact CMap
+  | MCombat s -> 
+    draw_battle gui_inf
+  | MWinGame ->  (*continue is a boolean for play again or quit*)
+    Interact (CWinGame !continue);
+  | MWin ->  
+    Interact (CWinGame !continue);
+  | MLose -> 
+    Interact (CLose true);
+  | MQuit -> Interact (CLose true);
 
 
 (* 
