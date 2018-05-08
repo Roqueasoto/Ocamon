@@ -16,7 +16,6 @@ type effect =
   | Status of effect_on  * int * status
   | Buff of effect_on    * int * bufftype
   | Special of effect_on * int * string
-  | ClearStatus of effect_on * status
   | Nothing
 
 type command =
@@ -24,3 +23,5 @@ type command =
   | Interact of choices
   | CombatAction of effect list
   | Round of effect list * effect list
+
+let parse i = failwith"Unimplemented"

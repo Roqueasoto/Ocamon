@@ -1,0 +1,17 @@
+#directory "_build"
+#require "oUnit"
+#require "yojson"
+#require "ANSITerminal"
+#require "camlimages"
+#require "camlimages.png"
+#require "camlimages.jpeg"
+#require "graphics"
+
+#load "pokemon.cmo"
+#load "model.cmo"
+#load "ai.cmo"
+#load "guitext.cmo"
+#load "gui.cmo"
+#load "main.cmo"
+
+open Main
