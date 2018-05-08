@@ -1,6 +1,6 @@
 open OUnit2
 open Ai
-open Types
+open Shared_types
 open Controller
 open Pokemon
 open Model

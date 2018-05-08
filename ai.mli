@@ -1,4 +1,4 @@
-open Types
+open Shared_types
 open Controller
 
 (* [take_turn combat] is the command that represents the ai input based on the
