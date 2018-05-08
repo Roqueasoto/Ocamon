@@ -1,6 +1,6 @@
 open Pokemon
 open Model
-open Types
+open Shared_types
 open Controller
 
 (* [team_points pokes1 pokes2] evaluates the current combat situation to

@@ -4,7 +4,7 @@ open Images
 open Png
 open Jpeg
 open Pokemon
-open Types
+open Shared_types
 open Controller
 
 (*

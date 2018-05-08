@@ -1,8 +1,8 @@
-open Types
+open Shared_types
 open Model
 open Ai
 open Controller
-open Guitext
+open Gui
 
 (* [step st gmode] returns new game state when the GUI returns, indicating the
  * a command was given. If the mode is Quit, then no stepping takes place.
@@ -44,4 +44,4 @@ let main () =
   play_game init_st
 
 (*  Runs Main Function. *)
-let () = main ()
+(* let () = main () *)
