@@ -13,6 +13,83 @@ type t = {poketype : ptype list; name : string; status : status list;
                 actions : action list; sprite_back : string;
                 sprite_front : string}
 
+module Pokedex = struct
+  let charizard =
+    let act =
+      [{actname = "Fire Fang"; descript = "Deals damage of 65 with 95 accuracy,
+  has a 10% chance of burning the target and
+  has a 10% chance of causing the target to flinch";
+        effect = [Damage(Other, 95, 65, (1, 1)); Status(Other,10, Burn); Status(Other,10, Flinch)]};
+      {actname = "Flame Burst";
+        descript = "Deals damage of 70 with 100 accuracy";
+        effect = [Damage(Other, 100, 70, (1, 1))]};
+      {actname = "Slash";
+        descript = "Slash deals damage of 70 with 100 accuracy";
+        effect = [Damage(Other, 100, 70, (1, 1))]};
+      {actname = "Flamethrower";
+        descript = "Deals damage of 90 with 100 accuracy,
+  has a 10% chance of burning the target";
+        effect = [Damage(Other, 100, 90, (1, 1)); Status(Other,10, Burn)]}]
+    in
+    {poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
+     hp = 161; atk = (112, 0); def = (106, 0);
+     spd = (100, 0); maxhp = 161; catch_rate = 45; actions = act;
+     sprite_back = "./PokeSpriteBack/6.png";
+     sprite_front = "./PokeSpriteFront/Spr_1y_006.png"}
+
+  let pikachu =
+    let act =
+      [{actname = "Slam";
+        descript = "Slam deals damage of 80 with 75 accuracy";
+        effect = [Damage(Other, 75, 80, (1, 1))]};
+       {actname = "Tunderbolt";
+        descript = "Thunderbolt deals damage of 70 with 100 accuracy and has a 10% chance of paralyzing the target";
+        effect = [Damage(Other, 100, 70, (1, 1));Status(Other,10, Paralyze)]};
+       {actname = "Agility";
+        descript = "Agility raises the user's Speed by two stages";
+        effect = [Buff(Self, 100, SPDBuff 2)]};
+       {actname = "Wild Charge";
+        descript = "Wild Charge deals damage, but the user receives 1⁄4 of the damage it inflicted in recoil";
+        effect = [Damage(Self, 100, 90, (1, 1)); Damage (Self, 100, 22, (1, 1))]}]
+    in
+    {poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
+     hp = 118; atk = (83, 0); def = (58, 0);
+     spd = (90, 0); maxhp = 118; catch_rate = 190; actions = act;
+     sprite_back = "./PokeSpriteBack/25.png";
+     sprite_front = "./PokeSpriteFront/Spr_1y_025.png"}
+
+  let pokedex = [("6", charizard);("25", pikachu)]
+end
+
+module Inventory = struct
+  let antidote = {name = "Antidote"; descript = "Heals pokemon from poisoning";
+                  itemeffect = [ClearStatus(Self, Poison)]; quantity = 1}
+
+  let awakening = {name = "Awakening"; descript = "Wakes pokemon from sleep";
+                   itemeffect = [ClearStatus(Self, Sleep)]; quantity = 1}
+
+  let burnheal = {name = "Burn Heal"; descript = "Heals a burned pokemon";
+                  itemeffect = [ClearStatus(Self, Burn)]; quantity = 1}
+
+  let freshwater = {name = "Fresh Water"; descript = "Water with high mineral content, +50 HP";
+                    itemeffect = [Heal(Self, 100, 60)]; quantity = 1}
+
+  let hyperpotion = {name = "Hyper Potion"; descript = "HP +200 pts";
+                     itemeffect = [Heal(Self, 100, 200)]; quantity = 1}
+  let iceheal = {name = "Ice Heal"; descript = "Heal a frozen pokemon";
+                 itemeffect = [ClearStatus(Self, Frozen)]; quantity = 1}
+  let lemonade = {name = "Lemonade"; descript = "HP +80 pts";
+                  itemeffect = [Heal(Self, 100, 80)]; quantity = 1}
+  let paralyzeheal = {name = "Paralyze Heal"; descript = "Heal a paralyzed pokemon";
+                      itemeffect = [ClearStatus(Self, Paralyze)]; quantity = 1}
+
+
+  let invlist = [antidote, awakening, burnheal, freshwater, hyperpotion, iceheal, lemonade, paralyzeheal]
+
+end
+
+
+
 let ptype poke = poke.poketype
 
 let name poke = poke.name
@@ -36,7 +113,12 @@ let sprite_back poke = poke.sprite_back
 let status poke = poke.status
 
 let check_sub poke =
-  if poke.status = [Substitute] then true else false
+  let rec checkstat lst =
+  match lst with
+  | [] -> false
+  | h::t -> if h = Substitute then true else checkstat t
+  in
+  checkstat poke.status
 
 let rec parse_actions lst ind acc =
   match lst with
@@ -70,59 +152,16 @@ let clear_stat poke stat =
    sprite_front = poke.sprite_front}
 
 let build_poke s =
-let act =
-  [{actname = "Slam";
-    descript = "Slam deals damage of 80 with 75 accuracy";
-    effect = [Damage(Other, 75, 80, (1, 1))]};
-   {actname = "Tunderbolt";
-    descript = "Thunderbolt deals damage of 70 with 100 accuracy and has a 10% chance of paralyzing the target";
-    effect = [Damage(Other, 100, 70, (1, 1));Status(Other,10, Paralyze)]};
-   {actname = "Agility";
-    descript = "Agility raises the user's Speed by two stages";
-    effect = [Buff(Self, 100, SPDBuff 2)]};
-   {actname = "Wild Charge";
-    descript = "Wild Charge deals damage, but the user receives 1⁄4 of the damage it inflicted in recoil";
-    effect = [Damage(Self, 100, 90, (1, 1)); Damage (Self, 100, 22, (1, 1))]}]
-in
-{poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
-   hp = 118; atk = (83, 0); def = (58, 0);
-   spd = (90, 0); maxhp = 118; catch_rate = 190; actions = act;
-   sprite_back = "./PokeSpriteBack/25.png";
-   sprite_front = "./PokeSpriteFront/Spr_1y_025.png"}
+  match List.assoc_opt s Pokedex.pokedex with
+  | Some p -> p
+  | None -> failwith "A pokemon with this index does not exist"
 
 let random_poke () =
-  let act =
-    [{actname = "Fire Fang";
-      descript = "Deals damage of 65 with 95 accuracy,
-has a 10% chance of burning the target and
-has a 10% chance of causing the target to flinch";
-      effect = [Damage(Other, 95, 65, (1, 1)); Status(Other,10, Burn); Status(Other,10, Flinch)]};
-     {actname = "Flame Burst";
-      descript = "Deals damage of 70 with 100 accuracy";
-      effect = [Damage(Other, 100, 70, (1, 1))]};
-     {actname = "Slash";
-      descript = "Slash deals damage of 70 with 100 accuracy";
-      effect = [Damage(Other, 100, 70, (1, 1))]};
-     {actname = "Flamethrower";
-      descript = "Deals damage of 90 with 100 accuracy,
-has a 10% chance of burning the target";
-      effect = [Damage(Other, 100, 90, (1, 1)); Status(Other,10, Burn)]}]
-in
-
-{poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
-   hp = 161; atk = (112, 0); def = (106, 0);
-   spd = (100, 0); maxhp = 161; catch_rate = 45; actions = act;
-   sprite_back = "./PokeSpriteBack/6.png";
-   sprite_front = "./PokeSpriteFront/Spr_1y_006.png"}
-
+  let rand = (Random.int 150) + 1 in
+  let index = string_of_int rand in
+  build_poke index
 
 let build_inventory poke =
-  (* [{name = "Antidote";descript = "heals pokemon from poisoning";
-    effect = [SwapStatus(Self, Poison, StatusNone)]; quantity = 1};
-   {name = }
-
-     ]
-  *)
   []
 
 
@@ -240,6 +279,7 @@ let poke_effect poke1 poke2 effect =
     end
   | Special (_,_,_) -> failwith "unimplemented"
   | Status (_,_,s) -> poke_change_status poke1 s
+  | ClearStatus(_,s) -> clear_stat poke1 s
   | Nothing -> poke1
 
 let clear_buff poke =
@@ -254,7 +294,11 @@ let clear_buff poke =
   catch_rate = poke.catch_rate;
   actions = poke.actions;
   sprite_back = poke.sprite_back;
-  sprite_front = poke.sprite_front}
+   sprite_front = poke.sprite_front}
+
+let item_use_combat item =
+  if item.itemeffect = [] then None
+  else Some (CombatAction item.itemeffect)
 
 let type_compare ptype1 ptype2 =
   match ptype1,ptype2 with
@@ -304,7 +348,3 @@ let type_compare ptype1 ptype2 =
   | Ghost,_ -> 1.
   | Dragon,Dragon -> 2.
   | Dragon,_ -> 1.
-
-let item_use_combat item =
-  if item.itemeffect = [] then None
-  else Some (CombatAction item.itemeffect)
