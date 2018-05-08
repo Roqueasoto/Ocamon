@@ -4,7 +4,7 @@ open Images
 open Png       
 open Jpeg 
 open Pokemon
-open Types
+open Shared_types
 open Controller   
 
 type image 
@@ -28,11 +28,11 @@ val array_of_image : Images.t -> Graphics.color array array
 
 val press_battle : int ref -> unit -> unit 
 
-val make_action : int ref -> Types.gui_combat_info -> Controller.command
+val make_action : int ref -> gui_combat_info -> Controller.command
 
-val check : int ref -> Types.gui_combat_info -> int -> int -> Controller.command
+val check : int ref -> gui_combat_info -> int -> int -> Controller.command
 
-val draw_battle : Types.gui_info -> Controller.command
+val draw_battle : gui_info -> Controller.command
 
 val press_map : unit -> unit 
 
@@ -48,7 +48,7 @@ val press_win : unit -> unit
 
 val win_game : unit -> unit 
 
-val get_cmd : Types.gui_info -> Types.mode -> Controller.command
+val get_cmd : gui_info -> mode -> Controller.command
 
 
 

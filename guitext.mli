@@ -1,5 +1,5 @@
 open Controller
-open Types
+open Shared_types
 
 (* [get_cmd gui_inf gmode] is the command that represents the user input based
  * on the current mode [gmode] and relevant information about the state

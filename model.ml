@@ -1,4 +1,4 @@
-open Types
+open Shared_types
 
 (* AF: [person] represents a person and id pair.
 RI: person_id must equal person_info.id *)
@@ -51,6 +51,12 @@ module Blanks = struct
     milestones = [];
     game_stats = [];
   }
+
+  let blank_history_info =
+    {
+      milestones = [];
+      game_stats = [];
+    }
 end
 
 (* Helper functions to create initla population. *)
@@ -129,7 +135,7 @@ module MakeGuiInfo = struct
     {
       mode = t.mode;
       combat_info = make_combat_info_opt t;
-      history_info = failwith "";
+      history_info = Blanks.blank_history_info;
     }
 end
 
