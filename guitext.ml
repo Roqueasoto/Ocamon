@@ -1,5 +1,5 @@
 open Controller
-open Types
+open Shared_types
 open Pokemon
 
 (* [start_text] Produces the text informaton and interface for the user to

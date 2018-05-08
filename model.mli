@@ -1,4 +1,4 @@
-open Types
+open Shared_types
 
 (* [t] is the (abstract) state of the game. *)
 type t

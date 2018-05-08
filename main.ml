@@ -1,4 +1,4 @@
-open Types
+open Shared_types
 open Model
 open Ai
 open Controller
@@ -44,4 +44,4 @@ let main () =
   play_game init_st
 
 (*  Runs Main Function. *)
-let () = main ()
+(* let () = main () *)
