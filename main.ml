@@ -44,4 +44,4 @@ let main () =
   play_game init_st
 
 (*  Runs Main Function. *)
-(* let () = main () *)
+let () = main ()
