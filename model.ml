@@ -353,7 +353,7 @@ module DoRoundHelp = struct
     | Damage (effect_on, accuracy, _, _) -> do_stuff effect_on accuracy
     | Status (effect_on, accuracy, _) -> do_stuff effect_on accuracy
     | Buff (effect_on, accuracy, _) ->  do_stuff effect_on accuracy
-    | Special (effect_on, accuracy, _) ->  do_stuff effect_on accuracy
+    | Special (effect_on, accuracy, _, _) ->  do_stuff effect_on accuracy
     | Nothing -> (st, true)
 
 (* Requires that elist be expanded.
