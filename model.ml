@@ -455,7 +455,7 @@ module DoInteractHelp = struct
 (* Normally, i represents which pokemon the user wants to start with.
    For protoype, we default to pikachu. TODO failwith "alpha set" *)
   let do_csart i st =
-    let user_poke_new = Pokemon.build_poke ":)" in (*TODO failwith "implement pokemon picking" alpha set *)
+    let user_poke_new = Pokemon.build_poke "0" in (*TODO failwith "implement pokemon picking" alpha set *)
     let user_info = List.assoc "user" st.population in
     let user_info' = {user_info with poke_inv = [0, user_poke_new]} in
     let population' = update_assoc "user" user_info' st.population in
