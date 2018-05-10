@@ -21,7 +21,7 @@ type t = {
   population : person list;
   mode : mode;
   milestones : string list;
-  game_stats : (string * string list) list;
+  game_stats : game_stats;
 }
 
 (* Module for common helper methods *)
@@ -45,17 +45,22 @@ module Blanks = struct
       message = "";
     }
 
+  let blank_game_stats =
+    {
+      next_battle = 0;
+    }
+
   let blank_state = {
     population = [];
     mode = MStart;
     milestones = [];
-    game_stats = [];
+    game_stats = blank_game_stats;
   }
 
   let blank_history_info =
     {
       milestones = [];
-      game_stats = [];
+      game_stats = blank_game_stats;
     }
 end
 
@@ -131,11 +136,17 @@ module MakeGuiInfo = struct
     | MCombat enemy_id -> Some (make_combat_info enemy_id t)
     | _ -> None
 
+  let make_history_info t =
+    {
+      milestones = t.milestones;
+      game_stats = t.game_stats;
+    }
+
   let make_gui_info t =
     {
       mode = t.mode;
       combat_info = make_combat_info_opt t;
-      history_info = Blanks.blank_history_info;
+      history_info = make_history_info t;
     }
 end
 
@@ -353,7 +364,7 @@ module DoRoundHelp = struct
     | Damage (effect_on, accuracy, _, _) -> do_stuff effect_on accuracy
     | Status (effect_on, accuracy, _) -> do_stuff effect_on accuracy
     | Buff (effect_on, accuracy, _) ->  do_stuff effect_on accuracy
-    | Special (effect_on, accuracy, _) ->  do_stuff effect_on accuracy
+    | Special (effect_on, accuracy, _, _) ->  do_stuff effect_on accuracy
     | Nothing -> (st, true)
 
 (* Requires that elist be expanded.
@@ -455,21 +466,31 @@ module DoInteractHelp = struct
 (* Normally, i represents which pokemon the user wants to start with.
    For protoype, we default to pikachu. TODO failwith "alpha set" *)
   let do_csart i st =
-    let user_poke_new = Pokemon.build_poke ":)" in (*TODO failwith "implement pokemon picking" alpha set *)
+    let user_poke_new = Pokemon.build_poke "0" in (*TODO failwith "implement pokemon picking" alpha set *)
     let user_info = List.assoc "user" st.population in
     let user_info' = {user_info with poke_inv = [0, user_poke_new]} in
     let population' = update_assoc "user" user_info' st.population in
     {st with population = population'}
 
-(* Normally, go to next available level. In prototype, we go to level 6. *)
+(* Normally, go to next available level. *)
   let do_cmap st =
-    {st with mode = MCombat "enemy_05"}
+    let enemy_id = Initiate_Population.enemy_id (st.game_stats.next_battle) in
+    {st with mode = MCombat enemy_id}
 
-(* Go back to map. TODO inform state that next level is one higher. *)
+  (* Go back to map. TODO-done inform state that next level is one higher. *)
   let do_cwin st =
-    {st with mode = MMap}
+    let next_battle' = st.game_stats.next_battle + 1 in
+    if next_battle' = 6 then
+      {st with mode = MWinGame}
+    else
+      let game_stats' = {next_battle = next_battle'} in
+      {
+        st with
+        mode = MMap;
+        game_stats = game_stats';
+      }
 
-  (* Go back to map. TODO inform state that next level is same.  *)
+  (* Go back to map. TODO-done inform state that next level is same.  *)
   let do_close st =
     {st with mode = MMap}
 

@@ -36,10 +36,15 @@ type gui_combat_info = {
   enemy_person_info : person_info;
 }
 
+type game_stats =
+  {
+    next_battle : int;
+  }
+
 (* [gui_history_info] represents additional information about the user play history. *)
 type gui_history_info = {
   milestones : string list;
-  game_stats : (string * string list) list
+  game_stats : game_stats
 }
 
 (* [mode_of_info] is which mode we are in. *)

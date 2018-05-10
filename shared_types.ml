@@ -27,9 +27,14 @@ type gui_combat_info = {
   enemy_person_info : person_info;
 }
 
+type game_stats =
+  {
+    next_battle : int;
+  }
+
 type gui_history_info = {
   milestones : string list;
-  game_stats : (string * string list) list
+  game_stats : game_stats
 }
 
 type mode =
