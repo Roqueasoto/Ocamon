@@ -4,7 +4,7 @@ type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison | Toxic
             | Confused | Flinch | Substitute | Uncontrollable | Focused
             | LeechSeed | Missed
 
-type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int
+type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int | SpatkBuff of int
 
 type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
              | CWinGame of bool | CQuit
@@ -60,6 +60,8 @@ type special =
   | Thrash (* MODEL *)
   | Transform
   | Wrap (* MODEL *)
+  | HealStatus of status(*item*)
+  | Revive (*item*)
 
 type effect =
   | Switch of int
