@@ -59,7 +59,7 @@ type special =
   | SonicBoom
   | SolarBeam (* MODEL *)
   | Submission
-  | Substitute
+  | SpeSubstitute
   | SuperFang
   | Swift (* MODEL *)
   | TakeDown
