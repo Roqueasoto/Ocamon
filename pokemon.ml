@@ -27,8 +27,23 @@ module PokeMoves = struct
                     descript = "Deals damage of 120";
                     effect = [Damage(Other, 100, 120, (1,1))]}
 
+  let poison_powder = {actname = "Poison Powder";
+                       descript = "Poisons the pokemon";
+                       effect = [Status(Other, 75, Poison)]}
+
+  let vine_whip = {actname = "Vine Whip";
+                   descript = "deals damage";
+                   effect = [Damage(Other, 100, 45, (1,1))]}
 end
 
+(*Template:
+  {poketype = []; name = ""; status = [StatusNone];
+  hp = ; atk = (, 0); def = (, 0); spd = (, 0); spatk = (, 0);
+  maxhp = ; catch_rate = ;
+  actions = [];
+  sprite_back = "./PokeSpriteBack/1.png";
+  sprite_front = "./PokeSpriteFront/1.png"}
+*)
 
 module Pokedex = struct
   open PokeMoves
@@ -40,6 +55,22 @@ module Pokedex = struct
      actions = [razor_leaf; growth; sleep_powder; solar_beam];
      sprite_back = "./PokeSpriteBack/1.png";
      sprite_front = "./PokeSpriteFront/1.png"}
+
+  let ivysaur =
+    {poketype = [Grass;Poison]; name = "Ivysaur"; status = [StatusNone];
+     hp = 143; atk = (90, 0); def = (91, 0); spd = (88, 0); spatk = (108, 0);
+     maxhp = 143; catch_rate = 45;
+     actions = [sleep_powder; growth; razor_leaf; poison_powder];
+     sprite_back = "./PokeSpriteBack/2.png";
+     sprite_front = "./PokeSpriteFront/2.png"}
+
+  let venusaur=
+    {poketype = [Grass;Poison]; name="Venusaur"; status=[StatusNone];
+     hp = 163; atk = (110, 0); def = (111, 0); spd = (108, 0); spatk = (128, 0);
+     maxhp = 163; catch_rate = 45;
+     actions = [growth; razor_leaf; poison_powder; vine_whip];
+     sprite_back = "./PokeSpriteBack/3.png";
+     sprite_front = "./PokeSpriteBack/3.png"}
 
     let charizard =
     {poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
@@ -53,7 +84,7 @@ module Pokedex = struct
 let pikachu =
     {poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
      hp = 118; atk = (83, 0); def = (58, 0);
-     spd = (90, 0); spatk = (78, 0); maxhp = 118; catch_rate = 190; actions = act;
+     spd = (90, 0); spatk = (78, 0); maxhp = 118; catch_rate = 190; actions = [];
      sprite_back = "./PokeSpriteBack/25.png";
      sprite_front = "./PokeSpriteFront/Spr_1y_025.png"}
 
