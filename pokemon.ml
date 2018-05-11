@@ -3,7 +3,7 @@ open Controller
 type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
            | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
 
-type item = {name: string; descript : string; itemeffect : effect list; quantity: int}
+type item = {itemname: string; descript : string; itemeffect : effect list; quantity: int}
 
 type action = {actname : string; descript : string; effect : effect list}
 
@@ -62,74 +62,74 @@ module Pokedex = struct
 end
 
 module Inventory = struct
-  let antidote = {name = "Antidote"; descript = "Heals pokemon from poisoning";
+  let antidote = {itemname = "Antidote"; descript = "Heals pokemon from poisoning";
                   itemeffect = [Special(Self, 100, HealStatus(Poison), Nothing)]; quantity = 1}
 
-  let awakening = {name = "Awakening"; descript = "Wakes pokemon from sleep";
+  let awakening = {itemname = "Awakening"; descript = "Wakes pokemon from sleep";
                    itemeffect = [Special(Self, 100, HealStatus(Sleep), Nothing)]; quantity = 1}
 
-  let burnheal = {name = "Burn Heal"; descript = "Heals a burned pokemon";
+  let burnheal = {itemname = "Burn Heal"; descript = "Heals a burned pokemon";
                   itemeffect = [Special(Self, 100, HealStatus(Burn), Nothing)]; quantity = 1}
 
-  let freshwater = {name = "Fresh Water"; descript = "Water with high mineral content, +50 HP";
+  let freshwater = {itemname = "Fresh Water"; descript = "Water with high mineral content, +50 HP";
                     itemeffect = [Heal(Self, 100, 60)]; quantity = 1}
 
-  let hyperpotion = {name = "Hyper Potion"; descript = "HP +200 pts";
+  let hyperpotion = {itemname = "Hyper Potion"; descript = "HP +200 pts";
                      itemeffect = [Heal(Self, 100, 200)]; quantity = 1}
-  let iceheal = {name = "Ice Heal"; descript = "Heal a frozen pokemon";
+  let iceheal = {itemname = "Ice Heal"; descript = "Heal a frozen pokemon";
                  itemeffect = [Special(Self, 100, HealStatus(Frozen), Nothing)]; quantity = 1}
-  let lemonade = {name = "Lemonade"; descript = "HP +80 pts";
+  let lemonade = {itemname = "Lemonade"; descript = "HP +80 pts";
                   itemeffect = [Heal(Self, 100, 80)]; quantity = 1}
-  let paralyzeheal = {name = "Paralyze Heal"; descript = "Heal a paralyzed pokemon";
+  let paralyzeheal = {itemname = "Paralyze Heal"; descript = "Heal a paralyzed pokemon";
                       itemeffect = [Special(Self, 100, HealStatus(Paralyze), Nothing)]; quantity = 1}
 
-  let direhit = {name = "Dire Hit"; descript = "Makes a pokemon focused";
+  let direhit = {itemname = "Dire Hit"; descript = "Makes a pokemon focused";
                  itemeffect = [Status(Self, 100, Focused)]; quantity = 1}
 
-  let fullheal = {name = "Full Heal"; descript = "Heals all nonvolatile status";
+  let fullheal = {itemname = "Full Heal"; descript = "Heals all nonvolatile status";
                   itemeffect = [Special(Self, 100, HealStatus(Poison), Nothing);
-                                Special(Self, 100, HealStatus(Paralysis), Nothing);
+                                Special(Self, 100, HealStatus(Paralyze), Nothing);
                                 Special(Self, 100, HealStatus(Sleep), Nothing);
                                 Special(Self, 100, HealStatus(Burn), Nothing);
                                 Special(Self, 100, HealStatus(Frozen), Nothing)]; quantity = 1}
-  let fullrestore = {name = "Full Restore"; descript = "Heals all nonvolatile status and restore full hp";
-                     itemeffect = [Heal(Self, 100, 1000);
+  let fullrestore = {itemname = "Full Restore"; descript = "Heals all nonvolatile status and restore full hp";
+                   itemeffect = [Heal(Self, 100, 1000);
                                  Special(Self, 100, HealStatus(Poison), Nothing);
-                                 Special(Self, 100, HealStatus(Paralysis), Nothing);
+                                 Special(Self, 100, HealStatus(Paralyze), Nothing);
                                  Special(Self, 100, HealStatus(Sleep), Nothing);
                                  Special(Self, 100, HealStatus(Burn), Nothing);
-                                   Special(Self, 100, HealStatus(Frozen), Nothing); quantity = 1]}
-  let guardspec = {name = "Guard Spec"; descript = "Prevent stat reduction for 5 turns";
+                                   Special(Self, 100, HealStatus(Frozen), Nothing)]; quantity = 1}
+  let guardspec = {itemname = "Guard Spec"; descript = "Prevent stat reduction for 5 turns";
                    itemeffect = [Special(Self, 100, GSPA, Nothing)]; quantity = 1}
 
-  let maxpotion = {name = "Max Potion"; descript = "Restores full hp";
+  let maxpotion = {itemname = "Max Potion"; descript = "Restores full hp";
                    itemeffect = [Heal(Self, 100, 1000)]; quantity = 1}
 
-  let pokeflute = {name = "Poke Flute"; descript = "Wake up sleeping pokemon";
+  let pokeflute = {itemname = "Poke Flute"; descript = "Wake up sleeping pokemon";
                    itemeffect = [Special(Self, 100, HealStatus(Sleep), Nothing)]; quantity =1}
 
-  let potion = {name = "Potion"; descript = "Heal +20 hp";
+  let potion = {itemname = "Potion"; descript = "Heal +20 hp";
                 itemeffect = [Heal(Self, 100, 20)]; quantity =1}
 
-  let revive = {name = "Revive"; descript = "Revive a fainted pokemon and restore half of its hp";
+  let revive = {itemname = "Revive"; descript = "Revive a fainted pokemon and restore half of its hp";
                 itemeffect = [Special(Self, 100, Revive, Nothing)]; quantity = 1}
 
-  let sodapop = {name = "Soda Pop"; descript = "Heal +60 hp";
-                 itemeffect = [Heal(Self, 100, 60); quantity =1]}
+  let sodapop = {itemname = "Soda Pop"; descript = "Heal +60 hp";
+                 itemeffect = [Heal(Self, 100, 60)]; quantity =1}
 
-  let superpotion = {name = "Super Potion"; descript = "Heal +50 hp";
+  let superpotion = {itemname = "Super Potion"; descript = "Heal +50 hp";
                      itemeffect = [Heal(Self, 100, 50)]; quantity = 1}
 
-  let xattack = {name = "X Attack"; descript = "Raises attack by 1 level";
+  let xattack = {itemname = "X Attack"; descript = "Raises attack by 1 level";
                  itemeffect=[Buff(Self, 100, ATKBuff 1)]; quantity =1}
 
-  let xdefense = {name = "X Defense"; descript = "Raises defense by 1 level";
+  let xdefense = {itemname = "X Defense"; descript = "Raises defense by 1 level";
                   itemeffect=[Buff(Self, 100, DEFBuff 1)]; quantity = 1}
 
-  let xspecial = {name = "X Special"; descript = "Raises special by 1 level";
+  let xspecial = {itemname = "X Special"; descript = "Raises special by 1 level";
                   itemeffect = [Buff(Self, 100, SpatkBuff 1)]; quantity =1}
 
-  let xspeed = {name = "X Speed"; descript = "Raises speed by 1 level";
+  let xspeed = {itemname = "X Speed"; descript = "Raises speed by 1 level";
                 itemeffect = [Buff(Self, 100, SPDBuff 1)]; quantity =1}
 
   let inv = [(0,antidote);(1,awakening);(2,burnheal);(3,freshwater);
@@ -195,7 +195,7 @@ let action_names poke =
 let rec parse_item_names lst ind acc =
   match lst with
   | [] -> acc
-  | h::t -> parse_item_names t (ind+1) (acc@[ind, h.name])
+  | h::t -> parse_item_names t (ind+1) (acc@[ind, h.itemname])
 
 let inv_names inv =
   parse_item_names inv 1 []
@@ -294,7 +294,7 @@ let poke_spatk_buff poke i =
      sprite_front = poke.sprite_front}
   else
     {poketype = poke.poketype; name = poke.name; status = poke.status; hp = poke.hp;
-     atk = poke.atk; def = (fst(poke.spatk),(min (6) (snd poke.spakt)+i));
+     atk = poke.atk; def = (fst(poke.spatk),(min (6) (snd poke.spatk)+i));
      spd = poke.spd; spatk = poke.spatk;
      maxhp = poke.maxhp; catch_rate = poke.catch_rate;
      actions = poke.actions; sprite_back = poke.sprite_back;
@@ -322,7 +322,7 @@ let poke_damage poke1 poke2 pts =
    status = poke1.status;
    hp = (max (poke1.hp-damage) 0);
    atk = poke1.atk; def = poke1.def;
-   spd = poke1.spd; spatk = poke.spatk;
+   spd = poke1.spd; spatk = poke1.spatk;
    maxhp = poke1.maxhp;
    catch_rate = poke1.catch_rate;
    actions = poke1.actions;
@@ -374,7 +374,7 @@ let poke_effect poke1 poke2 effect =
       | SPDBuff i -> poke_spd_buff poke1 i
       | SpatkBuff i -> poke_spatk_buff poke1 i
     end
-  | Special (_,_,_) -> failwith "unimplemented"
+  | Special (_,_,_,_) -> failwith "unimplemented"
   | Status (_,_,s) -> poke_change_status poke1 s
   | Nothing -> poke1
 
@@ -385,7 +385,8 @@ let clear_buff poke =
   hp = poke.hp;
   atk = (fst(poke.atk), 0);
   def = (fst(poke.def), 0);
-  spd = (fst(poke.spd), 0);
+   spd = (fst(poke.spd), 0);
+   spatk = (fst(poke.spatk),0);
   maxhp = poke.maxhp;
   catch_rate = poke.catch_rate;
   actions = poke.actions;
