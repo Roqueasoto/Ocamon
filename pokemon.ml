@@ -13,45 +13,44 @@ type t = {poketype : ptype list; name : string; status : status list;
                 actions : action list; sprite_back : string;
                 sprite_front : string}
 
+module PokeMoves = struct
+  let razor_leaf = {actname = "Razor Leaf";
+                    descript = "Deals damage and increase critical hit";
+                    effect = [Damage(Other, 95, 55, (1,1))]}
+  let growth = {actname = "Growth";
+                descript = "Raises the user's Attack and Special Attack by one stage each";
+                effect = [Buff(Self, 100, ATKBuff 1); Buff(Self, 100, SpatkBuff 1)]}
+  let sleep_powder = {actname = "Sleep Powder";
+                      descript = "Puts target to sleep";
+                      effect = [Status(Other, 75, Sleep)]}
+  let solar_beam = {actname = "Solar Beam";
+                    descript = "Deals damage of 120";
+                    effect = [Damage(Other, 100, 120, (1,1))]}
+
+end
+
+
 module Pokedex = struct
-  let charizard =
-    let act =
-      [{actname = "Fire Fang"; descript = "Deals damage of 65 with 95 accuracy,
-  has a 10% chance of burning the target and
-  has a 10% chance of causing the target to flinch";
-        effect = [Damage(Other, 95, 65, (1, 1)); Status(Other,10, Burn); Status(Other,10, Flinch)]};
-      {actname = "Flame Burst";
-        descript = "Deals damage of 70 with 100 accuracy";
-        effect = [Damage(Other, 100, 70, (1, 1))]};
-      {actname = "Slash";
-        descript = "Slash deals damage of 70 with 100 accuracy";
-        effect = [Damage(Other, 100, 70, (1, 1))]};
-      {actname = "Flamethrower";
-        descript = "Deals damage of 90 with 100 accuracy,
-  has a 10% chance of burning the target";
-        effect = [Damage(Other, 100, 90, (1, 1)); Status(Other,10, Burn)]}]
-    in
+  open PokeMoves
+
+  let bulbasaur =
+    {poketype = [Grass;Poison]; name = "Bulbasaur"; status = [StatusNone];
+     hp = 128; atk = (77, 0); def = (77, 0); spd = (73, 0); spatk = (93, 0);
+     maxhp = 128; catch_rate = 45;
+     actions = [razor_leaf; growth; sleep_powder; solar_beam];
+     sprite_back = "./PokeSpriteBack/1.png";
+     sprite_front = "./PokeSpriteFront/1.png"}
+
+    let charizard =
     {poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
      hp = 161; atk = (112, 0); def = (106, 0);
-     spd = (100, 0); spatk = (113, 0); maxhp = 161; catch_rate = 45; actions = act;
+     spd = (100, 0); spatk = (113, 0); maxhp = 161; catch_rate = 45;
+     actions = [];
      sprite_back = "./PokeSpriteBack/6.png";
      sprite_front = "./PokeSpriteFront/Spr_1y_006.png"}
 
-  let pikachu =
-    let act =
-      [{actname = "Slam";
-        descript = "Slam deals damage of 80 with 75 accuracy";
-        effect = [Damage(Other, 75, 80, (1, 1))]};
-       {actname = "Tunderbolt";
-        descript = "Thunderbolt deals damage of 70 with 100 accuracy and has a 10% chance of paralyzing the target";
-        effect = [Damage(Other, 100, 70, (1, 1));Status(Other,10, Paralyze)]};
-       {actname = "Agility";
-        descript = "Agility raises the user's Speed by two stages";
-        effect = [Buff(Self, 100, SPDBuff 2)]};
-       {actname = "Wild Charge";
-        descript = "Wild Charge deals damage, but the user receives 1⁄4 of the damage it inflicted in recoil";
-        effect = [Damage(Self, 100, 90, (1, 1)); Damage (Self, 100, 22, (1, 1))]}]
-    in
+
+let pikachu =
     {poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
      hp = 118; atk = (83, 0); def = (58, 0);
      spd = (90, 0); spatk = (78, 0); maxhp = 118; catch_rate = 190; actions = act;
