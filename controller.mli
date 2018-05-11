@@ -7,7 +7,7 @@ type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison | Toxic
 
 (* [BuffType] are types for the Buff effect. The int it carries indicate how much to
    increase/decrease the stages of certain stats*)
-type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int
+type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int | SpatkBuff of int
 
 (* [choices] are types for the Interact command. These indicate what choices are
  * made and at what stage of the game they were made. CStart carries an int that
@@ -16,10 +16,10 @@ type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
              | CWinGame of bool | CQuit
 
 type special =
-  | XAtk (* MODEL *)
-  | XDef (* MODEL *)
-  | XSpd (* MODEL *)
-  | XSpa (* MODEL *) (*Temporarily reaises stat in battle*)
+  | XAtk (*Do not need*)
+  | XDef (*Do not need*)
+  | XSpd (*Do not need*)
+  | XSpa (*Do not need*)
   | GSPA (* MODEL *) (*Temporarily guards stat in battle*)
   | Absorb
   | Bide (* MODEL *)
@@ -66,6 +66,8 @@ type special =
   | Thrash (* MODEL *)
   | Transform
   | Wrap (* MODEL *)
+  | HealStatus of status(*item*)
+  | Revive (*item*)
 
 (* [effect] represents a combat effect on the game state. For type Switch, the
  * int carried represents the position of the Pokemon in the party that will be

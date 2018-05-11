@@ -27,6 +27,9 @@ val def : t -> int * int
 (* [spd p] is the current spd value and stat stage of the pokemon p. *)
 val spd : t -> int * int
 
+(*[spatk p] is the current special attack value and stat stage of the pokemon p*)
+val spatk : t -> int*int
+
 (* [maxhp p] is the maxiumum hp value of the pokemon p. *)
 val maxhp : t -> int
 
@@ -43,8 +46,11 @@ val sprite_back : t -> string
  * can perform. *)
 val actions : t -> (int * command) list
 
-(*[action_names] returns an association list of (index, action_name)*)
+(*[action_names] returns an association list of (index, action_name), indexing from 1*)
 val action_names : t -> (int * string) list
+
+(*[inv_names] returns a association list of (index, itemn name), indexing from 1*)
+val inv_names : item list -> (int * string) list
 
 (*[status p] returns the status list of pokemon p*)
 val status : t -> status list
@@ -64,7 +70,7 @@ val build_poke : string -> t
  *)
 val random_poke : unit -> t
 
-(* [build_inventory] gives a random list of items*)
+(* [build_inventory] gives a random list of 4  items*)
 val build_inventory : unit -> item list
 
 (* [pokemon_damage p e] process effect e on the pokemon p and returns a new pokemon *)
