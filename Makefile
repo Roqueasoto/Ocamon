@@ -22,3 +22,6 @@ compile_andrea:
 
 compile_tim:
 	ocamlbuild -use-ocamlfind model.cmo shared_types.cmo
+
+compile_test:
+	ocamlbuild -use-ocamlfind test.cmo test_andrea.cmo test_cynthia.cmo test_roque.cmo test_timothy.cmo ai_test.cmo
