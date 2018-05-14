@@ -50,8 +50,6 @@ val press_history : unit -> unit
 
 val draw_battle : gui_info -> Controller.command
 
-val do_battle : gui_info -> Controller.command
-
 val press_before : unit -> unit
 
 val before_battle : gui_info -> unit

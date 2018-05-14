@@ -463,13 +463,6 @@ let draw_battle gui_inf =
   then Interact CBattleEnd
   else fpi_screen gui_inf 
 
-  (*****************************************************************)
-  (*****************************************************************)
-
-(*THIS DOES EVERYTHING FOR BATTLE*)
-let do_battle gui_inf = 
-  draw_battle gui_inf (*This is opened following, the before_battle*)
-
 (*MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP*)
 let rec press_before () = 
   let keep_running = ref true in 
