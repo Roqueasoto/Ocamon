@@ -15,44 +15,8 @@ type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
              | CWinGame of bool | CQuit
 
 type special =
-  | GSPA (* MODEL *) (*Temporarily guards stat in battle*)
-  | Clamp (* MODEL *)
-  | Dig (* MODEL *)
-  | DoubleEdge
-  | DragonRage
-  | DreamEater
-  | Explosion
-  | FireSpin (* MODEL *)
-  | Fissure
-  | Guillotine
-  | Haze
-  | HornDrill
-  | HyperBeam (* MODEL *)
-  | LightScreen (* MODEL *)
-  | Mimic
-  | MirrorMove (* MODEL *)
-  | NightShade
-  | PetalDance (* MODEL *)
-  | PsyWave
-  | Rage (* MODEL *)
-  | Recover
-  | Reflect (* MODEL *)
-  | Rest
-  | SeismicToss
-  | SelfDestruct
-  | SoftBoiled
-  | SonicBoom
-  | SolarBeam (* MODEL *)
-  | Submission
-  | SpeSubstitute
-  | SuperFang
-  | Swift (* MODEL *)
-  | TakeDown
-  | Thrash (* MODEL *)
-  | Transform
-  | HealStatus of status(*item*)
-  | Revive (*item*)
-  | FocusEnergy (*critical hit, possibly delete*)
+  | HealStatus of status
+  | Revive
 
 type effect =
   | Switch of int
