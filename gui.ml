@@ -114,7 +114,7 @@ let pokemon_or_items () =
         else keep_running := true; 
     done; !num
 
-let press_battle () =
+let press_battle_four () =
   let num = ref 1 in  
   let keep_running = ref true in 
     while !keep_running do 
@@ -129,6 +129,36 @@ let press_battle () =
         then (num := 3; keep_running := false)
         else if s.Graphics.key = '4' 
         then (num := 4; keep_running := false) 
+        else keep_running := true; 
+    done; !num
+
+let press_battle_three () =
+  let num = ref 1 in  
+  let keep_running = ref true in 
+    while !keep_running do 
+      let s = Graphics.wait_next_event [Graphics.Key_pressed] in 
+      if s.Graphics.keypressed 
+      then  
+        if s.Graphics.key = '1'
+        then (num := 1; keep_running := false)
+        else if s.Graphics.key = '2'
+        then (num := 2; keep_running := false)
+        else if s.Graphics.key = '3'
+        then (num := 3; keep_running := false)
+        else keep_running := true; 
+    done; !num
+
+let press_battle_two () =
+  let num = ref 1 in  
+  let keep_running = ref true in 
+    while !keep_running do 
+      let s = Graphics.wait_next_event [Graphics.Key_pressed] in 
+      if s.Graphics.keypressed 
+      then  
+        if s.Graphics.key = '1'
+        then (num := 1; keep_running := false)
+        else if s.Graphics.key = '2'
+        then (num := 2; keep_running := false) 
         else keep_running := true; 
     done; !num
 
@@ -234,19 +264,44 @@ let fight_screen gui_inf =
   fill_rect 50 10 500 100;
 
   set_color black;
-  moveto 80 25;
   set_font "-misc-dejavu sans mono-bold-r-normal--12-0-0-0-m-0-iso8859-1";
-  draw_string ("4. " ^ (List.assoc 4 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv))))); 
-  moveto 80 40;
-  draw_string ("3. " ^ (List.assoc 3 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
-  moveto 80 55;
-  draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
-  moveto 80 70;
-  draw_string ("1. " ^ (List.assoc 1 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
-  moveto 80 90;
-  draw_string "Press number key for attack.";
-  
-  press_battle ()
+
+  if (List.length (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv))) = 2)
+  then 
+    (moveto 80 55;
+    draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+    moveto 80 70;
+    draw_string ("1. " ^ (List.assoc 1 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+    moveto 80 90;
+    draw_string "Press number key for attack.";
+    press_battle_two ())
+
+  else 
+    if (List.length (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv))) = 3)
+    then 
+      (moveto 80 40;
+      draw_string ("3. " ^ (List.assoc 3 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      moveto 80 55;
+      draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      moveto 80 70;
+      draw_string ("1. " ^ (List.assoc 1 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      moveto 80 90;
+      draw_string "Press number key for attack.";
+      
+      press_battle_three ())
+    else
+      (moveto 80 25;
+      draw_string ("4. " ^ (List.assoc 4 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv))))); 
+      moveto 80 40;
+      draw_string ("3. " ^ (List.assoc 3 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      moveto 80 55;
+      draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      moveto 80 70;
+      draw_string ("1. " ^ (List.assoc 1 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      moveto 80 90;
+      draw_string "Press number key for attack.";
+      
+      press_battle_four ())
 
 let fpi_screen gui_inf = 
   let comb_inf = begin match gui_inf.combat_info with

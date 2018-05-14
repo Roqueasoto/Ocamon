@@ -12,6 +12,7 @@ type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
 
 type category = Special | Physical
 
+
 (* [BuffType] are types for the Buff effect. The int it carries indicate how much to
    increase/decrease the stages of certain stats*)
 type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int | SpatkBuff of int
@@ -23,44 +24,8 @@ type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
              | CWinGame of bool | CQuit
 
 type special =
-  | GSPA (* MODEL *) (*Temporarily guards stat in battle*)
-  | Clamp (* MODEL *)
-  | Dig (* MODEL *)
-  | DoubleEdge
-  | DragonRage
-  | DreamEater
-  | Explosion
-  | FireSpin (* MODEL *)
-  | Fissure
-  | Guillotine
-  | Haze
-  | HornDrill
-  | HyperBeam (* MODEL *)
-  | LightScreen (* MODEL *)
-  | Mimic
-  | MirrorMove (* MODEL *)
-  | NightShade
-  | PetalDance (* MODEL *)
-  | PsyWave
-  | Rage (* MODEL *)
-  | Recover
-  | Reflect (* MODEL *)
-  | Rest
-  | SeismicToss
-  | SelfDestruct
-  | SoftBoiled
-  | SonicBoom
-  | SolarBeam (* MODEL *)
-  | Submission
-  | SpeSubstitute
-  | SuperFang
-  | Swift (* MODEL *)
-  | TakeDown
-  | Thrash (* MODEL *)
-  | Transform
   | HealStatus of status(*item*)
   | Revive (*item*)
-  | FocusEnergy (*critical hit, possibly delete*)
 
 (* [effect] represents a combat effect on the game state. For type Switch, the
  * int carried represents the position of the Pokemon in the party that will be

@@ -30,7 +30,11 @@ val fpi_press : unit -> int
 
 val pokemon_or_items : unit -> int
 
-val press_battle : unit -> int
+val press_battle_four : unit -> int
+
+val press_battle_three : unit -> int
+
+val press_battle_two : unit -> int
 
 val make_action : int -> gui_combat_info -> Controller.command
 
