@@ -36,12 +36,12 @@ module PokeMoves = struct
                    effect = [Damage(Other, 100, 45, (1,1), Grass, Physical)]}
 
   let fire_spin = {actname = "Fire Spin";
-                   descript = "Inflicts damage on the first turn 
-                   then traps the opponent, causing them to lose 1⁄16 
+                   descript = "Inflicts damage on the first turn
+                   then traps the opponent, causing them to lose 1⁄16
                    of their maximum HP after each turn, for 4-5 turns";
                    effect = [Special(Other, 85, FireSpin, Damage(Other, 85, 35, (1,1), Fire, Special))]}
 
-  let flamethrower = {actname = "Flamethrower"; 
+  let flamethrower = {actname = "Flamethrower";
                    descript = "Deals damage and has 10% chance of burning the target";
                    effect = [Damage(Other, 100, 95, (1,1), Fire, Special); Status(Other, 10, Burn)]}
 
@@ -51,11 +51,11 @@ module PokeMoves = struct
 
   let rage = {actname = "Rage";
               descript = "Deals damage, raises atk stage";
-              effect = [Sepcial(Self, 100, Rage, Damage(Other, 100, 20, (1,1), Normal, Physical))]}
+              effect = [Special(Self, 100, Rage, Damage(Other, 100, 20, (1,1), Normal, Physical))]}
 
   let leer = {actname = "Leer";
               descript = "lowers target defense by one stage";
-              effect = [Buff(Other, 100, DEFBuff -1)]}
+              effect = [Buff(Other, 100, DEFBuff (-1))]}
 
   let hydropump = {actname = "hydropump";
               descript = "deals damage";
@@ -83,11 +83,11 @@ module PokeMoves = struct
 
   let stringshot = {actname = "String Shot";
               descript = "slows target speed by one stage";
-              effect = [Buff(Other, 95, SPDBuff -1)]}
+                    effect = [Buff(Other, 95, SPDBuff (-1))]}
 
   let harden = {actname = "harden";
               descript = "raise user def by 1";
-              effect = [Buff(Other, 100, DEFBuff -1)]}
+                effect = [Buff(Other, 100, DEFBuff (-1))]}
 
   let psybeam = {actname = "Psybeam";
                descript = "deals damage and has a 10% chance of confusing the target";
@@ -133,13 +133,13 @@ module PokeMoves = struct
                 descript = "Takes off half of the oponent's HP";
                 effect = [Special(Other, 90, SuperFang, Nothing)]}
 
-  let focus_energy = {actnmae = "Focus Energy";
+  let focus_energy = {actname = "Focus Energy";
                 descript = "Increase critical hit ratio";
-                effect = [Special(Other, 100, FocusEnergy)]}
+                effect = [Special(Other, 100, FocusEnergy, Nothing)]}
 
   let hyper_fang = {actname = "Hyper Fang";
                 descript = "Deals damage and has 10% chance of causing flinch";
-                effect = [Damage(Other, 90, 80, (1,1), Normal, Physical); Status(Other, 10, Flinch)]}
+                    effect = [Damage(Other, 90, 80, (1,1), Normal, Physical); Status(Other, 10, Flinch)]}
 
 
 
@@ -182,7 +182,7 @@ module Pokedex = struct
      sprite_back = "./PokeSpriteBack/3.png";
      sprite_front = "./PokeSpriteBack/3.png"}
 
-  let charmander = 
+  let charmander =
     {poketype = [Fire]; name = "Charmander"; status = [StatusNone];
     hp = 122; atk = (80, 0); def = (71, 0); spd = (93, 0); spatk = (78, 0);
     maxhp = 122; catch_rate = 45;
@@ -200,21 +200,21 @@ module Pokedex = struct
 
   let charizard =
     {poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
-     hp = 161; atk = (112, 0); def = (106, 0); spd = (100, 0); spatk = (113, 0); 
+     hp = 161; atk = (112, 0); def = (106, 0); spd = (100, 0); spatk = (113, 0);
      maxhp = 161; catch_rate = 45;
      actions = [flamethrower; slash; rage; leer];
      sprite_back = "./PokeSpriteBack/6.png";
      sprite_front = "./PokeSpriteFront/6.png"}
 
-  let squirtle = 
+  let squirtle =
     {poketype = [Water]; name = "Squirtle"; status = [StatusNone];
     hp = 77; atk = (76, 0); def = (93, 0); spd = (71, 0); spatk = (78, 0);
     maxhp = 77; catch_rate = 45;
     actions = [hydropump; skullbash; withdraw; bite];
     sprite_back = "./PokeSpriteBack/7.png";
     sprite_front = "./PokeSpriteFront/7.png"}
-  
-  let wartortle = 
+
+  let wartortle =
     {poketype = [Water]; name = "Wartortle"; status = [StatusNone];
     hp = 142; atk = (91, 0); def = (108, 0); spd = (86, 0); spatk = (93, 0);
     maxhp = 142; catch_rate = 45;
@@ -222,7 +222,7 @@ module Pokedex = struct
     sprite_back = "./PokeSpriteBack/8.png";
     sprite_front = "./PokeSpriteFront/8.png"}
 
-  let blastoise = 
+  let blastoise =
     {poketype = [Water]; name = "Blastoise"; status = [StatusNone];
     hp = 162; atk = (111, 0); def = (128, 0); spd = (106, 0); spatk = (113, 0);
     maxhp = 162; catch_rate = 45;
@@ -230,7 +230,7 @@ module Pokedex = struct
     sprite_back = "./PokeSpriteBack/9.png";
     sprite_front = "./PokeSpriteFront/9.png"}
 
-  let caterpie = 
+  let caterpie =
     {poketype = [Bug]; name = "Caterpie"; status = [StatusNone];
     hp = 128; atk = (58, 0); def = (63, 0); spd = (73, 0); spatk = (48, 0);
     maxhp = 128; catch_rate = 225;
@@ -238,15 +238,15 @@ module Pokedex = struct
     sprite_back = "./PokeSpriteBack/10.png";
     sprite_front = "./PokeSpriteFront/10.png"}
 
-  let metapod = 
-    {poketype = [Bug]; name = "Metapod"; status = [StatusNone];
+  let metapod =
+    {poketype = [Bug]; name = "Caterpie"; status = [StatusNone];
     hp = 133; atk = (48, 0); def = (83, 0); spd = (58, 0); spatk = (53, 0);
     maxhp = 133; catch_rate = 120;
     actions = [tackle; stringshot; harden];
     sprite_back = "./PokeSpriteBack/11.png";
     sprite_front = "./PokeSpriteFront/11.png"}
 
-  let butterfree = 
+  let butterfree =
     {poketype = [Bug;Flying]; name = "Butterfree"; status = [StatusNone];
     hp = 143; atk = (146, 0); def = (78, 0); spd = (98, 0); spatk = (108, 0);
     maxhp = 143; catch_rate = 120;
@@ -254,7 +254,7 @@ module Pokedex = struct
     sprite_back = "./PokeSpriteBack/12.png";
     sprite_front = "./PokeSpriteFront/12.png"}
 
-  let weedle = 
+  let weedle =
     {poketype = [Bug;Poison]; name = "Weedle"; status = [StatusNone];
     hp = 123; atk = (63, 0); def = (58, 0); spd = (78, 0); spatk = (48, 0);
     maxhp = 123; catch_rate = 255;
@@ -262,23 +262,23 @@ module Pokedex = struct
     sprite_back = "./PokeSpriteBack/13.png";
     sprite_front = "./PokeSpriteFront/13.png"}
 
-  let kakuna = 
+  let kakuna =
     {poketype = [Bug;Poison]; name = "Kakuna"; status = [StatusNone];
     hp = 128; atk = (53, 0); def = (78, 0); spd = (63, 0); spatk = (53, 0);
     maxhp = 128; catch_rate = 120;
     actions = [stringshot; poison_sting; harden];
     sprite_back = "./PokeSpriteBack/14.png";
-    sprite_front = "./PokeSpriteFront/14.png"} 
+    sprite_front = "./PokeSpriteFront/14.png"}
 
-  let beedrill = 
+  let beedrill =
     {poketype = [Bug;Poison]; name = "Beedrill"; status = [StatusNone];
     hp = 148; atk = (108, 0); def = (68, 0); spd = (103, 0); spatk = (73, 0);
     maxhp = 148; catch_rate = 45;
     actions = [agility; pin_missle; rage; twineedle];
     sprite_back = "./PokeSpriteBack/15.png";
-    sprite_front = "./PokeSpriteFront/15.png"} 
+    sprite_front = "./PokeSpriteFront/15.png"}
 
-  let pidgey = 
+  let pidgey =
     {poketype = [Normal; Flying]; name = "Pidgey"; status = [StatusNone];
     hp = 123; atk = (73, 0); def = (68, 0); spd = (84, 0); spatk = (63, 0);
     maxhp = 123; catch_rate = 255;
@@ -286,39 +286,39 @@ module Pokedex = struct
     sprite_back = "./PokeSpriteBack/16.png";
     sprite_front = "./PokeSpriteFront/16.png"}
 
-  let pidgeotto = 
+  let pidgeotto =
     {poketype = [Normal; Flying]; name = "Pidgeotto"; status = [StatusNone];
     hp = 146; atk = (88, 0); def = (83, 0); spd = (99, 0); spatk = (78, 0);
     maxhp = 146; catch_rate = 255;
-    actions = [mirrormove; agility wingattack; whirlwind]
+    actions = [mirrormove; agility; wingattack; whirlwind];
     sprite_back = "./PokeSpriteBack/17.png";
-    sprite_front = "./PokeSpriteFront/17.png"} 
+    sprite_front = "./PokeSpriteFront/17.png"}
 
-  let pidgeot = 
+  let pidgeot =
     {poketype = [Normal; Flying]; name = "Pidgeotto"; status = [StatusNone];
     hp = 166; atk = (108, 0); def = (103, 0); spd = (119, 0); spatk = (98, 0);
     maxhp = 166; catch_rate = 45;
-    actions = [agility; wingattack; whirlwind; quickattack]
+    actions = [agility; wingattack; whirlwind; quickattack];
     sprite_back = "./PokeSpriteBack/18.png";
     sprite_front = "./PokeSpriteFront/18.png"}
 
-  let rattata = 
+  let rattata =
     {poketype = [Normal]; name = "Rattata"; status = [StatusNone];
     hp = 113; atk = (84, 0); def = (63, 0); spd = (100, 0); spatk = (53, 0);
     maxhp = 113; catch_rate = 255;
-    actions = [super_fang; focus_energy; hyper_fang; quickattack]
+    actions = [super_fang; focus_energy; hyper_fang; quickattack];
     sprite_back = "./PokeSpriteBack/19.png";
-    sprite_front = "./PokeSpriteFront/19.png"} 
+    sprite_front = "./PokeSpriteFront/19.png"}
 
-  let raticate = 
+  let raticate =
     {poketype = [Normal]; name = "Raticate"; status = [StatusNone];
     hp = 138; atk = (109, 0); def = (88, 0); spd = (125, 0); spatk = (78, 0);
     maxhp = 138; catch_rate = 127;
-    actions = [super_fang; focus_energy; hyper_fang; quickattack]
+    actions = [super_fang; focus_energy; hyper_fang; quickattack];
     sprite_back = "./PokeSpriteBack/20.png";
     sprite_front = "./PokeSpriteFront/20.png"}
 
-  let spearow = 
+  let spearow =
     {poketype = [Normal; Flying]; name = "Spearow"; status = [StatusNone];
     hp = 123; atk = (88, 0); def = (58, 0); spd = (98, 0); spatk = (59, 0);
     maxhp = 123; catch_rate = 255;
@@ -329,19 +329,19 @@ module Pokedex = struct
 
   let pikachu =
     {poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
-     hp = 118; atk = (83, 0); def = (58, 0); spd = (90, 0); spatk = (78, 0); 
+     hp = 118; atk = (83, 0); def = (58, 0); spd = (90, 0); spatk = (78, 0);
      maxhp = 118; catch_rate = 190; actions = [];
      sprite_back = "./PokeSpriteBack/25.png";
      sprite_front = "./PokeSpriteFront/25.png"}
 
 
 
-  let pokedex = 
-  [("1", bulbasaur); ("2", ivysaur); ("3", venusaur); ("4", charmander); 
+  let pokedex =
+  [("1", bulbasaur); ("2", ivysaur); ("3", venusaur); ("4", charmander);
    ("5", charmeleon); ("6", charizard); ("7", squirtle); ("8", wartortle);
    ("9", blastoise); ("10", caterpie); ("11", metapod); ("12", butterfree);
-   ("13", weedle); ("14", kakuna); ("15"; beedrill); ("16", pidgey);
-   ("17", pigeotto); ("18", pidgeot); ("19", rattata); ("20", raticate);
+   ("13", weedle); ("14", kakuna); ("15", beedrill); ("16", pidgey);
+   ("17", pidgeotto); ("18", pidgeot); ("19", rattata); ("20", raticate);
    ("21", spearow);
 
 
@@ -511,11 +511,8 @@ let build_poke s =
   | None -> failwith "A pokemon with this index does not exist"
 
 let random_poke () =
-  (*let rand = (Random.int 151) + 1 in
-  let index = string_of_int rand in*)
-  let len = List.length Pokedex.pokedex in
-  let rand = (Random.int len) in
-  let index = fst (List.nth Pokedex.pokedex rand) in
+  let rand = (Random.int 151) + 1 in
+  let index = string_of_int rand in
   build_poke index
 
 let build_inventory poke =
@@ -655,22 +652,22 @@ let poke_heal poke pts =
    sprite_front = poke.sprite_front}
 
 (*Calculate the largest possible effectiveness*)
-let rec type_eff mtype lst acc = 
-  match lst with 
+let rec type_eff mtype lst acc =
+  match lst with
   | [] -> acc
-  | h::t -> let nspat = type_compare mtype h in 
-            if nspat >= acc then spat mtype t nspat 
-            else spat mtype t acc
+  | h::t -> let nspat = type_compare mtype h in
+            if nspat >= acc then type_eff mtype t nspat
+            else type_eff mtype t acc
 
 
 let poke_damage poke1 poke2 pts mtype cat =
-  let astage = begin 
-              match cat with 
+  let astage = begin
+              match cat with
               | Physical -> float_of_int (snd poke2.atk)
               | Special -> float_of_int (snd poke2.spatk)
-            end in 
-  let apower = begin 
-              match cat with 
+            end in
+  let apower = begin
+              match cat with
               | Physical -> float_of_int (fst poke2.atk)
               | Special -> float_of_int (fst poke2.spatk)
             end in
@@ -679,7 +676,7 @@ let poke_damage poke1 poke2 pts mtype cat =
   let dstage = float_of_int (snd poke1.def) in
   let dmul = max (2.0) (2.0 +. dstage) /. max (2.0) (2.0 -. dstage) in
   let def = float_of_int (fst(poke1.def)) *. dmul in
-  let eff = type_eff mtype poke1 0. in 
+  let eff = type_eff mtype poke1.poketype 0. in
   let damage = int_of_float (((2.0 *. 50.0 /. 5.0) +. 2.0) *. atk *. (float_of_int pts) /. def /. 50.0 *. eff) in
 
   {poketype = poke1.poketype; name = poke1.name;
