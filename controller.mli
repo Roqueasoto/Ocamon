@@ -12,6 +12,9 @@ type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
 
 type category = Special | Physical
 
+type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
+           | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
+
 (* [BuffType] are types for the Buff effect. The int it carries indicate how much to
    increase/decrease the stages of certain stats*)
 type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int | SpatkBuff of int
@@ -60,6 +63,7 @@ type special =
   | Transform
   | HealStatus of status(*item*)
   | Revive (*item*)
+  | FocusEnergy (*critical hit, possibly delete*)
 
 (* [effect] represents a combat effect on the game state. For type Switch, the
  * int carried represents the position of the Pokemon in the party that will be
