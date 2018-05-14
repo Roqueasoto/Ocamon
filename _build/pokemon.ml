@@ -564,8 +564,9 @@ let build_poke s =
   | None -> failwith "A pokemon with this index does not exist"
 
 let random_poke () =
-  let rand = (Random.int 151) + 1 in
-  let index = string_of_int rand in
+  let len = List.length Pokedex.pokedex in
+  let rand = (Random.int len) in
+  let index = fst (List.nth Pokedex.pokedex rand) in
   build_poke index
 
 let build_inventory poke =
@@ -625,7 +626,7 @@ let type_compare ptype1 ptype2 =
   | Ghost,Ghost -> 2.
   | Ghost,Normal | Ghost,Fighting -> 0.
   | Ghost,_ -> 1.
-  | Dragon,Dragon -> 2.
+  | Dragon,Dragon -> 2. 
   | Dragon,_ -> 1.
 
 

@@ -4,7 +4,7 @@ open Images
 open Png       
 open Jpeg   
 open Pokemon 
-open Shared_types 
+open Shared_types  
 open Controller     
 
 (*
@@ -438,26 +438,23 @@ let draw_battle gui_inf =
   (*****************************************************************)
   (*This handles the log_history*)
   (*****************************************************************)
-
-  set_color black; 
-  set_line_width 7;
-  draw_rect 50 10 500 100;
-  set_color white;
-  fill_rect 50 10 500 100;
-
-  set_color black;
-  set_font "-misc-dejavu sans mono-bold-r-normal--12-0-0-0-m-0-iso8859-1";
-  moveto 380 10;
-  draw_string "Press 'c' to continue. >";
-
+  
   let rec history l = 
     match l with 
     |[] -> ()
     |h::t -> begin
+      set_color black; 
+      set_line_width 7;
+      draw_rect 50 10 500 100;
+      set_color white;
+      fill_rect 50 10 500 100;
       set_color black;
       set_font "-misc-dejavu sans mono-bold-r-normal--14-0-0-0-m-0-iso8859-1";
       moveto 80 90;
       h;
+      moveto 380 10;
+      set_font "-misc-dejavu sans mono-bold-r-normal--12-0-0-0-m-0-iso8859-1";
+      draw_string "Press 'c' to continue. >";
       press_history ();
       history t
     end
