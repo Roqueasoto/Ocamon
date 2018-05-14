@@ -626,7 +626,7 @@ let type_compare ptype1 ptype2 =
   | Ghost,Ghost -> 2.
   | Ghost,Normal | Ghost,Fighting -> 0.
   | Ghost,_ -> 1.
-  | Dragon,Dragon -> 2.
+  | Dragon,Dragon -> 2. 
   | Dragon,_ -> 1.
 
 
