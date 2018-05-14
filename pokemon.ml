@@ -47,11 +47,11 @@ module PokeMoves = struct
 
   let slash = {actname = "Slash";
                descript = "Deals damage and increase critical hit";
-               effect = [Damage(Other, 100, 70, (1,1), Normal, Physical))]}
+               effect = [Damage(Other, 100, 70, (1,1), Normal, Physical)]}
 
   let rage = {actname = "Rage";
               descript = "Deals damage, raises atk stage";
-              effect = [Damage(Other, 100, 20, (1,1), Normal, Physical)); Buff(Self, 100, ATKBuff 1)]}
+              effect = [Damage(Other, 100, 20, (1,1), Normal, Physical); Buff(Self, 100, ATKBuff 1)]}
 
   let leer = {actname = "Leer";
               descript = "lowers target defense by one stage";
@@ -311,17 +311,17 @@ module Pokedex = struct
     {poketype = [Normal; Flying]; name = "Spearow"; status = [StatusNone];
     hp = 123; atk = (88, 0); def = (58, 0); spd = (98, 0); spatk = (59, 0);
     maxhp = 123; catch_rate = 255;
-    actions = [agilityl; ];
+    actions = [];
     sprite_back = "./PokeSpriteBack/21.png";
     sprite_front = "./PokeSpriteFront/21.png"}
 
-  let fearow = 
+  let fearow =
     {poketype = [Normal; Flying]; name = "Fearow"; status = [StatusNone];
     hp = 123; atk = (88, 0); def = (58, 0); spd = (98, 0); spatk = (59, 0);
     maxhp = 123; catch_rate = 255;
     actions = [];
     sprite_back = "./PokeSpriteBack/21.png";
-    sprite_front = "./PokeSpriteFront/21.png"} 
+    sprite_front = "./PokeSpriteFront/21.png"}
 
 
   let pikachu =
@@ -388,8 +388,6 @@ module Inventory = struct
                                  Special(Self, 100, HealStatus(Burn), Nothing);
                                    Special(Self, 100, HealStatus(Frozen), Nothing)]; quantity = 1}
 
-  let guardspec = {itemname = "Guard Spec"; descript = "Prevent stat reduction for 5 turns";
-                   itemeffect = [Special(Self, 100, GSPA, Nothing)]; quantity = 1}
 
   let maxpotion = {itemname = "Max Potion"; descript = "Restores full hp";
                    itemeffect = [Heal(Self, 100, 1000)]; quantity = 1}
@@ -423,10 +421,10 @@ module Inventory = struct
 
   let inv = [(0,antidote);(1,awakening);(2,burnheal);(3,freshwater);
              (4,hyperpotion); (5,iceheal);(6, lemonade); (7, paralyzeheal);
-             (8, direhit); (9, fullheal); (10, fullrestore); (11, guardspec);
+             (8, direhit); (9, fullheal); (10, fullrestore); (11, xspeed);
              (12, maxpotion); (13, pokeflute); (14, potion); (15, revive);
              (16, sodapop); (17, superpotion); (18, xattack); (19, xdefense);
-             (20, xspecial); (21, xspeed)]
+             (20, xspecial)]
 end
 
 
@@ -513,10 +511,10 @@ let random_poke () =
   build_poke index
 
 let build_inventory poke =
-  let r1 = Random.int 22 in
-  let r2 = Random.int 22 in
-  let r3 = Random.int 22 in
-  let r4 = Random.int 22 in
+  let r1 = Random.int 21 in
+  let r2 = Random.int 21 in
+  let r3 = Random.int 21 in
+  let r4 = Random.int 21 in
   let i1 = List.assoc r1 Inventory.inv in
   let i2 = List.assoc r2 Inventory.inv in
   let i3 = List.assoc r3 Inventory.inv in
@@ -719,7 +717,7 @@ let poke_change_status poke s =
           sprite_back = poke.sprite_back;
           sprite_front = poke.sprite_front}
 
-let revive_poke poke = 
+let revive_poke poke =
   let newhp = poke.maxhp/2 in
   {poketype = poke.poketype; name = poke.name; status = poke.status;
    hp = newhp; atk = poke.atk; def = poke.def;
@@ -741,10 +739,11 @@ let poke_effect poke1 poke2 effect =
       | SPDBuff i -> poke_spd_buff poke1 i
       | SpatkBuff i -> poke_spatk_buff poke1 i
     end
-  | Special (s,i,p,e) -> begin 
-      match p with 
+  | Special (s,i,p,e) -> begin
+      match p with
       | HealStatus stat -> clear_stat poke1 stat
       | Revive -> revive_poke poke1
+    end
   | Status (_,_,s) -> poke_change_status poke1 s
   | Nothing -> poke1
 
