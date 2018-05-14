@@ -40,7 +40,7 @@ let tests_g =
     enemy_level = 5; } in
   let st1 = make_hypothetical_state ai_inf_1 in
   let no_mv1 = (CombatAction [Nothing])::(CombatAction [Nothing])::[] in
-  let dmg2 = Damage (Other,100,5,(1,1),Normal) in
+  let dmg2 = Damage (Other,100,5,(1,1),Normal,Physical) in
   let ai_poke2 = build_poke "6" in
   let user_poke2 = poke_effect ("25" |> build_poke) ai_poke2 dmg2 in
   let user_pty2 = [ (0,user_poke2) ] in
@@ -51,7 +51,7 @@ let tests_g =
     enemy_item_inv = [];
     enemy_level = 5; } in
   let st2 = make_hypothetical_state ai_inf_2 in
-  let dmg3 = Damage (Other,100,300,(1,1),Ground) in
+  let dmg3 = Damage (Other,100,300,(1,1),Ground,Physical) in
   let ai_poke3 = build_poke "6" in
   let user_poke3 = poke_effect ("25" |> build_poke) ai_poke3 dmg3 in
   let user_pty3 = [ (0,build_poke "25");(1,user_poke3) ] in
@@ -72,82 +72,89 @@ let tests_g =
   let n_effH = Heal (Other,35,90) in
   let n_effSta = Status (Other,95,Paralyze) in
   let n_effBf = Buff (Other,10,ATKBuff 2) in
-  let n_effD = Damage (Other,85,300,(1,1),Ground) in
+  let n_effD = Damage (Other,85,300,(1,1),Ground,Physical) in
 
   (* Testing expansion of moves*)
-  let fl_mv1 = [Damage (Other,85,300,(1,1),Normal)] in
-  let fl_mv2 = [Damage (Other,85,300,(1,1),Normal) ; Switch 1 ] in
-  let fl_mv3 = [Damage (Other,85,300,(1,1),Normal) ; Heal (Other,35,90) ] in
-  let fl_mv4 = [Damage (Other,85,90,(1,1),Normal) ;
+  let fl_mv1 = [Damage (Other,85,300,(1,1),Normal,Physical)] in
+  let fl_mv2 = [Damage (Other,85,300,(1,1),Normal,Physical) ; Switch 1 ] in
+  let fl_mv3 = [Damage (Other,85,300,(1,1),Normal,Physical) ;
+                Heal (Other,35,90) ] in
+  let fl_mv4 = [Damage (Other,85,90,(1,1),Normal,Physical) ;
                 Heal (Other,35,90) ; Switch 1] in
-  let fl_mv5 = [Damage (Other,85,90,(1,1),Normal) ; Heal (Other,35,90) ;
+  let fl_mv5 = [Damage (Other,85,90,(1,1),Normal,Physical) ; Heal (Other,35,90);
                 Status (Other,30,Paralyze)] in
-  let fl_mv6 = [Damage (Other,85,90,(1,1),Normal) ;
+  let fl_mv6 = [Damage (Other,85,90,(1,1),Normal,Physical) ;
                 Heal (Other,35,90) ; Switch 1 ;
                 Status (Other,30,Paralyze)] in
-  let fl_mv7 = [Damage (Other,85,90,(1,1),Normal) ; Heal (Other,35,90) ;
+  let fl_mv7 = [Damage (Other,85,90,(1,1),Normal,Physical) ; Heal (Other,35,90);
                 Status (Other,30,Paralyze) ; Switch 1 ] in
-  let ex_mv1 = [([Nothing],15.);([Damage (Other,100,300,(1,1),Normal)],85.)] in
+  let ex_mv1 = [([Nothing],15.);
+                ([Damage (Other,100,300,(1,1),Normal,Physical)],85.)] in
   let ex_mv2 = [([Nothing],15.);
-                ([Switch 1;Damage (Other,100,300,(1,1),Normal)],85.)] in
+                ([Switch 1;
+                  Damage (Other,100,300,(1,1),Normal,Physical)],85.)] in
   let ex_mv3 =
     [([Nothing],15.);
-     ([Heal (Other,100,90);Damage (Other,100,300,(1,1),Normal)],29.75);
-     ([Damage (Other,100,300,(1,1),Normal)],55.25)] in
+     ([Heal (Other,100,90);Damage (Other,100,300,(1,1),Normal,Physical)],29.75);
+     ([Damage (Other,100,300,(1,1),Normal,Physical)],55.25)] in
   let ex_mv4 =
     [([Nothing],15.);
-     ([Switch 1;Heal (Other,100,90);Damage (Other,100,90,(1,1),Normal)],29.75);
-     ([Switch 1;Damage (Other,100,90,(1,1),Normal)],55.25)] in
+     ([Switch 1;Heal (Other,100,90);
+       Damage (Other,100,90,(1,1),Norma,Physicall)],29.75);
+     ([Switch 1;Damage (Other,100,90,(1,1),Normal,Physical)],55.25)] in
   let ex_mv5 =
     [([Nothing],15.);([Status (Other,100,Paralyze);Heal (Other,100,90);
-                       Damage (Other,100,90,(1,1),Normal)],8.925);
-     ([Status (Other,100,Paralyze);Damage (Other,100,90,(1,1),Normal)],16.575);
-     ([Heal (Other,100,90);Damage (Other,100,90,(1,1),Normal)],20.825);
-     ([Damage (Other,100,90,(1,1),Normal)],38.675)] in
+                       Damage (Other,100,90,(1,1),Normal,Physical)],8.925);
+     ([Status (Other,100,Paralyze);
+       Damage (Other,100,90,(1,1),Normal,Physical)],16.575);
+     ([Heal (Other,100,90);
+       Damage (Other,100,90,(1,1),Normal,Physical)],20.825);
+     ([Damage (Other,100,90,(1,1),Normal,Physical)],38.675)] in
   let ex_mv6 =
     [([Nothing],15.);([Status (Other,100,Paralyze);Switch 1;Heal (Other,100,90);
-                       Damage (Other,100,90,(1,1),Normal)],8.925);
+                       Damage (Other,100,90,(1,1),Normal,Physical)],8.925);
      ([Status (Other,100,Paralyze);
-       Switch 1;Damage (Other,100,90,(1,1),Normal)],16.575);
-     ([Switch 1;Heal (Other,100,90);Damage (Other,100,90,(1,1),Normal)],20.825);
-     ([Switch 1;Damage (Other,100,90,(1,1),Normal)],38.675)] in
+       Switch 1;Damage (Other,100,90,(1,1),Normal,Physical)],16.575);
+     ([Switch 1;Heal (Other,100,90);
+       Damage (Other,100,90,(1,1),Normal,Physical)],20.825);
+     ([Switch 1;Damage (Other,100,90,(1,1),Normal,Physical)],38.675)] in
   let er_mv7 = try let _ = expand_move fl_mv7 [] in false
     with _ -> true in
 
   (* Testing valid_move generation. *)
   let mv_gen1 =
-    [('a',CombatAction [Damage(Self, 100, 90, (1, 1),Electric);
-                        Damage (Self, 100, 22, (1, 1),Normal)]);
+    [('a',CombatAction [Damage(Self, 100, 90, (1, 1),Electric,Physical);
+                        Damage (Self, 100, 22, (1, 1),Normal,Physical)]);
      ('a',CombatAction [Buff(Self, 100, SPDBuff 2)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Electric);
+     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Electric,Special);
                         Status(Other,10, Paralyze)]);
-     ('a',CombatAction [Damage(Other, 75, 80, (1, 1),Normal)])] in
+     ('a',CombatAction [Damage(Other, 75, 80, (1, 1),Normal,Physical)])] in
   let mv_gen2 =
     [('s',CombatAction [(Switch 1)]);
-     ('a',CombatAction [Damage(Self, 100, 90, (1, 1),Electric);
-                        Damage (Self, 100, 22, (1, 1),Normal)]);
+     ('a',CombatAction [Damage(Self, 100, 90, (1, 1),Electric,Physical);
+                        Damage (Self, 100, 22, (1, 1),Normal,Physical)]);
      ('a',CombatAction [Buff(Self, 100, SPDBuff 2)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Electric);
+     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Electric,Special);
                         Status(Other,10, Paralyze)]);
-     ('a',CombatAction [Damage(Other, 75, 80, (1, 1),Normal)])] in
+     ('a',CombatAction [Damage(Other, 75, 80, (1, 1),Normal,Physical)])] in
      let ai_poke4 = build_poke "6" in
      let user_poke4 = "25" |> build_poke in
      let user_pty4 = [ (0,build_poke "25");(1,user_poke4) ] in
      let ai_pty4 = (0,ai_poke4)::(1,ai_poke4)::[] in
   let mv_gen3 =
-    [('a',CombatAction [Damage(Other, 100, 90, (1, 1),Fire);
+    [('a',CombatAction [Damage(Other, 100, 90, (1, 1),Fire,Special);
                          Status(Other,10, Burn)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Normal)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Fire)]);
-     ('a',CombatAction [Damage(Other, 95, 65, (1, 1),Fire);
+     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Normal,Physical)]);
+     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Fire,Physical)]);
+     ('a',CombatAction [Damage(Other, 95, 65, (1, 1),Fire,Physical);
                         Status(Other,10, Burn); Status(Other,10, Flinch)])] in
   let mv_gen4 =
     [('s',CombatAction [(Switch 1)]);
-     ('a',CombatAction [Damage(Other, 100, 90, (1, 1),Fire);
+     ('a',CombatAction [Damage(Other, 100, 90, (1, 1),Fire,Special);
                         Status(Other,10, Burn)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Normal)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Fire)]);
-     ('a',CombatAction [Damage(Other, 95, 65, (1, 1),Fire);
+     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Normal,Physical)]);
+     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Fire,Physical)]);
+     ('a',CombatAction [Damage(Other, 95, 65, (1, 1),Fire,Physical);
                         Status(Other,10, Burn); Status(Other,10, Flinch)])] in [
   (* Test the evaluation function with teams that only have a type difference.*)
   "tp_us1" >:: (fun _ -> assert_equal 25 (team_points user_pty1 ai_pty1));
