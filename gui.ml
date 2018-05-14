@@ -679,7 +679,7 @@ let press_poke () =
       if s.Graphics.key = '1' 
       then (poke_num := 25; keep_running := false) (*CHANGE 25 TO 26*) 
       else 
-        if s.Graphics.key = '2' 
+        if s.Graphics.key = '2'  
         then (poke_num := 3; keep_running := false)
         else 
             if s.Graphics.key = '3'
