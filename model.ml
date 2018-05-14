@@ -32,6 +32,61 @@ module CommonHelp = struct
     let lst' = List.remove_assoc k lst in
     (k, v)::lst'
 
+  let get_special_effect_name special =
+    let open Controller in
+    match special with
+    | XAtk -> "XAtk"
+    | XDef -> "XDef"
+    | XSpd -> "XSpd"
+    | XSpa -> "XSpa"
+    | GSPA -> "GSPA"
+    | Absorb -> "Absorb"
+    | Bide -> "Bide"
+    | Bind -> "Bind"
+    | Clamp -> "Clamp"
+    | Conversion -> "Conversion"
+    | Counter -> "Counter"
+    | Dig -> "Dig"
+    | DoubleEdge -> "DoubleEdge"
+    | DragonRage -> "DragonRage"
+    | DreamEater -> "DreamEater"
+    | Explosion -> "Explosion"
+    | FireSpin -> "FireSpin"
+    | Fissure -> "Fissure"
+    | Fly -> "Fly"
+    | Guillotine -> "Guillotine"
+    | Haze -> "Haze"
+    | HornDrill -> "HornDrill"
+    | HyperBeam -> "HyperBeam"
+    | LightScreen -> "LightScreen"
+    | Mimic -> "Mimic"
+    | MirrorMove -> "MirrorMove"
+    | NightShade -> "NightShade"
+    | PetalDance -> "PetalDance"
+    | PsyWave -> "PsyWave"
+    | Rage -> "Rage"
+    | RazorWind -> "RazorWind"
+    | Recover -> "Recover"
+    | Reflect -> "Reflect"
+    | Rest -> "Rest"
+    | SeismicToss -> "SeismicToss"
+    | SelfDestruct -> "SelfDestruct"
+    | SkillBash -> "SkillBash"
+    | SkyAttack -> "SkyAttack"
+    | SoftBoiled -> "SoftBoiled"
+    | SonicBoom -> "SonicBoom"
+    | SolarBeam -> "SolarBeam"
+    | Submission -> "Submission"
+    | SpeSubstitute -> "SpeSubstitute"
+    | SuperFang -> "SuperFang"
+    | Swift -> "Swift"
+    | TakeDown -> "TakeDown"
+    | Thrash -> "Thrash"
+    | Transform -> "Transform"
+    | Wrap -> "Wrap"
+    | HealStatus _ -> "HealStatus"
+    | Revive -> "Revive"
+
   let get_eff_name eff =
     let open Controller in
     match eff with
@@ -40,7 +95,7 @@ module CommonHelp = struct
     | Damage _ -> "Damage"
     | Status _ -> "Status"
     | Buff _ -> "Buff"
-    | Special _ -> "Special"
+    | Special (_, _, special, _) -> get_special_effect_name special
     | Nothing -> "Nothing"
 end
 
@@ -417,8 +472,8 @@ module DoRoundHelp = struct
               (poke_self', poke_other')
             end in
         let st' = update_state_with_pokes_and_state_info st (state_info, poke_self', poke_other') in
-        (* Log = Pokemon_name used move_name! Pokomen    Pokeom x does action on Pokemon Y.  *)
-        (st', true)
+        let st'' = update_log (pokemon_name^"'s attack succeeded. ") st' in
+        (st'', true)
       end in
 
     match eff with
