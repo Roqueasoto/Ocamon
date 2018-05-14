@@ -35,41 +35,6 @@ module CommonHelp = struct
   let get_special_effect_name special =
     let open Controller in
     match special with
-    | GSPA -> "GSPA"
-    | Clamp -> "Clamp"
-    | Dig -> "Dig"
-    | DoubleEdge -> "DoubleEdge"
-    | DragonRage -> "DragonRage"
-    | DreamEater -> "DreamEater"
-    | Explosion -> "Explosion"
-    | FireSpin -> "FireSpin"
-    | Fissure -> "Fissure"
-    | Guillotine -> "Guillotine"
-    | Haze -> "Haze"
-    | HornDrill -> "HornDrill"
-    | HyperBeam -> "HyperBeam"
-    | LightScreen -> "LightScreen"
-    | Mimic -> "Mimic"
-    | MirrorMove -> "MirrorMove"
-    | NightShade -> "NightShade"
-    | PetalDance -> "PetalDance"
-    | PsyWave -> "PsyWave"
-    | Rage -> "Rage"
-    | Recover -> "Recover"
-    | Reflect -> "Reflect"
-    | Rest -> "Rest"
-    | SeismicToss -> "SeismicToss"
-    | SelfDestruct -> "SelfDestruct"
-    | SoftBoiled -> "SoftBoiled"
-    | SonicBoom -> "SonicBoom"
-    | SolarBeam -> "SolarBeam"
-    | Submission -> "Submission"
-    | SpeSubstitute -> "SpeSubstitute"
-    | SuperFang -> "SuperFang"
-    | Swift -> "Swift"
-    | TakeDown -> "TakeDown"
-    | Thrash -> "Thrash"
-    | Transform -> "Transform"
     | HealStatus _ -> "HealStatus"
     | Revive -> "Revive"
     | FocusEnergy -> "Focus Energy" (*critical hit, possibly delete*)
@@ -571,8 +536,7 @@ module DoInteractHelp = struct
   open CommonHelp
   open Controller
 
-(* Normally, i represents which pokemon the user wants to start with.
-   For protoype, we default to pikachu. TODO failwith "alpha set" *)
+(* i represents which pokemon the user wants to start with. *)
   let do_csart i st =
     let user_poke_new = Pokemon.build_poke (string_of_int i) in
     let user_info = List.assoc "user" st.population in
@@ -580,12 +544,13 @@ module DoInteractHelp = struct
     let population' = update_assoc "user" user_info' st.population in
     {st with population = population'}
 
-(* Normally, go to next available level. *)
+(* go to next available level. *)
   let do_cmap st =
     let enemy_id = Initiate_Population.enemy_id (st.game_stats.next_battle) in
-    {st with mode = MCombat enemy_id}
+    let game_stats' = {st.game_stats with battle_round_log = []} in
+    {st with mode = MCombat enemy_id; game_stats = game_stats'}
 
-  (* Go back to map. TODO-done inform state that next level is one higher. *)
+  (* Go back to map. inform state that next level is one higher. *)
   let do_cwin st =
     let next_battle' = st.game_stats.next_battle + 1 in
     if next_battle' = 6 then
@@ -598,7 +563,7 @@ module DoInteractHelp = struct
         game_stats = game_stats';
       }
 
-  (* Go back to map. TODO-done inform state that next level is same.  *)
+  (* Go back to map. inform state that next level is same.  *)
   let do_close st =
     {st with mode = MMap}
 
