@@ -31,6 +31,17 @@ module CommonHelp = struct
   let update_assoc k v lst =
     let lst' = List.remove_assoc k lst in
     (k, v)::lst'
+
+  let get_eff_name eff =
+    let open Controller in
+    match eff with
+    | Switch _ -> "Switch"
+    | Heal _ -> "Heal"
+    | Damage _ -> "Damage"
+    | Status _ -> "Status"
+    | Buff _ -> "Buff"
+    | Special _ -> "Special"
+    | Nothing -> "Nothing"
 end
 
 (* Blank types to be used by helper functions. *)
@@ -48,6 +59,7 @@ module Blanks = struct
   let blank_game_stats =
     {
       next_battle = 0;
+      battle_round_log = [];
     }
 
   let blank_state = {
@@ -68,7 +80,7 @@ end
 module Initiate_Population = struct
   open Blanks
 
-  let initial_user = {blank_person_info with id = "user"}
+  let initial_user = {blank_person_info with id = "user"; name = "Player"}
 
   let enemy_id_list = ["enemy_0";
                        "enemy_1";
@@ -79,29 +91,47 @@ module Initiate_Population = struct
 
   let enemy_id n = List.nth enemy_id_list n
 
+  let rec make_random_party size =
+    let rec h size start_index =
+      if size = 0 then []
+      else
+        (start_index, Pokemon.random_poke ())::(h (size - 1) (start_index + 1)) in
+    h size 0
+
   let initial_enemy_0 = {blank_person_info with
                          id = enemy_id 0;
+                         name = "Jesse and James";
+                         poke_inv = make_random_party 1;
                         }
 
   let initial_enemy_1 = {blank_person_info with
                          id = enemy_id 1;
+                         name = "Brock";
+                         poke_inv = make_random_party 2;
                         }
 
   let initial_enemy_2 = {blank_person_info with
                          id = enemy_id 2;
+                         name = "Misty";
+                         poke_inv = make_random_party 3;
                         }
 
   let initial_enemy_3 = {blank_person_info with
                          id = enemy_id 3;
+                         name = "Giovanni";
+                         poke_inv = make_random_party 4;
                         }
 
   let initial_enemy_4 = {blank_person_info with
                          id = enemy_id 4;
+                         name = "Lance";
+                         poke_inv = make_random_party 5;
                         }
 
   let initial_enemy_5 = {blank_person_info with
                          id = enemy_id 5;
-                         poke_inv = [(0, Pokemon.random_poke ())];
+                         name = "Gary";
+                         poke_inv = make_random_party 6;
                         }
 
   let initial_population =
@@ -160,12 +190,9 @@ module MakeAIInfo = struct
   let get_item_inv id t =
     (get_person_info id t).item_inv
 
-  let keys_of_inv inv =
-    inv |> List.split |> fst
-
   let get_item_lst id t =
     let inv = (get_item_inv) id t in
-    keys_of_inv inv
+    inv
 
   (* Helper of ints_of_id, which converts a string to a char list. *)
   let rec char_lst s =
@@ -223,7 +250,7 @@ module MakeHypotheticalState = struct
       blank_person_info with
       id = enemy_simulated_name;
       poke_inv = ai_info.enemy_poke_inv;
-      item_inv = List.map (fun elt -> (elt, 1)) ai_info.enemy_item_inv;
+      item_inv = ai_info.enemy_item_inv;
     }
 
   let make_hypothetical_state ai_info =
@@ -235,6 +262,18 @@ module MakeHypotheticalState = struct
       mode = MCombat (enemy_simulated_name)
     }
 end
+
+(* module type Monad = sig
+  type 'a t_
+  val bind : 'a t_ -> ('a -> 'b t_) -> 'b t_
+  val return : 'a -> 'b t_
+end
+
+module Loggable : Monad = struct
+  type 'a t_ = t
+  let bind = failwith "unimplemented"
+  let return = failwith "unimplemented"
+end *)
 
 (* Helper functions for Do *)
 module DoRoundHelp = struct
@@ -320,7 +359,16 @@ module DoRoundHelp = struct
       let random = Random.int 100 in
       random < accuracy in
 
-    (* Swap poke_0 with poke_i *)
+    (* Returns state with s appended to the battle log. *)
+    let update_log s st =
+      let log = st.game_stats.battle_round_log in
+      let log' = log@[s] in
+      let game_stats = st.game_stats in
+      let game_stats' = {game_stats with battle_round_log = log'} in
+      {st with game_stats = game_stats'} in
+
+    (* Swap poke_0 with poke_i.
+       Log += "<user/enemy> sent out <pokemon>."  *)
     let do_switch i =
       let state_info = expand_state self_id other_id st in
       let poke_inv_other_new = state_info.poke_inv_other in
@@ -332,14 +380,28 @@ module DoRoundHelp = struct
         let poke_inv_self'' = update_assoc i poke_0 poke_inv_self' in
         poke_inv_self'' in
       let st' = update_state_with_poke_invs_and_state_info st (state_info, poke_inv_self_new, poke_inv_other_new) in
-      (st', true) in
+      let log =
+        let name = state_info.person_info_self.name in
+        let pokemon = List.assoc 0 poke_inv_self_new in
+        let pokemon_name = Pokemon.name pokemon in
+        (name^" sent out "^pokemon_name^". ") in
+      let st'' = update_log log st' in
+      (st'', true) in
 
     (* For Heal, Damage, Status, Buff, and Special *)
     let do_stuff effect_on accuracy =
       let is_success = get_is_success accuracy in
       let state_info = expand_state self_id other_id st in
+      let pokemon_name = Pokemon.name state_info.poke_self in
+      let move_name = get_eff_name eff in
 
-      if not is_success then (st, false)
+      (* Log += <pokemon_name> used <move_name>. *)
+      let st = update_log (pokemon_name^" used "^move_name^"! ") st in
+
+      (* Log += Pokemon's attack missed. *)
+      if not is_success then
+        let st' = update_log (pokemon_name^"'s attack missed. ") st in
+        (st', false)
 
       else begin
         let (poke_self', poke_other') =
@@ -355,6 +417,7 @@ module DoRoundHelp = struct
               (poke_self', poke_other')
             end in
         let st' = update_state_with_pokes_and_state_info st (state_info, poke_self', poke_other') in
+        (* Log = Pokemon_name used move_name! Pokomen    Pokeom x does action on Pokemon Y.  *)
         (st', true)
       end in
 
@@ -455,7 +518,9 @@ module DoRoundHelp = struct
     let order = get_order_info user_elist_x enemy_elist_x enemy_id st in
     let first_id = order.first_id in
     let second_id = order.second_id in
-    let st' = do_eff_lst (first_id, second_id, st) order.first_elist in
+    (* Empty the battle_round_log. *)
+    let st_0 = {st with game_stats = {st.game_stats with battle_round_log = []}} in
+    let st' = do_eff_lst (first_id, second_id, st_0) order.first_elist in
     let st'' = do_eff_lst (second_id, first_id, st') order.second_elist in
     st''
 end
@@ -484,7 +549,7 @@ module DoInteractHelp = struct
     if next_battle' = 6 then
       {st with mode = MWinGame}
     else
-      let game_stats' = {next_battle = next_battle'} in
+      let game_stats' = {st.game_stats with next_battle = next_battle'} in
       {
         st with
         mode = MMap;
