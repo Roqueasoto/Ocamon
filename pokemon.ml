@@ -7,7 +7,7 @@ type action = {actname : string; descript : string; effect : effect list}
 type t = {poketype : ptype list; name : string; status : status list;
                 hp : int; atk : int*int; def : int*int;
                 spd : int*int; spatk: int*int; maxhp : int; catch_rate : int;
-                turn_counter = 0; actions : action list; 
+                turn_counter : int; actions : action list;
                 sprite_back : string; sprite_front : string}
 
 module PokeMoves = struct
@@ -133,7 +133,7 @@ module PokeMoves = struct
                 descript = "Lowers defense by 1 stage";
                 effect = [Buff(Other, 100, DEFBuff (-1))]}
 
-  let drillpeck = {actnmae = "Drill Peck";
+  let drillpeck = {actname = "Drill Peck";
                 descript = "deals damage";
                 effect = [Damage(Other, 100, 80, (1,1), Flying, Physical)]}
 
@@ -142,7 +142,7 @@ module PokeMoves = struct
                 effect = [Damage(Other, 85, 15, (2,5), Normal, Physical)]}
 
   let acid = {actname = "Acid";
-              descript = "deals damage and has a 10% chance 
+              descript = "deals damage and has a 10% chance
               of lowering the target's Special Defense by one stage.";
               effect = [Damage(Other, 100, 40, (1,1), Poison, Special)]}
 
@@ -357,7 +357,7 @@ module Pokedex = struct
     sprite_back = "./PokeSpriteBack/22.png";
     sprite_front = "./PokeSpriteFront/22.png"}
 
-  let ekans = 
+  let ekans =
     {poketype = [Poison]; name = "Ekans"; status = [StatusNone];
     hp = 118; atk = (88, 0); def = (72, 0); spd = (83, 0); spatk = (68, 0);
     maxhp = 118; catch_rate = 255; turn_counter = 0;
@@ -365,7 +365,7 @@ module Pokedex = struct
     sprite_back = "./PokeSpriteBack/23.png";
     sprite_front = "./PokeSpriteFront/23.png"}
 
-  let arbok = 
+  let arbok =
     {poketype = [Poison]; name = "Arbok"; status = [StatusNone];
     hp = 143; atk = (113, 0); def = (97, 0); spd = (108, 0); spatk = (93, 0);
     maxhp = 143; catch_rate = 90; turn_counter = 0;
@@ -503,7 +503,7 @@ let status poke = poke.status
 
 let turns poke = poke.turn_counter
 
-let decre_turn poke = 
+let decre_turn poke =
   {poketype = poke.poketype; name = poke.name; status = poke.status;
    hp = poke.hp; atk = poke.atk; def = poke.def;
    spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
@@ -511,7 +511,7 @@ let decre_turn poke =
    actions = poke.actions; sprite_back = poke.sprite_back;
    sprite_front = poke.sprite_front}
 
-let set_count poke i = 
+let set_count poke i =
   {poketype = poke.poketype; name = poke.name; status = poke.status;
    hp = poke.hp; atk = poke.atk; def = poke.def;
    spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
@@ -747,14 +747,14 @@ let poke_damage poke1 poke2 pts mtype cat =
    spd = poke1.spd; spatk = poke1.spatk;
    maxhp = poke1.maxhp;
    catch_rate = poke1.catch_rate;
-   turn_counter = poke.turn_counter;
+   turn_counter = poke1.turn_counter;
    actions = poke1.actions;
    sprite_back = poke1.sprite_back;
    sprite_front = poke1.sprite_front}
 
-let overlap_stats s = 
-  match s with 
-  | Sleep -> true 
+let overlap_stats s =
+  match s with
+  | Sleep -> true
   | Paralyze -> true
   | Burn -> true
   | Frozen -> true
@@ -763,29 +763,29 @@ let overlap_stats s =
   | Substitute -> true
   | _ -> false
 
-let rec check_overlaps lst s = 
-  if not overlap_stats s then false else 
-  match lst with 
+let rec check_overlaps lst s =
+  if not (overlap_stats s) then false else
+  match lst with
   | [] -> false
-  | h::t -> if overlap_stats h then true 
+  | h::t -> if overlap_stats h then true
             else check_overlaps t s
 
-(*let get_turns s = 
-  match s with 
+(*let get_turns s =
+  match s with
   | Confused -> 4
   | Sleep -> Random.int 8*)
-  
+
 let poke_change_status poke s =
-  match lst, s with 
+  match poke.status, s with
   | [], _ -> failwith "status should not be empty"
-  | h::t, _ -> begin 
-             match h, s with 
-            (* _, Substitute -> {poketype = poke.poketype; name = poke.name; status = s::poke.status;
-                                hp = poke.hp; atk = poke.atk; def = poke.def;
+  | h::t, _ -> begin
+             match h, s with
+           | _, Substitute -> {poketype = poke.poketype; name = poke.name; status = s::poke.status;
+                                hp = poke.hp/4*3; atk = poke.atk; def = poke.def;
                                 spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
                                 catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
                                 actions = poke.actions; sprite_back = poke.sprite_back;
-                                sprite_front = poke.sprite_front}*)
+                                sprite_front = poke.sprite_front}
             | StatusNone, _ -> {poketype = poke.poketype; name = poke.name; status = [s];
                                 hp = poke.hp; atk = poke.atk; def = poke.def;
                                 spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
@@ -798,7 +798,7 @@ let poke_change_status poke s =
                                 catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
                                 actions = poke.actions; sprite_back = poke.sprite_back;
                                 sprite_front = poke.sprite_front}
-            | _, _ -> if check_overlaps lst s then poke
+            | _, _ -> if check_overlaps poke.status s then poke
                       else      {poketype = poke.poketype; name = poke.name; status = s::poke.status;
                                 hp = poke.hp; atk = poke.atk; def = poke.def;
                                 spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
@@ -806,7 +806,7 @@ let poke_change_status poke s =
                                 actions = poke.actions; sprite_back = poke.sprite_back;
                                 sprite_front = poke.sprite_front}
             end
-  
+
 
 let revive_poke poke =
   let newhp = poke.maxhp/2 in
@@ -819,18 +819,18 @@ let revive_poke poke =
    sprite_front = poke.sprite_front}
 
 let rec match_type lst s =
-  match lst with 
+  match lst with
   | [] -> false
-  | h::t -> match h, s with 
+  | h::t -> match h, s with
            | Fire, Burn -> true
            | Poison, Poisoned -> true
            | Ice, Frozen -> true
-           | Grass, LeechSeed -> true 
+           | Grass, LeechSeed -> true
            | _, Substitute -> true
            | _, _ -> false
 
 let rec check_status_help lst s =
-  match lst with 
+  match lst with
   | [] -> false
   | h::t -> if h = s then true else check_status_help t s
 
@@ -841,8 +841,8 @@ let poke_effect poke1 poke2 effect =
   match effect with
   | Switch _ -> failwith "should not reach"
   | Heal (s, i1, i2) ->  poke_heal poke1 i2
-  | Damage (s, i1, i2, (r1, r2), t, c) -> if check_status poke1 Substitute then poke
-                                             poke_damage poke1 poke2 i2 t c
+  | Damage (s, i1, i2, (r1, r2), t, c) -> if check_status poke1 Substitute then poke1
+        else poke_damage poke1 poke2 i2 t c
   | Buff (s, i1, b) -> begin
       match b with
       | ATKBuff i -> poke_atk_buff poke1 i
@@ -855,7 +855,7 @@ let poke_effect poke1 poke2 effect =
       | HealStatus stat -> clear_stat poke1 stat
       | Revive -> revive_poke poke1
     end
-  | Status (_,_,s) -> if match_type poke1.poketype s then poke else 
+  | Status (_,_,s) -> if match_type poke1.poketype s then poke1 else
                          poke_change_status poke1 s
   | Nothing -> poke1
 

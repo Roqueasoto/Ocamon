@@ -62,7 +62,7 @@ val action_names : t -> (int * string) list
 val inv_names : item list -> (int * string) list
 
 (*[check_status p s] returns true if the pokemon has status s*)
-val check_status: t -> bool
+val check_status: t -> status -> bool
 
 (*[clear_stat p s] returns a pokemon without the status s*)
 val clear_stat: t -> status -> t
