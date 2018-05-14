@@ -1,8 +1,13 @@
 type effect_on = Self | Other
 
-type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison | Toxic
+type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poisoned | Toxic
             | Confused | Flinch | Substitute | Uncontrollable | Focused
             | LeechSeed | Missed
+
+type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
+           | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
+
+type category = Special | Physical
 
 type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int | SpatkBuff of int
 
@@ -10,17 +15,8 @@ type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
              | CWinGame of bool | CQuit
 
 type special =
-  | XAtk (* MODEL *)
-  | XDef (* MODEL *)
-  | XSpd (* MODEL *)
-  | XSpa (* MODEL *) (*Temporarily reaises stat in battle*)
   | GSPA (* MODEL *) (*Temporarily guards stat in battle*)
-  | Absorb
-  | Bide (* MODEL *)
-  | Bind (* MODEL *)
   | Clamp (* MODEL *)
-  | Conversion
-  | Counter (* BOTH: I take counter special, and put fireblast into effect of special. *)
   | Dig (* MODEL *)
   | DoubleEdge
   | DragonRage
@@ -28,27 +24,22 @@ type special =
   | Explosion
   | FireSpin (* MODEL *)
   | Fissure
-  | Fly (* MODEL *)
   | Guillotine
   | Haze
   | HornDrill
   | HyperBeam (* MODEL *)
   | LightScreen (* MODEL *)
-  (* | Metronome  *)
   | Mimic
   | MirrorMove (* MODEL *)
   | NightShade
   | PetalDance (* MODEL *)
   | PsyWave
   | Rage (* MODEL *)
-  | RazorWind (* MODEL *)
   | Recover
   | Reflect (* MODEL *)
   | Rest
   | SeismicToss
   | SelfDestruct
-  | SkillBash (* MODEL *)
-  | SkyAttack (* MODEL *)
   | SoftBoiled
   | SonicBoom
   | SolarBeam (* MODEL *)
@@ -59,14 +50,14 @@ type special =
   | TakeDown
   | Thrash (* MODEL *)
   | Transform
-  | Wrap (* MODEL *)
   | HealStatus of status(*item*)
   | Revive (*item*)
+  | FocusEnergy (*critical hit, possibly delete*)
 
 type effect =
   | Switch of int
   | Heal of effect_on    * int * int
-  | Damage of effect_on  * int * int * (int * int)
+  | Damage of effect_on  * int * int * (int * int) * ptype * category
   | Status of effect_on  * int * status
   | Buff of effect_on    * int * bufftype
   | Special of effect_on * int * special * effect

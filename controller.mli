@@ -1,9 +1,12 @@
 (* [effect_on] represents whether an effect should occur on self or other.  *)
 type effect_on = Self | Other
 
-type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison | Toxic
+type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poisoned | Toxic
            | Confused | Flinch | Substitute | Uncontrollable | Focused
            | LeechSeed | Missed
+
+type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
+           | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
 
 (* [BuffType] are types for the Buff effect. The int it carries indicate how much to
    increase/decrease the stages of certain stats*)
@@ -16,17 +19,8 @@ type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
              | CWinGame of bool | CQuit
 
 type special =
-  | XAtk (*Do not need*)
-  | XDef (*Do not need*)
-  | XSpd (*Do not need*)
-  | XSpa (*Do not need*)
   | GSPA (* MODEL *) (*Temporarily guards stat in battle*)
-  | Absorb
-  | Bide (* MODEL *)
-  | Bind (* MODEL *)
   | Clamp (* MODEL *)
-  | Conversion
-  | Counter (* BOTH: I take counter special, and put fireblast into effect of special. *)
   | Dig (* MODEL *)
   | DoubleEdge
   | DragonRage
@@ -34,27 +28,22 @@ type special =
   | Explosion
   | FireSpin (* MODEL *)
   | Fissure
-  | Fly (* MODEL *)
   | Guillotine
   | Haze
   | HornDrill
   | HyperBeam (* MODEL *)
   | LightScreen (* MODEL *)
-  (* | Metronome  *)
   | Mimic
   | MirrorMove (* MODEL *)
   | NightShade
   | PetalDance (* MODEL *)
   | PsyWave
   | Rage (* MODEL *)
-  | RazorWind (* MODEL *)
   | Recover
   | Reflect (* MODEL *)
   | Rest
   | SeismicToss
   | SelfDestruct
-  | SkillBash (* MODEL *)
-  | SkyAttack (* MODEL *)
   | SoftBoiled
   | SonicBoom
   | SolarBeam (* MODEL *)
@@ -65,9 +54,9 @@ type special =
   | TakeDown
   | Thrash (* MODEL *)
   | Transform
-  | Wrap (* MODEL *)
   | HealStatus of status(*item*)
   | Revive (*item*)
+  | FocusEnergy (*critical hit, possibly delete*)
 
 (* [effect] represents a combat effect on the game state. For type Switch, the
  * int carried represents the position of the Pokemon in the party that will be
