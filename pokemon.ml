@@ -139,7 +139,7 @@ module PokeMoves = struct
 
   let hyper_fang = {actname = "Hyper Fang";
                 descript = "Deals damage and has 10% chance of causing flinch";
-                effect = [Damage(Other, 90, 80, (1,1), Normal, Physical); Status(Other, 10, Flinch)]}
+                    effect = [Damage(Other, 90, 80, (1,1), Normal, Physical); Status(Other, 10, Flinch)]}
 
 
 

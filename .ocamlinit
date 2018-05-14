@@ -10,8 +10,10 @@
 #load "pokemon.cmo"
 #load "model.cmo"
 #load "ai.cmo"
-#load "guitext.cmo"
 #load "gui.cmo"
-#load "main.cmo"
 
-open Main
+#load "ai_test.cmo"
+#load "test_andrea.cmo"
+#load "test_cynthia.cmo"
+#load "test_roque.cmo"
+#load "test_timothy.cmo"
