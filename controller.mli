@@ -12,11 +12,6 @@ type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
 
 type category = Special | Physical
 
-type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
-           | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
-
-type category = Special | Physical
-
 
 (* [BuffType] are types for the Buff effect. The int it carries indicate how much to
    increase/decrease the stages of certain stats*)
