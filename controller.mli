@@ -23,17 +23,8 @@ type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
              | CWinGame of bool | CQuit
 
 type special =
-  | XAtk (*Do not need*)
-  | XDef (*Do not need*)
-  | XSpd (*Do not need*)
-  | XSpa (*Do not need*)
   | GSPA (* MODEL *) (*Temporarily guards stat in battle*)
-  | Absorb
-  | Bide (* MODEL *)
-  | Bind (* MODEL *)
   | Clamp (* MODEL *)
-  | Conversion
-  | Counter (* BOTH: I take counter special, and put fireblast into effect of special. *)
   | Dig (* MODEL *)
   | DoubleEdge
   | DragonRage
@@ -41,27 +32,22 @@ type special =
   | Explosion
   | FireSpin (* MODEL *)
   | Fissure
-  | Fly (* MODEL *)
   | Guillotine
   | Haze
   | HornDrill
   | HyperBeam (* MODEL *)
   | LightScreen (* MODEL *)
-  (* | Metronome  *)
   | Mimic
   | MirrorMove (* MODEL *)
   | NightShade
   | PetalDance (* MODEL *)
   | PsyWave
   | Rage (* MODEL *)
-  | RazorWind (* MODEL *)
   | Recover
   | Reflect (* MODEL *)
   | Rest
   | SeismicToss
   | SelfDestruct
-  | SkillBash (* MODEL *)
-  | SkyAttack (* MODEL *)
   | SoftBoiled
   | SonicBoom
   | SolarBeam (* MODEL *)
@@ -72,7 +58,6 @@ type special =
   | TakeDown
   | Thrash (* MODEL *)
   | Transform
-  | Wrap (* MODEL *)
   | HealStatus of status(*item*)
   | Revive (*item*)
 
