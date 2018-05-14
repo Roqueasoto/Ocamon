@@ -424,7 +424,7 @@ module DoRoundHelp = struct
     match eff with
     | Switch i -> do_switch i
     | Heal (effect_on, accuracy, _) -> do_stuff effect_on accuracy
-    | Damage (effect_on, accuracy, _, _) -> do_stuff effect_on accuracy
+    | Damage (effect_on, accuracy, _, _,_,_) -> do_stuff effect_on accuracy
     | Status (effect_on, accuracy, _) -> do_stuff effect_on accuracy
     | Buff (effect_on, accuracy, _) ->  do_stuff effect_on accuracy
     | Special (effect_on, accuracy, _, _) ->  do_stuff effect_on accuracy
@@ -471,8 +471,9 @@ module DoRoundHelp = struct
     | [] -> failwith "unreachable empty elist"
     | h::t -> begin
         match h with
-        | Damage (effect_on, accuracy, amount, (mini, maxi)) -> begin
-            let damage = Damage (effect_on, accuracy, amount, (1, 1)) in
+        | Damage (effect_on, accuracy, amount, (mini, maxi),ptyp,categ) -> begin
+            let damage =
+              Damage (effect_on, accuracy, amount, (1, 1),ptyp,categ) in
             let n = get_random_in_range mini maxi in
             (multiply damage n)@t
           end

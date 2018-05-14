@@ -70,7 +70,7 @@ let valid_moves (pokes : poke list) (items : Pokemon.item list) =
 (* [accuracy move] returns the accuracy of a given effect [move].*)
 let accuracy = function
   | Switch _ | Nothing -> 100.
-  | Heal (_,i1,_) | Damage (_,i1,_,_) | Status (_,i1,_) | Buff (_,i1,_)
+  | Heal (_,i1,_) | Damage (_,i1,_,_,_,_) | Status (_,i1,_) | Buff (_,i1,_)
   | Special (_,i1,_,_) -> float i1
 
 (* [move_acy_set acy move] returns effect [move] with accuracy set to [acy] if
@@ -78,7 +78,7 @@ let accuracy = function
 let move_acy_set acy move =
   match move with
   | Heal (poke,_,mag) -> Heal (poke,acy,mag)
-  | Damage (poke,_,mag,freq) -> Damage (poke,acy,mag,freq)
+  | Damage (poke,_,mag,freq,typ,ca) -> Damage (poke,acy,mag,freq,typ,ca)
   | Status (poke,_,sta) -> Status (poke,acy,sta)
   | Buff (poke,_,buf) -> Buff (poke,acy,buf)
   | Special (poke,_,spec,eff) -> Special (poke,acy,spec,eff)
