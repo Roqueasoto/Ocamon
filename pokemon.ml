@@ -51,11 +51,11 @@ module PokeMoves = struct
 
   let rage = {actname = "Rage";
               descript = "Deals damage, raises atk stage";
-              effect = [Sepcial(Self, 100, Rage, Damage(Other, 100, 20, (1,1), Normal, Physical))]}
+              effect = [Special(Self, 100, Rage, Damage(Other, 100, 20, (1,1), Normal, Physical))]}
 
   let leer = {actname = "Leer";
               descript = "lowers target defense by one stage";
-              effect = [Buff(Other, 100, DEFBuff -1)]}
+              effect = [Buff(Other, 100, DEFBuff (-1))]}
 
   let hydropump = {actname = "hydropump";
               descript = "deals damage";
@@ -83,11 +83,11 @@ module PokeMoves = struct
 
   let stringshot = {actname = "String Shot";
               descript = "slows target speed by one stage";
-              effect = [Buff(Other, 95, SPDBuff -1)]}
+              effect = [Buff(Other, 95, SPDBuff (-1))]}
 
   let harden = {actname = "harden";
               descript = "raise user def by 1";
-              effect = [Buff(Other, 100, DEFBuff -1)]}
+              effect = [Buff(Other, 100, DEFBuff (-1))]}
 
   let psybeam = {actname = "Psybeam";
                descript = "deals damage and has a 10% chance of confusing the target";
@@ -133,9 +133,10 @@ module PokeMoves = struct
                 descript = "Takes off half of the oponent's HP";
                 effect = [Special(Other, 90, SuperFang, Nothing)]}
 
-  let focus_energy = {actnmae = "Focus Energy";
+  let focus_energy = {actname = "Focus Energy";
                 descript = "Increase critical hit ratio";
-                effect = [Special(Other, 100, FocusEnergy)]}
+                effect = [Special(Other, 100, FocusEnergy, Nothing)]} 
+                (*TODO: Cynthia added Nothing as fourth argument*)
 
   let hyper_fang = {actname = "Hyper Fang";
                 descript = "Deals damage and has 10% chance of causing flinch";
@@ -290,7 +291,7 @@ module Pokedex = struct
     {poketype = [Normal; Flying]; name = "Pidgeotto"; status = [StatusNone];
     hp = 146; atk = (88, 0); def = (83, 0); spd = (99, 0); spatk = (78, 0);
     maxhp = 146; catch_rate = 255;
-    actions = [mirrormove; agility wingattack; whirlwind]
+    actions = [mirrormove; agility; wingattack; whirlwind];
     sprite_back = "./PokeSpriteBack/17.png";
     sprite_front = "./PokeSpriteFront/17.png"} 
 
@@ -298,7 +299,7 @@ module Pokedex = struct
     {poketype = [Normal; Flying]; name = "Pidgeotto"; status = [StatusNone];
     hp = 166; atk = (108, 0); def = (103, 0); spd = (119, 0); spatk = (98, 0);
     maxhp = 166; catch_rate = 45;
-    actions = [agility; wingattack; whirlwind; quickattack]
+    actions = [agility; wingattack; whirlwind; quickattack];
     sprite_back = "./PokeSpriteBack/18.png";
     sprite_front = "./PokeSpriteFront/18.png"}
 
@@ -306,7 +307,7 @@ module Pokedex = struct
     {poketype = [Normal]; name = "Rattata"; status = [StatusNone];
     hp = 113; atk = (84, 0); def = (63, 0); spd = (100, 0); spatk = (53, 0);
     maxhp = 113; catch_rate = 255;
-    actions = [super_fang; focus_energy; hyper_fang; quickattack]
+    actions = [super_fang; focus_energy; hyper_fang; quickattack];
     sprite_back = "./PokeSpriteBack/19.png";
     sprite_front = "./PokeSpriteFront/19.png"} 
 
@@ -314,7 +315,7 @@ module Pokedex = struct
     {poketype = [Normal]; name = "Raticate"; status = [StatusNone];
     hp = 138; atk = (109, 0); def = (88, 0); spd = (125, 0); spatk = (78, 0);
     maxhp = 138; catch_rate = 127;
-    actions = [super_fang; focus_energy; hyper_fang; quickattack]
+    actions = [super_fang; focus_energy; hyper_fang; quickattack];
     sprite_back = "./PokeSpriteBack/20.png";
     sprite_front = "./PokeSpriteFront/20.png"}
 
@@ -340,8 +341,8 @@ module Pokedex = struct
   [("1", bulbasaur); ("2", ivysaur); ("3", venusaur); ("4", charmander); 
    ("5", charmeleon); ("6", charizard); ("7", squirtle); ("8", wartortle);
    ("9", blastoise); ("10", caterpie); ("11", metapod); ("12", butterfree);
-   ("13", weedle); ("14", kakuna); ("15"; beedrill); ("16", pidgey);
-   ("17", pigeotto); ("18", pidgeot); ("19", rattata); ("20", raticate);
+   ("13", weedle); ("14", kakuna); ("15", beedrill); ("16", pidgey);
+   ("17", pidgeotto); ("18", pidgeot); ("19", rattata); ("20", raticate);
    ("21", spearow);
 
 

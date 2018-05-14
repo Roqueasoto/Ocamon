@@ -72,6 +72,7 @@ module CommonHelp = struct
     | Transform -> "Transform"
     | HealStatus _ -> "HealStatus"
     | Revive -> "Revive"
+    | FocusEnergy -> "Focus Energy" (*critical hit, possibly delete*)
 
   let get_eff_name eff =
     let open Controller in

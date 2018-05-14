@@ -4,7 +4,7 @@ open Images
 open Png       
 open Jpeg 
 open Pokemon
-open Shared_types 
+open Shared_types
 open Controller   
 
 type image 
@@ -38,17 +38,14 @@ val press_map : unit -> unit
 
 val draw_map : unit -> unit 
 
-val press_start : unit -> int 
+val press_start : unit -> unit 
 
-val draw_start : unit -> int 
+val draw_start : unit -> unit 
+
+val start_game : unit -> unit 
 
 val press_win : unit -> unit 
 
 val win_game : unit -> unit 
 
 val get_cmd : gui_info -> mode -> Controller.command
-
-
-
-
-
