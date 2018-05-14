@@ -72,6 +72,7 @@ module CommonHelp = struct
     | Transform -> "Transform"
     | HealStatus _ -> "HealStatus"
     | Revive -> "Revive"
+    | FocusEnergy -> "Focus Energy"
 
   let get_eff_name eff =
     let open Controller in
@@ -570,8 +571,7 @@ module DoInteractHelp = struct
   open CommonHelp
   open Controller
 
-(* Normally, i represents which pokemon the user wants to start with.
-   For protoype, we default to pikachu. TODO failwith "alpha set" *)
+(* i represents which pokemon the user wants to start with. *)
   let do_csart i st =
     let user_poke_new = Pokemon.build_poke (string_of_int i) in
     let user_info = List.assoc "user" st.population in
@@ -579,12 +579,13 @@ module DoInteractHelp = struct
     let population' = update_assoc "user" user_info' st.population in
     {st with population = population'}
 
-(* Normally, go to next available level. *)
+(* go to next available level. *)
   let do_cmap st =
     let enemy_id = Initiate_Population.enemy_id (st.game_stats.next_battle) in
-    {st with mode = MCombat enemy_id}
+    let game_stats' = {st.game_stats with battle_round_log = []} in
+    {st with mode = MCombat enemy_id; game_stats = game_stats'}
 
-  (* Go back to map. TODO-done inform state that next level is one higher. *)
+  (* Go back to map. inform state that next level is one higher. *)
   let do_cwin st =
     let next_battle' = st.game_stats.next_battle + 1 in
     if next_battle' = 6 then
@@ -597,7 +598,7 @@ module DoInteractHelp = struct
         game_stats = game_stats';
       }
 
-  (* Go back to map. TODO-done inform state that next level is same.  *)
+  (* Go back to map. inform state that next level is same.  *)
   let do_close st =
     {st with mode = MMap}
 
