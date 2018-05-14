@@ -7,8 +7,8 @@ type action = {actname : string; descript : string; effect : effect list}
 type t = {poketype : ptype list; name : string; status : status list;
                 hp : int; atk : int*int; def : int*int;
                 spd : int*int; spatk: int*int; maxhp : int; catch_rate : int;
-                actions : action list; sprite_back : string;
-                sprite_front : string}
+                turn_counter : int; actions : action list;
+                sprite_back : string; sprite_front : string}
 
 module PokeMoves = struct
   let razor_leaf = {actname = "Razor Leaf";
@@ -133,6 +133,40 @@ module PokeMoves = struct
                 descript = "Lowers defense by 1 stage";
                 effect = [Buff(Other, 100, DEFBuff (-1))]}
 
+  let drillpeck = {actname = "Drill Peck";
+                descript = "deals damage";
+                effect = [Damage(Other, 100, 80, (1,1), Flying, Physical)]}
+
+  let furyattack = {actname = "Fury Attack";
+                descript = "hits 2-5 times per turn used";
+                effect = [Damage(Other, 85, 15, (2,5), Normal, Physical)]}
+
+  let acid = {actname = "Acid";
+              descript = "deals damage and has a 10% chance
+              of lowering the target's Special Defense by one stage.";
+              effect = [Damage(Other, 100, 40, (1,1), Poison, Special)]}
+
+  let screech = {actname = "Screech";
+              descript = "Lowers target def by 2 stages";
+              effect = [Buff(Other, 85, DEFBuff (-2))]}
+
+  let glare = {actname = "Glare";
+              descript = "paralyzes target";
+              effect = [Status(Other, 100, Paralyze)]}
+
+  let bite = {actname = "Bite";
+              descript = "Deals damage and has 30% chance of causing target to flinch";
+              effect = [Damage(Other, 100, 60, (1,1), Normal, Physical); Status(Other, 30, Flinch)]}
+
+  let thunder = {actname = "Thunder";
+              descript = "deals damage and has a 30% chance of paralyzing the target";
+              effect = [Damage(Other, 70, 110, (1,1), Electric, Special); Status(Other, 30, Paralyze)]}
+
+  let swift = {actname = "Swift";
+               descript = "deals damage";
+               effect = [Damage(Other, 100, 60, (1,1), Normal, Special)]
+  }
+
 end
 
 (*Template:
@@ -150,7 +184,7 @@ module Pokedex = struct
   let bulbasaur =
     {poketype = [Grass;Poison]; name = "Bulbasaur"; status = [StatusNone];
      hp = 128; atk = (77, 0); def = (77, 0); spd = (73, 0); spatk = (93, 0);
-     maxhp = 128; catch_rate = 45;
+     maxhp = 128; catch_rate = 45; turn_counter = 0;
      actions = [razor_leaf; growth; sleep_powder; solar_beam];
      sprite_back = "./PokeSpriteBack/1.png";
      sprite_front = "./PokeSpriteFront/1.png"}
@@ -158,7 +192,7 @@ module Pokedex = struct
   let ivysaur =
     {poketype = [Grass;Poison]; name = "Ivysaur"; status = [StatusNone];
      hp = 143; atk = (90, 0); def = (91, 0); spd = (88, 0); spatk = (108, 0);
-     maxhp = 143; catch_rate = 45;
+     maxhp = 143; catch_rate = 45; turn_counter = 0;
      actions = [sleep_powder; growth; razor_leaf; poison_powder];
      sprite_back = "./PokeSpriteBack/2.png";
      sprite_front = "./PokeSpriteFront/2.png"}
@@ -166,7 +200,7 @@ module Pokedex = struct
   let venusaur =
     {poketype = [Grass;Poison]; name="Venusaur"; status=[StatusNone];
      hp = 163; atk = (110, 0); def = (111, 0); spd = (108, 0); spatk = (128, 0);
-     maxhp = 163; catch_rate = 45;
+     maxhp = 163; catch_rate = 45; turn_counter = 0;
      actions = [growth; razor_leaf; poison_powder; vine_whip];
      sprite_back = "./PokeSpriteBack/3.png";
      sprite_front = "./PokeSpriteBack/3.png"}
@@ -174,7 +208,7 @@ module Pokedex = struct
   let charmander =
     {poketype = [Fire]; name = "Charmander"; status = [StatusNone];
     hp = 122; atk = (80, 0); def = (71, 0); spd = (93, 0); spatk = (78, 0);
-    maxhp = 122; catch_rate = 45;
+    maxhp = 122; catch_rate = 45; turn_counter = 0;
     actions = [fire_spin; flamethrower; slash; rage];
     sprite_back = "./PokeSpriteBack/4.png";
     sprite_front = "./PokeSpriteFront/4.png"}
@@ -182,7 +216,7 @@ module Pokedex = struct
   let charmeleon =
     {poketype = [Fire]; name = "Charmeleon"; status = [StatusNone];
     hp = 141; atk = (92, 0); def = (86, 0); spd = (108, 0); spatk = (93, 0);
-    maxhp = 141; catch_rate = 45;
+    maxhp = 141; catch_rate = 45; turn_counter = 0;
     actions = [flamethrower; slash; rage; leer];
     sprite_back = "./PokeSpriteBack/5.png";
     sprite_front = "./PokeSpriteFront/5.png"}
@@ -190,7 +224,7 @@ module Pokedex = struct
   let charizard =
     {poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
      hp = 161; atk = (112, 0); def = (106, 0); spd = (100, 0); spatk = (113, 0);
-     maxhp = 161; catch_rate = 45;
+     maxhp = 161; catch_rate = 45; turn_counter = 0;
      actions = [flamethrower; slash; rage; leer];
      sprite_back = "./PokeSpriteBack/6.png";
      sprite_front = "./PokeSpriteFront/6.png"}
@@ -198,7 +232,7 @@ module Pokedex = struct
   let squirtle =
     {poketype = [Water]; name = "Squirtle"; status = [StatusNone];
     hp = 77; atk = (76, 0); def = (93, 0); spd = (71, 0); spatk = (78, 0);
-    maxhp = 77; catch_rate = 45;
+    maxhp = 77; catch_rate = 45; turn_counter = 0;
     actions = [hydropump; skullbash; withdraw; bite];
     sprite_back = "./PokeSpriteBack/7.png";
     sprite_front = "./PokeSpriteFront/7.png"}
@@ -206,7 +240,7 @@ module Pokedex = struct
   let wartortle =
     {poketype = [Water]; name = "Wartortle"; status = [StatusNone];
     hp = 142; atk = (91, 0); def = (108, 0); spd = (86, 0); spatk = (93, 0);
-    maxhp = 142; catch_rate = 45;
+    maxhp = 142; catch_rate = 45; turn_counter = 0;
     actions = [hydropump; skullbash; withdraw; bite];
     sprite_back = "./PokeSpriteBack/8.png";
     sprite_front = "./PokeSpriteFront/8.png"}
@@ -214,7 +248,7 @@ module Pokedex = struct
   let blastoise =
     {poketype = [Water]; name = "Blastoise"; status = [StatusNone];
     hp = 162; atk = (111, 0); def = (128, 0); spd = (106, 0); spatk = (113, 0);
-    maxhp = 162; catch_rate = 45;
+    maxhp = 162; catch_rate = 45; turn_counter = 0;
     actions = [skullbash; withdraw; bite; watergun];
     sprite_back = "./PokeSpriteBack/9.png";
     sprite_front = "./PokeSpriteFront/9.png"}
@@ -222,7 +256,7 @@ module Pokedex = struct
   let caterpie =
     {poketype = [Bug]; name = "Caterpie"; status = [StatusNone];
     hp = 128; atk = (58, 0); def = (63, 0); spd = (73, 0); spatk = (48, 0);
-    maxhp = 128; catch_rate = 225;
+    maxhp = 128; catch_rate = 225; turn_counter = 0;
     actions = [tackle; stringshot];
     sprite_back = "./PokeSpriteBack/10.png";
     sprite_front = "./PokeSpriteFront/10.png"}
@@ -230,7 +264,7 @@ module Pokedex = struct
   let metapod =
     {poketype = [Bug]; name = "Caterpie"; status = [StatusNone];
     hp = 133; atk = (48, 0); def = (83, 0); spd = (58, 0); spatk = (53, 0);
-    maxhp = 133; catch_rate = 120;
+    maxhp = 133; catch_rate = 120; turn_counter = 0;
     actions = [tackle; stringshot; harden];
     sprite_back = "./PokeSpriteBack/11.png";
     sprite_front = "./PokeSpriteFront/11.png"}
@@ -238,7 +272,7 @@ module Pokedex = struct
   let butterfree =
     {poketype = [Bug;Flying]; name = "Butterfree"; status = [StatusNone];
     hp = 143; atk = (146, 0); def = (78, 0); spd = (98, 0); spatk = (108, 0);
-    maxhp = 143; catch_rate = 120;
+    maxhp = 143; catch_rate = 120; turn_counter = 0;
     actions = [psybeam;whirlwind;supersonic;sleep_powder];
     sprite_back = "./PokeSpriteBack/12.png";
     sprite_front = "./PokeSpriteFront/12.png"}
@@ -246,7 +280,7 @@ module Pokedex = struct
   let weedle =
     {poketype = [Bug;Poison]; name = "Weedle"; status = [StatusNone];
     hp = 123; atk = (63, 0); def = (58, 0); spd = (78, 0); spatk = (48, 0);
-    maxhp = 123; catch_rate = 255;
+    maxhp = 123; catch_rate = 255; turn_counter = 0;
     actions = [stringshot; poison_sting];
     sprite_back = "./PokeSpriteBack/13.png";
     sprite_front = "./PokeSpriteFront/13.png"}
@@ -254,7 +288,7 @@ module Pokedex = struct
   let kakuna =
     {poketype = [Bug;Poison]; name = "Kakuna"; status = [StatusNone];
     hp = 128; atk = (53, 0); def = (78, 0); spd = (63, 0); spatk = (53, 0);
-    maxhp = 128; catch_rate = 120;
+    maxhp = 128; catch_rate = 120; turn_counter = 0;
     actions = [stringshot; poison_sting; harden];
     sprite_back = "./PokeSpriteBack/14.png";
     sprite_front = "./PokeSpriteFront/14.png"}
@@ -262,7 +296,7 @@ module Pokedex = struct
   let beedrill =
     {poketype = [Bug;Poison]; name = "Beedrill"; status = [StatusNone];
     hp = 148; atk = (108, 0); def = (68, 0); spd = (103, 0); spatk = (73, 0);
-    maxhp = 148; catch_rate = 45;
+    maxhp = 148; catch_rate = 45; turn_counter = 0;
     actions = [agility; pin_missle; rage; twineedle];
     sprite_back = "./PokeSpriteBack/15.png";
     sprite_front = "./PokeSpriteFront/15.png"}
@@ -270,7 +304,7 @@ module Pokedex = struct
   let pidgey =
     {poketype = [Normal; Flying]; name = "Pidgey"; status = [StatusNone];
     hp = 123; atk = (73, 0); def = (68, 0); spd = (84, 0); spatk = (63, 0);
-    maxhp = 123; catch_rate = 255;
+    maxhp = 123; catch_rate = 255; turn_counter = 0;
     actions = [agility; whirlwind; quickattack; wingattack];
     sprite_back = "./PokeSpriteBack/16.png";
     sprite_front = "./PokeSpriteFront/16.png"}
@@ -278,7 +312,7 @@ module Pokedex = struct
   let pidgeotto =
     {poketype = [Normal; Flying]; name = "Pidgeotto"; status = [StatusNone];
     hp = 146; atk = (88, 0); def = (83, 0); spd = (99, 0); spatk = (78, 0);
-    maxhp = 146; catch_rate = 255;
+    maxhp = 146; catch_rate = 255; turn_counter = 0;
     actions = [agility; wingattack; whirlwind; quickattack];
     sprite_back = "./PokeSpriteBack/17.png";
     sprite_front = "./PokeSpriteFront/17.png"}
@@ -286,7 +320,7 @@ module Pokedex = struct
   let pidgeot =
     {poketype = [Normal; Flying]; name = "Pidgeotto"; status = [StatusNone];
     hp = 166; atk = (108, 0); def = (103, 0); spd = (119, 0); spatk = (98, 0);
-    maxhp = 166; catch_rate = 45;
+    maxhp = 166; catch_rate = 45; turn_counter = 0;
     actions = [agility; wingattack; whirlwind; quickattack];
     sprite_back = "./PokeSpriteBack/18.png";
     sprite_front = "./PokeSpriteFront/18.png"}
@@ -294,7 +328,7 @@ module Pokedex = struct
   let rattata =
     {poketype = [Normal]; name = "Rattata"; status = [StatusNone];
     hp = 113; atk = (84, 0); def = (63, 0); spd = (100, 0); spatk = (53, 0);
-    maxhp = 113; catch_rate = 255;
+    maxhp = 113; catch_rate = 255; turn_counter = 0;
     actions = [hyper_fang; quickattack; tackle; tailwhip];
     sprite_back = "./PokeSpriteBack/19.png";
     sprite_front = "./PokeSpriteFront/19.png"}
@@ -302,7 +336,7 @@ module Pokedex = struct
   let raticate =
     {poketype = [Normal]; name = "Raticate"; status = [StatusNone];
     hp = 138; atk = (109, 0); def = (88, 0); spd = (125, 0); spatk = (78, 0);
-    maxhp = 138; catch_rate = 127;
+    maxhp = 138; catch_rate = 127; turn_counter = 0;
     actions = [tackle; hyper_fang; quickattack; tailwhip];
     sprite_back = "./PokeSpriteBack/20.png";
     sprite_front = "./PokeSpriteFront/20.png"}
@@ -310,27 +344,42 @@ module Pokedex = struct
   let spearow =
     {poketype = [Normal; Flying]; name = "Spearow"; status = [StatusNone];
     hp = 123; atk = (88, 0); def = (58, 0); spd = (98, 0); spatk = (59, 0);
-    maxhp = 123; catch_rate = 255;
-    actions = [];
+    maxhp = 123; catch_rate = 255; turn_counter = 0;
+    actions = [agility; drillpeck; furyattack; leer];
     sprite_back = "./PokeSpriteBack/21.png";
     sprite_front = "./PokeSpriteFront/21.png"}
 
   let fearow =
     {poketype = [Normal; Flying]; name = "Fearow"; status = [StatusNone];
-    hp = 123; atk = (88, 0); def = (58, 0); spd = (98, 0); spatk = (59, 0);
-    maxhp = 123; catch_rate = 255;
-    actions = [];
-    sprite_back = "./PokeSpriteBack/21.png";
-    sprite_front = "./PokeSpriteFront/21.png"}
+    hp = 148; atk = (118, 0); def = (93, 0); spd = (128, 0); spatk = (89, 0);
+    maxhp = 148; catch_rate = 90; turn_counter = 0;
+    actions = [agility; drillpeck; furyattack; leer];
+    sprite_back = "./PokeSpriteBack/22.png";
+    sprite_front = "./PokeSpriteFront/22.png"}
 
+  let ekans =
+    {poketype = [Poison]; name = "Ekans"; status = [StatusNone];
+    hp = 118; atk = (88, 0); def = (72, 0); spd = (83, 0); spatk = (68, 0);
+    maxhp = 118; catch_rate = 255; turn_counter = 0;
+    actions = [acid; screech; glare; bite];
+    sprite_back = "./PokeSpriteBack/23.png";
+    sprite_front = "./PokeSpriteFront/23.png"}
+
+  let arbok =
+    {poketype = [Poison]; name = "Arbok"; status = [StatusNone];
+    hp = 143; atk = (113, 0); def = (97, 0); spd = (108, 0); spatk = (93, 0);
+    maxhp = 143; catch_rate = 90; turn_counter = 0;
+    actions = [acid; screech; glare; bite];
+    sprite_back = "./PokeSpriteBack/24.png";
+    sprite_front = "./PokeSpriteFront/24.png"}
 
   let pikachu =
     {poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
      hp = 118; atk = (83, 0); def = (58, 0); spd = (90, 0); spatk = (78, 0);
-     maxhp = 118; catch_rate = 190; actions = [];
+     maxhp = 118; catch_rate = 190;  turn_counter = 0;
+     actions = [thunder; agility; swift; quickattack];
      sprite_back = "./PokeSpriteBack/25.png";
      sprite_front = "./PokeSpriteFront/25.png"}
-
 
 
   let pokedex =
@@ -339,8 +388,7 @@ module Pokedex = struct
    ("9", blastoise); ("10", caterpie); ("11", metapod); ("12", butterfree);
    ("13", weedle); ("14", kakuna); ("15", beedrill); ("16", pidgey);
    ("17", pidgeotto); ("18", pidgeot); ("19", rattata); ("20", raticate);
-   ("21", spearow);
-
+   ("21", spearow); ("22", fearow);("23", ekans);("24", arbok);("25", pikachu)
 
   ]
 end
@@ -386,7 +434,7 @@ module Inventory = struct
                                  Special(Self, 100, HealStatus(Paralyze), Nothing);
                                  Special(Self, 100, HealStatus(Sleep), Nothing);
                                  Special(Self, 100, HealStatus(Burn), Nothing);
-                                   Special(Self, 100, HealStatus(Frozen), Nothing)]; quantity = 1}
+                                 Special(Self, 100, HealStatus(Frozen), Nothing)]; quantity = 1}
 
 
   let maxpotion = {itemname = "Max Potion"; descript = "Restores full hp";
@@ -453,13 +501,23 @@ let sprite_back poke = poke.sprite_back
 
 let status poke = poke.status
 
-let check_sub poke =
-  let rec checkstat lst =
-  match lst with
-  | [] -> false
-  | h::t -> if h = Substitute then true else checkstat t
-  in
-  checkstat poke.status
+let turns poke = poke.turn_counter
+
+let decre_turn poke =
+  {poketype = poke.poketype; name = poke.name; status = poke.status;
+   hp = poke.hp; atk = poke.atk; def = poke.def;
+   spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
+   catch_rate = poke.catch_rate; turn_counter = max 0 (poke.turn_counter -1);
+   actions = poke.actions; sprite_back = poke.sprite_back;
+   sprite_front = poke.sprite_front}
+
+let set_count poke i =
+  {poketype = poke.poketype; name = poke.name; status = poke.status;
+   hp = poke.hp; atk = poke.atk; def = poke.def;
+   spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
+   catch_rate = poke.catch_rate; turn_counter = i;
+   actions = poke.actions; sprite_back = poke.sprite_back;
+   sprite_front = poke.sprite_front}
 
 let rec parse_actions lst ind acc =
   match lst with
@@ -496,7 +554,7 @@ let clear_stat poke stat =
   {poketype = poke.poketype; name = poke.name; status = clear_helper poke.status stat [];
    hp = poke.hp; atk = poke.atk; def = poke.def;
    spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
-   catch_rate = poke.catch_rate;
+   catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
    actions = poke.actions; sprite_back = poke.sprite_back;
    sprite_front = poke.sprite_front}
 
@@ -577,7 +635,7 @@ let poke_spd_buff poke i=
      hp = poke.hp; atk = poke.atk; def = poke.def;
      spd = (fst(poke.spd), (max (-6) (snd poke.spd)+i));
      spatk = poke.spatk; maxhp = poke.maxhp;
-     catch_rate = poke.catch_rate;
+     catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
      actions = poke.actions; sprite_back = poke.sprite_back;
      sprite_front = poke.sprite_front}
   else
@@ -585,7 +643,8 @@ let poke_spd_buff poke i=
      hp = poke.hp; atk = poke.atk; def = poke.def;
      spd = (fst(poke.spd), (min (6) (snd poke.spd)+i));
      spatk = poke.spatk; maxhp = poke.maxhp;
-     catch_rate = poke.catch_rate; actions = poke.actions;
+     catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
+     actions = poke.actions;
      sprite_back = poke.sprite_back; sprite_front = poke.sprite_front}
 
 let poke_atk_buff poke i =
@@ -594,6 +653,7 @@ let poke_atk_buff poke i =
                    atk = (fst(poke.atk), (max (-6) (snd poke.atk)+i)); def = poke.def;
                    spd = poke.spd; spatk = poke.spatk;
                    maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+                   turn_counter = poke.turn_counter;
                    actions = poke.actions; sprite_back = poke.sprite_back;
                    sprite_front = poke.sprite_front}
     else
@@ -601,6 +661,7 @@ let poke_atk_buff poke i =
        atk = (fst(poke.atk), (min (6) (snd poke.atk)+i)); def = poke.def;
        spd = poke.spd; spatk = poke.spatk;
        maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+       turn_counter = poke.turn_counter;
       actions = poke.actions; sprite_back = poke.sprite_back;
       sprite_front = poke.sprite_front}
 
@@ -610,6 +671,7 @@ let poke_def_buff poke i =
        atk = poke.atk; def = (fst(poke.def), (max (-6) (snd poke.def)+i));
        spd = poke.spd; spatk = poke.spatk;
        maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+       turn_counter = poke.turn_counter;
       actions = poke.actions; sprite_back = poke.sprite_back;
       sprite_front = poke.sprite_front}
     else
@@ -617,6 +679,7 @@ let poke_def_buff poke i =
        atk = poke.atk; def = (fst(poke.def),(min (6) (snd poke.def)+i));
        spd = poke.spd; spatk = poke.spatk;
        maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+       turn_counter = poke.turn_counter;
        actions = poke.actions; sprite_back = poke.sprite_back;
        sprite_front = poke.sprite_front}
 
@@ -626,6 +689,7 @@ let poke_spatk_buff poke i =
      atk = poke.atk; def = poke.def;
      spd = poke.spd; spatk = (fst(poke.spatk), (max (-6) (snd poke.spatk)+i));
      maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+     turn_counter = poke.turn_counter;
      actions = poke.actions; sprite_back = poke.sprite_back;
      sprite_front = poke.sprite_front}
   else
@@ -633,6 +697,7 @@ let poke_spatk_buff poke i =
      atk = poke.atk; def = (fst(poke.spatk),(min (6) (snd poke.spatk)+i));
      spd = poke.spd; spatk = poke.spatk;
      maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+     turn_counter = poke.turn_counter;
      actions = poke.actions; sprite_back = poke.sprite_back;
      sprite_front = poke.sprite_front}
 
@@ -642,6 +707,7 @@ let poke_heal poke pts =
    atk = poke.atk; def = poke.def;
    spd = poke.spd; spatk = poke.spatk;
    maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+   turn_counter = poke.turn_counter;
    actions = poke.actions;
    sprite_back = poke.sprite_back;
    sprite_front = poke.sprite_front}
@@ -681,57 +747,102 @@ let poke_damage poke1 poke2 pts mtype cat =
    spd = poke1.spd; spatk = poke1.spatk;
    maxhp = poke1.maxhp;
    catch_rate = poke1.catch_rate;
+   turn_counter = poke1.turn_counter;
    actions = poke1.actions;
    sprite_back = poke1.sprite_back;
    sprite_front = poke1.sprite_front}
 
-let non_overlap_stat s =
+let overlap_stats s =
   match s with
-  | StatusNone-> true
   | Sleep -> true
-  | Burn -> true
   | Paralyze -> true
+  | Burn -> true
   | Frozen -> true
   | Poisoned -> true
   | Toxic -> true
+  | Substitute -> true
   | _ -> false
+
+let rec check_overlaps lst s =
+  if not (overlap_stats s) then false else
+  match lst with
+  | [] -> false
+  | h::t -> if overlap_stats h then true
+            else check_overlaps t s
+
+(*let get_turns s =
+  match s with
+  | Confused -> 4
+  | Sleep -> Random.int 8*)
 
 let poke_change_status poke s =
   match poke.status, s with
-  | [], s -> failwith "status should not be empty"
-  | h::t, newstat -> if (h = StatusNone || newstat == StatusNone) then
-                                             {poketype = poke.poketype; name = poke.name; status = [newstat];
-                                             hp = poke.hp; atk = poke.atk; def = poke.def;
-                                              spd = poke.spd; spatk = poke.spatk;
-                                              maxhp = poke.maxhp;
-                                             catch_rate = poke.catch_rate;
-                                             actions = poke.actions;
-                                             sprite_back = poke.sprite_back;
-                                             sprite_front = poke.sprite_front}
-    else if non_overlap_stat h && non_overlap_stat h then poke
-    else {poketype = poke.poketype; name = poke.name; status = newstat::poke.status;
-          hp = poke.hp; atk = poke.atk; def = poke.def;
-          spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
-          catch_rate = poke.catch_rate;
-          actions = poke.actions;
-          sprite_back = poke.sprite_back;
-          sprite_front = poke.sprite_front}
+  | [], _ -> failwith "status should not be empty"
+  | h::t, _ -> begin
+             match h, s with
+           | _, Substitute -> {poketype = poke.poketype; name = poke.name; status = s::poke.status;
+                                hp = poke.hp/4*3; atk = poke.atk; def = poke.def;
+                                spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
+                                catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
+                                actions = poke.actions; sprite_back = poke.sprite_back;
+                                sprite_front = poke.sprite_front}
+            | StatusNone, _ -> {poketype = poke.poketype; name = poke.name; status = [s];
+                                hp = poke.hp; atk = poke.atk; def = poke.def;
+                                spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
+                                catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
+                                actions = poke.actions; sprite_back = poke.sprite_back;
+                                sprite_front = poke.sprite_front}
+            | _, StatusNone -> {poketype = poke.poketype; name = poke.name; status = [s];
+                                hp = poke.hp; atk = poke.atk; def = poke.def;
+                                spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
+                                catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
+                                actions = poke.actions; sprite_back = poke.sprite_back;
+                                sprite_front = poke.sprite_front}
+            | _, _ -> if check_overlaps poke.status s then poke
+                      else      {poketype = poke.poketype; name = poke.name; status = s::poke.status;
+                                hp = poke.hp; atk = poke.atk; def = poke.def;
+                                spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
+                                catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
+                                actions = poke.actions; sprite_back = poke.sprite_back;
+                                sprite_front = poke.sprite_front}
+            end
+
 
 let revive_poke poke =
   let newhp = poke.maxhp/2 in
   {poketype = poke.poketype; name = poke.name; status = poke.status;
    hp = newhp; atk = poke.atk; def = poke.def;
    spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
-   catch_rate = poke.catch_rate;
+   catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
    actions = poke.actions;
    sprite_back = poke.sprite_back;
    sprite_front = poke.sprite_front}
+
+let rec match_type lst s =
+  match lst with
+  | [] -> false
+  | h::t -> match h, s with
+           | Fire, Burn -> true
+           | Poison, Poisoned -> true
+           | Ice, Frozen -> true
+           | Grass, LeechSeed -> true
+           | _, Substitute -> true
+           | _, _ -> false
+
+let rec check_status_help lst s =
+  match lst with
+  | [] -> false
+  | h::t -> if h = s then true else check_status_help t s
+
+let check_status poke s =
+  check_status_help poke.status s
 
 let poke_effect poke1 poke2 effect =
   match effect with
   | Switch _ -> failwith "should not reach"
   | Heal (s, i1, i2) ->  poke_heal poke1 i2
-  | Damage (s, i1, i2, (r1, r2), t, c) -> poke_damage poke1 poke2 i2 t c
+  | Damage (s, i1, i2, (r1, r2), t, c) -> if check_status poke1 Substitute then poke1
+        else poke_damage poke1 poke2 i2 t c
   | Buff (s, i1, b) -> begin
       match b with
       | ATKBuff i -> poke_atk_buff poke1 i
@@ -744,7 +855,8 @@ let poke_effect poke1 poke2 effect =
       | HealStatus stat -> clear_stat poke1 stat
       | Revive -> revive_poke poke1
     end
-  | Status (_,_,s) -> poke_change_status poke1 s
+  | Status (_,_,s) -> if match_type poke1.poketype s then poke1 else
+                         poke_change_status poke1 s
   | Nothing -> poke1
 
 let clear_buff poke =
@@ -758,6 +870,7 @@ let clear_buff poke =
   spatk = (fst(poke.spatk),0);
   maxhp = poke.maxhp;
   catch_rate = poke.catch_rate;
+  turn_counter = poke.turn_counter;
   actions = poke.actions;
   sprite_back = poke.sprite_back;
   sprite_front = poke.sprite_front}
