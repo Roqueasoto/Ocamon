@@ -2,7 +2,7 @@ type effect_on = Self | Other
 
 type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poisoned | Toxic
             | Confused | Flinch | Substitute | Uncontrollable | Focused
-            | LeechSeed | Missed
+            | LeechSeed | Mist
 
 type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
            | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
