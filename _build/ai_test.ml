@@ -32,7 +32,7 @@ let tests_g =
 
   (* Testing game state evaluation.*)
   let user_pty1 = [ (0,build_poke "25") ] in
-  let ai_pty1 = (0,random_poke ())::[] in
+  let ai_pty1 = (0,build_poke "6")::[] in
   let ai_inf_1 = {
     user_poke_inv = user_pty1;
     enemy_poke_inv = ai_pty1;
@@ -41,7 +41,7 @@ let tests_g =
   let st1 = make_hypothetical_state ai_inf_1 in
   let no_mv1 = (CombatAction [Nothing])::(CombatAction [Nothing])::[] in
   let dmg2 = Damage (Other,100,5,(1,1)) in
-  let ai_poke2 = random_poke () in
+  let ai_poke2 = build_poke "6" in
   let user_poke2 = poke_effect ("25" |> build_poke) ai_poke2 dmg2 in
   let user_pty2 = [ (0,user_poke2) ] in
   let ai_pty2 = (0,ai_poke2)::[] in
@@ -52,7 +52,7 @@ let tests_g =
     enemy_level = 5; } in
   let st2 = make_hypothetical_state ai_inf_2 in
   let dmg3 = Damage (Other,100,300,(1,1)) in
-  let ai_poke3 = random_poke () in
+  let ai_poke3 = build_poke "6" in
   let user_poke3 = poke_effect ("25" |> build_poke) ai_poke3 dmg3 in
   let user_pty3 = [ (0,build_poke "25");(1,user_poke3) ] in
   let ai_pty3 = (0,ai_poke3)::[] in
@@ -113,20 +113,39 @@ let tests_g =
 
   (* Testing valid_move generation. *)
   let mv_gen1 =
-    [('a',CombatAction [Damage(Other, 75, 80, (1, 1))]);
+    [('a',CombatAction [Damage(Self, 100, 90, (1, 1));
+                        Damage (Self, 100, 22, (1, 1))]);
+     ('a',CombatAction [Buff(Self, 100, SPDBuff 2)]);
      ('a',CombatAction [Damage(Other, 100, 70, (1, 1));
                         Status(Other,10, Paralyze)]);
-     ('a',CombatAction [Buff(Self, 100, SPDBuff 2)]);
-     ('a',CombatAction[Damage(Self, 100, 90, (1, 1));
-                       Damage (Self, 100, 22, (1, 1))])] in
+     ('a',CombatAction [Damage(Other, 75, 80, (1, 1))])] in
   let mv_gen2 =
     [('s',CombatAction [(Switch 1)]);
-     ('a',CombatAction [Damage(Other, 75, 80, (1, 1))]);
+     ('a',CombatAction [Damage(Self, 100, 90, (1, 1));
+                        Damage (Self, 100, 22, (1, 1))]);
+     ('a',CombatAction [Buff(Self, 100, SPDBuff 2)]);
      ('a',CombatAction [Damage(Other, 100, 70, (1, 1));
                         Status(Other,10, Paralyze)]);
-     ('a',CombatAction [Buff(Self, 100, SPDBuff 2)]);
-     ('a',CombatAction[Damage(Self, 100, 90, (1, 1));
-                       Damage (Self, 100, 22, (1, 1))])] in [
+     ('a',CombatAction [Damage(Other, 75, 80, (1, 1))])] in
+     let ai_poke4 = build_poke "6" in
+     let user_poke4 = "25" |> build_poke in
+     let user_pty4 = [ (0,build_poke "25");(1,user_poke4) ] in
+     let ai_pty4 = (0,ai_poke4)::(1,ai_poke4)::[] in
+  let mv_gen3 =
+    [('a',CombatAction [Damage(Other, 100, 90, (1, 1));
+                         Status(Other,10, Burn)]);
+     ('a',CombatAction [Damage(Other, 100, 70, (1, 1))]);
+     ('a',CombatAction [Damage(Other, 100, 70, (1, 1))]);
+     ('a',CombatAction [Damage(Other, 95, 65, (1, 1));
+                        Status(Other,10, Burn); Status(Other,10, Flinch)])] in
+  let mv_gen4 =
+    [('s',CombatAction [(Switch 1)]);
+     ('a',CombatAction [Damage(Other, 100, 90, (1, 1));
+                        Status(Other,10, Burn)]);
+     ('a',CombatAction [Damage(Other, 100, 70, (1, 1))]);
+     ('a',CombatAction [Damage(Other, 100, 70, (1, 1))]);
+     ('a',CombatAction [Damage(Other, 95, 65, (1, 1));
+                        Status(Other,10, Burn); Status(Other,10, Flinch)])] in [
   (* Test the evaluation function with teams that only have a type difference.*)
   "tp_us1" >:: (fun _ -> assert_equal 25 (team_points user_pty1 ai_pty1));
   "tp_ai1" >:: (fun _ -> assert_equal (-25) (team_points ai_pty1 user_pty1));
@@ -178,14 +197,12 @@ let tests_g =
   "exp_6" >:: (fun _ -> assert_equal ex_mv6 (expand_move fl_mv6 []));
   "exp_7" >:: (fun _ -> assert_equal true er_mv7);
 
-  (* Test the valid_moves function. *)
-  "exp_1" >:: (fun _ -> assert_equal ex_mv1 (expand_move fl_mv1 []));
-  "exp_2" >:: (fun _ -> assert_equal ex_mv2 (expand_move fl_mv2 []));
-  "exp_3" >:: (fun _ -> assert_equal ex_mv3 (expand_move fl_mv3 []));
-  "exp_4" >:: (fun _ -> assert_equal ex_mv4 (expand_move fl_mv4 []));
-  "exp_5" >:: (fun _ -> assert_equal ex_mv5 (expand_move fl_mv5 []));
-  "exp_6" >:: (fun _ -> assert_equal ex_mv6 (expand_move fl_mv6 []));
-  "exp_7" >:: (fun _ -> assert_equal true er_mv7);
+  (* Test the valid_moves function with different pokemon set_ups *)
+  "val_1" >:: (fun _ -> assert_equal mv_gen1 (valid_moves user_pty1 []));
+  "val_2" >:: (fun _ -> assert_equal mv_gen2 (valid_moves user_pty4 []));
+  "val_3" >:: (fun _ -> assert_equal mv_gen1 (valid_moves user_pty3 []));
+  "val_4" >:: (fun _ -> assert_equal mv_gen3 (valid_moves ai_pty3 []));
+  "val_5" >:: (fun _ -> assert_equal mv_gen4 (valid_moves ai_pty4 []));
 ]
 
 let gb_tests = gb_tests @ tests_g

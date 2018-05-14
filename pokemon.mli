@@ -3,9 +3,6 @@ open Controller
 (* [pokemon] is an abstract type representing an instance of a pokemon in the game *)
 type t
 
-(* [ptype p] is the type of the pokemon p. *)
-type ptype
-
 (* [item] is the type representing items in the user's inventory. *)
 type item
 

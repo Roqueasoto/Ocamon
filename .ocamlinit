@@ -10,8 +10,4 @@
 #load "pokemon.cmo"
 #load "model.cmo"
 #load "ai.cmo"
-#load "guitext.cmo"
 #load "gui.cmo"
-#load "main.cmo"
-
-open Main

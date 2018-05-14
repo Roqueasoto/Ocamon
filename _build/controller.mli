@@ -1,9 +1,16 @@
 (* [effect_on] represents whether an effect should occur on self or other.  *)
 type effect_on = Self | Other
 
-type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison | Toxic
+type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poisoned | Toxic
            | Confused | Flinch | Substitute | Uncontrollable | Focused
-           | LeechSeed | Missed
+            | LeechSeed | Missed
+
+(* Pokemon type exposed temporarily for glass box testing.*)
+(* [ptype p] is the type of the pokemon p.*)
+type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
+           | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
+
+type category = Special | Physical
 
 (* [BuffType] are types for the Buff effect. The int it carries indicate how much to
    increase/decrease the stages of certain stats*)
@@ -83,7 +90,7 @@ type special =
 type effect =
   | Switch of int
   | Heal of effect_on    * int * int
-  | Damage of effect_on  * int * int * (int * int)
+  | Damage of effect_on  * int * int * (int * int) * ptype * category
   | Status of effect_on  * int * status
   | Buff of effect_on    * int * bufftype
   | Special of effect_on * int * special * effect

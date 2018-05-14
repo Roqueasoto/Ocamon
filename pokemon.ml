@@ -1,8 +1,5 @@
 open Controller
 
-type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
-           | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
-
 type item = {itemname: string; descript : string; itemeffect : effect list; quantity: int}
 
 type action = {actname : string; descript : string; effect : effect list}
@@ -19,17 +16,19 @@ module Pokedex = struct
       [{actname = "Fire Fang"; descript = "Deals damage of 65 with 95 accuracy,
   has a 10% chance of burning the target and
   has a 10% chance of causing the target to flinch";
-        effect = [Damage(Other, 95, 65, (1, 1)); Status(Other,10, Burn); Status(Other,10, Flinch)]};
+        effect = [Damage(Other, 95, 65, (1, 1),Fire,Physical);
+                  Status(Other,10, Burn); Status(Other,10, Flinch)]};
       {actname = "Flame Burst";
         descript = "Deals damage of 70 with 100 accuracy";
-        effect = [Damage(Other, 100, 70, (1, 1))]};
+        effect = [Damage(Other, 100, 70, (1, 1),Fire,Physical)]};
       {actname = "Slash";
         descript = "Slash deals damage of 70 with 100 accuracy";
-        effect = [Damage(Other, 100, 70, (1, 1))]};
+        effect = [Damage(Other, 100, 70, (1, 1),Normal,Physical)]};
       {actname = "Flamethrower";
         descript = "Deals damage of 90 with 100 accuracy,
   has a 10% chance of burning the target";
-        effect = [Damage(Other, 100, 90, (1, 1)); Status(Other,10, Burn)]}]
+       effect = [Damage(Other, 100, 90, (1, 1),Fire,Special);
+                 Status(Other,10, Burn)]}]
     in
     {poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
      hp = 161; atk = (112, 0); def = (106, 0);
@@ -41,16 +40,18 @@ module Pokedex = struct
     let act =
       [{actname = "Slam";
         descript = "Slam deals damage of 80 with 75 accuracy";
-        effect = [Damage(Other, 75, 80, (1, 1))]};
+        effect = [Damage(Other, 75, 80, (1, 1),Normal,Physical)]};
        {actname = "Tunderbolt";
         descript = "Thunderbolt deals damage of 70 with 100 accuracy and has a 10% chance of paralyzing the target";
-        effect = [Damage(Other, 100, 70, (1, 1));Status(Other,10, Paralyze)]};
+        effect = [Damage(Other, 100, 70, (1, 1),Electric,Special);
+                  Status(Other,10, Paralyze)]};
        {actname = "Agility";
         descript = "Agility raises the user's Speed by two stages";
         effect = [Buff(Self, 100, SPDBuff 2)]};
        {actname = "Wild Charge";
         descript = "Wild Charge deals damage, but the user receives 1⁄4 of the damage it inflicted in recoil";
-        effect = [Damage(Self, 100, 90, (1, 1)); Damage (Self, 100, 22, (1, 1))]}]
+        effect = [Damage(Self, 100, 90, (1, 1),Electric,Physical);
+                  Damage (Self, 100, 22, (1, 1),Normal,Physical)]}]
     in
     {poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
      hp = 118; atk = (83, 0); def = (58, 0);
@@ -63,7 +64,7 @@ end
 
 module Inventory = struct
   let antidote = {itemname = "Antidote"; descript = "Heals pokemon from poisoning";
-                  itemeffect = [Special(Self, 100, HealStatus(Poison), Nothing)]; quantity = 1}
+                  itemeffect = [Special(Self, 100, HealStatus(Poisoned), Nothing)]; quantity = 1}
 
   let awakening = {itemname = "Awakening"; descript = "Wakes pokemon from sleep";
                    itemeffect = [Special(Self, 100, HealStatus(Sleep), Nothing)]; quantity = 1}
@@ -87,14 +88,14 @@ module Inventory = struct
                  itemeffect = [Status(Self, 100, Focused)]; quantity = 1}
 
   let fullheal = {itemname = "Full Heal"; descript = "Heals all nonvolatile status";
-                  itemeffect = [Special(Self, 100, HealStatus(Poison), Nothing);
+                  itemeffect = [Special(Self, 100, HealStatus(Poisoned), Nothing);
                                 Special(Self, 100, HealStatus(Paralyze), Nothing);
                                 Special(Self, 100, HealStatus(Sleep), Nothing);
                                 Special(Self, 100, HealStatus(Burn), Nothing);
                                 Special(Self, 100, HealStatus(Frozen), Nothing)]; quantity = 1}
   let fullrestore = {itemname = "Full Restore"; descript = "Heals all nonvolatile status and restore full hp";
                    itemeffect = [Heal(Self, 100, 1000);
-                                 Special(Self, 100, HealStatus(Poison), Nothing);
+                                 Special(Self, 100, HealStatus(Poisoned), Nothing);
                                  Special(Self, 100, HealStatus(Paralyze), Nothing);
                                  Special(Self, 100, HealStatus(Sleep), Nothing);
                                  Special(Self, 100, HealStatus(Burn), Nothing);
@@ -337,7 +338,7 @@ let non_overlap_stat s =
   | Burn -> true
   | Paralyze -> true
   | Frozen -> true
-  | Poison -> true
+  | Poisoned -> true
   | Toxic -> true
   | _ -> false
 
@@ -367,7 +368,7 @@ let poke_effect poke1 poke2 effect =
   match effect with
   | Switch _ -> failwith "should not reach"
   | Heal (s, i1, i2) ->  poke_heal poke1 i2
-  | Damage (s, i1, i2, (r1, r2)) -> poke_damage poke1 poke2 i2
+  | Damage (s, i1, i2, (r1, r2), pt1, cat1) -> poke_damage poke1 poke2 i2
   | Buff (s, i1, b) -> begin
       match b with
       | ATKBuff i -> poke_atk_buff poke1 i
