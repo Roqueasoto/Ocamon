@@ -239,7 +239,7 @@ module Pokedex = struct
     sprite_front = "./PokeSpriteFront/10.png"}
 
   let metapod = 
-    {poketype = [Bug]; name = "Caterpie"; status = [StatusNone];
+    {poketype = [Bug]; name = "Metapod"; status = [StatusNone];
     hp = 133; atk = (48, 0); def = (83, 0); spd = (58, 0); spatk = (53, 0);
     maxhp = 133; catch_rate = 120;
     actions = [tackle; stringshot; harden];
@@ -350,7 +350,7 @@ end
 
 module Inventory = struct
   let antidote = {itemname = "Antidote"; descript = "Heals pokemon from poisoning";
-                  itemeffect = [Special(Self, 100, HealStatus(Poison), Nothing)]; quantity = 1}
+                  itemeffect = [Special(Self, 100, HealStatus(Poisoned), Nothing)]; quantity = 1}
 
   let awakening = {itemname = "Awakening"; descript = "Wakes pokemon from sleep";
                    itemeffect = [Special(Self, 100, HealStatus(Sleep), Nothing)]; quantity = 1}
@@ -511,8 +511,11 @@ let build_poke s =
   | None -> failwith "A pokemon with this index does not exist"
 
 let random_poke () =
-  let rand = (Random.int 151) + 1 in
-  let index = string_of_int rand in
+  (*let rand = (Random.int 151) + 1 in
+  let index = string_of_int rand in*)
+  let len = List.length Pokedex.pokedex in
+  let rand = (Random.int len) in
+  let index = fst (List.nth Pokedex.pokedex rand) in
   build_poke index
 
 let build_inventory poke =
