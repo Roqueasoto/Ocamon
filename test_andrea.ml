@@ -3,7 +3,7 @@ open OUnit2
 open Pokemon
 open Controller
 
-let pkc = build_poke "Pikachu"
+let pkc = build_poke "25"
 let rand = random_poke ()
 let effect1 = Nothing
 

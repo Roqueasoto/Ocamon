@@ -1,19 +1,69 @@
 (* [effect_on] represents whether an effect should occur on self or other.  *)
 type effect_on = Self | Other
 
-type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poison | Toxic
+type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poisoned | Toxic
            | Confused | Flinch | Substitute | Uncontrollable | Focused
-           | LeechSeed | Missed
+            | LeechSeed | Missed
+
+(* Pokemon type exposed temporarily for glass box testing.*)
+(* [ptype p] is the type of the pokemon p.*)
+type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
+           | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
+
+type category = Special | Physical
+
+type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
+           | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
 
 (* [BuffType] are types for the Buff effect. The int it carries indicate how much to
    increase/decrease the stages of certain stats*)
-type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int
+type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int | SpatkBuff of int
 
 (* [choices] are types for the Interact command. These indicate what choices are
  * made and at what stage of the game they were made. CStart carries an int that
  * represents the choice of Pokemon at the outset of the game. *)
 type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
              | CWinGame of bool | CQuit
+
+type special =
+  | GSPA (* MODEL *) (*Temporarily guards stat in battle*)
+  | Clamp (* MODEL *)
+  | Dig (* MODEL *)
+  | DoubleEdge
+  | DragonRage
+  | DreamEater
+  | Explosion
+  | FireSpin (* MODEL *)
+  | Fissure
+  | Guillotine
+  | Haze
+  | HornDrill
+  | HyperBeam (* MODEL *)
+  | LightScreen (* MODEL *)
+  | Mimic
+  | MirrorMove (* MODEL *)
+  | NightShade
+  | PetalDance (* MODEL *)
+  | PsyWave
+  | Rage (* MODEL *)
+  | Recover
+  | Reflect (* MODEL *)
+  | Rest
+  | SeismicToss
+  | SelfDestruct
+  | SoftBoiled
+  | SonicBoom
+  | SolarBeam (* MODEL *)
+  | Submission
+  | SpeSubstitute
+  | SuperFang
+  | Swift (* MODEL *)
+  | TakeDown
+  | Thrash (* MODEL *)
+  | Transform
+  | HealStatus of status(*item*)
+  | Revive (*item*)
+  | FocusEnergy (*critical hit, possibly delete*)
 
 (* [effect] represents a combat effect on the game state. For type Switch, the
  * int carried represents the position of the Pokemon in the party that will be
@@ -29,10 +79,10 @@ type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
 type effect =
   | Switch of int
   | Heal of effect_on    * int * int
-  | Damage of effect_on  * int * int * (int * int)
+  | Damage of effect_on  * int * int * (int * int) * ptype * category
   | Status of effect_on  * int * status
   | Buff of effect_on    * int * bufftype
-  | Special of effect_on * int * string
+  | Special of effect_on * int * special * effect
   | Nothing
 
 (* [command] represents a command input by a player. Parsed into one of the 7

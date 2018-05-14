@@ -2,8 +2,6 @@ type index = int
 
 type poke = (index * Pokemon.t)
 
-type itemQ = (Pokemon.item * int)
-
 type ai_info = {
   user_poke_inv : poke list;
   enemy_poke_inv : poke list;
@@ -17,7 +15,7 @@ type person_info = {
   id : person_id;
   name : string;
   poke_inv : poke list;
-  item_inv : itemQ list; (* RI: Keys in item_inv contain no duplicates. *)
+  item_inv : Pokemon.item list; (* RI: Keys in item_inv contain no duplicates. *)
   person_image : string;
   message : string;
 }
@@ -27,9 +25,15 @@ type gui_combat_info = {
   enemy_person_info : person_info;
 }
 
+type game_stats =
+  {
+    next_battle : int;
+    battle_round_log : string list;
+  }
+
 type gui_history_info = {
   milestones : string list;
-  game_stats : (string * string list) list
+  game_stats : game_stats
 }
 
 type mode =
