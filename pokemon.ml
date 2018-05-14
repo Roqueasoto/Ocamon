@@ -25,7 +25,7 @@ module PokeMoves = struct
 
   let solar_beam = {actname = "Solar Beam";
                     descript = "Deals damage of 120";
-                    effect = [Special(Other, 100, SolarBeam, Damage(Other, 100, 120, (1,1), Grass, Special))]}
+                    effect = [Damage(Other, 100, 120, (1,1), Grass, Special)]}
 
   let poison_powder = {actname = "Poison Powder";
                        descript = "Poisons the pokemon";
@@ -39,7 +39,7 @@ module PokeMoves = struct
                    descript = "Inflicts damage on the first turn
                    then traps the opponent, causing them to lose 1⁄16
                    of their maximum HP after each turn, for 4-5 turns";
-                   effect = [Special(Other, 85, FireSpin, Damage(Other, 85, 35, (1,1), Fire, Special))]}
+                   effect = [Damage(Other, 85, 35, (1,1), Fire, Special)]}
 
   let flamethrower = {actname = "Flamethrower";
                    descript = "Deals damage and has 10% chance of burning the target";
@@ -51,7 +51,7 @@ module PokeMoves = struct
 
   let rage = {actname = "Rage";
               descript = "Deals damage, raises atk stage";
-              effect = [Special(Self, 100, Rage, Damage(Other, 100, 20, (1,1), Normal, Physical))]}
+              effect = [Damage(Other, 100, 20, (1,1), Normal, Physical); Buff(Self, 100, ATKBuff 1)]}
 
   let leer = {actname = "Leer";
               descript = "lowers target defense by one stage";
@@ -117,10 +117,6 @@ module PokeMoves = struct
                 descript = "Deals damage twice, 20% chance of poisoning";
                 effect = [Damage(Other, 100, 25, (2,2), Bug, Physical); Status(Other, 20, Poisoned)]}
 
-  let mirrormove = {actname = "Mirror Move";
-                descript = "User performs the opponent's last move.";
-                effect = [Special(Other, 100, MirrorMove, Nothing)]}
-
   let wingattack = {actname = "Wing Attack";
                 descript = "Deals damage w/ no additional effect";
                 effect = [Damage(Other, 100, 60, (1,1), Flying, Physical)]}
@@ -129,20 +125,13 @@ module PokeMoves = struct
                 descript = "Deals damage";
                 effect = [Damage(Other, 100, 40, (1,1), Normal, Physical)]}
 
-  let super_fang = {actname = "Super Fang";
-                descript = "Takes off half of the oponent's HP";
-                effect = [Special(Other, 90, SuperFang, Nothing)]}
-
-  let focus_energy = {actname = "Focus Energy";
-                descript = "Increase critical hit ratio";
-                effect = [Special(Other, 100, FocusEnergy, Nothing)]}
-
   let hyper_fang = {actname = "Hyper Fang";
                 descript = "Deals damage and has 10% chance of causing flinch";
-                    effect = [Damage(Other, 90, 80, (1,1), Normal, Physical); Status(Other, 10, Flinch)]}
+                effect = [Damage(Other, 90, 80, (1,1), Normal, Physical); Status(Other, 10, Flinch)]}
 
-
-
+  let tailwhip = {actname = "Tail Whip";
+                descript = "Lowers defense by 1 stage";
+                effect = [Buff(Other, 100, DEFBuff (-1))]}
 
 end
 
@@ -282,7 +271,7 @@ module Pokedex = struct
     {poketype = [Normal; Flying]; name = "Pidgey"; status = [StatusNone];
     hp = 123; atk = (73, 0); def = (68, 0); spd = (84, 0); spatk = (63, 0);
     maxhp = 123; catch_rate = 255;
-    actions = [agility; whirlwind; mirrormove; wingattack];
+    actions = [agility; whirlwind; quickattack; wingattack];
     sprite_back = "./PokeSpriteBack/16.png";
     sprite_front = "./PokeSpriteFront/16.png"}
 
@@ -290,7 +279,7 @@ module Pokedex = struct
     {poketype = [Normal; Flying]; name = "Pidgeotto"; status = [StatusNone];
     hp = 146; atk = (88, 0); def = (83, 0); spd = (99, 0); spatk = (78, 0);
     maxhp = 146; catch_rate = 255;
-    actions = [mirrormove; agility; wingattack; whirlwind];
+    actions = [agility; wingattack; whirlwind; quickattack];
     sprite_back = "./PokeSpriteBack/17.png";
     sprite_front = "./PokeSpriteFront/17.png"}
 
@@ -306,7 +295,7 @@ module Pokedex = struct
     {poketype = [Normal]; name = "Rattata"; status = [StatusNone];
     hp = 113; atk = (84, 0); def = (63, 0); spd = (100, 0); spatk = (53, 0);
     maxhp = 113; catch_rate = 255;
-    actions = [super_fang; focus_energy; hyper_fang; quickattack];
+    actions = [hyper_fang; quickattack; tackle; tailwhip];
     sprite_back = "./PokeSpriteBack/19.png";
     sprite_front = "./PokeSpriteFront/19.png"}
 
@@ -314,7 +303,7 @@ module Pokedex = struct
     {poketype = [Normal]; name = "Raticate"; status = [StatusNone];
     hp = 138; atk = (109, 0); def = (88, 0); spd = (125, 0); spatk = (78, 0);
     maxhp = 138; catch_rate = 127;
-    actions = [super_fang; focus_energy; hyper_fang; quickattack];
+    actions = [tackle; hyper_fang; quickattack; tailwhip];
     sprite_back = "./PokeSpriteBack/20.png";
     sprite_front = "./PokeSpriteFront/20.png"}
 
@@ -322,7 +311,15 @@ module Pokedex = struct
     {poketype = [Normal; Flying]; name = "Spearow"; status = [StatusNone];
     hp = 123; atk = (88, 0); def = (58, 0); spd = (98, 0); spatk = (59, 0);
     maxhp = 123; catch_rate = 255;
-    actions = [super_fang; focus_energy; hyper_fang; quickattack];
+    actions = [];
+    sprite_back = "./PokeSpriteBack/21.png";
+    sprite_front = "./PokeSpriteFront/21.png"}
+
+  let fearow =
+    {poketype = [Normal; Flying]; name = "Fearow"; status = [StatusNone];
+    hp = 123; atk = (88, 0); def = (58, 0); spd = (98, 0); spatk = (59, 0);
+    maxhp = 123; catch_rate = 255;
+    actions = [];
     sprite_back = "./PokeSpriteBack/21.png";
     sprite_front = "./PokeSpriteFront/21.png"}
 
@@ -391,8 +388,6 @@ module Inventory = struct
                                  Special(Self, 100, HealStatus(Burn), Nothing);
                                    Special(Self, 100, HealStatus(Frozen), Nothing)]; quantity = 1}
 
-  let guardspec = {itemname = "Guard Spec"; descript = "Prevent stat reduction for 5 turns";
-                   itemeffect = [Special(Self, 100, GSPA, Nothing)]; quantity = 1}
 
   let maxpotion = {itemname = "Max Potion"; descript = "Restores full hp";
                    itemeffect = [Heal(Self, 100, 1000)]; quantity = 1}
@@ -426,10 +421,10 @@ module Inventory = struct
 
   let inv = [(0,antidote);(1,awakening);(2,burnheal);(3,freshwater);
              (4,hyperpotion); (5,iceheal);(6, lemonade); (7, paralyzeheal);
-             (8, direhit); (9, fullheal); (10, fullrestore); (11, guardspec);
+             (8, direhit); (9, fullheal); (10, fullrestore); (11, xspeed);
              (12, maxpotion); (13, pokeflute); (14, potion); (15, revive);
              (16, sodapop); (17, superpotion); (18, xattack); (19, xdefense);
-             (20, xspecial); (21, xspeed)]
+             (20, xspecial)]
 end
 
 
@@ -516,10 +511,10 @@ let random_poke () =
   build_poke index
 
 let build_inventory poke =
-  let r1 = Random.int 22 in
-  let r2 = Random.int 22 in
-  let r3 = Random.int 22 in
-  let r4 = Random.int 22 in
+  let r1 = Random.int 21 in
+  let r2 = Random.int 21 in
+  let r3 = Random.int 21 in
+  let r4 = Random.int 21 in
   let i1 = List.assoc r1 Inventory.inv in
   let i2 = List.assoc r2 Inventory.inv in
   let i3 = List.assoc r3 Inventory.inv in
@@ -722,6 +717,15 @@ let poke_change_status poke s =
           sprite_back = poke.sprite_back;
           sprite_front = poke.sprite_front}
 
+let revive_poke poke =
+  let newhp = poke.maxhp/2 in
+  {poketype = poke.poketype; name = poke.name; status = poke.status;
+   hp = newhp; atk = poke.atk; def = poke.def;
+   spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
+   catch_rate = poke.catch_rate;
+   actions = poke.actions;
+   sprite_back = poke.sprite_back;
+   sprite_front = poke.sprite_front}
 
 let poke_effect poke1 poke2 effect =
   match effect with
@@ -735,7 +739,11 @@ let poke_effect poke1 poke2 effect =
       | SPDBuff i -> poke_spd_buff poke1 i
       | SpatkBuff i -> poke_spatk_buff poke1 i
     end
-  | Special (_,_,_,_) -> failwith "unimplemented"
+  | Special (s,i,p,e) -> begin
+      match p with
+      | HealStatus stat -> clear_stat poke1 stat
+      | Revive -> revive_poke poke1
+    end
   | Status (_,_,s) -> poke_change_status poke1 s
   | Nothing -> poke1
 
