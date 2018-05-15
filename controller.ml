@@ -6,7 +6,6 @@ type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poisoned | Toxic
 
 type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
            | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
-
 type category = Special | Physical
 
 type bufftype =
