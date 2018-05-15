@@ -768,6 +768,14 @@ let draw_battle gui_inf =
   set_color green;
   fill_rect 260 210 (truncate opp_health) 10; (*full health is 100*)
 
+  let rec counter lst = 
+    match lst with 
+    |[] -> 0
+    |h::t -> 
+      if (h > 0)
+      then (1 + counter t)
+      else (0 + counter t) in 
+
   (*USER*)
   set_color black;
   (* set_font "-misc-dejavu sans mono-bold-r-normal--12-0-0-0-m-0-iso8859-1"; *)
@@ -780,7 +788,10 @@ let draw_battle gui_inf =
   (* set_font "-misc-dejavu sans mono-bold-r-normal--12-0-0-0-m-0-iso8859-1"; *)
   moveto 260 190;
   draw_string (string_of_int (truncate opp_hp_now) ^ "/" ^
-    string_of_int (truncate max_opp));
+    string_of_int (truncate max_opp) ^ "   " ^ 
+    string_of_int (counter (List.map hp (snd (List.split 
+      (comb_inf.enemy_person_info.poke_inv)))))
+    ^ " pokemon left.");
 
   (*****************************************************************)
   (*This handles the log_history*)
@@ -832,15 +843,16 @@ let rec press_before () =
 
 (*[before_battle gui_inf] displays the enemy's image
 and name before the actual battle*)
-let before_battle () =
+let before_battle gui_inf =
   Graphics.set_window_title "OCAMON!";
   Graphics.open_graph " 600x400";
   let start = Jpeg.load "battleBackground.jpg" [] in
   let s = start |> array_of_image |> make_image in
   draw_image s 0 0;
 
-  (*let enemy = Jpeg.load comb_inf.enemy_person_info.person_image [] in
-  let e = enemy |> array_of_image |> make_image in
+  (*let friend = Jpeg.load (sprite_front (List.assoc 0 
+    (comb_inf.user_person_info.poke_inv))) [] in
+  let e = friend |> array_of_image |> make_image in
   draw_image e 250 50;*)
 
   set_color black;
@@ -849,8 +861,10 @@ let before_battle () =
   draw_string "You are about to go into battle!";
   (*draw_string ("You are about to battle " ^ comb_inf.enemy_person_info.name
     ^ ".");*)
+  moveto 210 150; 
+  draw_string ("You have received a new pokemon!");
   moveto 210 180;
-  draw_string "Press 'c' to continue.";
+  draw_string "Press 'c' to continue. >";
 
   press_before ()
 
@@ -965,7 +979,7 @@ let draw_map gui_inf =
 
 let map_game gui_inf =
   draw_map gui_inf;
-  before_battle () (*unit because gui_info doesn't have enemy name yet*)
+  before_battle gui_inf (*unit because gui_info doesn't have enemy name yet*)
 
 (*START-START-START-START-START-START-START-START-START-START-START-START*)
 
@@ -1145,7 +1159,7 @@ let press_win_match () =
     let s = Graphics.wait_next_event [Graphics.Key_pressed] in
     if s.Graphics.keypressed
     then
-      if s.Graphics.key = 'c'
+      if s.Graphics.key = 's'
       then (return_bool := true; keep_running := false)
       else keep_running := true;
   done; !return_bool
@@ -1168,7 +1182,7 @@ let rec win_match () =
   moveto 160 180;
   draw_string "Congrats! You won the match!";
   moveto 160 150;
-  draw_string "Press 'c' to continue. >";
+  draw_string "Press 's' to start new match. >";
 
   let maybe = press_win_match () in
     match maybe with
