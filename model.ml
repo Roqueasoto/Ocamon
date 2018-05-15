@@ -471,9 +471,8 @@ module DoRoundHelp = struct
 
   (* Requires to be in battle mode *)
   let get_enemy_id st =
-    match st.mode with
-    | MCombat enemy_id -> enemy_id
-    | _ -> failwith "unreachable get_enemy_id"
+    let level = st.game_stats.next_battle in
+    Initiate_Population.enemy_id level
 
   (* Elist is expanded to reflect damage multiplier.
      Example: elist is (damage (min 3, max 5), effect 2, efect 3) an
