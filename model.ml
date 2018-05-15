@@ -1,7 +1,7 @@
 open Shared_types
 
 (* Your damage has qradruple the effect in battle! *)
-let god_mode = false
+let god_mode = true
 let god_damage_multiplier = 4
 
 (* AF: [person] represents a person and id pair.
