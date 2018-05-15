@@ -712,7 +712,7 @@ let rec press_history () =
       else keep_running := true; 
   done 
 
-(*[draw_battle gui_inf] *) 
+(*[draw_battle gui_inf] *)
 let draw_battle gui_inf = 
   Graphics.set_window_title "OCAMON!";
   Graphics.open_graph " 600x400";
