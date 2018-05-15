@@ -187,14 +187,6 @@ module PokeMoves = struct
 
 end
 
-(*Template:
-  {poketype = []; name = ""; status = [StatusNone];
-  hp = ; atk = (, 0); def = (, 0); spd = (, 0); spatk = (, 0);
-  maxhp = ; catch_rate = ;
-  actions = [];
-  sprite_back = "./PokeSpriteBack/1.png";
-  sprite_front = "./PokeSpriteFront/1.png"}
-*)
 
 module Pokedex = struct
   open PokeMoves
@@ -595,12 +587,13 @@ let inv_names inv =
 
 let rec clear_helper stats stat acc =
   match stats with
-  | [] -> if acc == [] then [StatusNone] else acc
-  | h::t -> if h = stat then acc@t else clear_helper stats stat (h::acc)
+  | [] -> []
+  | h::t -> if h = stat then acc@t else clear_helper t stat (h::acc)
 
 let clear_stat poke stat =
+  let new_stats = clear_helper poke.status stat [] in
   {poketype = poke.poketype; name = poke.name;
-   status = clear_helper poke.status stat [];
+   status = if new_stats = [] then [StatusNone] else new_stats;
    hp = poke.hp; atk = poke.atk; def = poke.def;
    spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
    catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
@@ -618,7 +611,7 @@ let random_poke () =
   let index = fst (List.nth Pokedex.pokedex rand) in
   build_poke index
 
-let build_inventory poke =
+let build_inventory () =
   let r1 = Random.int 21 in
   let r2 = Random.int 21 in
   let r3 = Random.int 21 in
@@ -683,7 +676,7 @@ let poke_spd_buff poke i=
   if i < 0 then
     {poketype = poke.poketype; name = poke.name; status = poke.status;
      hp = poke.hp; atk = poke.atk; def = poke.def;
-     spd = (fst(poke.spd), (max (-6) (snd poke.spd)+i));
+     spd = (fst(poke.spd), (max (-6) ((snd poke.spatk)+i)));
      spatk = poke.spatk; maxhp = poke.maxhp;
      catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
      actions = poke.actions; sprite_back = poke.sprite_back;
@@ -691,7 +684,7 @@ let poke_spd_buff poke i=
   else
     {poketype = poke.poketype; name = poke.name; status = poke.status;
      hp = poke.hp; atk = poke.atk; def = poke.def;
-     spd = (fst(poke.spd), (min (6) (snd poke.spd)+i));
+     spd = (fst(poke.spd), (min (6) ((snd poke.spatk)+i)));
      spatk = poke.spatk; maxhp = poke.maxhp;
      catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
      actions = poke.actions;
@@ -701,7 +694,7 @@ let poke_atk_buff poke i =
   if i < 0 then
     {poketype = poke.poketype; name = poke.name; status = poke.status;
      hp = poke.hp;
-     atk = (fst(poke.atk), (max (-6) (snd poke.atk)+i)); def = poke.def;
+     atk = (fst(poke.atk), (max (-6) ((snd poke.spatk)+i))); def = poke.def;
      spd = poke.spd; spatk = poke.spatk;
      maxhp = poke.maxhp; catch_rate = poke.catch_rate;
      turn_counter = poke.turn_counter;
@@ -710,7 +703,7 @@ let poke_atk_buff poke i =
   else
     {poketype = poke.poketype; name = poke.name;
      status = poke.status; hp = poke.hp;
-     atk = (fst(poke.atk), (min (6) (snd poke.atk)+i)); def = poke.def;
+     atk = (fst(poke.atk), (min (6) ((snd poke.spatk)+i))); def = poke.def;
      spd = poke.spd; spatk = poke.spatk;
      maxhp = poke.maxhp; catch_rate = poke.catch_rate;
      turn_counter = poke.turn_counter;
@@ -721,7 +714,7 @@ let poke_def_buff poke i =
     if i < 0 then
       {poketype = poke.poketype; name = poke.name;
        status = poke.status; hp = poke.hp;
-       atk = poke.atk; def = (fst(poke.def), (max (-6) (snd poke.def)+i));
+       atk = poke.atk; def = (fst(poke.def), (max (-6) ((snd poke.spatk)+i)));
        spd = poke.spd; spatk = poke.spatk;
        maxhp = poke.maxhp; catch_rate = poke.catch_rate;
        turn_counter = poke.turn_counter;
@@ -730,7 +723,7 @@ let poke_def_buff poke i =
     else
       {poketype = poke.poketype; name = poke.name;
        status = poke.status; hp = poke.hp;
-       atk = poke.atk; def = (fst(poke.def),(min (6) (snd poke.def)+i));
+       atk = poke.atk; def = (fst(poke.def),(min (6) ((snd poke.spatk)+i)));
        spd = poke.spd; spatk = poke.spatk;
        maxhp = poke.maxhp; catch_rate = poke.catch_rate;
        turn_counter = poke.turn_counter;
@@ -742,7 +735,7 @@ let poke_spatk_buff poke i =
     {poketype = poke.poketype; name = poke.name;
      status = poke.status; hp = poke.hp;
      atk = poke.atk; def = poke.def;
-     spd = poke.spd; spatk = (fst(poke.spatk), (max (-6) (snd poke.spatk)+i));
+     spd = poke.spd; spatk = (fst(poke.spatk), (max (-6) ((snd poke.spatk)+i)));
      maxhp = poke.maxhp; catch_rate = poke.catch_rate;
      turn_counter = poke.turn_counter;
      actions = poke.actions; sprite_back = poke.sprite_back;
@@ -750,8 +743,8 @@ let poke_spatk_buff poke i =
   else
     {poketype = poke.poketype; name = poke.name;
      status = poke.status; hp = poke.hp;
-     atk = poke.atk; def = (fst(poke.spatk),(min (6) (snd poke.spatk)+i));
-     spd = poke.spd; spatk = poke.spatk;
+     atk = poke.atk; def = poke.def;
+     spd = poke.spd; spatk =(fst(poke.spatk),(min 6 ((snd poke.spatk)+i)));
      maxhp = poke.maxhp; catch_rate = poke.catch_rate;
      turn_counter = poke.turn_counter;
      actions = poke.actions; sprite_back = poke.sprite_back;
@@ -826,11 +819,6 @@ let rec check_overlaps lst s =
   | [] -> false
   | h::t -> if overlap_stats h then true
             else check_overlaps t s
-
-(*let get_turns s =
-  match s with
-  | Confused -> 4
-  | Sleep -> Random.int 8*)
 
 let poke_change_status poke s =
   match poke.status, s with
