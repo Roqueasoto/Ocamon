@@ -618,6 +618,7 @@ module DoInteractHelp = struct
     update_state_with_poke_invs_and_state_info
       st (state_info, user_poke_inv', enemy_poke_inv')
 
+  (* Gets a random new pokemon.  *)
   let get_random_new_poke poke_inv =
     let open Pokemon in
     let current_keys =
@@ -631,11 +632,37 @@ module DoInteractHelp = struct
     | k::_ -> build_poke k
 
 
-(* TODO ADD NEW POKE *)
+  let award_new_poke st =
+    let open DoRoundHelp in
+    let user_id = "user" in
+    let enemy_id = get_enemy_id st in
+    let state_info = expand_state user_id enemy_id st in
+    let user_poke_inv = state_info.poke_inv_self in
+    let enemy_poke_inv = state_info.poke_inv_other in
+
+    (* If there's space, award new poke. *)
+    if (List.length user_poke_inv = 6) then st
+    else
+      (* Add new pokemon *)
+      let user_poke_inv' =
+        let new_poke = get_random_new_poke user_poke_inv in
+
+        (* increment the indices of each poke. *)
+        let user_poke_inv_incr =
+          let op (index, poke) = (index + 1, poke) in
+          List.map op user_poke_inv in
+
+        (0, new_poke)::user_poke_inv_incr in
+
+      update_state_with_poke_invs_and_state_info
+        st (state_info, user_poke_inv', enemy_poke_inv)
+
   let do_cbattleend st =
     let is_user_winner = get_is_user_winner st in
     let st = revive_all_poke st in
-    if is_user_winner then {st with mode = MWin}
+    if is_user_winner then
+      let st_awarded = award_new_poke st in
+      {st_awarded with mode = MWin}
     else {st with mode = MLose}
 
   let do_cwingame b st =
