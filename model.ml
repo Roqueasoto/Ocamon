@@ -541,7 +541,7 @@ module DoInteractHelp = struct
     let user_info = List.assoc "user" st.population in
     let user_info' = {user_info with poke_inv = [0, user_poke_new]} in
     let population' = update_assoc "user" user_info' st.population in
-    {st with population = population'}
+    {st with population = population'; mode = MMap}
 
 (* go to next available level. *)
   let do_cmap st =

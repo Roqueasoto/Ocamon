@@ -3,7 +3,7 @@ type effect_on = Self | Other
 
 type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poisoned | Toxic
            | Confused | Flinch | Substitute | Uncontrollable | Focused
-            | LeechSeed | Missed
+            | LeechSeed | Mist
 
 (* Pokemon type exposed temporarily for glass box testing.*)
 (* [ptype p] is the type of the pokemon p.*)
