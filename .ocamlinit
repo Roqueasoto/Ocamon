@@ -17,3 +17,5 @@
 #load "test_cynthia.cmo"
 #load "test_roque.cmo"
 #load "test_timothy.cmo"
+
+#load "main.cmo"
