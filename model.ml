@@ -43,7 +43,7 @@ module CommonHelp = struct
     match eff with
     | Switch _ -> "Switch"
     | Heal _ -> "Heal"
-    | Damage _ -> "Damage"
+    | Damage _ -> "Attack"
     | Status _ -> "Status"
     | Buff _ -> "Buff"
     | Special (_, _, special, _) -> get_special_effect_name special
