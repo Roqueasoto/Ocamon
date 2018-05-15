@@ -598,7 +598,7 @@ module DoInteractHelp = struct
     user_hp <> 0
 
   let do_cbattleend st =
-    let is_user_winner = failwith "" in
+    let is_user_winner = get_is_user_winner st in
     if is_user_winner then {st with mode = MWin}
     else {st with mode = MLose}
 
