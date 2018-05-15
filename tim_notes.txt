@@ -1,0 +1,7 @@
+ai.cmo
+controller.cmo
+gui.cmo
+main.cmo
+model.cmo
+pokemon.cmo
+shared_types.cmo

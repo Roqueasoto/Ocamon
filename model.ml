@@ -45,7 +45,7 @@ module CommonHelp = struct
     | Heal _ -> "Heal"
     | Damage _ -> "Attack"
     | Status _ -> "Status"
-    | Buff _ -> "Buff" 
+    | Buff _ -> "Buff"
     | Special (_, _, special, _) -> get_special_effect_name special
     | Nothing -> "Nothing"
 end
@@ -77,8 +77,8 @@ module Blanks = struct
 
   let blank_history_info =
     {
-      milestones = []; 
-      game_stats = blank_game_stats; 
+      milestones = [];
+      game_stats = blank_game_stats;
     }
 end
 
@@ -95,7 +95,7 @@ module Initiate_Population = struct
                        "enemy_4";
                        "enemy_5";]
 
-  let enemy_id n = List.nth enemy_id_list n 
+  let enemy_id n = List.nth enemy_id_list n
 
   let rec make_random_party size =
     let rec h size start_index =
@@ -471,9 +471,8 @@ module DoRoundHelp = struct
 
   (* Requires to be in battle mode *)
   let get_enemy_id st =
-    match st.mode with
-    | MCombat enemy_id -> enemy_id
-    | _ -> failwith "unreachable get_enemy_id"
+    let level = st.game_stats.next_battle in
+    Initiate_Population.enemy_id level
 
   (* Elist is expanded to reflect damage multiplier.
      Example: elist is (damage (min 3, max 5), effect 2, efect 3) an

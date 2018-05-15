@@ -720,7 +720,7 @@ let draw_battle gui_inf =
 
   let comb_inf = begin match gui_inf.combat_info with
     | Some i -> i
-    | None -> failwith "Unreachable : Something wrong at draw_battle"
+    | None -> failwith "Unreachable : Something wrong at draw_battle" 
   end in 
 
   (*Displays pokemon images*)
