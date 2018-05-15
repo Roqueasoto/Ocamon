@@ -1,7 +1,8 @@
 open Shared_types
 
-(* Your damage has double the effect in battle! *)
+(* Your damage has qradruple the effect in battle! *)
 let god_mode = true
+let god_damage_multiplier = 4
 
 (* AF: [person] represents a person and id pair.
 RI: person_id must equal person_info.id *)
@@ -385,7 +386,8 @@ module DoRoundHelp = struct
           match eff with
           | Damage (effect_on, accuracy, damage, (mini, maxi), p, c) -> begin
               if (self_id = "user" && effect_on = Self)
-              then Damage (effect_on, accuracy, (damage * 2), (mini, maxi), p, c)
+              then Damage (effect_on, accuracy,
+                           (damage * god_damage_multiplier), (mini, maxi), p, c)
               else eff
           end
           | _ -> eff
@@ -678,7 +680,11 @@ module DoInteractHelp = struct
       List.filter is_new_key get_pokedex_keys in
     match new_pokedex_keys with
     | [] -> failwith "impossible to have no new pokemon to choose from"
-    | k::_ -> build_poke k
+    | _ -> begin
+        let random_index = Random.int (List.length new_pokedex_keys) in
+        let random_key = List.nth new_pokedex_keys random_index in
+        build_poke random_key
+    end
 
 (* If there's space, awards a new poke to player's party. *)
   let award_new_poke st =
