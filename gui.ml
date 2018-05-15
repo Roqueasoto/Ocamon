@@ -579,27 +579,28 @@ let rec press_before () =
 
 (*[before_battle gui_inf] displays the enemy's image 
 and name before the actual battle*)
-let before_battle gui_inf = 
+let before_battle () = 
   Graphics.set_window_title "OCAMON!";
   Graphics.open_graph " 600x400";
   let start = Jpeg.load "battleBackground.jpg" [] in 
   let s = start |> array_of_image |> make_image in 
   draw_image s 0 0; 
 
-  let comb_inf = begin match gui_inf.combat_info with
+  (*let comb_inf = begin match gui_inf.combat_info with
     | Some i -> i
     | None -> failwith "Unreachable : combat_text"
-  end in 
+  end in *)
 
-  let enemy = Jpeg.load comb_inf.enemy_person_info.person_image [] in 
+  (*let enemy = Jpeg.load comb_inf.enemy_person_info.person_image [] in 
   let e = enemy |> array_of_image |> make_image in 
-  draw_image e 250 50;
+  draw_image e 250 50;*)
 
   set_color black; 
   set_text_size 20; 
   moveto 210 210;
-  draw_string ("You are about to battle " ^ comb_inf.enemy_person_info.name 
-    ^ ".");
+  draw_string "You are about to go into battle!";
+  (*draw_string ("You are about to battle " ^ comb_inf.enemy_person_info.name 
+    ^ ".");*)
   moveto 210 180;
   draw_string "Press 'c' to continue.";
 
@@ -716,7 +717,7 @@ let draw_map gui_inf =
 
 let map_game gui_inf = 
   draw_map gui_inf;
-  before_battle gui_inf
+  before_battle ()
 
 (*START-START-START-START-START-START-START-START-START-START-START-START*)
 
