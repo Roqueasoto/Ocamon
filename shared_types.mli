@@ -27,7 +27,7 @@ type person_info = {
   message : string;
 }
 
-(* [gui_combat_info] represents the combat information for needed for the GUI. *)
+(* [gui_combat_info] represents the combat information for needed for the GUI.*)
 type gui_combat_info = {
   user_person_info : person_info;
   enemy_person_info : person_info;
@@ -44,7 +44,7 @@ type game_stats =
     battle_round_log : string list;
   }
 
-(* [gui_history_info] represents additional information about the user play history. *)
+(* [gui_history_info] represents more information about the user play history.*)
 type gui_history_info = {
   milestones : string list;
   game_stats : game_stats
@@ -60,7 +60,7 @@ type mode =
   | MWinGame
   | MQuit
 
-(* AF: [gui_info] represents the set of information about the game state that the
+(* AF: [gui_info] represents the set of information about the game state the
  * GUI needs in order to produce the graphics.
    RI: combat_info must be None if mode is not MCombat. combat_info must be Some
    gui_combat_info is mode is MCombat. *)

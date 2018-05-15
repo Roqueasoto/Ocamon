@@ -13,9 +13,10 @@ type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
 type category = Special | Physical
 
 
-(* [BuffType] are types for the Buff effect. The int it carries indicate how much to
-   increase/decrease the stages of certain stats*)
-type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int | SpatkBuff of int
+(* [BuffType] are types for the Buff effect. The int it carries indicate how
+ *   much to increase/decrease the stages of certain stats*)
+type bufftype =
+    ATKBuff of int | DEFBuff of int | SPDBuff of int | SpatkBuff of int
 
 (* [choices] are types for the Interact command. These indicate what choices are
  * made and at what stage of the game they were made. CStart carries an int that

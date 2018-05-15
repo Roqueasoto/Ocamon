@@ -1,6 +1,6 @@
 open Controller
 
-(* [pokemon] is an abstract type representing an instance of a pokemon in the game *)
+(* [pokemon] an abstract type representing an instanced pokemon in the game *)
 type t
 
 (* [item] is the type representing items in the user's inventory. *)
@@ -24,7 +24,7 @@ val def : t -> int * int
 (* [spd p] is the current spd value and stat stage of the pokemon p. *)
 val spd : t -> int * int
 
-(*[spatk p] is the current special attack value and stat stage of the pokemon p*)
+(*[spatk p] is the current special attack value & stat stage of the pokemon p*)
 val spatk : t -> int*int
 
 (* [maxhp p] is the maxiumum hp value of the pokemon p. *)
@@ -45,7 +45,7 @@ val status : t -> status list
 (*[turns p] returns the turn_counter of the pokemon p*)
 val turns : t -> int
 
-(*[decre_turn p] returns a pokemon with its turn_counter decremented (not below 0)*)
+(*[decre_turn p] returns a pokemon with turn_counter decremented (not below 0)*)
 val decre_turn : t -> t
 
 (*[set_count p i] sets the turn_counter to i. i cannot be below 0*)
@@ -55,10 +55,10 @@ val set_count : t -> int -> t
  * can perform. *)
 val actions : t -> (int * command) list
 
-(*[action_names] returns an association list of (index, action_name), indexing from 1*)
+(*[action_names] returns an assoc. list of (index, action_name), from 1*)
 val action_names : t -> (int * string) list
 
-(*[inv_names] returns a association list of (index, itemn name), indexing from 1*)
+(*[inv_names] returns a association list of (index, itemn name), from 1*)
 val inv_names : item list -> (int * string) list
 
 (*[check_status p s] returns true if the pokemon has status s*)
@@ -79,7 +79,7 @@ val random_poke : unit -> t
 (* [build_inventory] gives a random list of 4  items*)
 val build_inventory : unit -> item list
 
-(* [pokemon_damage p e] process effect e on the pokemon p and returns a new pokemon *)
+(* [pokemon_damage p e] process effect e on the pokemon p and returns a new p *)
 val poke_effect : t -> t -> effect -> t
 
 (* Set all stat stages to zero*)

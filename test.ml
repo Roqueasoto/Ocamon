@@ -6,7 +6,7 @@ open OUnit2
    3. Run "make test"
 
    WARNING:
-   Please make sure that the boolean flags below are correct. If you disable one,
+   Please make sure that the boolean flags below are correct. If you disable one
    don't forget to re-enable it if you wish to run it again.
 *)
 

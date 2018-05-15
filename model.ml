@@ -38,7 +38,7 @@ module CommonHelp = struct
     | HealStatus _ -> "HealStatus"
     | Revive -> "Revive"
 
-  let get_eff_name eff = 
+  let get_eff_name eff =
     let open Controller in
     match eff with
     | Switch _ -> "Switch"
@@ -101,7 +101,8 @@ module Initiate_Population = struct
     let rec h size start_index =
       if size = 0 then []
       else
-        (start_index, Pokemon.random_poke ())::(h (size - 1) (start_index + 1)) in
+        (start_index, Pokemon.random_poke ())::(h (size - 1)
+                                                  (start_index + 1)) in
     h size 0
 
   let initial_enemy_0 = {blank_person_info with
@@ -264,7 +265,8 @@ module MakeHypotheticalState = struct
     let enemy_person_info = make_enemy_person_info ai_info in
     {
       blank_state with
-      population = [(user_simulated_name, user_person_info); (enemy_simulated_name, enemy_person_info)];
+      population = [(user_simulated_name, user_person_info);
+                    (enemy_simulated_name, enemy_person_info)];
       mode = MCombat (enemy_simulated_name)
     }
 end
@@ -323,9 +325,12 @@ module DoRoundHelp = struct
     }
 
 (* Updates state_info given new poke_invs  *)
-  let update_state_info_with_poke_invs state_info (poke_inv_self', poke_inv_other') =
-    let person_info_self' = {state_info.person_info_self with poke_inv = poke_inv_self'} in
-    let person_info_other' = {state_info.person_info_other with poke_inv = poke_inv_other'} in
+  let update_state_info_with_poke_invs
+      state_info (poke_inv_self', poke_inv_other') =
+    let person_info_self' =
+      {state_info.person_info_self with poke_inv = poke_inv_self'} in
+    let person_info_other' =
+      {state_info.person_info_other with poke_inv = poke_inv_other'} in
     {state_info with
      person_info_self = person_info_self';
      person_info_other = person_info_other';
@@ -334,32 +339,41 @@ module DoRoundHelp = struct
 (* Updates state_info given new pokes *)
   let update_state_info_with_pokes state_info (poke_self', poke_other') =
     let poke_inv_self' = update_assoc 0 poke_self' state_info.poke_inv_self in
-    let poke_inv_other' = update_assoc 0 poke_other' state_info.poke_inv_other in
-    update_state_info_with_poke_invs state_info (poke_inv_self', poke_inv_other')
+    let poke_inv_other' =
+      update_assoc 0 poke_other' state_info.poke_inv_other in
+    update_state_info_with_poke_invs state_info
+      (poke_inv_self', poke_inv_other')
 
   (* Returns state updated with state_info. *)
   let update_state_with_state_info st state_info =
     let self_id = state_info.person_info_self.id in
     let other_id = state_info.person_info_other.id in
-    let population' = update_assoc self_id state_info.person_info_self st.population in
-    let population'' = update_assoc other_id state_info.person_info_other population' in
+    let population' =
+      update_assoc self_id state_info.person_info_self st.population in
+    let population'' =
+      update_assoc other_id state_info.person_info_other population' in
     {st with population = population''}
 
 (* Returns state updated with pokes, using state info.  *)
-  let update_state_with_pokes_and_state_info st (state_info, poke_self', poke_other') =
-    let state_info' = update_state_info_with_pokes state_info (poke_self', poke_other') in
+  let update_state_with_pokes_and_state_info
+      st (state_info, poke_self', poke_other') =
+    let state_info' =
+      update_state_info_with_pokes state_info (poke_self', poke_other') in
     update_state_with_state_info st state_info'
 
 (* Returns state updated with pokes, using state info *)
-  let update_state_with_poke_invs_and_state_info st (state_info, poke_inv_self', poke_inv_other') =
-    let state_info' = update_state_info_with_poke_invs state_info (poke_inv_self', poke_inv_other') in
+  let update_state_with_poke_invs_and_state_info
+      st (state_info, poke_inv_self', poke_inv_other') =
+    let state_info' =
+      update_state_info_with_poke_invs state_info
+        (poke_inv_self', poke_inv_other') in
     update_state_with_state_info st state_info'
 
-(* [do_eff_try (self_id, other_id) eff] returns (st', is_success) which is a tuple
+(* [do_eff_try (self_id, other_id) eff] returns (st', is_success) a tuple
    whose first element is the updated state and the second element is whether
    the effect was successful or not. *)
   let do_eff_try (self_id, other_id, st) eff =
-    (* Based on accuracy, return a boolean that represents whether this effect is
+    (* Based on accuracy, return a boolean that represents whether this effect's
        successful or not. *)
     let get_is_success accuracy =
       let random = Random.int 100 in
@@ -385,7 +399,8 @@ module DoRoundHelp = struct
         let poke_inv_self' = update_assoc 0 poke_i poke_inv_self in
         let poke_inv_self'' = update_assoc i poke_0 poke_inv_self' in
         poke_inv_self'' in
-      let st' = update_state_with_poke_invs_and_state_info st (state_info, poke_inv_self_new, poke_inv_other_new) in
+      let st' = update_state_with_poke_invs_and_state_info st
+          (state_info, poke_inv_self_new, poke_inv_other_new) in
       let log =
         let name = state_info.person_info_self.name in
         let pokemon = List.assoc 0 poke_inv_self_new in
@@ -414,15 +429,18 @@ module DoRoundHelp = struct
           match effect_on with
           | Self -> begin
               let poke_other' = state_info.poke_other in
-              let poke_self' = Pokemon.poke_effect state_info.poke_self state_info.poke_other eff in
+              let poke_self' = Pokemon.poke_effect state_info.poke_self
+                  state_info.poke_other eff in
               (poke_self', poke_other')
             end
           | Other -> begin
               let poke_self' = state_info.poke_self in
-              let poke_other' = Pokemon.poke_effect state_info.poke_other state_info.poke_self eff in
+              let poke_other' = Pokemon.poke_effect state_info.poke_other
+                  state_info.poke_self eff in
               (poke_self', poke_other')
             end in
-        let st' = update_state_with_pokes_and_state_info st (state_info, poke_self', poke_other') in
+        let st' = update_state_with_pokes_and_state_info st
+            (state_info, poke_self', poke_other') in
         let st'' = update_log (pokemon_name^"'s attack succeeded. ") st' in
         (st'', true)
       end in
@@ -437,7 +455,7 @@ module DoRoundHelp = struct
     | Nothing -> (st, true)
 
 (* Requires that elist be expanded.
-   First try the first effect. If it succeeds, proceed with resolving the rest of
+   First try the first effect. If it succeeds, proceed with resolving rest of
    the effect list. Otherwise, no other effects are resolved.  *)
   let do_eff_lst (self_id, other_id, st) elist =
     match elist with
@@ -525,7 +543,8 @@ module DoRoundHelp = struct
     let first_id = order.first_id in
     let second_id = order.second_id in
     (* Empty the battle_round_log. *)
-    let st_0 = {st with game_stats = {st.game_stats with battle_round_log = []}} in
+    let st_0 =
+      {st with game_stats = {st.game_stats with battle_round_log = []}} in
     let st' = do_eff_lst (first_id, second_id, st_0) order.first_elist in
     let st'' = do_eff_lst (second_id, first_id, st') order.second_elist in
     st''
@@ -620,6 +639,8 @@ let do' cmd st =
   match cmd with
   | Move s -> failwith "unreachable: handled by gui"
   | Interact choices -> DoInteractHelp.do_interact choices st
-  | CombatAction eff_lst -> failwith "unreachable: main will never ask model to do this"
+  | CombatAction eff_lst ->
+    failwith "unreachable: main will never ask model to do this"
   (* | Round (_,_) -> st *)
-  | Round (user_elist, enemy_elist) -> DoRoundHelp.do_round user_elist enemy_elist st
+  | Round (user_elist, enemy_elist) ->
+    DoRoundHelp.do_round user_elist enemy_elist st
