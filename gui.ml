@@ -252,6 +252,7 @@ let items_screen gui_inf =
   draw_rect 50 10 500 100;
   set_color white;
   fill_rect 50 10 500 100;
+  set_color black;
 
   (* set_font "-misc-dejavu sans mono-bold-r-normal--14-0-0-0-m-0-iso8859-1";  *)
 
@@ -358,6 +359,7 @@ let poke_screen gui_inf =
   draw_rect 50 10 500 100;
   set_color white;
   fill_rect 50 10 500 100;
+  set_color black;
 
   (* set_font "-misc-dejavu sans mono-bold-r-normal--14-0-0-0-m-0-iso8859-1";  *)
 
@@ -710,7 +712,7 @@ let rec press_history () =
       else keep_running := true; 
   done 
 
-(*[draw_battle gui_inf] *)
+(*[draw_battle gui_inf] *) 
 let draw_battle gui_inf = 
   Graphics.set_window_title "OCAMON!";
   Graphics.open_graph " 600x400";
@@ -1170,7 +1172,7 @@ let rec win_match () =
 
   let maybe = press_win_match () in 
     match maybe with 
-    |true -> Interact CBattleEnd
+    |true -> Interact CWin
     |false ->  win_match () 
 
 let rec press_win () = 
