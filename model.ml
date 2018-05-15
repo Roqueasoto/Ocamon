@@ -597,8 +597,44 @@ module DoInteractHelp = struct
     let user_hp = Pokemon.hp state_info.poke_self in
     user_hp <> 0
 
+  (* Restores the pokemon to full health at end of battle. *)
+  let revive_all_poke st =
+    let open DoRoundHelp in
+    let user_id = "user" in
+    let enemy_id = get_enemy_id st in
+    let state_info = expand_state user_id enemy_id st in
+
+    let revive_inv poke_inv =
+      let op (index, poke) =
+        let open Pokemon in
+        let pokedex_key = get_pokedex_number poke in
+        let poke_revived = build_poke pokedex_key in
+        (index, poke_revived) in
+      List.map op poke_inv in
+
+    let user_poke_inv' = revive_inv (state_info.poke_inv_self) in
+    let enemy_poke_inv' = revive_inv (state_info.poke_inv_other) in
+
+    update_state_with_poke_invs_and_state_info
+      st (state_info, user_poke_inv', enemy_poke_inv')
+
+  let get_random_new_poke poke_inv =
+    let open Pokemon in
+    let current_keys =
+      let get_key (index, poke) = get_pokedex_number poke in
+      List.map get_key poke_inv in
+    let new_pokedex_keys =
+      let is_new_key key = not (List.mem key current_keys) in
+      List.filter is_new_key get_pokedex_keys in
+    match new_pokedex_keys with
+    | [] -> failwith "impossible to have no new pokemon to choose from"
+    | k::_ -> build_poke k
+
+
+(* TODO ADD NEW POKE *)
   let do_cbattleend st =
     let is_user_winner = get_is_user_winner st in
+    let st = revive_all_poke st in
     if is_user_winner then {st with mode = MWin}
     else {st with mode = MLose}
 

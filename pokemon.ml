@@ -934,3 +934,17 @@ let clear_buff poke =
 let item_use_combat item =
   if item.itemeffect = [] then None
   else Some (CombatAction item.itemeffect)
+
+(* Gets the pokedex key corresponding to poke.
+Requires poke to be in pokedex.*)
+let get_pokedex_number poke =
+  let open Pokedex in
+  let op (elt_key, elt_poke) =
+    (name poke) = (name elt_poke) in
+  let filtered = List.filter op pokedex in
+  match filtered with
+  | [] -> failwith "unreachable: precondition failrure"
+  | (key, _)::_ -> key
+
+(* Gets the keys of pokedex *)
+let get_pokedex_keys = List.map fst Pokedex.pokedex
