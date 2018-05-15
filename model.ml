@@ -376,6 +376,23 @@ module DoRoundHelp = struct
    whose first element is the updated state and the second element is whether
    the effect was successful or not. *)
   let do_eff_try (self_id, other_id, st) eff =
+
+    (* GOD MODE: Multiply damage by 2 for user inflicting damage on enemy. *)
+    let eff =
+      if god_mode then
+        begin
+          let open Controller in
+          match eff with
+          | Damage (effect_on, accuracy, damage, (mini, maxi), p, c) -> begin
+              if (self_id = "user" && effect_on = Self)
+              then Damage (effect_on, accuracy, (damage * 2), (mini, maxi), p, c)
+              else eff
+          end
+          | _ -> eff
+        end
+      else eff in
+
+
     (* Based on accuracy, return a boolean that represents whether this effect's
        successful or not. *)
     let get_is_success accuracy =
