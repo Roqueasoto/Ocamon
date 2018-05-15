@@ -27,7 +27,7 @@ module PokeMoves = struct
 
   let solar_beam = {actname = "Solar Beam";
                     descript = "Deals damage of 120";
-                    effect = [Damage(Other, 100, 120, (1,1), Grass, Special)]}
+                    effect = [Damage(Other, 100, 120, (1,1), Grass, SpecialA)]}
 
   let poison_powder = {actname = "Poison Powder";
                        descript = "Poisons the pokemon";
@@ -41,12 +41,12 @@ module PokeMoves = struct
                    descript = "Inflicts damage on the first turn
                    then traps the opponent, causing them to lose 1⁄16
                    of their maximum HP after each turn, for 4-5 turns";
-                   effect = [Damage(Other, 85, 35, (1,1), Fire, Special)]}
+                   effect = [Damage(Other, 85, 35, (1,1), Fire, SpecialA)]}
 
   let flamethrower =
     {actname = "Flamethrower";
      descript = "Deals damage and has 10% chance of burning the target";
-     effect = [Damage(Other, 100, 95, (1,1), Fire, Special);
+     effect = [Damage(Other, 100, 95, (1,1), Fire, SpecialA);
                Status(Other, 10, Burn)]}
 
   let slash = {actname = "Slash";
@@ -65,7 +65,7 @@ module PokeMoves = struct
 
   let hydropump = {actname = "hydropump";
               descript = "deals damage";
-              effect = [Damage(Other, 80, 110, (1,1), Water, Special)]}
+              effect = [Damage(Other, 80, 110, (1,1), Water, SpecialA)]}
 
   let skullbash = {actname = "Skull Bash";
               descript = "deals damage";
@@ -81,7 +81,7 @@ module PokeMoves = struct
 
   let watergun = {actname = "Water Gun";
               descript = "Deals damage";
-              effect = [Damage(Other, 100, 40, (1,1), Water, Special)]}
+              effect = [Damage(Other, 100, 40, (1,1), Water, SpecialA)]}
 
   let tackle = {actname = "Tackle";
               descript = "deals damage";
@@ -98,7 +98,7 @@ module PokeMoves = struct
   let psybeam =
     {actname = "Psybeam";
      descript = "deals damage and has a 10% chance of confusing the target";
-     effect = [Damage(Other, 100, 65, (1,1), Psychic, Special);
+     effect = [Damage(Other, 100, 65, (1,1), Psychic, SpecialA);
                Status(Other, 10, Confused)]}
 
   let whirlwind = {actname = "Whirlwind";
@@ -158,7 +158,7 @@ module PokeMoves = struct
   let acid = {actname = "Acid";
               descript = "deals damage and has a 10% chance
               of lowering the target's Special Defense by one stage.";
-              effect = [Damage(Other, 100, 40, (1,1), Poison, Special)]}
+              effect = [Damage(Other, 100, 40, (1,1), Poison, SpecialA)]}
 
   let screech = {actname = "Screech";
               descript = "Lowers target def by 2 stages";
@@ -177,12 +177,12 @@ module PokeMoves = struct
   let thunder =
     {actname = "Thunder";
      descript = "deals damage and has a 30% chance of paralyzing the target";
-     effect = [Damage(Other, 70, 110, (1,1), Electric, Special);
+     effect = [Damage(Other, 70, 110, (1,1), Electric, SpecialA);
                Status(Other, 30, Paralyze)]}
 
   let swift = {actname = "Swift";
                descript = "deals damage";
-               effect = [Damage(Other, 100, 60, (1,1), Normal, Special)]
+               effect = [Damage(Other, 100, 60, (1,1), Normal, SpecialA)]
   }
 
 end
@@ -781,12 +781,12 @@ let poke_damage poke1 poke2 pts mtype cat =
   let astage = begin
               match cat with
               | Physical -> float_of_int (snd poke2.atk)
-              | Special -> float_of_int (snd poke2.spatk)
+              | SpecialA -> float_of_int (snd poke2.spatk)
             end in
   let apower = begin
               match cat with
               | Physical -> float_of_int (fst poke2.atk)
-              | Special -> float_of_int (fst poke2.spatk)
+              | SpecialA -> float_of_int (fst poke2.spatk)
             end in
   let amul = max (2.0) (2.0 +. astage) /. max (2.0) (2.0 -. astage) in
   let atk = apower *. amul in
