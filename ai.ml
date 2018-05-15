@@ -144,11 +144,11 @@ and chance_layer lst rootp bestp score min_max dep_max dep sc_mnmx st =
       let n_path,n_score
         = chance_move h s p score min_max dep_max dep rootp sc_mnmx st in
       if min_max = "max" && score >= n_score
-      then chance_layer t rootp rootp score min_max dep_max dep sc_mnmx st
+      then chance_layer t rootp bestp score min_max dep_max dep sc_mnmx st
       else if min_max = "max" && score < n_score then
         chance_layer t rootp n_path n_score min_max dep_max dep sc_mnmx st
       else if min_max = "min" && score <= n_score then
-        chance_layer t rootp rootp score min_max dep_max dep sc_mnmx st
+        chance_layer t rootp bestp score min_max dep_max dep sc_mnmx st
       else chance_layer t rootp n_path n_score min_max dep_max dep sc_mnmx st
 
 and chance_move move s p score min_max dep_max dep path sc_mnmx st =
@@ -188,6 +188,7 @@ and chance_br branch s p min_max dep_max dep path
 
 (* [take_turn state]*)
 let take_turn state =
+  (* make sc_mnmx more accurate*)
   let act_lst = gamma state "max" 1 (-1) [] (-1200.,1200.) in
   let choice = (act_lst |> fst |> List.rev |> List.hd |> fst) in
   let ai_inf = get_ai_info state in

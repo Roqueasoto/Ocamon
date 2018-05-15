@@ -16,8 +16,29 @@ let gb_tests = []
   This is the black-box testing section of this module.
 *)
 
-let tests_b = [
-  (*Check insertion works well with empty set. *)
+let tests_b =
+  (*Basic Game State.*)
+  let user_pty1 = [ (0,build_poke "6") ] in
+  let ai_pty1 = (0,build_poke "25")::[] in
+  let ai_inf_1 = {
+    user_poke_inv = user_pty1;
+    enemy_poke_inv = ai_pty1;
+    enemy_item_inv = [];
+    enemy_level = 5; } in
+  let st1 = make_hypothetical_state ai_inf_1 in
+  let mv1 = CombatAction [Damage(Other, 70, 110, (1,1), Electric, Special);
+                          Status(Other, 30, Paralyze)] in
+  let ai_inf_2 = {
+    user_poke_inv = ai_pty1;
+    enemy_poke_inv = user_pty1;
+    enemy_item_inv = [];
+    enemy_level = 5; } in
+  let st2 = make_hypothetical_state ai_inf_2 in
+  let mv2 = CombatAction [Damage(Other, 100, 95, (1,1), Fire, Special);
+                          Status(Other, 10, Burn)] in [
+  (*Test hypothetical choice*)
+    "bbox1" >:: (fun _ -> assert_equal mv1 (take_turn st1));
+    "bbox1" >:: (fun _ -> assert_equal mv2 (take_turn st2));
 ]
 
 let bb_tests = bb_tests @ tests_b
@@ -29,7 +50,6 @@ let bb_tests = bb_tests @ tests_b
 *)
 
 let tests_g =
-
   (* Testing game state evaluation.*)
   let user_pty1 = [ (0,build_poke "25") ] in
   let ai_pty1 = (0,build_poke "6")::[] in
@@ -123,39 +143,37 @@ let tests_g =
 
   (* Testing valid_move generation. *)
   let mv_gen1 =
-    [('a',CombatAction [Damage(Self, 100, 90, (1, 1),Electric,Physical);
-                        Damage (Self, 100, 22, (1, 1),Normal,Physical)]);
+    [('a',CombatAction [Damage(Other, 100, 40, (1,1), Normal, Physical)]);
+     ('a',CombatAction [Damage(Other, 100, 60, (1,1), Normal, Special)]);
      ('a',CombatAction [Buff(Self, 100, SPDBuff 2)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Electric,Special);
-                        Status(Other,10, Paralyze)]);
-     ('a',CombatAction [Damage(Other, 75, 80, (1, 1),Normal,Physical)])] in
+     ('a',CombatAction [Damage(Other, 70, 110, (1,1), Electric, Special);
+                        Status(Other, 30, Paralyze)])] in
   let mv_gen2 =
     [('s',CombatAction [(Switch 1)]);
-     ('a',CombatAction [Damage(Self, 100, 90, (1, 1),Electric,Physical);
-                        Damage (Self, 100, 22, (1, 1),Normal,Physical)]);
+     ('a',CombatAction [Damage(Other, 100, 40, (1,1), Normal, Physical)]);
+     ('a',CombatAction [Damage(Other, 100, 60, (1,1), Normal, Special)]);
      ('a',CombatAction [Buff(Self, 100, SPDBuff 2)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Electric,Special);
-                        Status(Other,10, Paralyze)]);
-     ('a',CombatAction [Damage(Other, 75, 80, (1, 1),Normal,Physical)])] in
+     ('a',CombatAction [Damage(Other, 70, 110, (1,1), Electric, Special);
+                        Status(Other, 30, Paralyze)])] in
      let ai_poke4 = build_poke "6" in
      let user_poke4 = "25" |> build_poke in
      let user_pty4 = [ (0,build_poke "25");(1,user_poke4) ] in
      let ai_pty4 = (0,ai_poke4)::(1,ai_poke4)::[] in
   let mv_gen3 =
-    [('a',CombatAction [Damage(Other, 100, 90, (1, 1),Fire,Special);
-                         Status(Other,10, Burn)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Normal,Physical)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Fire,Physical)]);
-     ('a',CombatAction [Damage(Other, 95, 65, (1, 1),Fire,Physical);
-                        Status(Other,10, Burn); Status(Other,10, Flinch)])] in
+    [('a',CombatAction [Buff(Other, 100, DEFBuff (-1))]);
+     ('a',CombatAction [Damage(Other, 100, 20, (1,1), Normal, Physical);
+                        Buff(Self, 100, ATKBuff 1)]);
+     ('a',CombatAction [Damage(Other, 100, 70, (1,1), Normal, Physical)]);
+     ('a',CombatAction [Damage(Other, 100, 95, (1,1), Fire, Special);
+                        Status(Other, 10, Burn)])] in
   let mv_gen4 =
     [('s',CombatAction [(Switch 1)]);
-     ('a',CombatAction [Damage(Other, 100, 90, (1, 1),Fire,Special);
-                        Status(Other,10, Burn)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Normal,Physical)]);
-     ('a',CombatAction [Damage(Other, 100, 70, (1, 1),Fire,Physical)]);
-     ('a',CombatAction [Damage(Other, 95, 65, (1, 1),Fire,Physical);
-                        Status(Other,10, Burn); Status(Other,10, Flinch)])] in [
+     ('a',CombatAction [Buff(Other, 100, DEFBuff (-1))]);
+     ('a',CombatAction [Damage(Other, 100, 20, (1,1), Normal, Physical);
+                        Buff(Self, 100, ATKBuff 1)]);
+     ('a',CombatAction [Damage(Other, 100, 70, (1,1), Normal, Physical)]);
+     ('a',CombatAction [Damage(Other, 100, 95, (1,1), Fire, Special);
+                        Status(Other, 10, Burn)])] in [
   (* Test the evaluation function with teams that only have a type difference.*)
   "tp_us1" >:: (fun _ -> assert_equal 25 (team_points user_pty1 ai_pty1));
   "tp_ai1" >:: (fun _ -> assert_equal (-25) (team_points ai_pty1 user_pty1));
