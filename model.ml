@@ -38,7 +38,7 @@ module CommonHelp = struct
     | HealStatus _ -> "HealStatus"
     | Revive -> "Revive"
 
-  let get_eff_name eff =
+  let get_eff_name eff = 
     let open Controller in
     match eff with
     | Switch _ -> "Switch"

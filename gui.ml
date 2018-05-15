@@ -1,5 +1,5 @@
 open Graphics
-open Camlimages
+open Camlimages 
 open Images
 open Png
 open Jpeg
