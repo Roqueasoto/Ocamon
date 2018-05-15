@@ -399,14 +399,6 @@ module Pokedex = struct
      sprite_back = "./PokeSpriteBack/25.png";
      sprite_front = "./PokeSpriteFront/25.png"}
 
-  let raichu =
-    {poketype = [Electric]; name = "Raichu"; status = [StatusNone];
-     hp = 143; atk = (118, 0); def = (83, 0); spd = (118, 0); spatk = (130, 0);
-     maxhp = 143; catch_rate = 190;  turn_counter = 0;
-     actions = [thunder; agility; swift; quickattack];
-     sprite_back = "./PokeSpriteBack/26.png";
-     sprite_front = "./PokeSpriteFront/26.png"}
-
 
   let pokedex =
   [("1", bulbasaur); ("2", ivysaur); ("3", venusaur); ("4", charmander);
@@ -414,8 +406,8 @@ module Pokedex = struct
    ("9", blastoise); ("10", caterpie); ("11", metapod); ("12", butterfree);
    ("13", weedle); ("14", kakuna); ("15", beedrill); ("16", pidgey);
    ("17", pidgeotto); ("18", pidgeot); ("19", rattata); ("20", raticate);
-   ("21", spearow); ("22", fearow);("23", ekans);("24", arbok);("25", pikachu);
-   ("26", raichu)
+   ("21", spearow); ("22", fearow);("23", ekans);("24", arbok);("25", pikachu)
+
   ]
 end
 

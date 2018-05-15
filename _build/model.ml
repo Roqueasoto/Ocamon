@@ -192,7 +192,7 @@ module MakeAIInfo = struct
   let get_person_info id t = List.assoc id t.population
 
   let get_poke_inv id t =
-    (get_person_info id t).poke_inv
+    (get_person_info  id t).poke_inv
 
   let get_item_inv id t =
     (get_person_info id t).item_inv
