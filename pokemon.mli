@@ -79,7 +79,7 @@ val random_poke : unit -> t
 (* [build_inventory] gives a random list of 4  items*)
 val build_inventory : unit -> item list
 
-(* [pokemon_damage p e] process effect e on the pokemon p and returns a new p *)
+(* [pokemon_effect p1 p2 e] process effect e on the pokemon p1 and returns a new p1 *)
 val poke_effect : t -> t -> effect -> t
 
 (* Set all stat stages to zero*)
