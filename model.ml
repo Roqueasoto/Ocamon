@@ -415,13 +415,21 @@ module DoRoundHelp = struct
       let state_info = expand_state self_id other_id st in
       let pokemon_name = Pokemon.name state_info.poke_self in
       let move_name = get_eff_name eff in
+      let is_special =
+        match eff with
+        | Controller.Special _ -> true
+        | _ -> false in
 
-      (* Log += <pokemon_name> used <move_name>. *)
-      let st = update_log (pokemon_name^" used "^move_name^"! ") st in
+      (* Log += <pokemon_name> used <move_name>, if not a special move. *)
+      let st =
+        if is_special then st
+        else update_log (pokemon_name^" used "^move_name^"! ") st in
 
-      (* Log += Pokemon's attack missed. *)
+      (* Log += Pokemon's attack missed, if not a special move. *)
       if not is_success then
-        let st' = update_log (pokemon_name^"'s attack missed. ") st in
+        let st' =
+          if is_special then st
+          else update_log (pokemon_name^"'s attack missed. ") st in
         (st', false)
 
       else begin
@@ -441,7 +449,9 @@ module DoRoundHelp = struct
             end in
         let st' = update_state_with_pokes_and_state_info st
             (state_info, poke_self', poke_other') in
-        let st'' = update_log (pokemon_name^"'s attack succeeded. ") st' in
+        let st'' =
+          if is_special then st'
+          else update_log (pokemon_name^"'s attack succeeded. ") st' in
         (st'', true)
       end in
 
