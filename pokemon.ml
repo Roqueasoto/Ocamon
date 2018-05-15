@@ -1,6 +1,7 @@
 open Controller
 
-type item = {itemname: string; descript : string; itemeffect : effect list; quantity: int}
+type item =
+  {itemname: string; descript : string; itemeffect : effect list; quantity: int}
 
 type action = {actname : string; descript : string; effect : effect list}
 
@@ -15,9 +16,10 @@ module PokeMoves = struct
                     descript = "Deals damage and increase critical hit";
                     effect = [Damage(Other, 95, 55, (1,1), Grass, Physical)]}
 
-  let growth = {actname = "Growth";
-                descript = "Raises the user's Attack and Special Attack by one stage each";
-                effect = [Buff(Self, 100, ATKBuff 1); Buff(Self, 100, SpatkBuff 1)]}
+  let growth =
+    {actname = "Growth";
+     descript = "Raises the user's Attack and Special Attack by one stage each";
+     effect = [Buff(Self, 100, ATKBuff 1); Buff(Self, 100, SpatkBuff 1)]}
 
   let sleep_powder = {actname = "Sleep Powder";
                       descript = "Puts target to sleep";
@@ -41,17 +43,21 @@ module PokeMoves = struct
                    of their maximum HP after each turn, for 4-5 turns";
                    effect = [Damage(Other, 85, 35, (1,1), Fire, Special)]}
 
-  let flamethrower = {actname = "Flamethrower";
-                   descript = "Deals damage and has 10% chance of burning the target";
-                   effect = [Damage(Other, 100, 95, (1,1), Fire, Special); Status(Other, 10, Burn)]}
+  let flamethrower =
+    {actname = "Flamethrower";
+     descript = "Deals damage and has 10% chance of burning the target";
+     effect = [Damage(Other, 100, 95, (1,1), Fire, Special);
+               Status(Other, 10, Burn)]}
 
   let slash = {actname = "Slash";
                descript = "Deals damage and increase critical hit";
                effect = [Damage(Other, 100, 70, (1,1), Normal, Physical)]}
 
-  let rage = {actname = "Rage";
-              descript = "Deals damage, raises atk stage";
-              effect = [Damage(Other, 100, 20, (1,1), Normal, Physical); Buff(Self, 100, ATKBuff 1)]}
+  let rage =
+    {actname = "Rage";
+     descript = "Deals damage, raises atk stage";
+     effect = [Damage(Other, 100, 20, (1,1), Normal, Physical);
+               Buff(Self, 100, ATKBuff 1)]}
 
   let leer = {actname = "Leer";
               descript = "lowers target defense by one stage";
@@ -89,9 +95,11 @@ module PokeMoves = struct
               descript = "raise user def by 1";
                 effect = [Buff(Other, 100, DEFBuff (-1))]}
 
-  let psybeam = {actname = "Psybeam";
-               descript = "deals damage and has a 10% chance of confusing the target";
-               effect = [Damage(Other, 100, 65, (1,1), Psychic, Special); Status(Other, 10, Confused)]}
+  let psybeam =
+    {actname = "Psybeam";
+     descript = "deals damage and has a 10% chance of confusing the target";
+     effect = [Damage(Other, 100, 65, (1,1), Psychic, Special);
+               Status(Other, 10, Confused)]}
 
   let whirlwind = {actname = "Whirlwind";
                 descript = "No effect on trainer battle";
@@ -101,9 +109,11 @@ module PokeMoves = struct
                 descript = "Makes the target confused";
                 effect = [Status(Other, 55, Confused)]}
 
-  let poison_sting = {actname = "Poison Sting";
-                descript = "deals damage and has a 30% chance of poisoning the target";
-                effect = [Damage(Other, 100, 15, (1,1), Poison, Physical); Status(Other, 30, Poisoned)]}
+  let poison_sting =
+    {actname = "Poison Sting";
+     descript = "deals damage and has a 30% chance of poisoning the target";
+     effect = [Damage(Other, 100, 15, (1,1), Poison, Physical);
+               Status(Other, 30, Poisoned)]}
 
   let agility = {actname = "Agility";
                 descript = "Raise user speed by 2 stages";
@@ -113,9 +123,11 @@ module PokeMoves = struct
                 descript = "Damage, hits 2-5 times";
                 effect = [Damage(Other, 95, 25, (2,5), Bug, Physical)]}
 
-  let twineedle = {actname = "Twineedle";
-                descript = "Deals damage twice, 20% chance of poisoning";
-                effect = [Damage(Other, 100, 25, (2,2), Bug, Physical); Status(Other, 20, Poisoned)]}
+  let twineedle =
+    {actname = "Twineedle";
+     descript = "Deals damage twice, 20% chance of poisoning";
+     effect = [Damage(Other, 100, 25, (2,2), Bug, Physical);
+               Status(Other, 20, Poisoned)]}
 
   let wingattack = {actname = "Wing Attack";
                 descript = "Deals damage w/ no additional effect";
@@ -125,9 +137,11 @@ module PokeMoves = struct
                 descript = "Deals damage";
                 effect = [Damage(Other, 100, 40, (1,1), Normal, Physical)]}
 
-  let hyper_fang = {actname = "Hyper Fang";
-                descript = "Deals damage and has 10% chance of causing flinch";
-                effect = [Damage(Other, 90, 80, (1,1), Normal, Physical); Status(Other, 10, Flinch)]}
+  let hyper_fang =
+    {actname = "Hyper Fang";
+     descript = "Deals damage and has 10% chance of causing flinch";
+     effect = [Damage(Other, 90, 80, (1,1), Normal, Physical);
+               Status(Other, 10, Flinch)]}
 
   let tailwhip = {actname = "Tail Whip";
                 descript = "Lowers defense by 1 stage";
@@ -154,13 +168,17 @@ module PokeMoves = struct
               descript = "paralyzes target";
               effect = [Status(Other, 100, Paralyze)]}
 
-  let bite = {actname = "Bite";
-              descript = "Deals damage and has 30% chance of causing target to flinch";
-              effect = [Damage(Other, 100, 60, (1,1), Normal, Physical); Status(Other, 30, Flinch)]}
+  let bite =
+    {actname = "Bite";
+     descript = "Deals damage and has 30% chance of causing target to flinch";
+     effect = [Damage(Other, 100, 60, (1,1), Normal, Physical);
+               Status(Other, 30, Flinch)]}
 
-  let thunder = {actname = "Thunder";
-              descript = "deals damage and has a 30% chance of paralyzing the target";
-              effect = [Damage(Other, 70, 110, (1,1), Electric, Special); Status(Other, 30, Paralyze)]}
+  let thunder =
+    {actname = "Thunder";
+     descript = "deals damage and has a 30% chance of paralyzing the target";
+     effect = [Damage(Other, 70, 110, (1,1), Electric, Special);
+               Status(Other, 30, Paralyze)]}
 
   let swift = {actname = "Swift";
                descript = "deals damage";
@@ -394,60 +412,80 @@ module Pokedex = struct
 end
 
 module Inventory = struct
-  let antidote = {itemname = "Antidote"; descript = "Heals pokemon from poisoning";
-                  itemeffect = [Special(Self, 100, HealStatus(Poisoned), Nothing)]; quantity = 1}
+  let antidote =
+    {itemname = "Antidote"; descript = "Heals pokemon from poisoning";
+     itemeffect = [Special(Self, 100, HealStatus(Poisoned), Nothing)];
+     quantity = 1}
 
-  let awakening = {itemname = "Awakening"; descript = "Wakes pokemon from sleep";
-                   itemeffect = [Special(Self, 100, HealStatus(Sleep), Nothing)]; quantity = 1}
+  let awakening =
+    {itemname = "Awakening"; descript = "Wakes pokemon from sleep";
+     itemeffect = [Special(Self, 100, HealStatus(Sleep), Nothing)];
+     quantity = 1}
 
-  let burnheal = {itemname = "Burn Heal"; descript = "Heals a burned pokemon";
-                  itemeffect = [Special(Self, 100, HealStatus(Burn), Nothing)]; quantity = 1}
+  let burnheal =
+    {itemname = "Burn Heal"; descript = "Heals a burned pokemon";
+     itemeffect = [Special(Self, 100, HealStatus(Burn), Nothing)];
+     quantity = 1}
 
-  let freshwater = {itemname = "Fresh Water"; descript = "Water with high mineral content, +50 HP";
-                    itemeffect = [Heal(Self, 100, 60)]; quantity = 1}
+  let freshwater =
+    {itemname = "Fresh Water";
+     descript = "Water with high mineral content, +50 HP";
+     itemeffect = [Heal(Self, 100, 60)]; quantity = 1}
 
   let hyperpotion = {itemname = "Hyper Potion"; descript = "HP +200 pts";
                      itemeffect = [Heal(Self, 100, 200)]; quantity = 1}
 
-  let iceheal = {itemname = "Ice Heal"; descript = "Heal a frozen pokemon";
-                 itemeffect = [Special(Self, 100, HealStatus(Frozen), Nothing)]; quantity = 1}
+  let iceheal =
+    {itemname = "Ice Heal"; descript = "Heal a frozen pokemon";
+     itemeffect = [Special(Self, 100, HealStatus(Frozen), Nothing)];
+     quantity = 1}
 
   let lemonade = {itemname = "Lemonade"; descript = "HP +80 pts";
                   itemeffect = [Heal(Self, 100, 80)]; quantity = 1}
 
-  let paralyzeheal = {itemname = "Paralyze Heal"; descript = "Heal a paralyzed pokemon";
-                      itemeffect = [Special(Self, 100, HealStatus(Paralyze), Nothing)]; quantity = 1}
+  let paralyzeheal =
+    {itemname = "Paralyze Heal"; descript = "Heal a paralyzed pokemon";
+     itemeffect = [Special(Self, 100, HealStatus(Paralyze), Nothing)];
+     quantity = 1}
 
   let direhit = {itemname = "Dire Hit"; descript = "Makes a pokemon focused";
                  itemeffect = [Status(Self, 100, Focused)]; quantity = 1}
 
-  let fullheal = {itemname = "Full Heal"; descript = "Heals all nonvolatile status";
-                  itemeffect = [Special(Self, 100, HealStatus(Poisoned), Nothing);
-                                Special(Self, 100, HealStatus(Paralyze), Nothing);
-                                Special(Self, 100, HealStatus(Sleep), Nothing);
-                                Special(Self, 100, HealStatus(Burn), Nothing);
-                                Special(Self, 100, HealStatus(Frozen), Nothing)]; quantity = 1}
+  let fullheal =
+    {itemname = "Full Heal"; descript = "Heals all nonvolatile status";
+     itemeffect = [Special(Self, 100, HealStatus(Poisoned), Nothing);
+                   Special(Self, 100, HealStatus(Paralyze), Nothing);
+                   Special(Self, 100, HealStatus(Sleep), Nothing);
+                   Special(Self, 100, HealStatus(Burn), Nothing);
+                   Special(Self, 100, HealStatus(Frozen), Nothing)];
+     quantity = 1}
 
-  let fullrestore = {itemname = "Full Restore"; descript = "Heals all nonvolatile status and restore full hp";
-                   itemeffect = [Heal(Self, 100, 1000);
-                                 Special(Self, 100, HealStatus(Poisoned), Nothing);
-                                 Special(Self, 100, HealStatus(Paralyze), Nothing);
-                                 Special(Self, 100, HealStatus(Sleep), Nothing);
-                                 Special(Self, 100, HealStatus(Burn), Nothing);
-                                 Special(Self, 100, HealStatus(Frozen), Nothing)]; quantity = 1}
+  let fullrestore =
+    {itemname = "Full Restore";
+     descript = "Heals all nonvolatile status and restore full hp";
+     itemeffect = [Heal(Self, 100, 1000);
+                   Special(Self, 100, HealStatus(Poisoned), Nothing);
+                   Special(Self, 100, HealStatus(Paralyze), Nothing);
+                   Special(Self, 100, HealStatus(Sleep), Nothing);
+                   Special(Self, 100, HealStatus(Burn), Nothing);
+                   Special(Self, 100, HealStatus(Frozen), Nothing)];
+     quantity = 1}
 
 
   let maxpotion = {itemname = "Max Potion"; descript = "Restores full hp";
                    itemeffect = [Heal(Self, 100, 1000)]; quantity = 1}
 
-  let pokeflute = {itemname = "Poke Flute"; descript = "Wake up sleeping pokemon";
-                   itemeffect = [Special(Self, 100, HealStatus(Sleep), Nothing)]; quantity =1}
+  let pokeflute =
+    {itemname = "Poke Flute"; descript = "Wake up sleeping pokemon";
+     itemeffect = [Special(Self, 100, HealStatus(Sleep), Nothing)]; quantity =1}
 
   let potion = {itemname = "Potion"; descript = "Heal +20 hp";
                 itemeffect = [Heal(Self, 100, 20)]; quantity =1}
 
-  let revive = {itemname = "Revive"; descript = "Revive a fainted pokemon and restore half of its hp";
-                itemeffect = [Special(Self, 100, Revive, Nothing)]; quantity = 1}
+  let revive =
+    {itemname = "Revive";
+     descript = "Revive a fainted pokemon and restore half of its hp";
+     itemeffect = [Special(Self, 100, Revive, Nothing)]; quantity = 1}
 
   let sodapop = {itemname = "Soda Pop"; descript = "Heal +60 hp";
                  itemeffect = [Heal(Self, 100, 60)]; quantity =1}
@@ -458,11 +496,13 @@ module Inventory = struct
   let xattack = {itemname = "X Attack"; descript = "Raises attack by 1 level";
                  itemeffect=[Buff(Self, 100, ATKBuff 1)]; quantity =1}
 
-  let xdefense = {itemname = "X Defense"; descript = "Raises defense by 1 level";
-                  itemeffect=[Buff(Self, 100, DEFBuff 1)]; quantity = 1}
+  let xdefense =
+    {itemname = "X Defense"; descript = "Raises defense by 1 level";
+     itemeffect=[Buff(Self, 100, DEFBuff 1)]; quantity = 1}
 
-  let xspecial = {itemname = "X Special"; descript = "Raises special by 1 level";
-                  itemeffect = [Buff(Self, 100, SpatkBuff 1)]; quantity =1}
+  let xspecial =
+    {itemname = "X Special"; descript = "Raises special by 1 level";
+     itemeffect = [Buff(Self, 100, SpatkBuff 1)]; quantity =1}
 
   let xspeed = {itemname = "X Speed"; descript = "Raises speed by 1 level";
                 itemeffect = [Buff(Self, 100, SPDBuff 1)]; quantity =1}
@@ -551,7 +591,8 @@ let rec clear_helper stats stat acc =
   | h::t -> if h = stat then acc@t else clear_helper stats stat (h::acc)
 
 let clear_stat poke stat =
-  {poketype = poke.poketype; name = poke.name; status = clear_helper poke.status stat [];
+  {poketype = poke.poketype; name = poke.name;
+   status = clear_helper poke.status stat [];
    hp = poke.hp; atk = poke.atk; def = poke.def;
    spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
    catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
@@ -649,26 +690,29 @@ let poke_spd_buff poke i=
      sprite_back = poke.sprite_back; sprite_front = poke.sprite_front}
 
 let poke_atk_buff poke i =
-    if i < 0 then {poketype = poke.poketype; name = poke.name; status = poke.status;
-                   hp = poke.hp;
-                   atk = (fst(poke.atk), (max (-6) (snd poke.atk)+i)); def = poke.def;
-                   spd = poke.spd; spatk = poke.spatk;
-                   maxhp = poke.maxhp; catch_rate = poke.catch_rate;
-                   turn_counter = poke.turn_counter;
-                   actions = poke.actions; sprite_back = poke.sprite_back;
-                   sprite_front = poke.sprite_front}
-    else
-      {poketype = poke.poketype; name = poke.name; status = poke.status; hp = poke.hp;
-       atk = (fst(poke.atk), (min (6) (snd poke.atk)+i)); def = poke.def;
-       spd = poke.spd; spatk = poke.spatk;
-       maxhp = poke.maxhp; catch_rate = poke.catch_rate;
-       turn_counter = poke.turn_counter;
-      actions = poke.actions; sprite_back = poke.sprite_back;
-      sprite_front = poke.sprite_front}
+  if i < 0 then
+    {poketype = poke.poketype; name = poke.name; status = poke.status;
+     hp = poke.hp;
+     atk = (fst(poke.atk), (max (-6) (snd poke.atk)+i)); def = poke.def;
+     spd = poke.spd; spatk = poke.spatk;
+     maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+     turn_counter = poke.turn_counter;
+     actions = poke.actions; sprite_back = poke.sprite_back;
+     sprite_front = poke.sprite_front}
+  else
+    {poketype = poke.poketype; name = poke.name;
+     status = poke.status; hp = poke.hp;
+     atk = (fst(poke.atk), (min (6) (snd poke.atk)+i)); def = poke.def;
+     spd = poke.spd; spatk = poke.spatk;
+     maxhp = poke.maxhp; catch_rate = poke.catch_rate;
+     turn_counter = poke.turn_counter;
+     actions = poke.actions; sprite_back = poke.sprite_back;
+     sprite_front = poke.sprite_front}
 
 let poke_def_buff poke i =
     if i < 0 then
-      {poketype = poke.poketype; name = poke.name; status = poke.status; hp = poke.hp;
+      {poketype = poke.poketype; name = poke.name;
+       status = poke.status; hp = poke.hp;
        atk = poke.atk; def = (fst(poke.def), (max (-6) (snd poke.def)+i));
        spd = poke.spd; spatk = poke.spatk;
        maxhp = poke.maxhp; catch_rate = poke.catch_rate;
@@ -676,7 +720,8 @@ let poke_def_buff poke i =
       actions = poke.actions; sprite_back = poke.sprite_back;
       sprite_front = poke.sprite_front}
     else
-      {poketype = poke.poketype; name = poke.name; status = poke.status; hp = poke.hp;
+      {poketype = poke.poketype; name = poke.name;
+       status = poke.status; hp = poke.hp;
        atk = poke.atk; def = (fst(poke.def),(min (6) (snd poke.def)+i));
        spd = poke.spd; spatk = poke.spatk;
        maxhp = poke.maxhp; catch_rate = poke.catch_rate;
@@ -686,7 +731,8 @@ let poke_def_buff poke i =
 
 let poke_spatk_buff poke i =
   if i < 0 then
-    {poketype = poke.poketype; name = poke.name; status = poke.status; hp = poke.hp;
+    {poketype = poke.poketype; name = poke.name;
+     status = poke.status; hp = poke.hp;
      atk = poke.atk; def = poke.def;
      spd = poke.spd; spatk = (fst(poke.spatk), (max (-6) (snd poke.spatk)+i));
      maxhp = poke.maxhp; catch_rate = poke.catch_rate;
@@ -694,7 +740,8 @@ let poke_spatk_buff poke i =
      actions = poke.actions; sprite_back = poke.sprite_back;
      sprite_front = poke.sprite_front}
   else
-    {poketype = poke.poketype; name = poke.name; status = poke.status; hp = poke.hp;
+    {poketype = poke.poketype; name = poke.name;
+     status = poke.status; hp = poke.hp;
      atk = poke.atk; def = (fst(poke.spatk),(min (6) (snd poke.spatk)+i));
      spd = poke.spd; spatk = poke.spatk;
      maxhp = poke.maxhp; catch_rate = poke.catch_rate;
@@ -739,7 +786,8 @@ let poke_damage poke1 poke2 pts mtype cat =
   let dmul = max (2.0) (2.0 +. dstage) /. max (2.0) (2.0 -. dstage) in
   let def = float_of_int (fst(poke1.def)) *. dmul in
   let eff = type_eff mtype poke1.poketype 0. in
-  let damage = int_of_float (((2.0 *. 50.0 /. 5.0) +. 2.0) *. atk *. (float_of_int pts) /. def /. 50.0 *. eff) in
+  let damage = int_of_float (((2.0 *. 50.0 /. 5.0) +. 2.0) *. atk *.
+                             (float_of_int pts) /. def /. 50.0 *. eff) in
 
   {poketype = poke1.poketype; name = poke1.name;
    status = poke1.status;
@@ -781,31 +829,37 @@ let poke_change_status poke s =
   | [], _ -> failwith "status should not be empty"
   | h::t, _ -> begin
              match h, s with
-           | _, Substitute -> {poketype = poke.poketype; name = poke.name; status = s::poke.status;
-                                hp = poke.hp/4*3; atk = poke.atk; def = poke.def;
-                                spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
-                                catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
-                                actions = poke.actions; sprite_back = poke.sprite_back;
-                                sprite_front = poke.sprite_front}
-            | StatusNone, _ -> {poketype = poke.poketype; name = poke.name; status = [s];
-                                hp = poke.hp; atk = poke.atk; def = poke.def;
-                                spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
-                                catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
-                                actions = poke.actions; sprite_back = poke.sprite_back;
-                                sprite_front = poke.sprite_front}
-            | _, StatusNone -> {poketype = poke.poketype; name = poke.name; status = [s];
-                                hp = poke.hp; atk = poke.atk; def = poke.def;
-                                spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
-                                catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
-                                actions = poke.actions; sprite_back = poke.sprite_back;
-                                sprite_front = poke.sprite_front}
-            | _, _ -> if check_overlaps poke.status s then poke
-                      else      {poketype = poke.poketype; name = poke.name; status = s::poke.status;
-                                hp = poke.hp; atk = poke.atk; def = poke.def;
-                                spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
-                                catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
-                                actions = poke.actions; sprite_back = poke.sprite_back;
-                                sprite_front = poke.sprite_front}
+          | _, Substitute ->
+            {poketype = poke.poketype; name = poke.name; status = s::poke.status;
+             hp = poke.hp/4*3; atk = poke.atk; def = poke.def;
+             spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
+             catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
+             actions = poke.actions; sprite_back = poke.sprite_back;
+             sprite_front = poke.sprite_front}
+          | StatusNone, _ ->
+            {poketype = poke.poketype; name = poke.name; status = [s];
+             hp = poke.hp; atk = poke.atk; def = poke.def;
+             spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
+             catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
+             actions = poke.actions; sprite_back = poke.sprite_back;
+             sprite_front = poke.sprite_front}
+          | _, StatusNone ->
+            {poketype = poke.poketype; name = poke.name; status = [s];
+             hp = poke.hp; atk = poke.atk; def = poke.def;
+             spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
+             catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
+             actions = poke.actions; sprite_back = poke.sprite_back;
+             sprite_front = poke.sprite_front}
+          | _, _ ->
+            if check_overlaps poke.status s then poke
+            else
+              {poketype = poke.poketype; name = poke.name;
+               status = s::poke.status;
+               hp = poke.hp; atk = poke.atk; def = poke.def;
+               spd = poke.spd; spatk = poke.spatk; maxhp = poke.maxhp;
+               catch_rate = poke.catch_rate; turn_counter = poke.turn_counter;
+               actions = poke.actions; sprite_back = poke.sprite_back;
+               sprite_front = poke.sprite_front}
             end
 
 
@@ -842,8 +896,9 @@ let poke_effect poke1 poke2 effect =
   match effect with
   | Switch _ -> failwith "should not reach"
   | Heal (s, i1, i2) ->  poke_heal poke1 i2
-  | Damage (s, i1, i2, (r1, r2), t, c) -> if check_status poke1 Substitute then poke1
-        else poke_damage poke1 poke2 i2 t c
+  | Damage (s, i1, i2, (r1, r2), t, c) ->
+    if check_status poke1 Substitute then poke1
+    else poke_damage poke1 poke2 i2 t c
   | Buff (s, i1, b) -> begin
       match b with
       | ATKBuff i -> poke_atk_buff poke1 i
