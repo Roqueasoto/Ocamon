@@ -39,7 +39,7 @@ module CommonHelp = struct
   let get_special_effect_name special =
     let open Controller in
     match special with
-    | HealStatus _ -> "HealStatus" 
+    | HealStatus _ -> "HealStatus"
     | Revive -> "Revive"
 
   let get_eff_name eff =
@@ -246,7 +246,7 @@ module MakeHypotheticalState = struct
   open Blanks
 
   let user_simulated_name = "user"
-  let enemy_simulated_name = "enemy_simulated 5"
+  let enemy_simulated_name = Initiate_Population.enemy_id 5
 
   let make_user_person_info ai_info =
     {
@@ -267,11 +267,16 @@ module MakeHypotheticalState = struct
   let make_hypothetical_state ai_info =
     let user_person_info = make_user_person_info ai_info in
     let enemy_person_info = make_enemy_person_info ai_info in
+    let game_stats = {
+      blank_game_stats with
+      next_battle = 5;
+    } in
     {
       blank_state with
       population = [(user_simulated_name, user_person_info);
                     (enemy_simulated_name, enemy_person_info)];
-      mode = MCombat (enemy_simulated_name)
+      mode = MCombat (enemy_simulated_name);
+      game_stats = game_stats
     }
 end
 
