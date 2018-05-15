@@ -650,7 +650,7 @@ module DoInteractHelp = struct
     | [] -> failwith "impossible to have no new pokemon to choose from"
     | k::_ -> build_poke k
 
-
+(* If there's space, awards a new poke to player's party. *)
   let award_new_poke st =
     let open DoRoundHelp in
     let user_id = "user" in
