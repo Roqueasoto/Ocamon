@@ -534,6 +534,15 @@ module DoRoundHelp = struct
       second_elist = if is_user_first then enemy_elist else user_elist;
     }
 
+(* [shuffle lst] shuffles the associated list by placing the pokemon which is
+ * associated to 0 in the back and associates it to List.length lst, and then
+ * decrements all indeces of the list. *)
+  let shuffle lst =
+    let poke = List.assoc 0 lst in
+    let nlst = ((List.length lst), poke)::(List.remove_assoc 0 lst) in
+    let decrm (idx,pke) = ((idx - 1),pke) in
+    List.map decrm nlst
+
   (* Performs do on Round command.  *)
   let do_round user_elist enemy_elist st =
     let enemy_id = get_enemy_id st in
@@ -546,8 +555,18 @@ module DoRoundHelp = struct
     let st_0 =
       {st with game_stats = {st.game_stats with battle_round_log = []}} in
     let st' = do_eff_lst (first_id, second_id, st_0) order.first_elist in
-    let st'' = do_eff_lst (second_id, first_id, st') order.second_elist in
-    st''
+    let f_pokes1 = (expand_state first_id second_id st').poke_inv_self in
+    let s_pokes1 = (expand_state first_id second_id st').poke_inv_other in
+    let st'' = if Pokemon.hp (snd (List.hd f_pokes1)) = 0 then
+        update_state_with_poke_invs_and_state_info st'
+          (expand_state first_id second_id st',(shuffle f_pokes1),s_pokes1)
+      else st' in
+    let faint_slow = Pokemon.hp (snd (List.hd s_pokes1)) = 0 in
+    let st''' = if faint_slow then
+        update_state_with_poke_invs_and_state_info st''
+          (expand_state first_id second_id st'',f_pokes1,(shuffle s_pokes1))
+      else do_eff_lst (second_id, first_id, st'') order.second_elist  in
+    st'''
 end
 
 module DoInteractHelp = struct
