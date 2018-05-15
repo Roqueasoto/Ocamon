@@ -1,16 +1,20 @@
 open Controller
 
+(*Item type*)
 type item =
   {itemname: string; descript : string; itemeffect : effect list; quantity: int}
 
+(*Action type*)
 type action = {actname : string; descript : string; effect : effect list}
 
+(*Pokemon type*)
 type t = {poketype : ptype list; name : string; status : status list;
                 hp : int; atk : int*int; def : int*int;
                 spd : int*int; spatk: int*int; maxhp : int; catch_rate : int;
                 turn_counter : int; actions : action list;
                 sprite_back : string; sprite_front : string}
 
+(*Module for all of the moves that Pokedex uses*)
 module PokeMoves = struct
   let razor_leaf = {actname = "Razor Leaf";
                     descript = "Deals damage and increase critical hit";
@@ -182,12 +186,12 @@ module PokeMoves = struct
 
   let swift = {actname = "Swift";
                descript = "deals damage";
-               effect = [Damage(Other, 100, 60, (1,1), Normal, SpecialA)]
-  }
+               effect = [Damage(Other, 100, 60, (1,1), Normal, SpecialA)]}
 
 end
 
 
+(*Module for the collection of pokemon data*)
 module Pokedex = struct
   open PokeMoves
 
@@ -399,7 +403,6 @@ module Pokedex = struct
      sprite_back = "./PokeSpriteBack/26.PNG";
      sprite_front = "./PokeSpriteFront/26.PNG"}
 
-
   let pokedex =
   [("1", bulbasaur); ("2", ivysaur); ("3", venusaur); ("4", charmander);
    ("5", charmeleon); ("6", charizard); ("7", squirtle); ("8", wartortle);
@@ -407,10 +410,12 @@ module Pokedex = struct
    ("13", weedle); ("14", kakuna); ("15", beedrill); ("16", pidgey);
    ("17", pidgeotto); ("18", pidgeot); ("19", rattata); ("20", raticate);
    ("21", spearow); ("22", fearow);("23", ekans);("24", arbok);("25", pikachu);
-   ("26", raichu)
+   ("26", raichu); 
   ]
 end
 
+
+(*Module for generating item inventory in the game*)
 module Inventory = struct
   let antidote =
     {itemname = "Antidote"; descript = "Heals pokemon from poisoning";
@@ -516,7 +521,7 @@ module Inventory = struct
 end
 
 
-
+(*A series of getters and setters for Pokemon fields, details in mli*)
 let ptype poke = poke.poketype
 
 let name poke = poke.name
@@ -559,37 +564,45 @@ let set_count poke i =
    actions = poke.actions; sprite_back = poke.sprite_back;
    sprite_front = poke.sprite_front}
 
+(*Helper for actions*)
 let rec parse_actions lst ind acc =
   match lst with
   | [] -> acc
   | h::t -> parse_actions t (ind+1) (acc@[(ind, CombatAction h.effect)])
 
+(*Returns an association list of pokemon actions, index starting at 1*)
 let actions poke =
   let actlst = poke.actions in
   parse_actions actlst 1 []
 
+(*Helper for action_names*)
 let rec parse_action_names lst ind acc =
   match lst with
   | [] -> acc
   | h::t -> parse_action_names t (ind+1) (acc@[(ind, h.actname)])
 
+(*Returns an association list of pokemon action names, index starting at 1*)
 let action_names poke =
   let actlst = poke.actions in
   parse_action_names actlst 1 []
 
+(*Helper for inv_names*)
 let rec parse_item_names lst ind acc =
   match lst with
   | [] -> acc
   | h::t -> parse_item_names t (ind+1) (acc@[ind, h.itemname])
 
+(*Returns an association list of pokemon item names, index starting at 1*)
 let inv_names inv =
   parse_item_names inv 1 []
 
+(*Helper for clear_stat*)
 let rec clear_helper stats stat acc =
   match stats with
   | [] -> []
   | h::t -> if h = stat then acc@t else clear_helper t stat (h::acc)
 
+(*Clears [stat] from pokemon's list of status*)
 let clear_stat poke stat =
   let new_stats = clear_helper poke.status stat [] in
   {poketype = poke.poketype; name = poke.name;
@@ -600,17 +613,20 @@ let clear_stat poke stat =
    actions = poke.actions; sprite_back = poke.sprite_back;
    sprite_front = poke.sprite_front}
 
+(*Build poke of index s, according to the traditional pokemon indexing*)
 let build_poke s =
   match List.assoc_opt s Pokedex.pokedex with
   | Some p -> p
   | None -> failwith "A pokemon with this index does not exist"
 
+(*Builds a random poke*)
 let random_poke () =
   let len = List.length Pokedex.pokedex in
   let rand = (Random.int len) in
   let index = fst (List.nth Pokedex.pokedex rand) in
   build_poke index
 
+(*Build an inventory of 4 items*)
 let build_inventory () =
   let r1 = Random.int 21 in
   let r2 = Random.int 21 in
@@ -622,6 +638,8 @@ let build_inventory () =
   let i4 = List.assoc r4 Inventory.inv in
   [i1; i2; i3; i4]
 
+(*Returns a float that describes how effective an
+attack of type [ptype1] is against a pokemon of [ptype2].*)
 let type_compare ptype1 ptype2 =
   match ptype1,ptype2 with
   | Normal,Ghost -> 0.
@@ -671,7 +689,7 @@ let type_compare ptype1 ptype2 =
   | Dragon,Dragon -> 2.
   | Dragon,_ -> 1.
 
-
+(*Increases the speed stage by i but remains within (-6, 6) *)
 let poke_spd_buff poke i=
   if i < 0 then
     {poketype = poke.poketype; name = poke.name; status = poke.status;
@@ -690,6 +708,7 @@ let poke_spd_buff poke i=
      actions = poke.actions;
      sprite_back = poke.sprite_back; sprite_front = poke.sprite_front}
 
+(*Increases the attack stage by i but remains within (-6, 6) *)
 let poke_atk_buff poke i =
   if i < 0 then
     {poketype = poke.poketype; name = poke.name; status = poke.status;
@@ -710,6 +729,7 @@ let poke_atk_buff poke i =
      actions = poke.actions; sprite_back = poke.sprite_back;
      sprite_front = poke.sprite_front}
 
+(*Increases the defense stage by i but remains within (-6, 6) *)
 let poke_def_buff poke i =
     if i < 0 then
       {poketype = poke.poketype; name = poke.name;
@@ -730,6 +750,7 @@ let poke_def_buff poke i =
        actions = poke.actions; sprite_back = poke.sprite_back;
        sprite_front = poke.sprite_front}
 
+(*Increases the special attack stage by i but remains within (-6, 6) *)
 let poke_spatk_buff poke i =
   if i < 0 then
     {poketype = poke.poketype; name = poke.name;
@@ -750,6 +771,7 @@ let poke_spatk_buff poke i =
      actions = poke.actions; sprite_back = poke.sprite_back;
      sprite_front = poke.sprite_front}
 
+(*Increases pokemon hp by [pts] but remains within maxhp bounds *)
 let poke_heal poke pts =
   {poketype = poke.poketype; name = poke.name; status = poke.status;
    hp = (min (poke.hp+pts) poke.maxhp);
@@ -761,7 +783,7 @@ let poke_heal poke pts =
    sprite_back = poke.sprite_back;
    sprite_front = poke.sprite_front}
 
-(*Calculate the largest possible effectiveness*)
+(*Calculate the largest possible effectiveness of a move against a pokemon*)
 let rec type_eff mtype lst acc =
   match lst with
   | [] -> acc
@@ -769,7 +791,7 @@ let rec type_eff mtype lst acc =
             if nspat >= acc then type_eff mtype t nspat
             else type_eff mtype t acc
 
-
+(*Calculates pokemon damage based on origina game formula*)
 let poke_damage poke1 poke2 pts mtype cat =
   let astage = begin
               match cat with
@@ -802,6 +824,7 @@ let poke_damage poke1 poke2 pts mtype cat =
    sprite_back = poke1.sprite_back;
    sprite_front = poke1.sprite_front}
 
+(*Check if [s] is one of the status that cannot overlap with each other*)
 let overlap_stats s =
   match s with
   | Sleep -> true
@@ -813,6 +836,7 @@ let overlap_stats s =
   | Substitute -> true
   | _ -> false
 
+(*Check if status [s] overlaps with any in the list of status [lst]*)
 let rec check_overlaps lst s =
   if not (overlap_stats s) then false else
   match lst with
@@ -820,6 +844,7 @@ let rec check_overlaps lst s =
   | h::t -> if overlap_stats h then true
             else check_overlaps t s
 
+(*Add a status [s] to pokemon [poke]*)
 let poke_change_status poke s =
   match poke.status, s with
   | [], _ -> failwith "status should not be empty"
@@ -858,7 +883,7 @@ let poke_change_status poke s =
                sprite_front = poke.sprite_front}
             end
 
-
+(*Give a pokemon half of its max hp back*)
 let revive_poke poke =
   let newhp = poke.maxhp/2 in
   {poketype = poke.poketype; name = poke.name; status = poke.status;
@@ -869,6 +894,9 @@ let revive_poke poke =
    sprite_back = poke.sprite_back;
    sprite_front = poke.sprite_front}
 
+(*Match status [s] to pokemon type list [lst].
+  Returns true if it's NOT possible for
+  the pokemon to gain this status condition *)
 let rec match_type lst s =
   match lst with
   | [] -> false
@@ -880,14 +908,17 @@ let rec match_type lst s =
            | _, Substitute -> true
            | _, _ -> false
 
+(*Helper to check_status*)
 let rec check_status_help lst s =
   match lst with
   | [] -> false
   | h::t -> if h = s then true else check_status_help t s
 
+(*Checks if pokemon [poke] has the status [s]*)
 let check_status poke s =
   check_status_help poke.status s
 
+(*Process an effect [effect] on [poke1]*)
 let poke_effect poke1 poke2 effect =
   match effect with
   | Switch _ -> failwith "should not reach"
@@ -911,6 +942,7 @@ let poke_effect poke1 poke2 effect =
                          poke_change_status poke1 s
   | Nothing -> poke1
 
+(*Set all stat stages back to 0*)
 let clear_buff poke =
   {poketype = poke.poketype;
   name = poke.name;
@@ -927,6 +959,7 @@ let clear_buff poke =
   sprite_back = poke.sprite_back;
   sprite_front = poke.sprite_front}
 
+(*Return an command option that a valid item can perform in battle*)
 let item_use_combat item =
   if item.itemeffect = [] then None
   else Some (CombatAction item.itemeffect)
