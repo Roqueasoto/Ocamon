@@ -52,7 +52,8 @@ let array_of_image img =
       let w = bitmap.Index8.width
       and h = bitmap.Index8.height
       and colormap = bitmap.Index8.colormap.map in
-      let cmap = Array.map (fun {r = r; g = g; b = b} -> Graphics.rgb r g b) colormap in
+      let cmap = Array.map (fun {r = r; g = g; b = b} -> Graphics.rgb r g b) 
+        colormap in
       if bitmap.Index8.transparent <> -1 then
         cmap.(bitmap.Index8.transparent) <- transp;
       Array.init h (fun i ->
@@ -75,7 +76,7 @@ let array_of_image img =
           rgb r g b))
   | Rgba32 _ | Cmyk32 _ -> failwith "RGBA and CMYK not supported"
 
-(*BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE *)
+(*BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE-BATTLE *)
 let fpi_press () =
   let num = ref 1 in  
   let keep_running = ref true in 
@@ -169,7 +170,8 @@ let make_switch num =
   CombatAction [Switch num] 
 
 let make_item num comb_inf = 
-  begin match item_use_combat (List.nth (comb_inf.user_person_info.item_inv) num) with
+  begin 
+  match item_use_combat (List.nth (comb_inf.user_person_info.item_inv) num) with
     | Some i -> i
     | None -> failwith "Unreachable : combat_text"
   end 
@@ -190,17 +192,23 @@ let items_screen gui_inf =
   set_color black;
   set_font "-misc-dejavu sans mono-bold-r-normal--14-0-0-0-m-0-iso8859-1"; 
   moveto 300 30;
-  draw_string ("6. " ^  (List.assoc 5 (inv_names (comb_inf.user_person_info.item_inv))));
+  draw_string ("6. " ^  (List.assoc 5 (inv_names 
+    (comb_inf.user_person_info.item_inv))));
   moveto 300 50;
-  draw_string ("5. " ^  (List.assoc 4 (inv_names (comb_inf.user_person_info.item_inv))));
+  draw_string ("5. " ^  (List.assoc 4 (inv_names 
+    (comb_inf.user_person_info.item_inv))));
   moveto 300 70;
-  draw_string ("4. " ^  (List.assoc 3 (inv_names (comb_inf.user_person_info.item_inv))));
+  draw_string ("4. " ^  (List.assoc 3 (inv_names 
+    (comb_inf.user_person_info.item_inv))));
   moveto 80 30;
-  draw_string ("3. " ^  (List.assoc 2 (inv_names (comb_inf.user_person_info.item_inv))));
+  draw_string ("3. " ^  (List.assoc 2 (inv_names 
+    (comb_inf.user_person_info.item_inv))));
   moveto 80 50;
-  draw_string ("2. " ^  (List.assoc 1 (inv_names (comb_inf.user_person_info.item_inv))));
+  draw_string ("2. " ^  (List.assoc 1 (inv_names 
+    (comb_inf.user_person_info.item_inv))));
   moveto 80 70;
-  draw_string ("1. " ^  (List.assoc 0 (inv_names (comb_inf.user_person_info.item_inv))));
+  draw_string ("1. " ^  (List.assoc 0 (inv_names 
+    (comb_inf.user_person_info.item_inv))));
   moveto 80 90;
   draw_string "Press number key to use item."; 
 
@@ -221,29 +229,53 @@ let poke_screen gui_inf =
   set_color black;
   set_font "-misc-dejavu sans mono-bold-r-normal--14-0-0-0-m-0-iso8859-1"; 
   moveto 300 30;
-  draw_string ("6. " ^ (name (List.assoc 5 (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
-  (string_of_int (hp (List.assoc 5 (comb_inf.user_person_info.poke_inv)))) ^ "/" ^ 
-  (string_of_int (maxhp (List.assoc 5 (comb_inf.user_person_info.poke_inv)))));
+  draw_string ("6. " ^ (name (List.assoc 5 
+    (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
+    (string_of_int (hp (List.assoc 5 (comb_inf.user_person_info.poke_inv)))) 
+    ^ "/" ^ 
+    (string_of_int (maxhp (List.assoc 5 
+      (comb_inf.user_person_info.poke_inv)))));
+
   moveto 300 50;
-  draw_string ("5. " ^ (name (List.assoc 4 (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
-  (string_of_int (hp (List.assoc 4 (comb_inf.user_person_info.poke_inv)))) ^ "/" ^ 
-  (string_of_int (maxhp (List.assoc 4 (comb_inf.user_person_info.poke_inv)))));
+  draw_string ("5. " ^ (name (List.assoc 4 
+    (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
+    (string_of_int (hp (List.assoc 4 (comb_inf.user_person_info.poke_inv)))) 
+    ^ "/" ^ 
+    (string_of_int (maxhp (List.assoc 4 
+      (comb_inf.user_person_info.poke_inv)))));
+
   moveto 300 70;
-  draw_string ("4. " ^ (name (List.assoc 3 (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
-  (string_of_int (hp (List.assoc 3 (comb_inf.user_person_info.poke_inv)))) ^ "/" ^ 
-  (string_of_int (maxhp (List.assoc 3 (comb_inf.user_person_info.poke_inv)))));
+  draw_string ("4. " ^ (name (List.assoc 3 
+    (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
+    (string_of_int (hp (List.assoc 3 (comb_inf.user_person_info.poke_inv)))) 
+    ^ "/" ^ 
+    (string_of_int (maxhp (List.assoc 3 
+      (comb_inf.user_person_info.poke_inv)))));
+
   moveto 80 30;
-  draw_string ("3. " ^ (name (List.assoc 2 (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
-  (string_of_int (hp (List.assoc 2 (comb_inf.user_person_info.poke_inv)))) ^ "/" ^ 
-  (string_of_int (maxhp (List.assoc 2 (comb_inf.user_person_info.poke_inv)))));
+  draw_string ("3. " ^ (name (List.assoc 2 
+    (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
+    (string_of_int (hp (List.assoc 2 (comb_inf.user_person_info.poke_inv)))) 
+    ^ "/" ^ 
+    (string_of_int (maxhp (List.assoc 2 
+      (comb_inf.user_person_info.poke_inv)))));
+
   moveto 80 50;
-  draw_string ("2. " ^ (name (List.assoc 1 (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
-  (string_of_int (hp (List.assoc 1 (comb_inf.user_person_info.poke_inv)))) ^ "/" ^ 
-  (string_of_int (maxhp (List.assoc 1 (comb_inf.user_person_info.poke_inv)))));
+  draw_string ("2. " ^ (name (List.assoc 1 
+    (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
+    (string_of_int (hp (List.assoc 1 (comb_inf.user_person_info.poke_inv)))) 
+    ^ "/" ^ 
+    (string_of_int (maxhp (List.assoc 1 
+    (comb_inf.user_person_info.poke_inv)))));
+
   moveto 80 70;
-  draw_string ("1. " ^ (name (List.assoc 0 (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
-  (string_of_int (hp (List.assoc 0 (comb_inf.user_person_info.poke_inv)))) ^ "/" ^ 
-  (string_of_int (maxhp (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+    draw_string ("1. " ^ (name (List.assoc 0 
+    (comb_inf.user_person_info.poke_inv))) ^ "  " ^ 
+    (string_of_int (hp (List.assoc 0 (comb_inf.user_person_info.poke_inv)))) 
+    ^ "/" ^ 
+    (string_of_int (maxhp (List.assoc 0 
+      (comb_inf.user_person_info.poke_inv)))));
+
   moveto 80 90;
   draw_string "Press number key to switch OCAMON."; 
 
@@ -266,38 +298,49 @@ let fight_screen gui_inf =
   set_color black;
   set_font "-misc-dejavu sans mono-bold-r-normal--12-0-0-0-m-0-iso8859-1";
 
-  if (List.length (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv))) = 2)
+  if (List.length (action_names (List.assoc 0 
+    (comb_inf.user_person_info.poke_inv))) = 2)
   then 
     (moveto 80 55;
-    draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+    draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 
+      (comb_inf.user_person_info.poke_inv)))));
     moveto 80 70;
-    draw_string ("1. " ^ (List.assoc 1 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+    draw_string ("1. " ^ (List.assoc 1 (action_names (List.assoc 0 
+      (comb_inf.user_person_info.poke_inv)))));
     moveto 80 90;
     draw_string "Press number key for attack.";
     press_battle_two ())
 
   else 
-    if (List.length (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv))) = 3)
+    if (List.length (action_names (List.assoc 0 
+      (comb_inf.user_person_info.poke_inv))) = 3)
     then 
       (moveto 80 40;
-      draw_string ("3. " ^ (List.assoc 3 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      draw_string ("3. " ^ (List.assoc 3 (action_names (List.assoc 0 
+        (comb_inf.user_person_info.poke_inv)))));
       moveto 80 55;
-      draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 
+        (comb_inf.user_person_info.poke_inv)))));
       moveto 80 70;
-      draw_string ("1. " ^ (List.assoc 1 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      draw_string ("1. " ^ (List.assoc 1 (action_names (List.assoc 0 
+        (comb_inf.user_person_info.poke_inv)))));
       moveto 80 90;
       draw_string "Press number key for attack.";
       
       press_battle_three ())
     else
       (moveto 80 25;
-      draw_string ("4. " ^ (List.assoc 4 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv))))); 
+      draw_string ("4. " ^ (List.assoc 4 (action_names (List.assoc 0 
+        (comb_inf.user_person_info.poke_inv))))); 
       moveto 80 40;
-      draw_string ("3. " ^ (List.assoc 3 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      draw_string ("3. " ^ (List.assoc 3 (action_names (List.assoc 0 
+        (comb_inf.user_person_info.poke_inv)))));
       moveto 80 55;
-      draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 
+        (comb_inf.user_person_info.poke_inv)))));
       moveto 80 70;
-      draw_string ("1. " ^ (List.assoc 1 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+      draw_string ("1. " ^ (List.assoc 1 (action_names (List.assoc 0 
+        (comb_inf.user_person_info.poke_inv)))));
       moveto 80 90;
       draw_string "Press number key for attack.";
       
@@ -374,11 +417,13 @@ let draw_battle gui_inf =
   draw_image p 400 200;
   *)
 
-  let user_poke = Png.load (sprite_front (List.assoc 0 (comb_inf.enemy_person_info.poke_inv))) [] in 
+  let user_poke = Png.load (sprite_back (List.assoc 0 
+    (comb_inf.user_person_info.poke_inv))) [] in 
   let c = user_poke |> array_of_image |> make_image in 
   draw_image c 150 115; 
 
-  let opp_poke = Png.load (sprite_back (List.assoc 0 (comb_inf.enemy_person_info.poke_inv))) [] in 
+  let opp_poke = Png.load (sprite_front (List.assoc 0 
+    (comb_inf.enemy_person_info.poke_inv))) [] in 
   let p = opp_poke|> array_of_image |> make_image in 
   draw_image p 400 200; 
 
@@ -393,7 +438,7 @@ let draw_battle gui_inf =
   set_font "-misc-dejavu sans mono-bold-r-normal--12-0-0-0-m-0-iso8859-1";
   set_color black;
   moveto 260 230;
-  draw_string (name (List.assoc 0 (comb_inf.enemy_person_info.poke_inv))); (* Index '0' is always true.*)
+  draw_string (name (List.assoc 0 (comb_inf.enemy_person_info.poke_inv))); 
   moveto 230 135;
   draw_string (name (List.assoc 0 (comb_inf.user_person_info.poke_inv)));
 
@@ -411,7 +456,7 @@ let draw_battle gui_inf =
   draw_string "Press number key for attack."; 
   *)
 
-  (*TEXT BOX-TEXT BOX-TEXT BOX-TEXT BOX-TEXT BOX-TEXT BOX-TEXT BOX-TEXT BOX-TEXT BOX*)
+  (*TEXT BOX-TEXT BOX-TEXT BOX-TEXT BOX-TEXT BOX-TEXT BOX-TEXT BOX-TEXT BOX*)
  
 
   (*
@@ -424,13 +469,17 @@ let draw_battle gui_inf =
   set_color black;
   moveto 80 25;
   set_font "-misc-dejavu sans mono-bold-r-normal--12-0-0-0-m-0-iso8859-1";
-  draw_string ("4. " ^ (List.assoc 4 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv))))); 
+  draw_string ("4. " ^ (List.assoc 4 (action_names (List.assoc 0 
+    (comb_inf.user_person_info.poke_inv))))); 
   moveto 80 40;
-  draw_string ("3. " ^ (List.assoc 3 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+  draw_string ("3. " ^ (List.assoc 3 (action_names (List.assoc 0 
+    (comb_inf.user_person_info.poke_inv)))));
   moveto 80 55;
-  draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+  draw_string ("2. " ^ (List.assoc 2 (action_names (List.assoc 0 
+    (comb_inf.user_person_info.poke_inv)))));
   moveto 80 70;
-  draw_string ("1. " ^ (List.assoc 2 (action_names (List.assoc 0 (comb_inf.user_person_info.poke_inv)))));
+  draw_string ("1. " ^ (List.assoc 2 (action_names (List.assoc 0 
+    (comb_inf.user_person_info.poke_inv)))));
   moveto 80 90;
   draw_string "Press number key for attack."; 
   *)
@@ -458,12 +507,13 @@ let draw_battle gui_inf =
       press_history ();
       history t
     end
-  in history (List.map draw_string gui_inf.history_info.game_stats.battle_round_log);
+  in history 
+    (List.map draw_string gui_inf.history_info.game_stats.battle_round_log);
 
   (*****************************************************************)
   (*****************************************************************)
 
-  (*HP METER-HP METER-HP METER-HP METER-HP METER-HP METER-HP METER-HP METER-HP METER-HP METER*)
+  (*HP METER-HP METER-HP METER-HP METER-HP METER-HP METER-HP METER-HP METER*)
   let max_user = maxhp (snd (List.hd (comb_inf.user_person_info.poke_inv))) in 
   let max_opp = maxhp (snd (List.hd (comb_inf.enemy_person_info.poke_inv))) in 
 
@@ -515,7 +565,7 @@ let draw_battle gui_inf =
   then Interact CBattleEnd
   else fpi_screen gui_inf 
 
-(*MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP*)
+(*MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP-MAP*)
 let rec press_before () = 
   let keep_running = ref true in 
     while !keep_running do 
@@ -548,7 +598,8 @@ let before_battle gui_inf =
   set_color black; 
   set_text_size 20; 
   moveto 210 210;
-  draw_string ("You are about to battle " ^ comb_inf.enemy_person_info.name ^ ".");
+  draw_string ("You are about to battle " ^ comb_inf.enemy_person_info.name 
+    ^ ".");
   moveto 210 180;
   draw_string "Press 'c' to continue.";
 
@@ -644,7 +695,7 @@ let draw_map gui_inf =
   let user = Jpeg.load "ash_front.jpg" [] in 
   let s = user |> array_of_image |> make_image in
 
-  if gui_inf.history_info.game_stats.next_battle = 0 (*WAIT if no battles have started, next_battle = 0*)
+  if gui_inf.history_info.game_stats.next_battle = 0 
   then draw_image s 70 200
   else 
     if gui_inf.history_info.game_stats.next_battle = 1
@@ -667,7 +718,7 @@ let map_game gui_inf =
   draw_map gui_inf;
   before_battle gui_inf
 
-(*START-START-START-START-START-START-START-START-START-START-START-START-START-START-START-START-START-START*)
+(*START-START-START-START-START-START-START-START-START-START-START-START*)
 
 let press_poke () = 
   let poke_num = ref 0 in 
@@ -679,7 +730,7 @@ let press_poke () =
       if s.Graphics.key = '1' 
       then (poke_num := 25; keep_running := false) (*CHANGE 25 TO 26*) 
       else 
-        if s.Graphics.key = '2' 
+        if s.Graphics.key = '2'  
         then (poke_num := 3; keep_running := false)
         else 
             if s.Graphics.key = '3'
@@ -794,7 +845,7 @@ let start_two () =
 
   press_start ()
 
-(*[press_poke ()] takes an input unit () and outputs the pokemon choice int: 0, 1, 2*)
+(*[press_poke ()] takes an input unit () and outputs the pokemon choice int*)
 
 let start_one () = 
   Graphics.set_window_title "OCAMON!";
@@ -834,7 +885,7 @@ let start_game () =
   start_two ();
   start_three ()
 
-(*WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN*)  
+(*WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN-WIN*)  
 (*press_win () gives a bool, 
 true if player wants to play again or 
 false if player wants to quit*)
@@ -875,7 +926,7 @@ let win_game () =
   draw_string "Press 'q' to quit game.";
 
   press_win ()
-(*LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE*)
+(*LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE-LOSE*)
 let rec press_lose () = 
   let continue = ref true in 
   let keep_running = ref true in 
