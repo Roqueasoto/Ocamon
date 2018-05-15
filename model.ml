@@ -77,7 +77,7 @@ module Blanks = struct
 
   let blank_history_info =
     {
-      milestones = [];
+      milestones = []; 
       game_stats = blank_game_stats; 
     }
 end
