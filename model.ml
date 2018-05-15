@@ -1,7 +1,7 @@
 open Shared_types
 
 (* Your damage has qradruple the effect in battle! *)
-let god_mode = true
+let god_mode = false
 let god_damage_multiplier = 4
 
 (* AF: [person] represents a person and id pair.
@@ -109,55 +109,55 @@ module Initiate_Population = struct
                                                   (start_index + 1)) in
     h size 0
 
-  let initial_enemy_0 = {blank_person_info with
+  let initial_enemy_0 () = {blank_person_info with
                          id = enemy_id 0;
                          name = "Jesse and James";
                          poke_inv = make_random_party 1;
                         }
 
-  let initial_enemy_1 = {blank_person_info with
+  let initial_enemy_1 () = {blank_person_info with
                          id = enemy_id 1;
                          name = "Brock";
                          poke_inv = make_random_party 2;
                         }
 
-  let initial_enemy_2 = {blank_person_info with
+  let initial_enemy_2 () = {blank_person_info with
                          id = enemy_id 2;
                          name = "Misty";
                          poke_inv = make_random_party 3;
                         }
 
-  let initial_enemy_3 = {blank_person_info with
+  let initial_enemy_3 () = {blank_person_info with
                          id = enemy_id 3;
                          name = "Giovanni";
                          poke_inv = make_random_party 4;
                         }
 
-  let initial_enemy_4 = {blank_person_info with
+  let initial_enemy_4 () = {blank_person_info with
                          id = enemy_id 4;
                          name = "Lance";
                          poke_inv = make_random_party 5;
                         }
 
-  let initial_enemy_5 = {blank_person_info with
+  let initial_enemy_5 () = {blank_person_info with
                          id = enemy_id 5;
                          name = "Gary";
                          poke_inv = make_random_party 6;
                         }
 
-  let initial_population =
+  let initial_population () =
     [("user", initial_user);
-     (enemy_id 0, initial_enemy_0);
-     (enemy_id 1, initial_enemy_1);
-     (enemy_id 2, initial_enemy_2);
-     (enemy_id 3, initial_enemy_3);
-     (enemy_id 4, initial_enemy_4);
-     (enemy_id 5, initial_enemy_5);]
+     (enemy_id 0, initial_enemy_0 ());
+     (enemy_id 1, initial_enemy_1 ());
+     (enemy_id 2, initial_enemy_2 ());
+     (enemy_id 3, initial_enemy_3 ());
+     (enemy_id 4, initial_enemy_4 ());
+     (enemy_id 5, initial_enemy_5 ());]
 
   let initiate_state = fun () ->
     {
       Blanks.blank_state with
-      population = initial_population;
+      population = initial_population ();
       mode = MStart;
     }
 end
