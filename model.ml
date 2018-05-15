@@ -1,7 +1,8 @@
 open Shared_types
 
-(* Your damage has double the effect in battle! *)
-let god_mode = false
+(* Your damage has qradruple the effect in battle! *)
+let god_mode = true
+let god_damage_multiplier = 4
 
 (* AF: [person] represents a person and id pair.
 RI: person_id must equal person_info.id *)
@@ -108,55 +109,55 @@ module Initiate_Population = struct
                                                   (start_index + 1)) in
     h size 0
 
-  let initial_enemy_0 = {blank_person_info with
+  let initial_enemy_0 () = {blank_person_info with
                          id = enemy_id 0;
                          name = "Jesse and James";
                          poke_inv = make_random_party 1;
                         }
 
-  let initial_enemy_1 = {blank_person_info with
+  let initial_enemy_1 () = {blank_person_info with
                          id = enemy_id 1;
                          name = "Brock";
                          poke_inv = make_random_party 2;
                         }
 
-  let initial_enemy_2 = {blank_person_info with
+  let initial_enemy_2 () = {blank_person_info with
                          id = enemy_id 2;
                          name = "Misty";
                          poke_inv = make_random_party 3;
                         }
 
-  let initial_enemy_3 = {blank_person_info with
+  let initial_enemy_3 () = {blank_person_info with
                          id = enemy_id 3;
                          name = "Giovanni";
                          poke_inv = make_random_party 4;
                         }
 
-  let initial_enemy_4 = {blank_person_info with
+  let initial_enemy_4 () = {blank_person_info with
                          id = enemy_id 4;
                          name = "Lance";
                          poke_inv = make_random_party 5;
                         }
 
-  let initial_enemy_5 = {blank_person_info with
+  let initial_enemy_5 () = {blank_person_info with
                          id = enemy_id 5;
                          name = "Gary";
                          poke_inv = make_random_party 6;
                         }
 
-  let initial_population =
+  let initial_population () =
     [("user", initial_user);
-     (enemy_id 0, initial_enemy_0);
-     (enemy_id 1, initial_enemy_1);
-     (enemy_id 2, initial_enemy_2);
-     (enemy_id 3, initial_enemy_3);
-     (enemy_id 4, initial_enemy_4);
-     (enemy_id 5, initial_enemy_5);]
+     (enemy_id 0, initial_enemy_0 ());
+     (enemy_id 1, initial_enemy_1 ());
+     (enemy_id 2, initial_enemy_2 ());
+     (enemy_id 3, initial_enemy_3 ());
+     (enemy_id 4, initial_enemy_4 ());
+     (enemy_id 5, initial_enemy_5 ());]
 
   let initiate_state = fun () ->
     {
       Blanks.blank_state with
-      population = initial_population;
+      population = initial_population ();
       mode = MStart;
     }
 end
@@ -376,6 +377,24 @@ module DoRoundHelp = struct
    whose first element is the updated state and the second element is whether
    the effect was successful or not. *)
   let do_eff_try (self_id, other_id, st) eff =
+
+    (* GOD MODE: Multiply damage by 2 for user inflicting damage on enemy. *)
+    let eff =
+      if god_mode then
+        begin
+          let open Controller in
+          match eff with
+          | Damage (effect_on, accuracy, damage, (mini, maxi), p, c) -> begin
+              if (self_id = "user" && effect_on = Self)
+              then Damage (effect_on, accuracy,
+                           (damage * god_damage_multiplier), (mini, maxi), p, c)
+              else eff
+          end
+          | _ -> eff
+        end
+      else eff in
+
+
     (* Based on accuracy, return a boolean that represents whether this effect's
        successful or not. *)
     let get_is_success accuracy =
@@ -661,7 +680,11 @@ module DoInteractHelp = struct
       List.filter is_new_key get_pokedex_keys in
     match new_pokedex_keys with
     | [] -> failwith "impossible to have no new pokemon to choose from"
-    | k::_ -> build_poke k
+    | _ -> begin
+        let random_index = Random.int (List.length new_pokedex_keys) in
+        let random_key = List.nth new_pokedex_keys random_index in
+        build_poke random_key
+    end
 
 (* If there's space, awards a new poke to player's party. *)
   let award_new_poke st =

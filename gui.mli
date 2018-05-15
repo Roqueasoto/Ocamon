@@ -18,18 +18,23 @@ type status = {
 }
 
 type event = 
-  |Button_down 
-  |Button_up
-  |Key_pressed
-  |Mouse_motion
-  |Poll 
+  |	Button_down	(* A mouse button is pressed *)
+  |	Button_up	(* A mouse button is released *)
+  |	Key_pressed	(* A key is pressed *)
+  |	Mouse_motion	(* The mouse is moved *)
+  |	Poll	(* Don't wait; return immediately *)
+  
 
+(* [array_of_image t] takes an image type and returns a 2-D color array *)
 val array_of_image : Images.t -> Graphics.color array array 
 
+(* [make_action i g] takes int and gui_inf to List.assoc the proper action*)
 val make_action : int -> gui_combat_info -> Controller.command
 
+(* [make_switch i] takes int and returns the command for a pokemon switch*)
 val make_switch : int -> Controller.command
 
+(* [make_item i g] takes int and gui_inf to create item needed*)
 val make_item : int -> gui_combat_info -> Controller.command
 
 val pokemon_or_items_six : unit -> int 
