@@ -93,3 +93,10 @@ val type_compare : ptype -> ptype -> float
 (* [item_use_combat item] returns a CombatAction command that a valid [item]
  * can perform if it has one, otherwise returns None.*)
 val item_use_combat : item -> command option
+
+(* Gets the pokedex key corresponding to poke.
+Requires poke to be in pokedex.*)
+val get_pokedex_number : t -> string
+
+(* Gets the keys to the pokedex *)
+val get_pokedex_keys : string list 

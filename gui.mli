@@ -26,9 +26,23 @@ type event =
 
 val array_of_image : Images.t -> Graphics.color array array 
 
-val fpi_press : unit -> int
+val make_action : int -> gui_combat_info -> Controller.command
 
-val pokemon_or_items : unit -> int
+val make_switch : int -> Controller.command
+
+val make_item : int -> gui_combat_info -> Controller.command
+
+val pokemon_or_items_six : unit -> int 
+
+val pokemon_or_items_five : unit -> int 
+
+val pokemon_or_items_four : unit -> int 
+
+val pokemon_or_items_three : unit -> int 
+
+val pokemon_or_items_two : unit -> int 
+
+val pokemon_or_items_one : unit -> int 
 
 val press_battle_four : unit -> int
 
@@ -36,17 +50,21 @@ val press_battle_three : unit -> int
 
 val press_battle_two : unit -> int
 
-val make_action : int -> gui_combat_info -> Controller.command
-
-val make_switch : int -> Controller.command
-
-val make_item : int -> gui_combat_info -> Controller.command
-
 val items_screen : gui_info -> int
 
 val poke_screen : gui_info -> int
 
 val fight_screen : gui_info -> int 
+
+val fpi_screen : gui_info -> Controller.command
+
+val no_more_press : unit -> unit
+
+val no_pokemon : unit -> unit 
+
+val no_items : unit -> unit 
+
+val fpi_press : unit -> int 
 
 val fpi_screen : gui_info -> Controller.command
 
@@ -75,6 +93,10 @@ val start_two : unit -> unit
 val start_one : unit -> unit
 
 val start_game : unit -> int
+
+val press_win_match : unit -> bool
+
+val win_match : unit -> Controller.command
 
 val press_win : unit -> bool
 

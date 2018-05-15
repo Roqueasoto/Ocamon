@@ -1,5 +1,8 @@
 open Shared_types
 
+(* Your damage has double the effect in battle! *)
+let god_mode = true
+
 (* AF: [person] represents a person and id pair.
 RI: person_id must equal person_info.id *)
 type person = (person_id * person_info)
@@ -43,7 +46,7 @@ module CommonHelp = struct
     match eff with
     | Switch _ -> "Switch"
     | Heal _ -> "Heal"
-    | Damage _ -> "Damage"
+    | Damage _ -> "Attack"
     | Status _ -> "Status"
     | Buff _ -> "Buff"
     | Special (_, _, special, _) -> get_special_effect_name special
@@ -415,13 +418,21 @@ module DoRoundHelp = struct
       let state_info = expand_state self_id other_id st in
       let pokemon_name = Pokemon.name state_info.poke_self in
       let move_name = get_eff_name eff in
+      let is_special =
+        match eff with
+        | Controller.Special _ -> true
+        | _ -> false in
 
-      (* Log += <pokemon_name> used <move_name>. *)
-      let st = update_log (pokemon_name^" used "^move_name^"! ") st in
+      (* Log += <pokemon_name> used <move_name>, if not a special move. *)
+      let st =
+        if is_special then st
+        else update_log (pokemon_name^" used "^move_name^"! ") st in
 
-      (* Log += Pokemon's attack missed. *)
+      (* Log += Pokemon's attack missed, if not a special move. *)
       if not is_success then
-        let st' = update_log (pokemon_name^"'s attack missed. ") st in
+        let st' =
+          if is_special then st
+          else update_log (pokemon_name^"'s attack missed. ") st in
         (st', false)
 
       else begin
@@ -441,7 +452,9 @@ module DoRoundHelp = struct
             end in
         let st' = update_state_with_pokes_and_state_info st
             (state_info, poke_self', poke_other') in
-        let st'' = update_log (pokemon_name^"'s attack succeeded. ") st' in
+        let st'' =
+          if is_special then st'
+          else update_log (pokemon_name^"'s attack succeeded. ") st' in
         (st'', true)
       end in
 
@@ -471,9 +484,8 @@ module DoRoundHelp = struct
 
   (* Requires to be in battle mode *)
   let get_enemy_id st =
-    match st.mode with
-    | MCombat enemy_id -> enemy_id
-    | _ -> failwith "unreachable get_enemy_id"
+    let level = st.game_stats.next_battle in
+    Initiate_Population.enemy_id level
 
   (* Elist is expanded to reflect damage multiplier.
      Example: elist is (damage (min 3, max 5), effect 2, efect 3) an
@@ -600,9 +612,10 @@ module DoInteractHelp = struct
         game_stats = game_stats';
       }
 
-  (* Go back to map. inform state that next level is same.  *)
-  let do_close st =
-    {st with mode = MMap}
+  (* Go back to map. inform state that next level is same, or quit.  *)
+  let do_close b st =
+    if b then {st with mode = MMap}
+    else {st with mode = MQuit}
 
 (* Let mode be MQuit, so that main knows that we have quit.*)
   let do_cquit st =
@@ -616,9 +629,72 @@ module DoInteractHelp = struct
     let user_hp = Pokemon.hp state_info.poke_self in
     user_hp <> 0
 
+  (* Restores the pokemon to full health at end of battle. *)
+  let revive_all_poke st =
+    let open DoRoundHelp in
+    let user_id = "user" in
+    let enemy_id = get_enemy_id st in
+    let state_info = expand_state user_id enemy_id st in
+
+    let revive_inv poke_inv =
+      let op (index, poke) =
+        let open Pokemon in
+        let pokedex_key = get_pokedex_number poke in
+        let poke_revived = build_poke pokedex_key in
+        (index, poke_revived) in
+      List.map op poke_inv in
+
+    let user_poke_inv' = revive_inv (state_info.poke_inv_self) in
+    let enemy_poke_inv' = revive_inv (state_info.poke_inv_other) in
+
+    update_state_with_poke_invs_and_state_info
+      st (state_info, user_poke_inv', enemy_poke_inv')
+
+  (* Gets a random new pokemon.  *)
+  let get_random_new_poke poke_inv =
+    let open Pokemon in
+    let current_keys =
+      let get_key (index, poke) = get_pokedex_number poke in
+      List.map get_key poke_inv in
+    let new_pokedex_keys =
+      let is_new_key key = not (List.mem key current_keys) in
+      List.filter is_new_key get_pokedex_keys in
+    match new_pokedex_keys with
+    | [] -> failwith "impossible to have no new pokemon to choose from"
+    | k::_ -> build_poke k
+
+(* If there's space, awards a new poke to player's party. *)
+  let award_new_poke st =
+    let open DoRoundHelp in
+    let user_id = "user" in
+    let enemy_id = get_enemy_id st in
+    let state_info = expand_state user_id enemy_id st in
+    let user_poke_inv = state_info.poke_inv_self in
+    let enemy_poke_inv = state_info.poke_inv_other in
+
+    (* If there's space, award new poke. *)
+    if (List.length user_poke_inv = 6) then st
+    else
+      (* Add new pokemon *)
+      let user_poke_inv' =
+        let new_poke = get_random_new_poke user_poke_inv in
+
+        (* increment the indices of each poke. *)
+        let user_poke_inv_incr =
+          let op (index, poke) = (index + 1, poke) in
+          List.map op user_poke_inv in
+
+        (0, new_poke)::user_poke_inv_incr in
+
+      update_state_with_poke_invs_and_state_info
+        st (state_info, user_poke_inv', enemy_poke_inv)
+
   let do_cbattleend st =
-    let is_user_winner = failwith "" in
-    if is_user_winner then {st with mode = MWin}
+    let is_user_winner = get_is_user_winner st in
+    let st = revive_all_poke st in
+    if is_user_winner then
+      let st_awarded = award_new_poke st in
+      {st_awarded with mode = MWin}
     else {st with mode = MLose}
 
   let do_cwingame b st =
@@ -631,7 +707,7 @@ module DoInteractHelp = struct
     | CStart i -> do_csart i st
     | CMap -> do_cmap st
     | CWin -> do_cwin st
-    | CLose _ -> do_close st
+    | CLose b -> do_close b st
     | CQuit -> do_cquit st
     | CBattleEnd -> do_cbattleend st
     | CWinGame b -> do_cwingame b st
