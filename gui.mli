@@ -94,6 +94,10 @@ val start_one : unit -> unit
 
 val start_game : unit -> int
 
+val press_win_match : unit -> bool
+
+val win_match : unit -> Controller.command
+
 val press_win : unit -> bool
 
 val win_game : unit -> bool

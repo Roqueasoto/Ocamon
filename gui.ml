@@ -975,7 +975,7 @@ let press_poke () =
     if s.Graphics.keypressed 
     then  
       if s.Graphics.key = '1' 
-      then (poke_num := 25; keep_running := false) (*CHANGE 25 TO 26*) 
+      then (poke_num := 26; keep_running := false) 
       else 
         if s.Graphics.key = '2'  
         then (poke_num := 3; keep_running := false)
@@ -1136,6 +1136,43 @@ let start_game () =
 (*press_win () gives a bool, 
 true if player wants to play again or 
 false if player wants to quit*)
+let press_win_match () = 
+  let return_bool = ref false in 
+  let keep_running = ref true in 
+  while !keep_running do 
+    let s = Graphics.wait_next_event [Graphics.Key_pressed] in 
+    if s.Graphics.keypressed 
+    then  
+      if s.Graphics.key = 'c' 
+      then (return_bool := true; keep_running := false)
+      else keep_running := true;
+  done; !return_bool
+
+let rec win_match () = 
+  Graphics.set_window_title "OCAMON!";
+  Graphics.open_graph " 600x400"; 
+  let start = Png.load "startScreen.png" [] in 
+  let s = start |> array_of_image |> make_image in 
+  draw_image s 0 0; 
+
+  set_color black;
+  set_line_width 5;
+  draw_rect 150 100 300 100;
+  set_color green; 
+  fill_rect 150 100 300 100;
+  
+  set_color black; 
+  set_text_size 20; 
+  moveto 160 180;
+  draw_string "Congrats! You won the match!"; 
+  moveto 160 150;
+  draw_string "Press 'c' to continue. >"; 
+
+  let maybe = press_win_match () in 
+    match maybe with 
+    |true -> Interact CBattleEnd
+    |false ->  win_match () 
+
 let rec press_win () = 
   let continue = ref true in 
   let keep_running = ref true in 
@@ -1143,7 +1180,7 @@ let rec press_win () =
     let s = Graphics.wait_next_event [Graphics.Key_pressed] in 
     if s.Graphics.keypressed 
     then  
-      if s.Graphics.key = 'q' 
+      if s.Graphics.key = 'q'
       then (continue := false; keep_running := false)
       else if s.Graphics.key = 'c' 
       then (continue := true; keep_running := false)
@@ -1166,7 +1203,7 @@ let win_game () =
   set_color black; 
   set_text_size 20; 
   moveto 160 180;
-  draw_string "Congrats! You won!"; 
+  draw_string "Congrats! You won! :)"; 
   moveto 160 150;
   draw_string "Press 'c' to continue playing."; 
   moveto 160 120;
@@ -1231,8 +1268,7 @@ let get_cmd gui_inf gmode =
     let choose = win_game () in 
     Interact (CWinGame choose)
   | MWin ->  (*match*)
-    let choose = win_game () in 
-    Interact (CWinGame choose)
+      win_match ()
   | MLose -> 
     let choose = lose_game () in 
     Interact (CLose choose);
