@@ -44,7 +44,7 @@ module CommonHelp = struct
     | Switch _ -> "Switch"
     | Heal _ -> "Heal"
     | Damage _ -> "Damage"
-    | Status _ -> "Status"
+    | Status _ -> "Status" 
     | Buff _ -> "Buff"
     | Special (_, _, special, _) -> get_special_effect_name special
     | Nothing -> "Nothing"
@@ -78,7 +78,7 @@ module Blanks = struct
   let blank_history_info =
     {
       milestones = [];
-      game_stats = blank_game_stats;
+      game_stats = blank_game_stats; 
     }
 end
 
@@ -95,7 +95,7 @@ module Initiate_Population = struct
                        "enemy_4";
                        "enemy_5";]
 
-  let enemy_id n = List.nth enemy_id_list n
+  let enemy_id n = List.nth enemy_id_list n 
 
   let rec make_random_party size =
     let rec h size start_index =

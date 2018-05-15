@@ -7,7 +7,7 @@ type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poisoned | Toxic
 type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
            | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
            
-type category = Special | Physical
+type category = Special | Physical 
 
 type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int | SpatkBuff of int
 
