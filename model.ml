@@ -1,5 +1,8 @@
 open Shared_types
 
+(* Your damage has double the effect in battle! *)
+let god_mode = true
+
 (* AF: [person] represents a person and id pair.
 RI: person_id must equal person_info.id *)
 type person = (person_id * person_info)
@@ -609,9 +612,10 @@ module DoInteractHelp = struct
         game_stats = game_stats';
       }
 
-  (* Go back to map. inform state that next level is same.  *)
-  let do_close st =
-    {st with mode = MMap}
+  (* Go back to map. inform state that next level is same, or quit.  *)
+  let do_close b st =
+    if b then {st with mode = MMap}
+    else {st with mode = MQuit}
 
 (* Let mode be MQuit, so that main knows that we have quit.*)
   let do_cquit st =
@@ -703,7 +707,7 @@ module DoInteractHelp = struct
     | CStart i -> do_csart i st
     | CMap -> do_cmap st
     | CWin -> do_cwin st
-    | CLose _ -> do_close st
+    | CLose b -> do_close b st
     | CQuit -> do_cquit st
     | CBattleEnd -> do_cbattleend st
     | CWinGame b -> do_cwingame b st
