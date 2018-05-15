@@ -390,7 +390,7 @@ module DoRoundHelp = struct
           let open Controller in
           match eff with
           | Damage (effect_on, accuracy, damage, (mini, maxi), p, c) -> begin
-              if (self_id = "user" && effect_on = Self)
+              if (self_id = "user" && effect_on = Other)
               then Damage (effect_on, accuracy,
                            (damage * god_damage_multiplier), (mini, maxi), p, c)
               else eff
@@ -577,7 +577,8 @@ module DoRoundHelp = struct
     let poke = List.assoc 0 lst in
     let nlst = ((List.length lst), poke)::(List.remove_assoc 0 lst) in
     let decrm (idx,pke) = ((idx - 1),pke) in
-    List.map decrm nlst
+    let nlst2 = List.sort (fun (a,_) (b,_) -> compare a b) nlst in
+    List.map decrm nlst2
 
   (* Performs do on Round command.  *)
   let do_round user_elist enemy_elist st =

@@ -90,7 +90,10 @@ let move_acy_set acy move =
  * requires -
  * - [move] a list of effect types representing a valid CombatAction. List size
  *   should be maximum 3 effects.
- * - [acc] an accumulator initiated as the empty list.*)
+ * - [acc] an accumulator initiated as the empty list.
+ * raises -
+ * - failwith "Move too large: expand_move" -  if list of expanded effects is
+ *   larger than anticipated.  *)
 let rec expand_move move acc =
   let miss_chance rem_acc hit =  rem_acc -. (snd hit) in
   match move with
@@ -121,7 +124,19 @@ let rec expand_move move acc =
       | _ -> failwith "Move too large: expand_move"
     end
 
-(* [gamma_A state] *)
+(* [gamma state min_max depth_max depth path score_minmax]
+ * returns the best choice CombatAction and corresponding score
+ * using the gamma pruning technique, pioneered by Melko and Nagy 2007. The
+ * gamma function has 3 branches: a minimizer, a maximizer, and an evaluation
+ * stage when the desired depth is reached.
+ * requires:
+ *  - [state] - a valid game state that is either the initial state or
+ *    one produced by multiple applications of do on the initial state.
+ *  - [min_max] - either "min" or "max" designating which action to perform.
+ *  - [depth_max] -  an integer designating the maximum desired depth.
+ *  - [depth] - an integer indicating current depth. Initialized as -1.
+ *  - [score_minmax] - a tuple of floats containg the largest possible points a
+ *    single move could bring the minimizer respectively.  *)
 let rec gamma state min_max depth_max depth path score_minmax =
   let depth = if min_max = "max" then depth + 1 else depth in
   let ai_inf = get_ai_info state in
@@ -136,6 +151,21 @@ let rec gamma state min_max depth_max depth path score_minmax =
   else let _,moves_up = List.split path in
          path,(evaluate state moves_up)
 
+(* [chance_layer lst rootp bestp score min_max dep_max dep sc_mnmx st]
+ * returns the best choice CombatAction and corresponding score
+ * using the gamma pruning technique, pioneered by Melko and Nagy 2007. This
+ * function is built as a mutually recursive helper function to gamma.
+ * requires:
+ *  - [lst] - a list of valid char*combat action pairs.
+ *  - [st] - a valid game state that is either the initial state or
+ *    one produced by multiple applications of do on the initial state.
+ *  - [rootp] the path of moves leading to valid moves [lst].
+ *  - [bestp] the path of moves leading to the current best moves [lst].
+ *  - [min_max] - either "min" or "max" designating which action to perform.
+ *  - [dep_max] -  an integer designating the maximum desired depth.
+ *  - [dep] - an integer indicating current depth. Initialized as -1.
+ *  - [sc_mnmx] - a tuple of floats containg the largest possible points a
+ *    single move could bring the minimizer respectively.  *)
 and chance_layer lst rootp bestp score min_max dep_max dep sc_mnmx st =
   let s = 0. in let p = 0. in
   match lst with
@@ -151,6 +181,22 @@ and chance_layer lst rootp bestp score min_max dep_max dep sc_mnmx st =
         chance_layer t rootp bestp score min_max dep_max dep sc_mnmx st
       else chance_layer t rootp n_path n_score min_max dep_max dep sc_mnmx st
 
+(* [chance_move move s p score min_max dep_max dep path sc_mnmx st]
+ * returns the score corresponding to CombatAction move and path of the move,
+ * using the gamma pruning technique, pioneered by Melko and Nagy 2007. This
+ * function is built as a mutually recursive helper function to gamma.
+ * requires:
+ *  - [move] - a valid char*CombatAction pair.
+ *  - [s] - a float that represents the value of the current move.
+ *  - [p] - a float that represents the probability of the current move.
+ *  - [score] - an integer value representing the current best move.
+ *  - [st] - a valid game state that is either the initial state or
+ *    one produced by multiple applications of do on the initial state.
+ *  - [min_max] - either "min" or "max" designating which action to perform.
+ *  - [dep_max] -  an integer designating the maximum desired depth.
+ *  - [dep] - an integer indicating current depth. Initialized as -1.
+ *  - [sc_mnmx] - a tuple of floats containg the largest possible points a
+ *    single move could bring the minimizer respectively.  *)
 and chance_move move s p score min_max dep_max dep path sc_mnmx st =
   let eff = begin match move with
     | _,Interact _ | _,Move _ -> failwith "Combat moves should be CombatActions"
@@ -162,6 +208,29 @@ and chance_move move s p score min_max dep_max dep path sc_mnmx st =
   chance_br eff s p min_max dep_max dep path
     (snd move) sc_mnmx score score false path st
 
+(* [chance_br branch s p min_max dep_max dep path comb_act sc_mnmx score
+ *   alphbet skip prev_path st]
+ * returns the average score corresponding to [branch] and path of the move,
+ * using the gamma pruning technique, pioneered by Melko and Nagy 2007. This
+ * function is built as a mutually recursive helper function to gamma. This
+ * is where pruning occurs if a move is partially evaluated to not be useful.
+ * requires:
+ *  - [branch] - a list of effect list * float (accuracy) pairs.
+ *  - [s] - a float that represents the value of the current move.
+ *  - [p] - a float that represents the probability of the current move.
+ *  - [comb_act] - a valid Combat Action.
+ *  - [score] - an integer value representing the current best move.
+ *  - [alphbet] - a float corresponding to the value of the current move with
+ *     the best possible scenario.
+ *  - [skip] -  a boolean to designate if remaining of branch should be skipped.
+ *  - [prev_path] - the path to the latest move in branch.
+ *  - [st] - a valid game state that is either the initial state or
+ *    one produced by multiple applications of do on the initial state.
+ *  - [min_max] - either "min" or "max" designating which action to perform.
+ *  - [dep_max] -  an integer designating the maximum desired depth.
+ *  - [dep] - an integer indicating current depth. Initialized as -1.
+ *  - [sc_mnmx] - a tuple of floats containg the largest possible points a
+ *    single move could bring the minimizer respectively.  *)
 and chance_br branch s p min_max dep_max dep path
     comb_act sc_mnmx score alphbet skip prev_path st =
   match branch with
@@ -186,7 +255,11 @@ and chance_br branch s p min_max dep_max dep path
     else chance_br t s p min_max dep_max dep path
         comb_act sc_mnmx score (truncate n_alphbet) false res_path st
 
-(* [take_turn state]*)
+(* [take_turn state] returns a CombatAction representing the choice taken by
+ * the ai. Every time take_turn is called, the ai assesses what the best move
+ * is through the gamma (gamma pruning function) and then depending on the level
+ * of difficulty of the enemy, decides whether or not to dispose of it and
+ * instead choose a random move from all valid moves it may make. *)
 let take_turn state =
   (* make sc_mnmx more accurate*)
   let act_lst = gamma state "max" 1 (-1) [] (-1200.,1200.) in

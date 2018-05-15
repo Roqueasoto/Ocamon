@@ -710,7 +710,7 @@ let rec press_history () =
       if s.Graphics.key = 'c'
       then keep_running := false
       else keep_running := true;
-  done 
+  done
 
 (*[draw_battle gui_inf] *)
 let draw_battle gui_inf =
@@ -745,15 +745,15 @@ let draw_battle gui_inf =
   draw_string (name (List.assoc 0 (comb_inf.user_person_info.poke_inv)));
 
   (*HP METER-HP METER-HP METER-HP METER-HP METER-HP METER-HP METER-HP METER*)
-  let max_user = float (maxhp  
-    (List.assoc 0 (comb_inf.user_person_info.poke_inv))) in 
-  let max_opp = float (maxhp 
-    (List.assoc 0 (comb_inf.enemy_person_info.poke_inv))) in 
+  let max_user = float (maxhp
+    (List.assoc 0 (comb_inf.user_person_info.poke_inv))) in
+  let max_opp = float (maxhp
+    (List.assoc 0 (comb_inf.enemy_person_info.poke_inv))) in
 
   let user_hp_now = float (hp
-    (List.assoc 0 (comb_inf.user_person_info.poke_inv))) in 
+    (List.assoc 0 (comb_inf.user_person_info.poke_inv))) in
   let opp_hp_now = float (hp
-    (List.assoc 0 (comb_inf.enemy_person_info.poke_inv))) in 
+    (List.assoc 0 (comb_inf.enemy_person_info.poke_inv))) in
 
   let user_health = (user_hp_now /. max_user) *. 100. in
   let opp_health = (opp_hp_now /. max_opp) *. 100. in
@@ -768,13 +768,13 @@ let draw_battle gui_inf =
   set_color green;
   fill_rect 260 210 (truncate opp_health) 10; (*full health is 100*)
 
-  let rec counter lst = 
-    match lst with 
+  let rec counter lst =
+    match lst with
     |[] -> 0
-    |h::t -> 
+    |h::t ->
       if (h > 0)
       then (1 + counter t)
-      else (0 + counter t) in 
+      else (0 + counter t) in
 
   (*USER*)
   set_color black;
@@ -788,8 +788,8 @@ let draw_battle gui_inf =
   (* set_font "-misc-dejavu sans mono-bold-r-normal--12-0-0-0-m-0-iso8859-1"; *)
   moveto 260 190;
   draw_string (string_of_int (truncate opp_hp_now) ^ "/" ^
-    string_of_int (truncate max_opp) ^ "   " ^ 
-    string_of_int (counter (List.map hp (snd (List.split 
+    string_of_int (truncate max_opp) ^ "   " ^
+    string_of_int (counter (List.map hp (snd (List.split
       (comb_inf.enemy_person_info.poke_inv)))))
     ^ " pokemon left.");
 
@@ -848,7 +848,7 @@ let before_battle gui_inf =
   let s = start |> array_of_image |> make_image in
   draw_image s 0 0;
 
-  (*let friend = Jpeg.load (sprite_front (List.assoc 0 
+  (*let friend = Jpeg.load (sprite_front (List.assoc 0
     (comb_inf.user_person_info.poke_inv))) [] in
   let e = friend |> array_of_image |> make_image in
   draw_image e 250 50;*)
@@ -859,7 +859,7 @@ let before_battle gui_inf =
   draw_string "You are about to go into battle!";
   (*draw_string ("You are about to battle " ^ comb_inf.enemy_person_info.name
     ^ ".");*)
-  moveto 210 150; 
+  moveto 210 150;
   draw_string ("You have received a new pokemon!");
   moveto 210 180;
   draw_string "Press 'c' to continue. >";
@@ -970,7 +970,7 @@ let draw_map gui_inf =
         else
           if gui_inf.history_info.game_stats.next_battle = 4
           then draw_image s 470 200
-          else 
+          else
             draw_image s 470 50;
 
   press_map ()
@@ -1217,9 +1217,9 @@ let win_game () =
   set_color black;
   set_text_size 20;
   moveto 160 180;
-  draw_string "Congrats! You won! :)";
+  draw_string "Congrats! You beat the Ocamon League!! :)";
   moveto 160 150;
-  draw_string "Press 'c' to continue playing.";
+  draw_string "Press 'c' to play again (quits game).";
   moveto 160 120;
   draw_string "Press 'q' to quit game.";
 
