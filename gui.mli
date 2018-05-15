@@ -56,7 +56,7 @@ val draw_battle : gui_info -> Controller.command
 
 val press_before : unit -> unit
 
-val before_battle : gui_info -> unit
+val before_battle : unit -> unit
 
 val press_map : unit -> unit 
 
