@@ -11,3 +11,9 @@
 #load "model.cmo"
 #load "ai.cmo"
 #load "gui.cmo"
+
+#load "ai_test.cmo"
+#load "test_andrea.cmo"
+#load "test_cynthia.cmo"
+#load "test_roque.cmo"
+#load "test_timothy.cmo"

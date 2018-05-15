@@ -1,11 +1,11 @@
 open Graphics
 open Camlimages
 open Images
-open Png       
-open Jpeg   
-open Pokemon 
-open Shared_types 
-open Controller     
+open Png
+open Jpeg
+open Pokemon
+open Shared_types
+open Controller
 
 (*
 #require "graphics";;
@@ -29,18 +29,18 @@ type status = {
   key : char;	(* the character for the key pressed *)
 }
 
-type event = 
-  |Button_down 
+type event =
+  |Button_down
   |Button_up
   |Key_pressed
   |Mouse_motion
   |Poll
- 
 
-(* let rec updateStatus (l: event list) (st: status) = 
-  match l with 
-  |[] -> draw_char ' '  
-  |h::t -> if st.keypressed = true 
+
+(* let rec updateStatus (l: event list) (st: status) =
+  match l with
+  |[] -> draw_char ' '
+  |h::t -> if st.keypressed = true
   then draw_char st.key else updateStatus t st *)
 
   (* Printf.printf "Key value pressed: %d\n%!" key;*)
@@ -77,66 +77,66 @@ let array_of_image img =
 
 (*[get_image f] reads an image from a .png file  *)
 
-let rec press_battle num () = 
-  let keep_running = ref true in 
-    while !keep_running do 
-      let s = Graphics.wait_next_event [Graphics.Key_pressed] in 
-      if s.Graphics.keypressed 
-      then  
-        if s.Graphics.key = 'q' 
-        then close_graph () 
+let rec press_battle num () =
+  let keep_running = ref true in
+    while !keep_running do
+      let s = Graphics.wait_next_event [Graphics.Key_pressed] in
+      if s.Graphics.keypressed
+      then
+        if s.Graphics.key = 'q'
+        then close_graph ()
         else if s.Graphics.key = '1'
         then num := 1
         else if s.Graphics.key = '2'
         then num := 2
         else if s.Graphics.key = '3'
         then num := 3
-        else if s.Graphics.key = '4' 
-        then num := 4 
-        else 
-          keep_running := true; 
+        else if s.Graphics.key = '4'
+        then num := 4
+        else
+          keep_running := true;
     done
 
 let make_action num comb_inf =
   List.assoc !num (actions (snd (List.hd (comb_inf.user_person_info.poke_inv))))
 
-let check num comb_inf user_health opp_health = 
-  if user_health <= 0 || opp_health <= 0 
-  then 
+let check num comb_inf user_health opp_health =
+  if user_health <= 0 || opp_health <= 0
+  then
     (*draw_string "Looks like the battle is over."; *)
     Interact CBattleEnd
-  else 
-    make_action num comb_inf 
+  else
+    make_action num comb_inf
 
 (*val draw_battle: Types.gui_info -> Controller.command*)
-let draw_battle gui_inf = 
+let draw_battle gui_inf =
   Graphics.set_window_title "OCAMON!";
   Graphics.open_graph " 300x300";
-  let start = Png.load "startScreen.png" [] in 
-  let s = start |> array_of_image |> make_image in 
+  let start = Png.load "startScreen.png" [] in
+  let s = start |> array_of_image |> make_image in
   draw_image s 0 0;
-  
-  let user_poke = Png.load "us.png" [] in 
-  let c = user_poke |> array_of_image |> make_image in 
-  draw_image c 0 0; 
 
-  let opp_poke = Jpeg.load "them.jpg" [] in 
-  let p = opp_poke|> array_of_image |> make_image in 
-  draw_image p 200 200; 
+  let user_poke = Png.load "us.png" [] in
+  let c = user_poke |> array_of_image |> make_image in
+  draw_image c 0 0;
 
-  set_color white; 
+  let opp_poke = Jpeg.load "them.jpg" [] in
+  let p = opp_poke|> array_of_image |> make_image in
+  draw_image p 200 200;
+
+  set_color white;
   fill_rect 70 20 200 100;
   set_color black;
   moveto 80 25;
 
-  let num = ref 0 in 
+  let num = ref 0 in
 
   let comb_inf = begin match gui_inf.combat_info with
     | Some i -> i
     | None -> failwith "Unreachable : combat_text"
-  end in 
-  
-  draw_string ("4. " ^ (List.assoc 4 (action_names (snd (List.hd (comb_inf.user_person_info.poke_inv)))))); 
+  end in
+
+  draw_string ("4. " ^ (List.assoc 4 (action_names (snd (List.hd (comb_inf.user_person_info.poke_inv))))));
   moveto 80 40;
   draw_string ("3. " ^ (List.assoc 3 (action_names (snd (List.hd (comb_inf.user_person_info.poke_inv))))));
   moveto 80 55;
@@ -144,47 +144,47 @@ let draw_battle gui_inf =
   moveto 80 70;
   draw_string ("2. " ^ (List.assoc 2 (action_names (snd (List.hd (comb_inf.user_person_info.poke_inv))))));
   moveto 80 100;
-  draw_string "Press number key for attack."; 
+  draw_string "Press number key for attack.";
 
   press_battle num ();
 
   (*This is the health meter*)
   let user_health =
     (hp (snd (List.hd (comb_inf.user_person_info.poke_inv))))/
-    (maxhp (snd (List.hd (comb_inf.user_person_info.poke_inv)))) * 100 in 
+    (maxhp (snd (List.hd (comb_inf.user_person_info.poke_inv)))) * 100 in
 
   let opp_health =
     (hp (snd (List.hd (comb_inf.enemy_person_info.poke_inv))))/
-    (maxhp (snd (List.hd (comb_inf.enemy_person_info.poke_inv)))) * 100 in 
+    (maxhp (snd (List.hd (comb_inf.enemy_person_info.poke_inv)))) * 100 in
 
   (*USER*)
-  set_color red; 
+  set_color red;
   fill_rect 70 0 100 10;
-  set_color green; 
+  set_color green;
   fill_rect 70 0 user_health 10;  (*full health is 100*)
 
   (*OPPONENT*)
-  set_color red; 
+  set_color red;
   fill_rect 90 200 100 10;
-  set_color green; 
+  set_color green;
   fill_rect 90 200 opp_health 10; (*full health is 100*)
 
-  check num comb_inf user_health opp_health 
+  check num comb_inf user_health opp_health
 
 (*HOW TO GET THE GUI_INF FOR "draw_battle gui_inf" *)
 (*HOW TO GET THE GUI_INF FOR "draw_battle gui_inf" *)
 (*HOW TO GET THE GUI_INF FOR "draw_battle gui_inf" *)
 
-let rec press_map () = 
-  let keep_running = ref true in 
-  while !keep_running do 
-    let s = Graphics.wait_next_event [Graphics.Key_pressed] in 
-    if s.Graphics.keypressed 
-    then  
-      if s.Graphics.key = 'q' 
-      then close_graph () 
-      else if s.Graphics.key = 'c' 
-      then 
+let rec press_map () =
+  let keep_running = ref true in
+  while !keep_running do
+    let s = Graphics.wait_next_event [Graphics.Key_pressed] in
+    if s.Graphics.keypressed
+    then
+      if s.Graphics.key = 'q'
+      then close_graph ()
+      else if s.Graphics.key = 'c'
+      then
         close_graph ();
         keep_running := false
   done
@@ -193,18 +193,18 @@ let rec press_map () =
 (*HOW TO GET THE GUI_INF FOR "draw_battle gui_inf" *)
 (*HOW TO GET THE GUI_INF FOR "draw_battle gui_inf" *)
 
-let draw_map () = 
+let draw_map () =
   Graphics.set_window_title "OCAMON!";
-  Graphics.open_graph " 300x300"; 
-  let start = Png.load "startScreen.png" [] in 
-  let s = start |> array_of_image |> make_image in 
+  Graphics.open_graph " 300x300";
+  let start = Png.load "startScreen.png" [] in
+  let s = start |> array_of_image |> make_image in
   draw_image s 0 0;
-  set_color yellow; 
+  set_color yellow;
   draw_rect 50 100 200 100;
   fill_rect 50 100 200 100;
 
-  set_color black; 
-  set_text_size 20; 
+  set_color black;
+  set_text_size 20;
   moveto 60 150;
   draw_string "You are about to battle GARY.";
   moveto 60 130;
@@ -212,86 +212,86 @@ let draw_map () =
 
   press_map ()
 
-let rec press_start () = 
-  let keep_running = ref true in 
-  while !keep_running do 
-    let s = Graphics.wait_next_event [Graphics.Key_pressed] in 
-    if s.Graphics.keypressed 
-    then  
-      if s.Graphics.key = 'q' 
-      then close_graph ()  
-      else if s.Graphics.key = 's' 
-      then 
-        draw_map (); 
-        keep_running := false; 
-  done 
+let rec press_start () =
+  let keep_running = ref true in
+  while !keep_running do
+    let s = Graphics.wait_next_event [Graphics.Key_pressed] in
+    if s.Graphics.keypressed
+    then
+      if s.Graphics.key = 'q'
+      then close_graph ()
+      else if s.Graphics.key = 's'
+      then
+        draw_map ();
+        keep_running := false;
+  done
 
-let draw_start () = 
+let draw_start () =
   Graphics.set_window_title "OCAMON!";
-  Graphics.open_graph " 300x300"; 
-  let start = Png.load "startScreen.png" [] in 
-  let s = start |> array_of_image |> make_image in 
-  draw_image s 0 0; 
+  Graphics.open_graph " 300x300";
+  let start = Png.load "startScreen.png" [] in
+  let s = start |> array_of_image |> make_image in
+  draw_image s 0 0;
 
   set_color black;
   draw_rect 50 100 205 105;
   fill_rect 50 100 205 105;
 
-  set_color cyan; 
+  set_color cyan;
   draw_rect 50 100 200 100;
   fill_rect 50 100 200 100;
-  
-  set_color black; 
-  set_text_size 20; 
+
+  set_color black;
+  set_text_size 20;
   moveto 80 180;
-  draw_string "Welcome to OCAMON!"; 
+  draw_string "Welcome to OCAMON!";
   moveto 80 150;
-  draw_string "Press 's' to start game."; 
+  draw_string "Press 's' to start game.";
   moveto 80 120;
   draw_string "Press 'q' to quit game.";
 
   press_start ()
 
-let start_game () = 
+let start_game () =
   draw_start ()
 
 let continue = ref true
 
-let rec press_win () = 
-  let keep_running = ref true in 
-  while !keep_running do 
-    let s = Graphics.wait_next_event [Graphics.Key_pressed] in 
-    if s.Graphics.keypressed 
-    then  
-      if s.Graphics.key = 'q' 
+let rec press_win () =
+  let keep_running = ref true in
+  while !keep_running do
+    let s = Graphics.wait_next_event [Graphics.Key_pressed] in
+    if s.Graphics.keypressed
+    then
+      if s.Graphics.key = 'q'
       then continue := false
-      else if s.Graphics.key = 's' 
-      then 
+      else if s.Graphics.key = 's'
+      then
         continue := true;
-        keep_running := false; 
-  done  
+        keep_running := false;
+  done
 
-let win_game () = 
+let win_game () =
   Graphics.set_window_title "OCAMON!";
-  Graphics.open_graph " 300x300"; 
-  let start = Png.load "startScreen.png" [] in 
-  let s = start |> array_of_image |> make_image in 
-  draw_image s 0 0; 
+  Graphics.open_graph " 300x300";
+  let start = Png.load "startScreen.png" [] in
+  let s = start |> array_of_image |> make_image in
+  draw_image s 0 0;
 
   set_color black;
   draw_rect 50 100 205 105;
   fill_rect 50 100 205 105;
 
-  set_color green; 
+  set_color green;
   draw_rect 50 100 200 100;
   fill_rect 50 100 200 100;
-  
-  set_color black; 
-  set_text_size 20; 
+
+  set_color black;
+  set_text_size 20;
   moveto 80 180;
-  draw_string "Congrats! You won!"; 
+  draw_string "Congrats! You won!";
   moveto 80 150;
-  draw_string "Press 's' to play again."; 
+  draw_string "Press 's' to play again.";
   moveto 80 120;
   draw_string "Press 'q' to quit game.";
 
@@ -306,31 +306,29 @@ let win_game () =
 * - [gmode] is the current mode of the game corresponding to the state. *)
 let get_cmd gui_inf gmode =
   match gmode with
-  | MStart -> start_game (); 
+  | MStart -> start_game ();
     let pick = 0
     in Interact (CStart pick)
-  | MMap -> draw_map (); 
+  | MMap -> draw_map ();
     Interact CMap
-  | MCombat s -> 
+  | MCombat s ->
     draw_battle gui_inf
   | MWinGame ->  (*continue is a boolean for play again or quit*)
     Interact (CWinGame !continue);
-  | MWin ->  
+  | MWin ->
     Interact (CWinGame !continue);
-  | MLose -> 
+  | MLose ->
     Interact (CLose true);
   | MQuit -> Interact (CLose true);
 
 
-(* 
-module OverworldGUI = struct 
+(*
+module OverworldGUI = struct
 failwith "Unimplemented"
-end 
+end
 
 module InvGUI = struct
-let dimensions = failwith "Unimplemented" 
+let dimensions = failwith "Unimplemented"
 let background = failwith "Unimplemented"
 let items = failwith "Unimplemented"
 end *)
-
-

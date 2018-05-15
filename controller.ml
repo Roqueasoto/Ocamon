@@ -2,13 +2,12 @@ type effect_on = Self | Other
 
 type status = StatusNone | Sleep | Paralyze | Burn | Frozen | Poisoned | Toxic
             | Confused | Flinch | Substitute | Uncontrollable | Focused
-            | LeechSeed | Missed
+            | LeechSeed | Mist
 
 type ptype = Normal | Fire | Water | Electric | Grass | Ice | Fighting
-         | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
+           | Poison | Ground | Flying | Psychic | Bug | Rock | Ghost | Dragon
 
 type category = Special | Physical
-
 
 type bufftype = ATKBuff of int | DEFBuff of int | SPDBuff of int | SpatkBuff of int
 
@@ -16,58 +15,8 @@ type choices = CStart of int | CMap | CBattleEnd | CWin | CLose of bool
              | CWinGame of bool | CQuit
 
 type special =
-  | XAtk (* MODEL *)
-  | XDef (* MODEL *)
-  | XSpd (* MODEL *)
-  | XSpa (* MODEL *) (*Temporarily reaises stat in battle*)
-  | GSPA (* MODEL *) (*Temporarily guards stat in battle*)
-  | Absorb
-  | Bide (* MODEL *)
-  | Bind (* MODEL *)
-  | Clamp (* MODEL *)
-  | Conversion
-  | Counter (* BOTH: I take counter special, and put fireblast into effect of special. *)
-  | Dig (* MODEL *)
-  | DoubleEdge
-  | DragonRage
-  | DreamEater
-  | Explosion
-  | FireSpin (* MODEL *)
-  | Fissure
-  | Fly (* MODEL *)
-  | Guillotine
-  | Haze
-  | HornDrill
-  | HyperBeam (* MODEL *)
-  | LightScreen (* MODEL *)
-  (* | Metronome  *)
-  | Mimic
-  | MirrorMove (* MODEL *)
-  | NightShade
-  | PetalDance (* MODEL *)
-  | PsyWave
-  | Rage (* MODEL *)
-  | RazorWind (* MODEL *)
-  | Recover
-  | Reflect (* MODEL *)
-  | Rest
-  | SeismicToss
-  | SelfDestruct
-  | SkillBash (* MODEL *)
-  | SkyAttack (* MODEL *)
-  | SoftBoiled
-  | SonicBoom
-  | SolarBeam (* MODEL *)
-  | Submission
-  | SpeSubstitute
-  | SuperFang
-  | Swift (* MODEL *)
-  | TakeDown
-  | Thrash (* MODEL *)
-  | Transform
-  | Wrap (* MODEL *)
-  | HealStatus of status(*item*)
-  | Revive (*item*)
+  | HealStatus of status
+  | Revive
 
 type effect =
   | Switch of int

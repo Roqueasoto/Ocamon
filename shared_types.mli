@@ -6,9 +6,6 @@ type index = int
 (* [poke] represents a pokemon and their position in the party.*)
 type poke = (index * Pokemon.t)
 
-(* [itemQ] represents an item and quantity pair in the inventory. *)
-type itemQ = (Pokemon.item * int)
-
 (* [ai_info] represents the information about combat the AI module requires. *)
 type ai_info = {
   user_poke_inv : poke list;
@@ -25,7 +22,7 @@ type person_info = {
   id : person_id;
   name : string;
   poke_inv : poke list;
-  item_inv : itemQ list; (* RI: Keys in item_inv contain no duplicates. *)
+  item_inv : Pokemon.item list;
   person_image : string;
   message : string;
 }
@@ -36,9 +33,15 @@ type gui_combat_info = {
   enemy_person_info : person_info;
 }
 
+(* Represents current useful stats of game.
+   next_battle is the integer representing the level that the
+   player is allowed to play.
+   battle_round_log represents the list of actions that took place
+   during each round of combat (or empty list). *)
 type game_stats =
   {
     next_battle : int;
+    battle_round_log : string list;
   }
 
 (* [gui_history_info] represents additional information about the user play history. *)
