@@ -204,208 +204,208 @@ module Pokedex = struct
      hp = 128; atk = (77, 0); def = (77, 0); spd = (73, 0); spatk = (93, 0);
      maxhp = 128; catch_rate = 45; turn_counter = 0;
      actions = [razor_leaf; growth; sleep_powder; solar_beam];
-     sprite_back = "./PokeSpriteBack/1.png";
-     sprite_front = "./PokeSpriteFront/1.png"}
+     sprite_back = "./PokeSpriteBack/1.PNG";
+     sprite_front = "./PokeSpriteFront/1.PNG"}
 
   let ivysaur =
     {poketype = [Grass;Poison]; name = "Ivysaur"; status = [StatusNone];
      hp = 143; atk = (90, 0); def = (91, 0); spd = (88, 0); spatk = (108, 0);
      maxhp = 143; catch_rate = 45; turn_counter = 0;
      actions = [sleep_powder; growth; razor_leaf; poison_powder];
-     sprite_back = "./PokeSpriteBack/2.png";
-     sprite_front = "./PokeSpriteFront/2.png"}
+     sprite_back = "./PokeSpriteBack/2.PNG";
+     sprite_front = "./PokeSpriteFront/2.PNG"}
 
   let venusaur =
     {poketype = [Grass;Poison]; name="Venusaur"; status=[StatusNone];
      hp = 163; atk = (110, 0); def = (111, 0); spd = (108, 0); spatk = (128, 0);
      maxhp = 163; catch_rate = 45; turn_counter = 0;
      actions = [growth; razor_leaf; poison_powder; vine_whip];
-     sprite_back = "./PokeSpriteBack/3.png";
-     sprite_front = "./PokeSpriteBack/3.png"}
+     sprite_back = "./PokeSpriteBack/3.PNG";
+     sprite_front = "./PokeSpriteBack/3.PNG"}
 
   let charmander =
     {poketype = [Fire]; name = "Charmander"; status = [StatusNone];
     hp = 122; atk = (80, 0); def = (71, 0); spd = (93, 0); spatk = (78, 0);
     maxhp = 122; catch_rate = 45; turn_counter = 0;
     actions = [fire_spin; flamethrower; slash; rage];
-    sprite_back = "./PokeSpriteBack/4.png";
-    sprite_front = "./PokeSpriteFront/4.png"}
+    sprite_back = "./PokeSpriteBack/4.PNG";
+    sprite_front = "./PokeSpriteFront/4.PNG"}
 
   let charmeleon =
     {poketype = [Fire]; name = "Charmeleon"; status = [StatusNone];
     hp = 141; atk = (92, 0); def = (86, 0); spd = (108, 0); spatk = (93, 0);
     maxhp = 141; catch_rate = 45; turn_counter = 0;
     actions = [flamethrower; slash; rage; leer];
-    sprite_back = "./PokeSpriteBack/5.png";
-    sprite_front = "./PokeSpriteFront/5.png"}
+    sprite_back = "./PokeSpriteBack/5.PNG";
+    sprite_front = "./PokeSpriteFront/5.PNG"}
 
   let charizard =
     {poketype = [Fire;Flying]; name = "Charizard"; status = [StatusNone];
      hp = 161; atk = (112, 0); def = (106, 0); spd = (100, 0); spatk = (113, 0);
      maxhp = 161; catch_rate = 45; turn_counter = 0;
      actions = [flamethrower; slash; rage; leer];
-     sprite_back = "./PokeSpriteBack/6.png";
-     sprite_front = "./PokeSpriteFront/6.png"}
+     sprite_back = "./PokeSpriteBack/6.PNG";
+     sprite_front = "./PokeSpriteFront/6.PNG"}
 
   let squirtle =
     {poketype = [Water]; name = "Squirtle"; status = [StatusNone];
     hp = 77; atk = (76, 0); def = (93, 0); spd = (71, 0); spatk = (78, 0);
     maxhp = 77; catch_rate = 45; turn_counter = 0;
     actions = [hydropump; skullbash; withdraw; bite];
-    sprite_back = "./PokeSpriteBack/7.png";
-    sprite_front = "./PokeSpriteFront/7.png"}
+    sprite_back = "./PokeSpriteBack/7.PNG";
+    sprite_front = "./PokeSpriteFront/7.PNG"}
 
   let wartortle =
     {poketype = [Water]; name = "Wartortle"; status = [StatusNone];
     hp = 142; atk = (91, 0); def = (108, 0); spd = (86, 0); spatk = (93, 0);
     maxhp = 142; catch_rate = 45; turn_counter = 0;
     actions = [hydropump; skullbash; withdraw; bite];
-    sprite_back = "./PokeSpriteBack/8.png";
-    sprite_front = "./PokeSpriteFront/8.png"}
+    sprite_back = "./PokeSpriteBack/8.PNG";
+    sprite_front = "./PokeSpriteFront/8.PNG"}
 
   let blastoise =
     {poketype = [Water]; name = "Blastoise"; status = [StatusNone];
     hp = 162; atk = (111, 0); def = (128, 0); spd = (106, 0); spatk = (113, 0);
     maxhp = 162; catch_rate = 45; turn_counter = 0;
     actions = [skullbash; withdraw; bite; watergun];
-    sprite_back = "./PokeSpriteBack/9.png";
-    sprite_front = "./PokeSpriteFront/9.png"}
+    sprite_back = "./PokeSpriteBack/9.PNG";
+    sprite_front = "./PokeSpriteFront/9.PNG"}
 
   let caterpie =
     {poketype = [Bug]; name = "Caterpie"; status = [StatusNone];
     hp = 128; atk = (58, 0); def = (63, 0); spd = (73, 0); spatk = (48, 0);
     maxhp = 128; catch_rate = 225; turn_counter = 0;
     actions = [tackle; stringshot];
-    sprite_back = "./PokeSpriteBack/10.png";
-    sprite_front = "./PokeSpriteFront/10.png"}
+    sprite_back = "./PokeSpriteBack/10.PNG";
+    sprite_front = "./PokeSpriteFront/10.PNG"}
 
   let metapod =
     {poketype = [Bug]; name = "Caterpie"; status = [StatusNone];
     hp = 133; atk = (48, 0); def = (83, 0); spd = (58, 0); spatk = (53, 0);
     maxhp = 133; catch_rate = 120; turn_counter = 0;
     actions = [tackle; stringshot; harden];
-    sprite_back = "./PokeSpriteBack/11.png";
-    sprite_front = "./PokeSpriteFront/11.png"}
+    sprite_back = "./PokeSpriteBack/11.PNG";
+    sprite_front = "./PokeSpriteFront/11.PNG"}
 
   let butterfree =
     {poketype = [Bug;Flying]; name = "Butterfree"; status = [StatusNone];
     hp = 143; atk = (146, 0); def = (78, 0); spd = (98, 0); spatk = (108, 0);
     maxhp = 143; catch_rate = 120; turn_counter = 0;
     actions = [psybeam;whirlwind;supersonic;sleep_powder];
-    sprite_back = "./PokeSpriteBack/12.png";
-    sprite_front = "./PokeSpriteFront/12.png"}
+    sprite_back = "./PokeSpriteBack/12.PNG";
+    sprite_front = "./PokeSpriteFront/12.PNG"}
 
   let weedle =
     {poketype = [Bug;Poison]; name = "Weedle"; status = [StatusNone];
     hp = 123; atk = (63, 0); def = (58, 0); spd = (78, 0); spatk = (48, 0);
     maxhp = 123; catch_rate = 255; turn_counter = 0;
     actions = [stringshot; poison_sting];
-    sprite_back = "./PokeSpriteBack/13.png";
-    sprite_front = "./PokeSpriteFront/13.png"}
+    sprite_back = "./PokeSpriteBack/13.PNG";
+    sprite_front = "./PokeSpriteFront/13.PNG"}
 
   let kakuna =
     {poketype = [Bug;Poison]; name = "Kakuna"; status = [StatusNone];
     hp = 128; atk = (53, 0); def = (78, 0); spd = (63, 0); spatk = (53, 0);
     maxhp = 128; catch_rate = 120; turn_counter = 0;
     actions = [stringshot; poison_sting; harden];
-    sprite_back = "./PokeSpriteBack/14.png";
-    sprite_front = "./PokeSpriteFront/14.png"}
+    sprite_back = "./PokeSpriteBack/14.PNG";
+    sprite_front = "./PokeSpriteFront/14.PNG"}
 
   let beedrill =
     {poketype = [Bug;Poison]; name = "Beedrill"; status = [StatusNone];
     hp = 148; atk = (108, 0); def = (68, 0); spd = (103, 0); spatk = (73, 0);
     maxhp = 148; catch_rate = 45; turn_counter = 0;
     actions = [agility; pin_missle; rage; twineedle];
-    sprite_back = "./PokeSpriteBack/15.png";
-    sprite_front = "./PokeSpriteFront/15.png"}
+    sprite_back = "./PokeSpriteBack/15.PNG";
+    sprite_front = "./PokeSpriteFront/15.PNG"}
 
   let pidgey =
     {poketype = [Normal; Flying]; name = "Pidgey"; status = [StatusNone];
     hp = 123; atk = (73, 0); def = (68, 0); spd = (84, 0); spatk = (63, 0);
     maxhp = 123; catch_rate = 255; turn_counter = 0;
     actions = [agility; whirlwind; quickattack; wingattack];
-    sprite_back = "./PokeSpriteBack/16.png";
-    sprite_front = "./PokeSpriteFront/16.png"}
+    sprite_back = "./PokeSpriteBack/16.PNG";
+    sprite_front = "./PokeSpriteFront/16.PNG"}
 
   let pidgeotto =
     {poketype = [Normal; Flying]; name = "Pidgeotto"; status = [StatusNone];
     hp = 146; atk = (88, 0); def = (83, 0); spd = (99, 0); spatk = (78, 0);
     maxhp = 146; catch_rate = 255; turn_counter = 0;
     actions = [agility; wingattack; whirlwind; quickattack];
-    sprite_back = "./PokeSpriteBack/17.png";
-    sprite_front = "./PokeSpriteFront/17.png"}
+    sprite_back = "./PokeSpriteBack/17.PNG";
+    sprite_front = "./PokeSpriteFront/17.PNG"}
 
   let pidgeot =
     {poketype = [Normal; Flying]; name = "Pidgeotto"; status = [StatusNone];
     hp = 166; atk = (108, 0); def = (103, 0); spd = (119, 0); spatk = (98, 0);
     maxhp = 166; catch_rate = 45; turn_counter = 0;
     actions = [agility; wingattack; whirlwind; quickattack];
-    sprite_back = "./PokeSpriteBack/18.png";
-    sprite_front = "./PokeSpriteFront/18.png"}
+    sprite_back = "./PokeSpriteBack/18.PNG";
+    sprite_front = "./PokeSpriteFront/18.PNG"}
 
   let rattata =
     {poketype = [Normal]; name = "Rattata"; status = [StatusNone];
     hp = 113; atk = (84, 0); def = (63, 0); spd = (100, 0); spatk = (53, 0);
     maxhp = 113; catch_rate = 255; turn_counter = 0;
     actions = [hyper_fang; quickattack; tackle; tailwhip];
-    sprite_back = "./PokeSpriteBack/19.png";
-    sprite_front = "./PokeSpriteFront/19.png"}
+    sprite_back = "./PokeSpriteBack/19.PNG";
+    sprite_front = "./PokeSpriteFront/19.PNG"}
 
   let raticate =
     {poketype = [Normal]; name = "Raticate"; status = [StatusNone];
     hp = 138; atk = (109, 0); def = (88, 0); spd = (125, 0); spatk = (78, 0);
     maxhp = 138; catch_rate = 127; turn_counter = 0;
     actions = [tackle; hyper_fang; quickattack; tailwhip];
-    sprite_back = "./PokeSpriteBack/20.png";
-    sprite_front = "./PokeSpriteFront/20.png"}
+    sprite_back = "./PokeSpriteBack/20.PNG";
+    sprite_front = "./PokeSpriteFront/20.PNG"}
 
   let spearow =
     {poketype = [Normal; Flying]; name = "Spearow"; status = [StatusNone];
     hp = 123; atk = (88, 0); def = (58, 0); spd = (98, 0); spatk = (59, 0);
     maxhp = 123; catch_rate = 255; turn_counter = 0;
     actions = [agility; drillpeck; furyattack; leer];
-    sprite_back = "./PokeSpriteBack/21.png";
-    sprite_front = "./PokeSpriteFront/21.png"}
+    sprite_back = "./PokeSpriteBack/21.PNG";
+    sprite_front = "./PokeSpriteFront/21.PNG"}
 
   let fearow =
     {poketype = [Normal; Flying]; name = "Fearow"; status = [StatusNone];
     hp = 148; atk = (118, 0); def = (93, 0); spd = (128, 0); spatk = (89, 0);
     maxhp = 148; catch_rate = 90; turn_counter = 0;
     actions = [agility; drillpeck; furyattack; leer];
-    sprite_back = "./PokeSpriteBack/22.png";
-    sprite_front = "./PokeSpriteFront/22.png"}
+    sprite_back = "./PokeSpriteBack/22.PNG";
+    sprite_front = "./PokeSpriteFront/22.PNG"}
 
   let ekans =
     {poketype = [Poison]; name = "Ekans"; status = [StatusNone];
     hp = 118; atk = (88, 0); def = (72, 0); spd = (83, 0); spatk = (68, 0);
     maxhp = 118; catch_rate = 255; turn_counter = 0;
     actions = [acid; screech; glare; bite];
-    sprite_back = "./PokeSpriteBack/23.png";
-    sprite_front = "./PokeSpriteFront/23.png"}
+    sprite_back = "./PokeSpriteBack/23.PNG";
+    sprite_front = "./PokeSpriteFront/23.PNG"}
 
   let arbok =
     {poketype = [Poison]; name = "Arbok"; status = [StatusNone];
     hp = 143; atk = (113, 0); def = (97, 0); spd = (108, 0); spatk = (93, 0);
     maxhp = 143; catch_rate = 90; turn_counter = 0;
     actions = [acid; screech; glare; bite];
-    sprite_back = "./PokeSpriteBack/24.png";
-    sprite_front = "./PokeSpriteFront/24.png"}
+    sprite_back = "./PokeSpriteBack/24.PNG";
+    sprite_front = "./PokeSpriteFront/24.PNG"}
 
   let pikachu =
     {poketype = [Electric]; name = "Pikachu"; status = [StatusNone];
      hp = 118; atk = (83, 0); def = (58, 0); spd = (90, 0); spatk = (78, 0);
      maxhp = 118; catch_rate = 190;  turn_counter = 0;
      actions = [thunder; agility; swift; quickattack];
-     sprite_back = "./PokeSpriteBack/25.png";
-     sprite_front = "./PokeSpriteFront/25.png"}
+     sprite_back = "./PokeSpriteBack/25.PNG";
+     sprite_front = "./PokeSpriteFront/25.PNG"}
 
   let raichu =
     {poketype = [Electric]; name = "Raichu"; status = [StatusNone];
      hp = 143; atk = (118, 0); def = (83, 0); spd = (118, 0); spatk = (130, 0);
      maxhp = 143; catch_rate = 190;  turn_counter = 0;
      actions = [thunder; agility; swift; quickattack];
-     sprite_back = "./PokeSpriteBack/26.png";
-     sprite_front = "./PokeSpriteFront/26.png"}
+     sprite_back = "./PokeSpriteBack/26.PNG";
+     sprite_front = "./PokeSpriteFront/26.PNG"}
 
 
   let pokedex =
