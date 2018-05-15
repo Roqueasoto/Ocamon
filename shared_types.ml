@@ -15,7 +15,7 @@ type person_info = {
   id : person_id;
   name : string;
   poke_inv : poke list;
-  item_inv : Pokemon.item list; (* RI: Keys in item_inv contain no duplicates. *)
+  item_inv : Pokemon.item list; (* RI: Keys in item_inv contain no duplicates.*)
   person_image : string;
   message : string;
 }
