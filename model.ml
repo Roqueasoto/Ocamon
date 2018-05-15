@@ -39,7 +39,7 @@ module CommonHelp = struct
   let get_special_effect_name special =
     let open Controller in
     match special with
-    | HealStatus _ -> "HealStatus"
+    | HealStatus _ -> "HealStatus" 
     | Revive -> "Revive"
 
   let get_eff_name eff =
