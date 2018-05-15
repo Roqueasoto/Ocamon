@@ -1,0 +1,4022 @@
+commit 465fbfa4fb831981de8e2d5915da35805252176e
+Merge: 041e25a 0ac4325
+Author: Roque <ras656@cornell.edu>
+Date:   Tue May 15 08:12:34 2018 -0400
+
+    Merge
+
+commit 041e25abca5a15021350b5737f92d2422ff117b3
+Author: Roque <ras656@cornell.edu>
+Date:   Tue May 15 08:06:44 2018 -0400
+
+    Add Specs to Gamma and friends.
+
+ _build/_digests                                    |   67 -
+ _build/_log                                        |   76 --
+ _build/ai.cmi                                      |  Bin 4100 -> 0 bytes
+ _build/ai.cmo                                      |  Bin 9375 -> 0 bytes
+ _build/ai.ml                                       |  271 -----
+ _build/ai.ml.depends                               |    1 -
+ _build/ai.mli                                      |   50 -
+ _build/ai.mli.depends                              |    1 -
+ _build/ai_test.cmi                                 |  Bin 1608 -> 0 bytes
+ _build/ai_test.cmo                                 |  Bin 13289 -> 0 bytes
+ _build/ai_test.ml                                  |  252 ----
+ _build/ai_test.ml.depends                          |    1 -
+ _build/controller.cmi                              |  Bin 3606 -> 0 bytes
+ _build/controller.cmo                              |  Bin 180 -> 0 bytes
+ _build/controller.ml                               |   35 -
+ _build/controller.ml.depends                       |    1 -
+ _build/controller.mli                              |   64 -
+ _build/controller.mli.depends                      |    1 -
+ _build/gui.cmi                                     |  Bin 5575 -> 0 bytes
+ _build/gui.cmo                                     |  Bin 44537 -> 0 bytes
+ _build/gui.ml                                      | 1277 --------------------
+ _build/gui.ml.depends                              |    1 -
+ _build/gui.mli                                     |  109 --
+ _build/gui.mli.depends                             |    1 -
+ _build/main.cmi                                    |  Bin 265 -> 0 bytes
+ _build/main.cmo                                    |  Bin 1593 -> 0 bytes
+ _build/main.ml                                     |   47 -
+ _build/main.ml.depends                             |    1 -
+ _build/main.mli                                    |    1 -
+ _build/main.mli.depends                            |    1 -
+ _build/model.cmi                                   |  Bin 946 -> 0 bytes
+ _build/model.cmo                                   |  Bin 13386 -> 0 bytes
+ _build/model.ml                                    |  741 ------------
+ _build/model.ml.depends                            |    1 -
+ _build/model.mli                                   |   58 -
+ _build/model.mli.depends                           |    1 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log |  541 ---------
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |   64 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |   67 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#03.log |   84 --
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache |  Bin 4803 -> 0 bytes
+ _build/ocamlc.where                                |    1 -
+ _build/pokemon.cmi                                 |  Bin 3401 -> 0 bytes
+ _build/pokemon.cmo                                 |  Bin 32208 -> 0 bytes
+ _build/pokemon.ml                                  |  958 ---------------
+ _build/pokemon.ml.depends                          |    1 -
+ _build/pokemon.mli                                 |  102 --
+ _build/pokemon.mli.depends                         |    1 -
+ _build/shared_types.cmi                            |  Bin 2535 -> 0 bytes
+ _build/shared_types.cmo                            |  Bin 241 -> 0 bytes
+ _build/shared_types.ml                             |   52 -
+ _build/shared_types.ml.depends                     |    1 -
+ _build/shared_types.mli                            |   71 --
+ _build/shared_types.mli.depends                    |    1 -
+ _build/test.byte                                   |  Bin 570791 -> 0 bytes
+ _build/test.cmi                                    |  Bin 2056 -> 0 bytes
+ _build/test.cmo                                    |  Bin 1757 -> 0 bytes
+ _build/test.ml                                     |   31 -
+ _build/test.ml.depends                             |    1 -
+ _build/test_andrea.cmi                             |  Bin 1161 -> 0 bytes
+ _build/test_andrea.cmo                             |  Bin 5651 -> 0 bytes
+ _build/test_andrea.ml                              |  426 -------
+ _build/test_andrea.ml.depends                      |    1 -
+ _build/test_andrea.mli                             |    4 -
+ _build/test_andrea.mli.depends                     |    1 -
+ _build/test_cynthia.cmi                            |  Bin 1164 -> 0 bytes
+ _build/test_cynthia.cmo                            |  Bin 4845 -> 0 bytes
+ _build/test_cynthia.ml                             |  411 -------
+ _build/test_cynthia.ml.depends                     |    1 -
+ _build/test_cynthia.mli                            |    4 -
+ _build/test_cynthia.mli.depends                    |    1 -
+ _build/test_timothy.cmi                            |  Bin 1164 -> 0 bytes
+ _build/test_timothy.cmo                            |  Bin 4845 -> 0 bytes
+ _build/test_timothy.ml                             |  413 -------
+ _build/test_timothy.ml.depends                     |    1 -
+ _build/test_timothy.mli                            |    4 -
+ _build/test_timothy.mli.depends                    |    1 -
+ test.byte                                          |    1 -
+ 78 files changed, 6304 deletions(-)
+
+commit 7cd1336419d4c94955583519bf4a27a5ada90a63
+Author: Roque <ras656@cornell.edu>
+Date:   Tue May 15 08:06:38 2018 -0400
+
+    Add Specs to Gamma and friends.
+
+ README.txt                                         |   27 +
+ _build/_digests                                    |   67 +
+ _build/_log                                        |   76 ++
+ _build/ai.cmi                                      |  Bin 0 -> 4100 bytes
+ _build/ai.cmo                                      |  Bin 0 -> 9375 bytes
+ _build/ai.ml                                       |  271 +++++
+ _build/ai.ml.depends                               |    1 +
+ _build/ai.mli                                      |   50 +
+ _build/ai.mli.depends                              |    1 +
+ _build/ai_test.cmi                                 |  Bin 0 -> 1608 bytes
+ _build/ai_test.cmo                                 |  Bin 0 -> 13289 bytes
+ _build/ai_test.ml                                  |  252 ++++
+ _build/ai_test.ml.depends                          |    1 +
+ _build/controller.cmi                              |  Bin 0 -> 3606 bytes
+ _build/controller.cmo                              |  Bin 0 -> 180 bytes
+ _build/controller.ml                               |   35 +
+ _build/controller.ml.depends                       |    1 +
+ _build/controller.mli                              |   64 +
+ _build/controller.mli.depends                      |    1 +
+ _build/gui.cmi                                     |  Bin 0 -> 5575 bytes
+ _build/gui.cmo                                     |  Bin 0 -> 44537 bytes
+ _build/gui.ml                                      | 1277 ++++++++++++++++++++
+ _build/gui.ml.depends                              |    1 +
+ _build/gui.mli                                     |  109 ++
+ _build/gui.mli.depends                             |    1 +
+ _build/main.cmi                                    |  Bin 0 -> 265 bytes
+ _build/main.cmo                                    |  Bin 0 -> 1593 bytes
+ _build/main.ml                                     |   47 +
+ _build/main.ml.depends                             |    1 +
+ _build/main.mli                                    |    1 +
+ _build/main.mli.depends                            |    1 +
+ _build/model.cmi                                   |  Bin 0 -> 946 bytes
+ _build/model.cmo                                   |  Bin 0 -> 13386 bytes
+ _build/model.ml                                    |  741 ++++++++++++
+ _build/model.ml.depends                            |    1 +
+ _build/model.mli                                   |   58 +
+ _build/model.mli.depends                           |    1 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log |  541 +++++++++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |   64 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |   67 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#03.log |   84 ++
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache |  Bin 0 -> 4803 bytes
+ _build/ocamlc.where                                |    1 +
+ _build/pokemon.cmi                                 |  Bin 0 -> 3401 bytes
+ _build/pokemon.cmo                                 |  Bin 0 -> 32208 bytes
+ _build/pokemon.ml                                  |  958 +++++++++++++++
+ _build/pokemon.ml.depends                          |    1 +
+ _build/pokemon.mli                                 |  102 ++
+ _build/pokemon.mli.depends                         |    1 +
+ _build/shared_types.cmi                            |  Bin 0 -> 2535 bytes
+ _build/shared_types.cmo                            |  Bin 0 -> 241 bytes
+ _build/shared_types.ml                             |   52 +
+ _build/shared_types.ml.depends                     |    1 +
+ _build/shared_types.mli                            |   71 ++
+ _build/shared_types.mli.depends                    |    1 +
+ _build/test.byte                                   |  Bin 0 -> 570791 bytes
+ _build/test.cmi                                    |  Bin 0 -> 2056 bytes
+ _build/test.cmo                                    |  Bin 0 -> 1757 bytes
+ _build/test.ml                                     |   31 +
+ _build/test.ml.depends                             |    1 +
+ _build/test_andrea.cmi                             |  Bin 0 -> 1161 bytes
+ _build/test_andrea.cmo                             |  Bin 0 -> 5651 bytes
+ _build/test_andrea.ml                              |  426 +++++++
+ _build/test_andrea.ml.depends                      |    1 +
+ _build/test_andrea.mli                             |    4 +
+ _build/test_andrea.mli.depends                     |    1 +
+ _build/test_cynthia.cmi                            |  Bin 0 -> 1164 bytes
+ _build/test_cynthia.cmo                            |  Bin 0 -> 4845 bytes
+ _build/test_cynthia.ml                             |  411 +++++++
+ _build/test_cynthia.ml.depends                     |    1 +
+ _build/test_cynthia.mli                            |    4 +
+ _build/test_cynthia.mli.depends                    |    1 +
+ _build/test_timothy.cmi                            |  Bin 0 -> 1164 bytes
+ _build/test_timothy.cmo                            |  Bin 0 -> 4845 bytes
+ _build/test_timothy.ml                             |  413 +++++++
+ _build/test_timothy.ml.depends                     |    1 +
+ _build/test_timothy.mli                            |    4 +
+ _build/test_timothy.mli.depends                    |    1 +
+ ai.ml                                              |   79 +-
+ controller.ml                                      |    4 -
+ model.ml                                           |    2 +-
+ test.byte                                          |    1 +
+ 82 files changed, 6408 insertions(+), 8 deletions(-)
+
+commit 0ac432516ae82afdeeaf69cb09db007ee5224417
+Merge: 9fc4e75 6f62038
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Tue May 15 07:44:05 2018 -0400
+
+    Merge pull request #70 from yy545/qh43
+
+    Qh43-gui finished
+
+commit 6f6203821ae8a3e7c5a627286b00385944558e85
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 07:42:19 2018 -0400
+
+    Finished
+
+ gui.mli | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
+
+commit 4b4a2f89808b61945f4eb292a9f8306c34360a9e
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 07:32:22 2018 -0400
+
+    Done I think
+
+ gui.ml | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit 9fc4e7501be73681f8ea975554654a0735b3033a
+Merge: 4602477 2d61773
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 07:17:28 2018 -0400
+
+    Merge pull request #69 from yy545/tz277_6
+
+    Tz277 6
+
+commit 2d6177357718a0848f41b900f823212d50f9bfdf
+Merge: 76175c2 4602477
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 07:16:51 2018 -0400
+
+    Merge branch 'master' into tz277_6
+
+commit 76175c24dcbc8230f3c5d028f5a1f6432b6a3192
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 07:16:04 2018 -0400
+
+    4
+
+ model.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5a09fddcccf7418b5bb02aaeb4790ee1e4bcab75
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 07:15:16 2018 -0400
+
+    fixed random
+
+ model.ml | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
+
+commit 5e3ad87c4d4ed896cb93cb1ad7bb24107bfc3d7a
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 07:12:38 2018 -0400
+
+    added pokemon left counter
+
+ controller.ml |  2 +-
+ gui.ml        | 30 ++++++++++++++++++++++--------
+ model.ml      |  2 +-
+ 3 files changed, 24 insertions(+), 10 deletions(-)
+
+commit 46024772201ecedc073db1d1be1b7967a00429c7
+Merge: be1a23a c2c7cee
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 06:57:17 2018 -0400
+
+    Merge pull request #68 from yy545/tz277_6
+
+    Tz277 6
+
+commit c2c7ceeaf46457059f1018f9d6a3d3c424f7e57c
+Merge: ecd34fe be1a23a
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 06:55:00 2018 -0400
+
+    Merge branch 'master' into tz277_6
+
+commit ecd34fe5493f96c3028ee184195e35c1830ec734
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 06:54:25 2018 -0400
+
+    fixex random, and multiplier
+
+ model.ml | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+commit 69f4566bd165439892297fc2cec3c2fbeaf37d3c
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 06:28:24 2018 -0400
+
+    I think I'm done
+
+ gui.ml | 18 ------------------
+ 1 file changed, 18 deletions(-)
+
+commit a9729ef106e44a5a77e65b4fc6cad2ee9e87f6af
+Merge: 47aa88e be1a23a
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 06:27:17 2018 -0400
+
+    Fixed
+
+commit 47aa88ede47ce93c76e14794610eb8946c2afb6c
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 06:25:35 2018 -0400
+
+    I THINK I'M DONE
+
+ gui.ml | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+commit be1a23a1069bbf10120bdcbd13d3416feec52f54
+Merge: 0114ed3 33b8970
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 06:22:08 2018 -0400
+
+    Merge pull request #67 from yy545/tz277_6
+
+    resolved
+
+commit 33b8970da3c0cbedaa37ac6c06a9f81e5fe73746
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 06:19:57 2018 -0400
+
+    resolved
+
+ controller.ml |    4 -
+ gui.ml        | 1054 ++++++++++++++++++++++++++++-----------------------------
+ main.byte     |    1 -
+ 3 files changed, 527 insertions(+), 532 deletions(-)
+
+commit 0114ed3670a109583756e7b8490062bbb771daa3
+Merge: 3cbee11 92308e7
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 06:17:51 2018 -0400
+
+    Merge pull request #66 from yy545/tz277_6
+
+    Tz277 added god mode, and fixed extensions.
+
+commit 92308e715efdff84be02c8c8f951c200ffdd5364
+Merge: 7613253 3cbee11
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 06:16:21 2018 -0400
+
+    Merge branch 'master' into tz277_6
+
+commit 76132538859dc6968267ff817099cb2b01dbdc5e
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 06:15:41 2018 -0400
+
+    fixed file extensions
+
+ pokemon.ml | 104 ++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 52 insertions(+), 52 deletions(-)
+
+commit 3cbee1192a415d744ff9ae0a78210c1300fce5c8
+Merge: 2f73be9 4849308
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 06:07:58 2018 -0400
+
+    Fix merge
+
+commit 2f73be98b01b49ac50aeb0fc2bd978317c8828b2
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 06:07:01 2018 -0400
+
+    Fxed Specials and revert damage implementation
+
+ _build/_digests                                    |  67 --
+ _build/_log                                        |  76 --
+ _build/ai.cmi                                      | Bin 4100 -> 0 bytes
+ _build/ai.cmo                                      | Bin 9375 -> 0 bytes
+ _build/ai.ml                                       | 198 ----
+ _build/ai.ml.depends                               |   1 -
+ _build/ai.mli                                      |  50 --
+ _build/ai.mli.depends                              |   1 -
+ _build/ai_test.cmi                                 | Bin 1608 -> 0 bytes
+ _build/ai_test.cmo                                 | Bin 13289 -> 0 bytes
+ _build/ai_test.ml                                  | 252 ------
+ _build/ai_test.ml.depends                          |   1 -
+ _build/controller.cmi                              | Bin 3606 -> 0 bytes
+ _build/controller.cmo                              | Bin 180 -> 0 bytes
+ _build/controller.ml                               |  35 -
+ _build/controller.ml.depends                       |   1 -
+ _build/controller.mli                              |  64 --
+ _build/controller.mli.depends                      |   1 -
+ _build/gui.cmi                                     | Bin 4575 -> 0 bytes
+ _build/gui.cmo                                     | Bin 30175 -> 0 bytes
+ _build/gui.ml                                      | 993 ---------------------
+ _build/gui.ml.depends                              |   1 -
+ _build/gui.mli                                     |  87 --
+ _build/gui.mli.depends                             |   1 -
+ _build/main.cmi                                    | Bin 265 -> 0 bytes
+ _build/main.cmo                                    | Bin 1593 -> 0 bytes
+ _build/main.ml                                     |  47 -
+ _build/main.ml.depends                             |   1 -
+ _build/main.mli                                    |   1 -
+ _build/main.mli.depends                            |   1 -
+ _build/model.cmi                                   | Bin 946 -> 0 bytes
+ _build/model.cmo                                   | Bin 12102 -> 0 bytes
+ _build/model.ml                                    | 665 --------------
+ _build/model.ml.depends                            |   1 -
+ _build/model.mli                                   |  58 --
+ _build/model.mli.depends                           |   1 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 376 --------
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  42 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  60 --
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#03.log |  24 -
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 2576 -> 0 bytes
+ _build/ocamlc.where                                |   1 -
+ _build/pokemon.cmi                                 | Bin 3218 -> 0 bytes
+ _build/pokemon.cmo                                 | Bin 31839 -> 0 bytes
+ _build/pokemon.ml                                  | 944 --------------------
+ _build/pokemon.ml.depends                          |   1 -
+ _build/pokemon.mli                                 |  95 --
+ _build/pokemon.mli.depends                         |   1 -
+ _build/shared_types.cmi                            | Bin 2535 -> 0 bytes
+ _build/shared_types.cmo                            | Bin 241 -> 0 bytes
+ _build/shared_types.ml                             |  52 --
+ _build/shared_types.ml.depends                     |   1 -
+ _build/shared_types.mli                            |  71 --
+ _build/shared_types.mli.depends                    |   1 -
+ _build/test.byte                                   | Bin 569357 -> 0 bytes
+ _build/test.cmi                                    | Bin 2056 -> 0 bytes
+ _build/test.cmo                                    | Bin 1757 -> 0 bytes
+ _build/test.ml                                     |  31 -
+ _build/test.ml.depends                             |   1 -
+ _build/test_andrea.cmi                             | Bin 1161 -> 0 bytes
+ _build/test_andrea.cmo                             | Bin 5651 -> 0 bytes
+ _build/test_andrea.ml                              | 426 ---------
+ _build/test_andrea.ml.depends                      |   1 -
+ _build/test_andrea.mli                             |   4 -
+ _build/test_andrea.mli.depends                     |   1 -
+ _build/test_cynthia.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_cynthia.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_cynthia.ml                             | 411 ---------
+ _build/test_cynthia.ml.depends                     |   1 -
+ _build/test_cynthia.mli                            |   4 -
+ _build/test_cynthia.mli.depends                    |   1 -
+ _build/test_timothy.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_timothy.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_timothy.ml                             | 413 ---------
+ _build/test_timothy.ml.depends                     |   1 -
+ _build/test_timothy.mli                            |   4 -
+ _build/test_timothy.mli.depends                    |   1 -
+ test.byte                                          |   1 -
+ 78 files changed, 5574 deletions(-)
+
+commit a4ca4e3f3d7bbe12050cadd4556c14f83a1fb4cb
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 06:06:55 2018 -0400
+
+    Fxed Specials and revert damage implementation
+
+ _build/_digests                                    |  67 ++
+ _build/_log                                        |  76 ++
+ _build/ai.cmi                                      | Bin 0 -> 4100 bytes
+ _build/ai.cmo                                      | Bin 0 -> 9375 bytes
+ _build/ai.ml                                       | 198 ++++
+ _build/ai.ml.depends                               |   1 +
+ _build/ai.mli                                      |  50 ++
+ _build/ai.mli.depends                              |   1 +
+ _build/ai_test.cmi                                 | Bin 0 -> 1608 bytes
+ _build/ai_test.cmo                                 | Bin 0 -> 13289 bytes
+ _build/ai_test.ml                                  | 252 ++++++
+ _build/ai_test.ml.depends                          |   1 +
+ _build/controller.cmi                              | Bin 0 -> 3606 bytes
+ _build/controller.cmo                              | Bin 0 -> 180 bytes
+ _build/controller.ml                               |  35 +
+ _build/controller.ml.depends                       |   1 +
+ _build/controller.mli                              |  64 ++
+ _build/controller.mli.depends                      |   1 +
+ _build/gui.cmi                                     | Bin 0 -> 4575 bytes
+ _build/gui.cmo                                     | Bin 0 -> 30175 bytes
+ _build/gui.ml                                      | 993 +++++++++++++++++++++
+ _build/gui.ml.depends                              |   1 +
+ _build/gui.mli                                     |  87 ++
+ _build/gui.mli.depends                             |   1 +
+ _build/main.cmi                                    | Bin 0 -> 265 bytes
+ _build/main.cmo                                    | Bin 0 -> 1593 bytes
+ _build/main.ml                                     |  47 +
+ _build/main.ml.depends                             |   1 +
+ _build/main.mli                                    |   1 +
+ _build/main.mli.depends                            |   1 +
+ _build/model.cmi                                   | Bin 0 -> 946 bytes
+ _build/model.cmo                                   | Bin 0 -> 12102 bytes
+ _build/model.ml                                    | 665 ++++++++++++++
+ _build/model.ml.depends                            |   1 +
+ _build/model.mli                                   |  58 ++
+ _build/model.mli.depends                           |   1 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 376 ++++++++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  42 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  60 ++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#03.log |  24 +
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 0 -> 2576 bytes
+ _build/ocamlc.where                                |   1 +
+ _build/pokemon.cmi                                 | Bin 0 -> 3218 bytes
+ _build/pokemon.cmo                                 | Bin 0 -> 31839 bytes
+ _build/pokemon.ml                                  | 944 ++++++++++++++++++++
+ _build/pokemon.ml.depends                          |   1 +
+ _build/pokemon.mli                                 |  95 ++
+ _build/pokemon.mli.depends                         |   1 +
+ _build/shared_types.cmi                            | Bin 0 -> 2535 bytes
+ _build/shared_types.cmo                            | Bin 0 -> 241 bytes
+ _build/shared_types.ml                             |  52 ++
+ _build/shared_types.ml.depends                     |   1 +
+ _build/shared_types.mli                            |  71 ++
+ _build/shared_types.mli.depends                    |   1 +
+ _build/test.byte                                   | Bin 0 -> 569357 bytes
+ _build/test.cmi                                    | Bin 0 -> 2056 bytes
+ _build/test.cmo                                    | Bin 0 -> 1757 bytes
+ _build/test.ml                                     |  31 +
+ _build/test.ml.depends                             |   1 +
+ _build/test_andrea.cmi                             | Bin 0 -> 1161 bytes
+ _build/test_andrea.cmo                             | Bin 0 -> 5651 bytes
+ _build/test_andrea.ml                              | 426 +++++++++
+ _build/test_andrea.ml.depends                      |   1 +
+ _build/test_andrea.mli                             |   4 +
+ _build/test_andrea.mli.depends                     |   1 +
+ _build/test_cynthia.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_cynthia.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_cynthia.ml                             | 411 +++++++++
+ _build/test_cynthia.ml.depends                     |   1 +
+ _build/test_cynthia.mli                            |   4 +
+ _build/test_cynthia.mli.depends                    |   1 +
+ _build/test_timothy.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_timothy.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_timothy.ml                             | 413 +++++++++
+ _build/test_timothy.ml.depends                     |   1 +
+ _build/test_timothy.mli                            |   4 +
+ _build/test_timothy.mli.depends                    |   1 +
+ ai_test.ml                                         |  18 +-
+ controller.ml                                      |   2 +-
+ controller.mli                                     |   2 +-
+ pokemon.ml                                         |  22 +-
+ test.byte                                          |   1 +
+ 82 files changed, 5596 insertions(+), 22 deletions(-)
+
+commit d6947889719b7f674ec69dc1c06664e9e5279865
+Merge: 325e64b 4849308
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 05:58:45 2018 -0400
+
+    Merge branch 'master' into tz277_6
+
+commit 325e64bee769c2b794d799910166d39fb0b8169d
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 05:58:05 2018 -0400
+
+    GOD MODE
+
+ model.ml | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+commit 48493085429fa4fe36fe84451f2bc6a31b22f925
+Merge: 24daf69 08ee74d
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Tue May 15 05:51:27 2018 -0400
+
+    Merge pull request #65 from yy545/qh43
+
+    Qh43-"everything seems okay"
+
+commit 423e5617f5bc1cc47782ca806bad86d117f50a8e
+Merge: 08ee74d 24daf69
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 05:49:32 2018 -0400
+
+    Merge branch 'master' into qh43
+
+commit 08ee74d2c44804ab7e219a85718f66af3f35852a
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 05:47:43 2018 -0400
+
+    made words black
+
+ _build/_digests                 |   42 --
+ _build/_log                     |   58 --
+ _build/ai.cmi                   |  Bin 4100 -> 0 bytes
+ _build/ai.cmo                   |  Bin 9375 -> 0 bytes
+ _build/ai.ml                    |  198 ------
+ _build/ai.ml.depends            |    1 -
+ _build/ai.mli                   |   50 --
+ _build/ai.mli.depends           |    1 -
+ _build/controller.cmi           |  Bin 3605 -> 0 bytes
+ _build/controller.cmo           |  Bin 180 -> 0 bytes
+ _build/controller.ml            |   34 --
+ _build/controller.ml.depends    |    1 -
+ _build/controller.mli           |   64 --
+ _build/controller.mli.depends   |    1 -
+ _build/gui.cmi                  |  Bin 5599 -> 0 bytes
+ _build/gui.cmo                  |  Bin 44561 -> 0 bytes
+ _build/gui.ml                   | 1277 ---------------------------------------
+ _build/gui.ml.depends           |    1 -
+ _build/gui.mli                  |  109 ----
+ _build/gui.mli.depends          |    1 -
+ _build/main.cmi                 |  Bin 265 -> 0 bytes
+ _build/main.cmo                 |  Bin 1617 -> 0 bytes
+ _build/main.ml                  |   47 --
+ _build/main.ml.depends          |    1 -
+ _build/main.mli                 |    1 -
+ _build/main.mli.depends         |    1 -
+ _build/model.cmi                |  Bin 946 -> 0 bytes
+ _build/model.cmo                |  Bin 13138 -> 0 bytes
+ _build/model.ml                 |  727 ----------------------
+ _build/model.ml.depends         |    1 -
+ _build/model.mli                |   58 --
+ _build/model.mli.depends        |    1 -
+ _build/ocamlc.where             |    1 -
+ _build/pokemon.cmi              |  Bin 3401 -> 0 bytes
+ _build/pokemon.cmo              |  Bin 32208 -> 0 bytes
+ _build/pokemon.ml               |  958 -----------------------------
+ _build/pokemon.ml.depends       |    1 -
+ _build/pokemon.mli              |  102 ----
+ _build/pokemon.mli.depends      |    1 -
+ _build/shared_types.cmi         |  Bin 2535 -> 0 bytes
+ _build/shared_types.cmo         |  Bin 241 -> 0 bytes
+ _build/shared_types.ml          |   52 --
+ _build/shared_types.ml.depends  |    1 -
+ _build/shared_types.mli         |   71 ---
+ _build/shared_types.mli.depends |    1 -
+ 45 files changed, 3863 deletions(-)
+
+commit a39ffebd63328a9f3418f359199f5f1c9ed1c86e
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 05:47:18 2018 -0400
+
+    make words black now
+
+ _build/_digests                 |   42 ++
+ _build/_log                     |   58 ++
+ _build/ai.cmi                   |  Bin 0 -> 4100 bytes
+ _build/ai.cmo                   |  Bin 0 -> 9375 bytes
+ _build/ai.ml                    |  198 ++++++
+ _build/ai.ml.depends            |    1 +
+ _build/ai.mli                   |   50 ++
+ _build/ai.mli.depends           |    1 +
+ _build/controller.cmi           |  Bin 0 -> 3605 bytes
+ _build/controller.cmo           |  Bin 0 -> 180 bytes
+ _build/controller.ml            |   34 ++
+ _build/controller.ml.depends    |    1 +
+ _build/controller.mli           |   64 ++
+ _build/controller.mli.depends   |    1 +
+ _build/gui.cmi                  |  Bin 0 -> 5599 bytes
+ _build/gui.cmo                  |  Bin 0 -> 44561 bytes
+ _build/gui.ml                   | 1277 +++++++++++++++++++++++++++++++++++++++
+ _build/gui.ml.depends           |    1 +
+ _build/gui.mli                  |  109 ++++
+ _build/gui.mli.depends          |    1 +
+ _build/main.cmi                 |  Bin 0 -> 265 bytes
+ _build/main.cmo                 |  Bin 0 -> 1617 bytes
+ _build/main.ml                  |   47 ++
+ _build/main.ml.depends          |    1 +
+ _build/main.mli                 |    1 +
+ _build/main.mli.depends         |    1 +
+ _build/model.cmi                |  Bin 0 -> 946 bytes
+ _build/model.cmo                |  Bin 0 -> 13138 bytes
+ _build/model.ml                 |  727 ++++++++++++++++++++++
+ _build/model.ml.depends         |    1 +
+ _build/model.mli                |   58 ++
+ _build/model.mli.depends        |    1 +
+ _build/ocamlc.where             |    1 +
+ _build/pokemon.cmi              |  Bin 0 -> 3401 bytes
+ _build/pokemon.cmo              |  Bin 0 -> 32208 bytes
+ _build/pokemon.ml               |  958 +++++++++++++++++++++++++++++
+ _build/pokemon.ml.depends       |    1 +
+ _build/pokemon.mli              |  102 ++++
+ _build/pokemon.mli.depends      |    1 +
+ _build/shared_types.cmi         |  Bin 0 -> 2535 bytes
+ _build/shared_types.cmo         |  Bin 0 -> 241 bytes
+ _build/shared_types.ml          |   52 ++
+ _build/shared_types.ml.depends  |    1 +
+ _build/shared_types.mli         |   71 +++
+ _build/shared_types.mli.depends |    1 +
+ gui.ml                          |    6 +-
+ 46 files changed, 3867 insertions(+), 2 deletions(-)
+
+commit 24daf6946643ed4c771ef97aea0afdbcaad522a6
+Merge: bdcd7b8 fa7dc28
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 05:42:29 2018 -0400
+
+    Merge pull request #64 from yy545/tz277_6
+
+    Tz277 more fixes
+
+commit fa7dc2873e66850ac2f3f88b48ee9326e6010467
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 05:41:18 2018 -0400
+
+    close fix
+
+ model.ml | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+commit 83ce27ffe459043d79707dcd697138bd3d697c02
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 05:34:33 2018 -0400
+
+    removed special logs
+
+ model.ml | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
+
+commit bdcd7b8defbab76d576735ab37b2a68453a45f6a
+Merge: 91eddc8 aefc71d
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 05:18:57 2018 -0400
+
+    Merge pull request #63 from yy545/qh43
+
+    Qh43
+
+commit aefc71daaa50a4ca86a4416abb06280cf8ff20d2
+Merge: 7e16fee 91eddc8
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 05:18:13 2018 -0400
+
+    merged
+
+commit 91eddc8798bfe374141fa46e8bc6ac1f76bce0bc
+Merge: 7d3b325 177244e
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 05:13:30 2018 -0400
+
+    Merge pull request #62 from yy545/tz277_6
+
+    minor fix
+
+commit 177244e9f612dd80613dc12430962968f0e6c91e
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 05:11:40 2018 -0400
+
+    minor fix
+
+ model.ml | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+commit 7e16feee9a6654ac607ffc9c9641ca79ffae3e3c
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 05:11:14 2018 -0400
+
+    Changed wingame
+
+ controller.ml |  5 -----
+ gui.ml        | 46 +++++++++++++++++++++++++++++++++++++++++-----
+ gui.mli       |  4 ++++
+ model.ml      |  7 +------
+ 4 files changed, 46 insertions(+), 16 deletions(-)
+
+commit 7d3b325bd27f2b6e9e3029cdfb327e6fd9b3e349
+Merge: 39dc976 3d26685
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 05:04:14 2018 -0400
+
+    Merge pull request #61 from yy545/tz277_6
+
+    Tz277 6 resolved conflicts
+
+commit 3d266850ed9edc46e4593034ac2a8d3284ba600f
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 05:02:02 2018 -0400
+
+    resovled conflicts
+
+ controller.ml |  5 -----
+ model.ml      | 11 +++--------
+ 2 files changed, 3 insertions(+), 13 deletions(-)
+
+commit dfc1761f6c51ab3341c8a31339a86ce87add18bf
+Merge: 398d2db 39dc976
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 04:59:16 2018 -0400
+
+    Merge branch 'master' into tz277_6
+
+commit 39dc9769ce7c379a8a8c44c30124f664a9152971
+Merge: 63b99c6 a4cf433
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 04:58:45 2018 -0400
+
+    Merge pull request #60 from yy545/qh43
+
+    Qh43 - major updates to GUI - almost done. Tim is the best.
+
+commit 398d2dbafdfe7ce34c4cab392c1f3507cb384ce9
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 04:56:49 2018 -0400
+
+    minor
+
+ Makefile      | 2 +-
+ tim_notes.txt | 7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+commit a4cf433b0b615b071ab5980e235fe32ca55764bd
+Merge: d71cdc0 63b99c6
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 04:37:54 2018 -0400
+
+    merge with master
+
+commit d71cdc0bdacfd1a9cd9375e7600a51c4f7ad0191
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Tue May 15 04:30:07 2018 -0400
+
+    Basically done
+
+ gui.ml  | 780 ++++++++++++++++++++++++++++++++++++++++++----------------------
+ gui.mli |  34 ++-
+ 2 files changed, 539 insertions(+), 275 deletions(-)
+
+commit 63b99c6226b2ba453dd3459d48b4f1edbd4e7808
+Merge: c329180 9f3e0dc
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 04:26:29 2018 -0400
+
+    Merge pull request #59 from yy545/tz277_6
+
+    specs
+
+commit 9f3e0dcdcad477c76e607bed671e17b6e3da70c0
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 04:25:41 2018 -0400
+
+    specs
+
+ model.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c3291808ae0f7dd0876921e5ed6dda82ec4f0f0e
+Merge: c610133 4fdb786
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 04:15:59 2018 -0400
+
+    Merge pull request #58 from yy545/tz277_6
+
+    Tz277 finished battle end
+
+commit 4fdb78654d72ce0454bdcd929d422059baf1efd5
+Merge: fdb83e7 c610133
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 04:15:07 2018 -0400
+
+    Merge branch 'master' into tz277_6
+
+commit fdb83e7ae22b3987acef2866d76bfc829cd88de8
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 04:13:37 2018 -0400
+
+    finished battle end
+
+ model.ml | 31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
+
+commit c6101331ddf939e3c39f81ea3485f93ca2b04f83
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 04:08:03 2018 -0400
+
+    Implement Raichu
+
+ _build/_digests                                    |  67 --
+ _build/_log                                        |  76 --
+ _build/ai.cmi                                      | Bin 4100 -> 0 bytes
+ _build/ai.cmo                                      | Bin 9375 -> 0 bytes
+ _build/ai.ml                                       | 198 ----
+ _build/ai.ml.depends                               |   1 -
+ _build/ai.mli                                      |  50 --
+ _build/ai.mli.depends                              |   1 -
+ _build/ai_test.cmi                                 | Bin 1608 -> 0 bytes
+ _build/ai_test.cmo                                 | Bin 13289 -> 0 bytes
+ _build/ai_test.ml                                  | 252 ------
+ _build/ai_test.ml.depends                          |   1 -
+ _build/controller.cmi                              | Bin 3605 -> 0 bytes
+ _build/controller.cmo                              | Bin 180 -> 0 bytes
+ _build/controller.ml                               |  35 -
+ _build/controller.ml.depends                       |   1 -
+ _build/controller.mli                              |  64 --
+ _build/controller.mli.depends                      |   1 -
+ _build/gui.cmi                                     | Bin 4575 -> 0 bytes
+ _build/gui.cmo                                     | Bin 30175 -> 0 bytes
+ _build/gui.ml                                      | 993 ---------------------
+ _build/gui.ml.depends                              |   1 -
+ _build/gui.mli                                     |  87 --
+ _build/gui.mli.depends                             |   1 -
+ _build/main.cmi                                    | Bin 265 -> 0 bytes
+ _build/main.cmo                                    | Bin 1593 -> 0 bytes
+ _build/main.ml                                     |  47 -
+ _build/main.ml.depends                             |   1 -
+ _build/main.mli                                    |   1 -
+ _build/main.mli.depends                            |   1 -
+ _build/model.cmi                                   | Bin 946 -> 0 bytes
+ _build/model.cmo                                   | Bin 12102 -> 0 bytes
+ _build/model.ml                                    | 665 --------------
+ _build/model.ml.depends                            |   1 -
+ _build/model.mli                                   |  58 --
+ _build/model.mli.depends                           |   1 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 366 --------
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  30 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  69 --
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#03.log |  27 -
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 2576 -> 0 bytes
+ _build/ocamlc.where                                |   1 -
+ _build/pokemon.cmi                                 | Bin 3218 -> 0 bytes
+ _build/pokemon.cmo                                 | Bin 31389 -> 0 bytes
+ _build/pokemon.ml                                  | 936 -------------------
+ _build/pokemon.ml.depends                          |   1 -
+ _build/pokemon.mli                                 |  95 --
+ _build/pokemon.mli.depends                         |   1 -
+ _build/shared_types.cmi                            | Bin 2535 -> 0 bytes
+ _build/shared_types.cmo                            | Bin 241 -> 0 bytes
+ _build/shared_types.ml                             |  52 --
+ _build/shared_types.ml.depends                     |   1 -
+ _build/shared_types.mli                            |  71 --
+ _build/shared_types.mli.depends                    |   1 -
+ _build/test.byte                                   | Bin 569023 -> 0 bytes
+ _build/test.cmi                                    | Bin 2056 -> 0 bytes
+ _build/test.cmo                                    | Bin 1757 -> 0 bytes
+ _build/test.ml                                     |  31 -
+ _build/test.ml.depends                             |   1 -
+ _build/test_andrea.cmi                             | Bin 1161 -> 0 bytes
+ _build/test_andrea.cmo                             | Bin 5651 -> 0 bytes
+ _build/test_andrea.ml                              | 426 ---------
+ _build/test_andrea.ml.depends                      |   1 -
+ _build/test_andrea.mli                             |   4 -
+ _build/test_andrea.mli.depends                     |   1 -
+ _build/test_cynthia.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_cynthia.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_cynthia.ml                             | 411 ---------
+ _build/test_cynthia.ml.depends                     |   1 -
+ _build/test_cynthia.mli                            |   4 -
+ _build/test_cynthia.mli.depends                    |   1 -
+ _build/test_timothy.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_timothy.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_timothy.ml                             | 413 ---------
+ _build/test_timothy.ml.depends                     |   1 -
+ _build/test_timothy.mli                            |   4 -
+ _build/test_timothy.mli.depends                    |   1 -
+ test.byte                                          |   1 -
+ 78 files changed, 5556 deletions(-)
+
+commit 886b7374047cf7a7c566564e47105cf3cda8ed27
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 04:07:58 2018 -0400
+
+    Implement Raichu
+
+ _build/_digests                                    |  67 ++
+ _build/_log                                        |  76 ++
+ _build/ai.cmi                                      | Bin 0 -> 4100 bytes
+ _build/ai.cmo                                      | Bin 0 -> 9375 bytes
+ _build/ai.ml                                       | 198 ++++
+ _build/ai.ml.depends                               |   1 +
+ _build/ai.mli                                      |  50 ++
+ _build/ai.mli.depends                              |   1 +
+ _build/ai_test.cmi                                 | Bin 0 -> 1608 bytes
+ _build/ai_test.cmo                                 | Bin 0 -> 13289 bytes
+ _build/ai_test.ml                                  | 252 ++++++
+ _build/ai_test.ml.depends                          |   1 +
+ _build/controller.cmi                              | Bin 0 -> 3605 bytes
+ _build/controller.cmo                              | Bin 0 -> 180 bytes
+ _build/controller.ml                               |  35 +
+ _build/controller.ml.depends                       |   1 +
+ _build/controller.mli                              |  64 ++
+ _build/controller.mli.depends                      |   1 +
+ _build/gui.cmi                                     | Bin 0 -> 4575 bytes
+ _build/gui.cmo                                     | Bin 0 -> 30175 bytes
+ _build/gui.ml                                      | 993 +++++++++++++++++++++
+ _build/gui.ml.depends                              |   1 +
+ _build/gui.mli                                     |  87 ++
+ _build/gui.mli.depends                             |   1 +
+ _build/main.cmi                                    | Bin 0 -> 265 bytes
+ _build/main.cmo                                    | Bin 0 -> 1593 bytes
+ _build/main.ml                                     |  47 +
+ _build/main.ml.depends                             |   1 +
+ _build/main.mli                                    |   1 +
+ _build/main.mli.depends                            |   1 +
+ _build/model.cmi                                   | Bin 0 -> 946 bytes
+ _build/model.cmo                                   | Bin 0 -> 12102 bytes
+ _build/model.ml                                    | 665 ++++++++++++++
+ _build/model.ml.depends                            |   1 +
+ _build/model.mli                                   |  58 ++
+ _build/model.mli.depends                           |   1 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 366 ++++++++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  30 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  69 ++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#03.log |  27 +
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 0 -> 2576 bytes
+ _build/ocamlc.where                                |   1 +
+ _build/pokemon.cmi                                 | Bin 0 -> 3218 bytes
+ _build/pokemon.cmo                                 | Bin 0 -> 31389 bytes
+ _build/pokemon.ml                                  | 936 +++++++++++++++++++
+ _build/pokemon.ml.depends                          |   1 +
+ _build/pokemon.mli                                 |  95 ++
+ _build/pokemon.mli.depends                         |   1 +
+ _build/shared_types.cmi                            | Bin 0 -> 2535 bytes
+ _build/shared_types.cmo                            | Bin 0 -> 241 bytes
+ _build/shared_types.ml                             |  52 ++
+ _build/shared_types.ml.depends                     |   1 +
+ _build/shared_types.mli                            |  71 ++
+ _build/shared_types.mli.depends                    |   1 +
+ _build/test.byte                                   | Bin 0 -> 569023 bytes
+ _build/test.cmi                                    | Bin 0 -> 2056 bytes
+ _build/test.cmo                                    | Bin 0 -> 1757 bytes
+ _build/test.ml                                     |  31 +
+ _build/test.ml.depends                             |   1 +
+ _build/test_andrea.cmi                             | Bin 0 -> 1161 bytes
+ _build/test_andrea.cmo                             | Bin 0 -> 5651 bytes
+ _build/test_andrea.ml                              | 426 +++++++++
+ _build/test_andrea.ml.depends                      |   1 +
+ _build/test_andrea.mli                             |   4 +
+ _build/test_andrea.mli.depends                     |   1 +
+ _build/test_cynthia.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_cynthia.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_cynthia.ml                             | 411 +++++++++
+ _build/test_cynthia.ml.depends                     |   1 +
+ _build/test_cynthia.mli                            |   4 +
+ _build/test_cynthia.mli.depends                    |   1 +
+ _build/test_timothy.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_timothy.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_timothy.ml                             | 413 +++++++++
+ _build/test_timothy.ml.depends                     |   1 +
+ _build/test_timothy.mli                            |   4 +
+ _build/test_timothy.mli.depends                    |   1 +
+ model.ml                                           |   2 +-
+ pokemon.ml                                         |  12 +-
+ test.byte                                          |   1 +
+ 80 files changed, 5567 insertions(+), 3 deletions(-)
+
+commit 6ac9aad0b9ea6533c84fefe6f1b347e58413c624
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 04:03:49 2018 -0400
+
+    working on win battle
+
+ model.ml    | 36 ++++++++++++++++++++++++++++++++++++
+ pokemon.ml  | 14 ++++++++++++++
+ pokemon.mli |  7 +++++++
+ 3 files changed, 57 insertions(+)
+
+commit 32babf12eb1f47aee6872ca4291506a1f7dfd7af
+Merge: 9ad505d 4d2e4b8
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 03:36:07 2018 -0400
+
+    fix ocamlinit merge conflict
+
+commit 9ad505d116ef665ed23f10dc6af33089e5f1f055
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 03:32:16 2018 -0400
+
+    Implement Fainting switching and preventing fainted pokemon from acting.
+
+ _build/_digests                                    |  67 --
+ _build/_log                                        |   2 -
+ _build/ai.cmi                                      | Bin 4100 -> 0 bytes
+ _build/ai.cmo                                      | Bin 9375 -> 0 bytes
+ _build/ai.ml                                       | 198 ----
+ _build/ai.ml.depends                               |   1 -
+ _build/ai.mli                                      |  50 --
+ _build/ai.mli.depends                              |   1 -
+ _build/ai_test.cmi                                 | Bin 1608 -> 0 bytes
+ _build/ai_test.cmo                                 | Bin 13289 -> 0 bytes
+ _build/ai_test.ml                                  | 252 ------
+ _build/ai_test.ml.depends                          |   1 -
+ _build/controller.cmi                              | Bin 3605 -> 0 bytes
+ _build/controller.cmo                              | Bin 180 -> 0 bytes
+ _build/controller.ml                               |  35 -
+ _build/controller.ml.depends                       |   1 -
+ _build/controller.mli                              |  64 --
+ _build/controller.mli.depends                      |   1 -
+ _build/gui.cmi                                     | Bin 4575 -> 0 bytes
+ _build/gui.cmo                                     | Bin 30175 -> 0 bytes
+ _build/gui.ml                                      | 993 ---------------------
+ _build/gui.ml.depends                              |   1 -
+ _build/gui.mli                                     |  87 --
+ _build/gui.mli.depends                             |   1 -
+ _build/main.cmi                                    | Bin 265 -> 0 bytes
+ _build/main.cmo                                    | Bin 1593 -> 0 bytes
+ _build/main.ml                                     |  47 -
+ _build/main.ml.depends                             |   1 -
+ _build/main.mli                                    |   1 -
+ _build/main.mli.depends                            |   1 -
+ _build/model.cmi                                   | Bin 946 -> 0 bytes
+ _build/model.cmo                                   | Bin 11429 -> 0 bytes
+ _build/model.ml                                    | 646 --------------
+ _build/model.ml.depends                            |   1 -
+ _build/model.mli                                   |  58 --
+ _build/model.mli.depends                           |   1 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 363 --------
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  54 --
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  45 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#03.log |  27 -
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 2576 -> 0 bytes
+ _build/ocamlc.where                                |   1 -
+ _build/pokemon.cmi                                 | Bin 3218 -> 0 bytes
+ _build/pokemon.cmo                                 | Bin 31389 -> 0 bytes
+ _build/pokemon.ml                                  | 936 -------------------
+ _build/pokemon.ml.depends                          |   1 -
+ _build/pokemon.mli                                 |  95 --
+ _build/pokemon.mli.depends                         |   1 -
+ _build/shared_types.cmi                            | Bin 2535 -> 0 bytes
+ _build/shared_types.cmo                            | Bin 241 -> 0 bytes
+ _build/shared_types.ml                             |  52 --
+ _build/shared_types.ml.depends                     |   1 -
+ _build/shared_types.mli                            |  71 --
+ _build/shared_types.mli.depends                    |   1 -
+ _build/test.byte                                   | Bin 568471 -> 0 bytes
+ _build/test.cmi                                    | Bin 2056 -> 0 bytes
+ _build/test.cmo                                    | Bin 1757 -> 0 bytes
+ _build/test.ml                                     |  31 -
+ _build/test.ml.depends                             |   1 -
+ _build/test_andrea.cmi                             | Bin 1161 -> 0 bytes
+ _build/test_andrea.cmo                             | Bin 5651 -> 0 bytes
+ _build/test_andrea.ml                              | 426 ---------
+ _build/test_andrea.ml.depends                      |   1 -
+ _build/test_andrea.mli                             |   4 -
+ _build/test_andrea.mli.depends                     |   1 -
+ _build/test_cynthia.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_cynthia.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_cynthia.ml                             | 411 ---------
+ _build/test_cynthia.ml.depends                     |   1 -
+ _build/test_cynthia.mli                            |   4 -
+ _build/test_cynthia.mli.depends                    |   1 -
+ _build/test_timothy.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_timothy.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_timothy.ml                             | 413 ---------
+ _build/test_timothy.ml.depends                     |   1 -
+ _build/test_timothy.mli                            |   4 -
+ _build/test_timothy.mli.depends                    |   1 -
+ test.byte                                          |   1 -
+ 78 files changed, 5460 deletions(-)
+
+commit 829f629b269022934262a6eebb6f27c246110c8f
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 03:32:08 2018 -0400
+
+    Implement Fainting switching and preventing fainted pokemon from acting.
+
+ .ocamlinit                                         |   1 +
+ _build/_digests                                    |  67 ++
+ _build/_log                                        |   2 +
+ _build/ai.cmi                                      | Bin 0 -> 4100 bytes
+ _build/ai.cmo                                      | Bin 0 -> 9375 bytes
+ _build/ai.ml                                       | 198 ++++
+ _build/ai.ml.depends                               |   1 +
+ _build/ai.mli                                      |  50 ++
+ _build/ai.mli.depends                              |   1 +
+ _build/ai_test.cmi                                 | Bin 0 -> 1608 bytes
+ _build/ai_test.cmo                                 | Bin 0 -> 13289 bytes
+ _build/ai_test.ml                                  | 252 ++++++
+ _build/ai_test.ml.depends                          |   1 +
+ _build/controller.cmi                              | Bin 0 -> 3605 bytes
+ _build/controller.cmo                              | Bin 0 -> 180 bytes
+ _build/controller.ml                               |  35 +
+ _build/controller.ml.depends                       |   1 +
+ _build/controller.mli                              |  64 ++
+ _build/controller.mli.depends                      |   1 +
+ _build/gui.cmi                                     | Bin 0 -> 4575 bytes
+ _build/gui.cmo                                     | Bin 0 -> 30175 bytes
+ _build/gui.ml                                      | 993 +++++++++++++++++++++
+ _build/gui.ml.depends                              |   1 +
+ _build/gui.mli                                     |  87 ++
+ _build/gui.mli.depends                             |   1 +
+ _build/main.cmi                                    | Bin 0 -> 265 bytes
+ _build/main.cmo                                    | Bin 0 -> 1593 bytes
+ _build/main.ml                                     |  47 +
+ _build/main.ml.depends                             |   1 +
+ _build/main.mli                                    |   1 +
+ _build/main.mli.depends                            |   1 +
+ _build/model.cmi                                   | Bin 0 -> 946 bytes
+ _build/model.cmo                                   | Bin 0 -> 11429 bytes
+ _build/model.ml                                    | 646 ++++++++++++++
+ _build/model.ml.depends                            |   1 +
+ _build/model.mli                                   |  58 ++
+ _build/model.mli.depends                           |   1 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 363 ++++++++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  54 ++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  45 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#03.log |  27 +
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 0 -> 2576 bytes
+ _build/ocamlc.where                                |   1 +
+ _build/pokemon.cmi                                 | Bin 0 -> 3218 bytes
+ _build/pokemon.cmo                                 | Bin 0 -> 31389 bytes
+ _build/pokemon.ml                                  | 936 +++++++++++++++++++
+ _build/pokemon.ml.depends                          |   1 +
+ _build/pokemon.mli                                 |  95 ++
+ _build/pokemon.mli.depends                         |   1 +
+ _build/shared_types.cmi                            | Bin 0 -> 2535 bytes
+ _build/shared_types.cmo                            | Bin 0 -> 241 bytes
+ _build/shared_types.ml                             |  52 ++
+ _build/shared_types.ml.depends                     |   1 +
+ _build/shared_types.mli                            |  71 ++
+ _build/shared_types.mli.depends                    |   1 +
+ _build/test.byte                                   | Bin 0 -> 568471 bytes
+ _build/test.cmi                                    | Bin 0 -> 2056 bytes
+ _build/test.cmo                                    | Bin 0 -> 1757 bytes
+ _build/test.ml                                     |  31 +
+ _build/test.ml.depends                             |   1 +
+ _build/test_andrea.cmi                             | Bin 0 -> 1161 bytes
+ _build/test_andrea.cmo                             | Bin 0 -> 5651 bytes
+ _build/test_andrea.ml                              | 426 +++++++++
+ _build/test_andrea.ml.depends                      |   1 +
+ _build/test_andrea.mli                             |   4 +
+ _build/test_andrea.mli.depends                     |   1 +
+ _build/test_cynthia.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_cynthia.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_cynthia.ml                             | 411 +++++++++
+ _build/test_cynthia.ml.depends                     |   1 +
+ _build/test_cynthia.mli                            |   4 +
+ _build/test_cynthia.mli.depends                    |   1 +
+ _build/test_timothy.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_timothy.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_timothy.ml                             | 413 +++++++++
+ _build/test_timothy.ml.depends                     |   1 +
+ _build/test_timothy.mli                            |   4 +
+ _build/test_timothy.mli.depends                    |   1 +
+ model.ml                                           |  25 +-
+ test.byte                                          |   1 +
+ 80 files changed, 5483 insertions(+), 3 deletions(-)
+
+commit ebec3a7a33307b6f62d454af3fccc40920f466c0
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 02:43:21 2018 -0400
+
+    fixed winner bug
+
+ model.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 37a59fbb8ebf0f8426f1acf3ad647b3212ec14ff
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 02:40:30 2018 -0400
+
+    changed damage to attack in log.
+
+ model.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 4d2e4b82d14e9765f84f47653340a6f9f9c931a0
+Merge: f2b1072 86f6c23
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Tue May 15 02:28:11 2018 -0400
+
+    Merge pull request #57 from yy545/tz277_6
+
+    Tz277 ocamlinit: utop starts game automatically
+
+commit 86f6c23bc6c64f221df8221072d12bb16f2da17a
+Merge: 2a03713 f2b1072
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 02:27:04 2018 -0400
+
+    Merge branch 'master' into tz277_6
+
+commit 2a03713d391c6253b294e8cb0c61ab34a2f1e9f6
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Tue May 15 02:25:55 2018 -0400
+
+    ocamlinit
+
+ .ocamlinit | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit f2b1072c901b5ef2f955429f743f59587354385d
+Merge: 96f5554 c520374
+Author: Roque <ras656@cornell.edu>
+Date:   Tue May 15 00:12:06 2018 -0400
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/yy545/ocamon
+
+commit 96f5554f206a5d20825168907a354480086649a6
+Author: Roque <ras656@cornell.edu>
+Date:   Tue May 15 00:11:48 2018 -0400
+
+    Fix code breaking 80 character limit.
+
+ _build/_digests                                    |  67 --
+ _build/_log                                        |   2 -
+ _build/ai.cmi                                      | Bin 4100 -> 0 bytes
+ _build/ai.cmo                                      | Bin 9375 -> 0 bytes
+ _build/ai.ml                                       | 198 ----
+ _build/ai.ml.depends                               |   1 -
+ _build/ai.mli                                      |  50 --
+ _build/ai.mli.depends                              |   1 -
+ _build/ai_test.cmi                                 | Bin 1608 -> 0 bytes
+ _build/ai_test.cmo                                 | Bin 13289 -> 0 bytes
+ _build/ai_test.ml                                  | 252 ------
+ _build/ai_test.ml.depends                          |   1 -
+ _build/controller.cmi                              | Bin 3605 -> 0 bytes
+ _build/controller.cmo                              | Bin 180 -> 0 bytes
+ _build/controller.ml                               |  34 -
+ _build/controller.ml.depends                       |   1 -
+ _build/controller.mli                              |  63 --
+ _build/controller.mli.depends                      |   1 -
+ _build/gui.cmi                                     | Bin 4585 -> 0 bytes
+ _build/gui.cmo                                     | Bin 30487 -> 0 bytes
+ _build/gui.ml                                      | 992 ---------------------
+ _build/gui.ml.depends                              |   1 -
+ _build/gui.mli                                     |  87 --
+ _build/gui.mli.depends                             |   1 -
+ _build/main.cmi                                    | Bin 265 -> 0 bytes
+ _build/main.cmo                                    | Bin 1593 -> 0 bytes
+ _build/main.ml                                     |  47 -
+ _build/main.ml.depends                             |   1 -
+ _build/main.mli                                    |   1 -
+ _build/main.mli.depends                            |   1 -
+ _build/model.cmi                                   | Bin 946 -> 0 bytes
+ _build/model.cmo                                   | Bin 11429 -> 0 bytes
+ _build/model.ml                                    | 625 -------------
+ _build/model.ml.depends                            |   1 -
+ _build/model.mli                                   |  58 --
+ _build/model.mli.depends                           |   1 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 363 --------
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  87 --
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  39 -
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 2576 -> 0 bytes
+ _build/ocamlc.where                                |   1 -
+ _build/pokemon.cmi                                 | Bin 3218 -> 0 bytes
+ _build/pokemon.cmo                                 | Bin 31389 -> 0 bytes
+ _build/pokemon.ml                                  | 881 ------------------
+ _build/pokemon.ml.depends                          |   1 -
+ _build/pokemon.mli                                 |  95 --
+ _build/pokemon.mli.depends                         |   1 -
+ _build/shared_types.cmi                            | Bin 2535 -> 0 bytes
+ _build/shared_types.cmo                            | Bin 241 -> 0 bytes
+ _build/shared_types.ml                             |  52 --
+ _build/shared_types.ml.depends                     |   1 -
+ _build/shared_types.mli                            |  71 --
+ _build/shared_types.mli.depends                    |   1 -
+ _build/test.byte                                   | Bin 568471 -> 0 bytes
+ _build/test.cmi                                    | Bin 2056 -> 0 bytes
+ _build/test.cmo                                    | Bin 1757 -> 0 bytes
+ _build/test.ml                                     |  31 -
+ _build/test.ml.depends                             |   1 -
+ _build/test_andrea.cmi                             | Bin 1161 -> 0 bytes
+ _build/test_andrea.cmo                             | Bin 5651 -> 0 bytes
+ _build/test_andrea.ml                              | 519 -----------
+ _build/test_andrea.ml.depends                      |   1 -
+ _build/test_andrea.mli                             |   4 -
+ _build/test_andrea.mli.depends                     |   1 -
+ _build/test_cynthia.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_cynthia.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_cynthia.ml                             | 512 -----------
+ _build/test_cynthia.ml.depends                     |   1 -
+ _build/test_cynthia.mli                            |   4 -
+ _build/test_cynthia.mli.depends                    |   1 -
+ _build/test_timothy.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_timothy.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_timothy.ml                             | 513 -----------
+ _build/test_timothy.ml.depends                     |   1 -
+ _build/test_timothy.mli                            |   4 -
+ _build/test_timothy.mli.depends                    |   1 -
+ test.byte                                          |   1 -
+ 77 files changed, 5675 deletions(-)
+
+commit 795f6dcfba133b40891011688ee077b5ec5b25d9
+Author: Roque <ras656@cornell.edu>
+Date:   Tue May 15 00:11:42 2018 -0400
+
+    Fix code breaking 80 character limit.
+
+ Makefile                                           |   1 -
+ _build/_digests                                    |  67 ++
+ _build/_log                                        |   2 +
+ _build/ai.cmi                                      | Bin 0 -> 4100 bytes
+ _build/ai.cmo                                      | Bin 0 -> 9375 bytes
+ _build/ai.ml                                       | 198 ++++
+ _build/ai.ml.depends                               |   1 +
+ _build/ai.mli                                      |  50 ++
+ _build/ai.mli.depends                              |   1 +
+ _build/ai_test.cmi                                 | Bin 0 -> 1608 bytes
+ _build/ai_test.cmo                                 | Bin 0 -> 13289 bytes
+ _build/ai_test.ml                                  | 252 ++++++
+ _build/ai_test.ml.depends                          |   1 +
+ _build/controller.cmi                              | Bin 0 -> 3605 bytes
+ _build/controller.cmo                              | Bin 0 -> 180 bytes
+ _build/controller.ml                               |  34 +
+ _build/controller.ml.depends                       |   1 +
+ _build/controller.mli                              |  63 ++
+ _build/controller.mli.depends                      |   1 +
+ _build/gui.cmi                                     | Bin 0 -> 4585 bytes
+ _build/gui.cmo                                     | Bin 0 -> 30487 bytes
+ _build/gui.ml                                      | 992 +++++++++++++++++++++
+ _build/gui.ml.depends                              |   1 +
+ _build/gui.mli                                     |  87 ++
+ _build/gui.mli.depends                             |   1 +
+ _build/main.cmi                                    | Bin 0 -> 265 bytes
+ _build/main.cmo                                    | Bin 0 -> 1593 bytes
+ _build/main.ml                                     |  47 +
+ _build/main.ml.depends                             |   1 +
+ _build/main.mli                                    |   1 +
+ _build/main.mli.depends                            |   1 +
+ _build/model.cmi                                   | Bin 0 -> 946 bytes
+ _build/model.cmo                                   | Bin 0 -> 11429 bytes
+ _build/model.ml                                    | 625 +++++++++++++
+ _build/model.ml.depends                            |   1 +
+ _build/model.mli                                   |  58 ++
+ _build/model.mli.depends                           |   1 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 363 ++++++++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  87 ++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  39 +
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 0 -> 2576 bytes
+ _build/ocamlc.where                                |   1 +
+ _build/pokemon.cmi                                 | Bin 0 -> 3218 bytes
+ _build/pokemon.cmo                                 | Bin 0 -> 31389 bytes
+ _build/pokemon.ml                                  | 881 ++++++++++++++++++
+ _build/pokemon.ml.depends                          |   1 +
+ _build/pokemon.mli                                 |  95 ++
+ _build/pokemon.mli.depends                         |   1 +
+ _build/shared_types.cmi                            | Bin 0 -> 2535 bytes
+ _build/shared_types.cmo                            | Bin 0 -> 241 bytes
+ _build/shared_types.ml                             |  52 ++
+ _build/shared_types.ml.depends                     |   1 +
+ _build/shared_types.mli                            |  71 ++
+ _build/shared_types.mli.depends                    |   1 +
+ _build/test.byte                                   | Bin 0 -> 568471 bytes
+ _build/test.cmi                                    | Bin 0 -> 2056 bytes
+ _build/test.cmo                                    | Bin 0 -> 1757 bytes
+ _build/test.ml                                     |  31 +
+ _build/test.ml.depends                             |   1 +
+ _build/test_andrea.cmi                             | Bin 0 -> 1161 bytes
+ _build/test_andrea.cmo                             | Bin 0 -> 5651 bytes
+ _build/test_andrea.ml                              | 519 +++++++++++
+ _build/test_andrea.ml.depends                      |   1 +
+ _build/test_andrea.mli                             |   4 +
+ _build/test_andrea.mli.depends                     |   1 +
+ _build/test_cynthia.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_cynthia.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_cynthia.ml                             | 512 +++++++++++
+ _build/test_cynthia.ml.depends                     |   1 +
+ _build/test_cynthia.mli                            |   4 +
+ _build/test_cynthia.mli.depends                    |   1 +
+ _build/test_timothy.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_timothy.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_timothy.ml                             | 513 +++++++++++
+ _build/test_timothy.ml.depends                     |   1 +
+ _build/test_timothy.mli                            |   4 +
+ _build/test_timothy.mli.depends                    |   1 +
+ controller.ml                                      |   5 +-
+ controller.mli                                     |   7 +-
+ model.ml                                           |  69 +-
+ pokemon.ml                                         | 283 +++---
+ pokemon.mli                                        |  12 +-
+ shared_types.ml                                    |   2 +-
+ shared_types.mli                                   |   6 +-
+ test.byte                                          |   1 +
+ test.ml                                            |   2 +-
+ test_andrea.ml                                     | 109 +--
+ test_cynthia.ml                                    | 101 ---
+ test_roque.ml                                      | 101 ---
+ test_timothy.ml                                    | 102 +--
+ 90 files changed, 5916 insertions(+), 559 deletions(-)
+
+commit c520374b5151077a819127f538338df9f05cc443
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Mon May 14 21:46:16 2018 -0400
+
+    I almost forgot about unit->unit
+
+ gui.mli | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit fa5d435a8add99629d37f1b7e3ee2a5bd3397f9b
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 21:45:38 2018 -0400
+
+    forgot about gui.mli
+
+ gui.mli | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit d32e4d643d533b190bd183f908f2b63efe43aede
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Mon May 14 21:43:46 2018 -0400
+
+    STUPID PIKACHU BEFORE BATTLE
+
+ gui.ml | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+commit 21cbda80567fcbdb7705b2ec58f4ea7254805c99
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 21:42:24 2018 -0400
+
+    Stupid ass pikachu
+
+ gui.ml   | 913 +++++++++++++++++++++++++++++++++++++--------------------------
+ model.ml |   2 +-
+ 2 files changed, 536 insertions(+), 379 deletions(-)
+
+commit c0caef015d6b7d3b96cf74eb715ca0350c4047d6
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Mon May 14 21:36:04 2018 -0400
+
+    I HATE MERGING
+
+ gui.ml | 904 ++++++++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 530 insertions(+), 374 deletions(-)
+
+commit 9f0fad5b74d335cdad04d5b224b377b3232ae79b
+Merge: 7cbdb49 dc7ae36
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 21:24:16 2018 -0400
+
+    Merge branch 'master' into qh43
+
+commit 7cbdb49a4eefe1b47f3b79a14d02247302f5db93
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 21:23:08 2018 -0400
+
+    wtf
+
+ controller.ml | 2 +-
+ model.ml      | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit dc7ae36ed24426ec5e45911cb300f15043c9c668
+Merge: 30c6cba b96185f
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Mon May 14 21:18:05 2018 -0400
+
+    Merge pull request #56 from yy545/qh43
+
+    Qh43 "Added ash_front"
+
+commit b96185f777142057af72daea4e41b88f9859d883
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 21:15:40 2018 -0400
+
+    Added ash_front
+
+ _build/_digests                 |  42 --
+ _build/_log                     |  58 ---
+ _build/ai.cmi                   | Bin 4100 -> 0 bytes
+ _build/ai.cmo                   | Bin 9375 -> 0 bytes
+ _build/ai.ml                    | 197 --------
+ _build/ai.ml.depends            |   1 -
+ _build/ai.mli                   |  50 --
+ _build/ai.mli.depends           |   1 -
+ _build/controller.cmi           | Bin 3605 -> 0 bytes
+ _build/controller.cmo           | Bin 180 -> 0 bytes
+ _build/controller.ml            |  34 --
+ _build/controller.ml.depends    |   1 -
+ _build/controller.mli           |  63 ---
+ _build/controller.mli.depends   |   1 -
+ _build/gui.cmi                  | Bin 4609 -> 0 bytes
+ _build/gui.cmo                  | Bin 30511 -> 0 bytes
+ _build/gui.ml                   | 992 ----------------------------------------
+ _build/gui.ml.depends           |   1 -
+ _build/gui.mli                  |  87 ----
+ _build/gui.mli.depends          |   1 -
+ _build/main.cmi                 | Bin 265 -> 0 bytes
+ _build/main.cmo                 | Bin 1617 -> 0 bytes
+ _build/main.ml                  |  47 --
+ _build/main.ml.depends          |   1 -
+ _build/main.mli                 |   1 -
+ _build/main.mli.depends         |   1 -
+ _build/model.cmi                | Bin 946 -> 0 bytes
+ _build/model.cmo                | Bin 11429 -> 0 bytes
+ _build/model.ml                 | 625 -------------------------
+ _build/model.ml.depends         |   1 -
+ _build/model.mli                |  58 ---
+ _build/model.mli.depends        |   1 -
+ _build/ocamlc.where             |   1 -
+ _build/pokemon.cmi              | Bin 3218 -> 0 bytes
+ _build/pokemon.cmo              | Bin 31389 -> 0 bytes
+ _build/pokemon.ml               | 881 -----------------------------------
+ _build/pokemon.ml.depends       |   1 -
+ _build/pokemon.mli              |  95 ----
+ _build/pokemon.mli.depends      |   1 -
+ _build/shared_types.cmi         | Bin 2535 -> 0 bytes
+ _build/shared_types.cmo         | Bin 241 -> 0 bytes
+ _build/shared_types.ml          |  52 ---
+ _build/shared_types.ml.depends  |   1 -
+ _build/shared_types.mli         |  71 ---
+ _build/shared_types.mli.depends |   1 -
+ 45 files changed, 3368 deletions(-)
+
+commit 0e19857a309bc5add653310271b9e54ef053ebd0
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 21:14:11 2018 -0400
+
+    Added ash_front
+
+ _build/_digests                 |  42 ++
+ _build/_log                     |  58 +++
+ _build/ai.cmi                   | Bin 0 -> 4100 bytes
+ _build/ai.cmo                   | Bin 0 -> 9375 bytes
+ _build/ai.ml                    | 197 ++++++++
+ _build/ai.ml.depends            |   1 +
+ _build/ai.mli                   |  50 ++
+ _build/ai.mli.depends           |   1 +
+ _build/controller.cmi           | Bin 0 -> 3605 bytes
+ _build/controller.cmo           | Bin 0 -> 180 bytes
+ _build/controller.ml            |  34 ++
+ _build/controller.ml.depends    |   1 +
+ _build/controller.mli           |  63 +++
+ _build/controller.mli.depends   |   1 +
+ _build/gui.cmi                  | Bin 0 -> 4609 bytes
+ _build/gui.cmo                  | Bin 0 -> 30511 bytes
+ _build/gui.ml                   | 992 ++++++++++++++++++++++++++++++++++++++++
+ _build/gui.ml.depends           |   1 +
+ _build/gui.mli                  |  87 ++++
+ _build/gui.mli.depends          |   1 +
+ _build/main.cmi                 | Bin 0 -> 265 bytes
+ _build/main.cmo                 | Bin 0 -> 1617 bytes
+ _build/main.ml                  |  47 ++
+ _build/main.ml.depends          |   1 +
+ _build/main.mli                 |   1 +
+ _build/main.mli.depends         |   1 +
+ _build/model.cmi                | Bin 0 -> 946 bytes
+ _build/model.cmo                | Bin 0 -> 11429 bytes
+ _build/model.ml                 | 625 +++++++++++++++++++++++++
+ _build/model.ml.depends         |   1 +
+ _build/model.mli                |  58 +++
+ _build/model.mli.depends        |   1 +
+ _build/ocamlc.where             |   1 +
+ _build/pokemon.cmi              | Bin 0 -> 3218 bytes
+ _build/pokemon.cmo              | Bin 0 -> 31389 bytes
+ _build/pokemon.ml               | 881 +++++++++++++++++++++++++++++++++++
+ _build/pokemon.ml.depends       |   1 +
+ _build/pokemon.mli              |  95 ++++
+ _build/pokemon.mli.depends      |   1 +
+ _build/shared_types.cmi         | Bin 0 -> 2535 bytes
+ _build/shared_types.cmo         | Bin 0 -> 241 bytes
+ _build/shared_types.ml          |  52 +++
+ _build/shared_types.ml.depends  |   1 +
+ _build/shared_types.mli         |  71 +++
+ _build/shared_types.mli.depends |   1 +
+ ash_front.jpg                   | Bin 0 -> 4162 bytes
+ controller.ml                   |   2 +-
+ gui.ml                          |   2 +-
+ model.ml                        |   2 +-
+ 49 files changed, 3371 insertions(+), 3 deletions(-)
+
+commit 30c6cbafd5954e71e0dc52d5bd006955e9e2d166
+Merge: f4d954b 5dff971
+Author: Roque <ras656@cornell.edu>
+Date:   Mon May 14 21:12:57 2018 -0400
+
+    Got Gui
+
+commit f4d954bbb934f0c3924fa5ee0c9206646a3673f2
+Merge: 935cc6d 5ff23fd
+Author: Roque <ras656@cornell.edu>
+Date:   Mon May 14 21:10:17 2018 -0400
+
+    Finish implementing AI
+
+commit 5dff971619973e1c912df79fcca2ee7554f140f5
+Merge: bb8c977 d2853bc
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Mon May 14 21:07:41 2018 -0400
+
+    Merge pull request #55 from yy545/qh43
+
+    Qh43 "Updated"
+
+commit d2853bca8c3a0af11cc30bde654bb116d8801b5f
+Merge: e8e811a bb8c977
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 21:05:40 2018 -0400
+
+    Merge branch 'master' into qh43
+
+commit bb8c9772d804d0ed936e7aa09303b03caa4831a9
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Mon May 14 21:04:45 2018 -0400
+
+    clean
+
+ _build/_digests                 |  18 -
+ _build/_log                     |  26 --
+ _build/controller.cmi           | Bin 3607 -> 0 bytes
+ _build/controller.cmo           | Bin 180 -> 0 bytes
+ _build/controller.ml            |  34 --
+ _build/controller.ml.depends    |   1 -
+ _build/controller.mli           |  63 ---
+ _build/controller.mli.depends   |   1 -
+ _build/gui.cmi                  | Bin 4609 -> 0 bytes
+ _build/gui.cmo                  | Bin 30511 -> 0 bytes
+ _build/gui.ml                   | 941 ----------------------------------------
+ _build/gui.ml.depends           |   1 -
+ _build/gui.mli                  |  87 ----
+ _build/gui.mli.depends          |   1 -
+ _build/ocamlc.where             |   1 -
+ _build/pokemon.cmi              | Bin 3218 -> 0 bytes
+ _build/pokemon.mli              |  95 ----
+ _build/pokemon.mli.depends      |   1 -
+ _build/shared_types.cmi         | Bin 2535 -> 0 bytes
+ _build/shared_types.mli         |  71 ---
+ _build/shared_types.mli.depends |   1 -
+ 21 files changed, 1342 deletions(-)
+
+commit e8e811ac103257e59f67f9c9d527d2983bd42167
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 21:03:27 2018 -0400
+
+    Deleted build files
+
+ _build/_digests                 |  18 -
+ _build/_log                     |  26 --
+ _build/controller.cmi           | Bin 3607 -> 0 bytes
+ _build/controller.cmo           | Bin 180 -> 0 bytes
+ _build/controller.ml            |  34 --
+ _build/controller.ml.depends    |   1 -
+ _build/controller.mli           |  63 ---
+ _build/controller.mli.depends   |   1 -
+ _build/gui.cmi                  | Bin 4609 -> 0 bytes
+ _build/gui.cmo                  | Bin 30511 -> 0 bytes
+ _build/gui.ml                   | 941 ----------------------------------------
+ _build/gui.ml.depends           |   1 -
+ _build/gui.mli                  |  87 ----
+ _build/gui.mli.depends          |   1 -
+ _build/ocamlc.where             |   1 -
+ _build/pokemon.cmi              | Bin 3218 -> 0 bytes
+ _build/pokemon.mli              |  95 ----
+ _build/pokemon.mli.depends      |   1 -
+ _build/shared_types.cmi         | Bin 2535 -> 0 bytes
+ _build/shared_types.mli         |  71 ---
+ _build/shared_types.mli.depends |   1 -
+ 21 files changed, 1342 deletions(-)
+
+commit f322cb2b1ca7d422210ed694ea708336a8090eef
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 21:01:41 2018 -0400
+
+    Updated
+
+ gui.ml | 161 +++++++++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 106 insertions(+), 55 deletions(-)
+
+commit 935cc6d595c9d12b565f6f33d83de40772ecdb43
+Author: Roque <ras656@cornell.edu>
+Date:   Mon May 14 19:44:11 2018 -0400
+
+    Finish Black Box testing AI
+
+ _build/_digests                                    |  68 ---
+ _build/_log                                        |  76 ---
+ _build/ai.cmi                                      | Bin 4100 -> 0 bytes
+ _build/ai.cmo                                      | Bin 9375 -> 0 bytes
+ _build/ai.ml                                       | 198 --------
+ _build/ai.ml.depends                               |   1 -
+ _build/ai.mli                                      |  50 --
+ _build/ai.mli.depends                              |   1 -
+ _build/ai_test.cmi                                 | Bin 1608 -> 0 bytes
+ _build/ai_test.cmo                                 | Bin 13120 -> 0 bytes
+ _build/ai_test.ml                                  | 245 ---------
+ _build/ai_test.ml.depends                          |   1 -
+ _build/controller.cmi                              | Bin 5796 -> 0 bytes
+ _build/controller.cmo                              | Bin 180 -> 0 bytes
+ _build/controller.ml                               |  85 ----
+ _build/controller.ml.depends                       |   1 -
+ _build/controller.mli                              | 112 -----
+ _build/controller.mli.depends                      |   1 -
+ _build/gui.cmi                                     | Bin 2979 -> 0 bytes
+ _build/gui.cmo                                     | Bin 9121 -> 0 bytes
+ _build/gui.ml                                      | 336 -------------
+ _build/gui.ml.depends                              |   1 -
+ _build/gui.mli                                     |  56 ---
+ _build/gui.mli.depends                             |   1 -
+ _build/main.byte                                   | Bin 395642 -> 0 bytes
+ _build/main.cmi                                    | Bin 265 -> 0 bytes
+ _build/main.cmo                                    | Bin 1593 -> 0 bytes
+ _build/main.ml                                     |  47 --
+ _build/main.ml.depends                             |   1 -
+ _build/main.mli                                    |   1 -
+ _build/main.mli.depends                            |   1 -
+ _build/model.cmi                                   | Bin 946 -> 0 bytes
+ _build/model.cmo                                   | Bin 9935 -> 0 bytes
+ _build/model.ml                                    | 554 ---------------------
+ _build/model.ml.depends                            |   1 -
+ _build/model.mli                                   |  58 ---
+ _build/model.mli.depends                           |   1 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 370 --------------
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  90 ----
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  33 --
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 2516 -> 0 bytes
+ _build/ocamlc.where                                |   1 -
+ _build/pokemon.cmi                                 | Bin 2892 -> 0 bytes
+ _build/pokemon.cmo                                 | Bin 15398 -> 0 bytes
+ _build/pokemon.ml                                  | 449 -----------------
+ _build/pokemon.ml.depends                          |   1 -
+ _build/pokemon.mli                                 |  86 ----
+ _build/pokemon.mli.depends                         |   1 -
+ _build/shared_types.cmi                            | Bin 2551 -> 0 bytes
+ _build/shared_types.cmo                            | Bin 241 -> 0 bytes
+ _build/shared_types.ml                             |  53 --
+ _build/shared_types.ml.depends                     |   1 -
+ _build/shared_types.mli                            |  68 ---
+ _build/shared_types.mli.depends                    |   1 -
+ _build/test.byte                                   | Bin 555091 -> 0 bytes
+ _build/test.cmi                                    | Bin 2056 -> 0 bytes
+ _build/test.cmo                                    | Bin 1757 -> 0 bytes
+ _build/test.ml                                     |  31 --
+ _build/test.ml.depends                             |   1 -
+ _build/test_andrea.cmi                             | Bin 1161 -> 0 bytes
+ _build/test_andrea.cmo                             | Bin 5651 -> 0 bytes
+ _build/test_andrea.ml                              | 519 -------------------
+ _build/test_andrea.ml.depends                      |   1 -
+ _build/test_andrea.mli                             |   4 -
+ _build/test_andrea.mli.depends                     |   1 -
+ _build/test_cynthia.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_cynthia.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_cynthia.ml                             | 512 -------------------
+ _build/test_cynthia.ml.depends                     |   1 -
+ _build/test_cynthia.mli                            |   4 -
+ _build/test_cynthia.mli.depends                    |   1 -
+ _build/test_timothy.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_timothy.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_timothy.ml                             | 513 -------------------
+ _build/test_timothy.ml.depends                     |   1 -
+ _build/test_timothy.mli                            |   4 -
+ _build/test_timothy.mli.depends                    |   1 -
+ main.byte                                          |   1 -
+ test.byte                                          |   1 -
+ 79 files changed, 4647 deletions(-)
+
+commit edc00ba530ad0a8c1671a08f655fd5d6371fc56b
+Author: Roque <ras656@cornell.edu>
+Date:   Mon May 14 19:44:03 2018 -0400
+
+    Finish Black Box testing AI
+
+ _build/_digests                                    |  68 +++
+ _build/_log                                        |  76 +++
+ _build/ai.cmi                                      | Bin 0 -> 4100 bytes
+ _build/ai.cmo                                      | Bin 0 -> 9375 bytes
+ _build/ai.ml                                       | 198 ++++++++
+ _build/ai.ml.depends                               |   1 +
+ _build/ai.mli                                      |  50 ++
+ _build/ai.mli.depends                              |   1 +
+ _build/ai_test.cmi                                 | Bin 0 -> 1608 bytes
+ _build/ai_test.cmo                                 | Bin 0 -> 13120 bytes
+ _build/ai_test.ml                                  | 245 +++++++++
+ _build/ai_test.ml.depends                          |   1 +
+ _build/controller.cmi                              | Bin 0 -> 5796 bytes
+ _build/controller.cmo                              | Bin 0 -> 180 bytes
+ _build/controller.ml                               |  85 ++++
+ _build/controller.ml.depends                       |   1 +
+ _build/controller.mli                              | 112 +++++
+ _build/controller.mli.depends                      |   1 +
+ _build/gui.cmi                                     | Bin 0 -> 2979 bytes
+ _build/gui.cmo                                     | Bin 0 -> 9121 bytes
+ _build/gui.ml                                      | 336 +++++++++++++
+ _build/gui.ml.depends                              |   1 +
+ _build/gui.mli                                     |  56 +++
+ _build/gui.mli.depends                             |   1 +
+ _build/main.byte                                   | Bin 0 -> 395642 bytes
+ _build/main.cmi                                    | Bin 0 -> 265 bytes
+ _build/main.cmo                                    | Bin 0 -> 1593 bytes
+ _build/main.ml                                     |  47 ++
+ _build/main.ml.depends                             |   1 +
+ _build/main.mli                                    |   1 +
+ _build/main.mli.depends                            |   1 +
+ _build/model.cmi                                   | Bin 0 -> 946 bytes
+ _build/model.cmo                                   | Bin 0 -> 9935 bytes
+ _build/model.ml                                    | 554 +++++++++++++++++++++
+ _build/model.ml.depends                            |   1 +
+ _build/model.mli                                   |  58 +++
+ _build/model.mli.depends                           |   1 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 370 ++++++++++++++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  90 ++++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  33 ++
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 0 -> 2516 bytes
+ _build/ocamlc.where                                |   1 +
+ _build/pokemon.cmi                                 | Bin 0 -> 2892 bytes
+ _build/pokemon.cmo                                 | Bin 0 -> 15398 bytes
+ _build/pokemon.ml                                  | 449 +++++++++++++++++
+ _build/pokemon.ml.depends                          |   1 +
+ _build/pokemon.mli                                 |  86 ++++
+ _build/pokemon.mli.depends                         |   1 +
+ _build/shared_types.cmi                            | Bin 0 -> 2551 bytes
+ _build/shared_types.cmo                            | Bin 0 -> 241 bytes
+ _build/shared_types.ml                             |  53 ++
+ _build/shared_types.ml.depends                     |   1 +
+ _build/shared_types.mli                            |  68 +++
+ _build/shared_types.mli.depends                    |   1 +
+ _build/test.byte                                   | Bin 0 -> 555091 bytes
+ _build/test.cmi                                    | Bin 0 -> 2056 bytes
+ _build/test.cmo                                    | Bin 0 -> 1757 bytes
+ _build/test.ml                                     |  31 ++
+ _build/test.ml.depends                             |   1 +
+ _build/test_andrea.cmi                             | Bin 0 -> 1161 bytes
+ _build/test_andrea.cmo                             | Bin 0 -> 5651 bytes
+ _build/test_andrea.ml                              | 519 +++++++++++++++++++
+ _build/test_andrea.ml.depends                      |   1 +
+ _build/test_andrea.mli                             |   4 +
+ _build/test_andrea.mli.depends                     |   1 +
+ _build/test_cynthia.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_cynthia.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_cynthia.ml                             | 512 +++++++++++++++++++
+ _build/test_cynthia.ml.depends                     |   1 +
+ _build/test_cynthia.mli                            |   4 +
+ _build/test_cynthia.mli.depends                    |   1 +
+ _build/test_timothy.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_timothy.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_timothy.ml                             | 513 +++++++++++++++++++
+ _build/test_timothy.ml.depends                     |   1 +
+ _build/test_timothy.mli                            |   4 +
+ _build/test_timothy.mli.depends                    |   1 +
+ ai.ml                                              |   5 +-
+ ai_test.ml                                         |  21 +-
+ main.byte                                          |   1 +
+ pokemon.ml                                         |   2 +-
+ test.byte                                          |   1 +
+ 82 files changed, 4667 insertions(+), 8 deletions(-)
+
+commit a5235dbff1213c3d8c69c2aaf7721642ba64588f
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 19:21:23 2018 -0400
+
+    Seeing if things work
+
+ gui.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5ff23fd719a92cc0724bba3749c84dd46237ac62
+Merge: e60a2a9 23679ba
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Mon May 14 18:39:19 2018 -0400
+
+    Merge pull request #54 from yy545/tz277_5
+
+    Tz277 fixed mode
+
+commit 23679baae3cbb5d6484de97e4c125336a3bda454
+Merge: 19cc6d9 e60a2a9
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Mon May 14 18:38:20 2018 -0400
+
+    Merge branch 'master' into tz277_5
+
+commit e60a2a9ff8c46e8e4c2de1937d018d850e41882c
+Merge: a0f90e9 c556f67
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Mon May 14 18:37:46 2018 -0400
+
+    Merge pull request #53 from yy545/qh43
+
+    Qh43: This is my pull request
+
+commit 19cc6d92306f985520b36d91d769e950b45bb39a
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Mon May 14 18:35:32 2018 -0400
+
+    fixed mode issue
+
+ model.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c556f679db026fef61df93cef740a22b09e4e044
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 18:35:12 2018 -0400
+
+    Added pokemon images
+
+ _build/_digests                 |  18 +
+ _build/_log                     |  26 ++
+ _build/controller.cmi           | Bin 0 -> 3607 bytes
+ _build/controller.cmo           | Bin 0 -> 180 bytes
+ _build/controller.ml            |  34 ++
+ _build/controller.ml.depends    |   1 +
+ _build/controller.mli           |  63 +++
+ _build/controller.mli.depends   |   1 +
+ _build/gui.cmi                  | Bin 0 -> 4609 bytes
+ _build/gui.cmo                  | Bin 0 -> 30511 bytes
+ _build/gui.ml                   | 941 ++++++++++++++++++++++++++++++++++++++++
+ _build/gui.ml.depends           |   1 +
+ _build/gui.mli                  |  87 ++++
+ _build/gui.mli.depends          |   1 +
+ _build/ocamlc.where             |   1 +
+ _build/pokemon.cmi              | Bin 0 -> 3218 bytes
+ _build/pokemon.mli              |  95 ++++
+ _build/pokemon.mli.depends      |   1 +
+ _build/shared_types.cmi         | Bin 0 -> 2535 bytes
+ _build/shared_types.mli         |  71 +++
+ _build/shared_types.mli.depends |   1 +
+ foster.jpg                      | Bin 0 -> 3185 bytes
+ gui.ml                          |  53 ++-
+ poke_26.png                     | Bin 0 -> 1120 bytes
+ poke_3.png                      | Bin 0 -> 1201 bytes
+ poke_6.png                      | Bin 0 -> 1382 bytes
+ poke_9.png                      | Bin 0 -> 1280 bytes
+ 27 files changed, 1383 insertions(+), 12 deletions(-)
+
+commit a0f90e905bdf0af6793de3c95ffe9f5d7b5abff7
+Merge: ba60df2 50259ce
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Mon May 14 18:17:00 2018 -0400
+
+    Merge pull request #52 from yy545/tz277_5
+
+    Tz277 changed status: "missed" to "mist"
+
+commit 50259cecb7c80d76d5956095f43104f2fc0ce5df
+Merge: 9e11fb5 ba60df2
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Mon May 14 18:12:36 2018 -0400
+
+    Merge branch 'master' into tz277_5
+
+commit 9e11fb5ce3ee7905fbf2ac954113db1100f88308
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Mon May 14 18:11:58 2018 -0400
+
+    changed 'status missed' to 'status mist'
+
+ controller.ml  | 2 +-
+ controller.mli | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 9cd6229d4d6b3f5427fef178c1afcd37bb1fb103
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 17:41:02 2018 -0400
+
+    whatever
+
+ _build/_digests                 |  42 --
+ _build/_log                     |   2 -
+ _build/ai.cmi                   | Bin 4100 -> 0 bytes
+ _build/ai.cmo                   | Bin 9375 -> 0 bytes
+ _build/ai.ml                    | 197 ---------
+ _build/ai.ml.depends            |   1 -
+ _build/ai.mli                   |  50 ---
+ _build/ai.mli.depends           |   1 -
+ _build/controller.cmi           | Bin 3607 -> 0 bytes
+ _build/controller.cmo           | Bin 180 -> 0 bytes
+ _build/controller.ml            |  34 --
+ _build/controller.ml.depends    |   1 -
+ _build/controller.mli           |  63 ---
+ _build/controller.mli.depends   |   1 -
+ _build/gui.cmi                  | Bin 4609 -> 0 bytes
+ _build/gui.cmo                  | Bin 29610 -> 0 bytes
+ _build/gui.ml                   | 912 ----------------------------------------
+ _build/gui.ml.depends           |   1 -
+ _build/gui.mli                  |  87 ----
+ _build/gui.mli.depends          |   1 -
+ _build/main.cmi                 | Bin 265 -> 0 bytes
+ _build/main.cmo                 | Bin 1617 -> 0 bytes
+ _build/main.ml                  |  47 ---
+ _build/main.ml.depends          |   1 -
+ _build/main.mli                 |   1 -
+ _build/main.mli.depends         |   1 -
+ _build/model.cmi                | Bin 946 -> 0 bytes
+ _build/model.cmo                | Bin 11433 -> 0 bytes
+ _build/model.ml                 | 625 ---------------------------
+ _build/model.ml.depends         |   1 -
+ _build/model.mli                |  58 ---
+ _build/model.mli.depends        |   1 -
+ _build/ocamlc.where             |   1 -
+ _build/pokemon.cmi              | Bin 3218 -> 0 bytes
+ _build/pokemon.cmo              | Bin 31389 -> 0 bytes
+ _build/pokemon.ml               | 881 --------------------------------------
+ _build/pokemon.ml.depends       |   1 -
+ _build/pokemon.mli              |  95 -----
+ _build/pokemon.mli.depends      |   1 -
+ _build/shared_types.cmi         | Bin 2535 -> 0 bytes
+ _build/shared_types.cmo         | Bin 241 -> 0 bytes
+ _build/shared_types.ml          |  52 ---
+ _build/shared_types.ml.depends  |   1 -
+ _build/shared_types.mli         |  71 ----
+ _build/shared_types.mli.depends |   1 -
+ 45 files changed, 3232 deletions(-)
+
+commit ba60df2f931408b3051da958056e5fe6ff847536
+Merge: 55908f5 53ac050
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Mon May 14 17:40:44 2018 -0400
+
+    Merge pull request #51 from yy545/tz277_5
+
+    updated random_poke()
+
+commit 953c3d8fabe9d6021a14a3c6bf0b1f36dfcd7da7
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 17:40:31 2018 -0400
+
+    WHATEVER
+
+ _build/_digests    |  16 ++++++++--------
+ _build/gui.cmo     | Bin 29648 -> 29610 bytes
+ _build/gui.ml      |  23 ++++++++++-------------
+ _build/pokemon.cmo | Bin 31330 -> 31389 bytes
+ _build/pokemon.ml  |   7 ++++---
+ pokemon.ml         |   7 ++++---
+ 6 files changed, 26 insertions(+), 27 deletions(-)
+
+commit 53ac05073575c0695f0e7bf5dba879bf5b5b62b6
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Mon May 14 17:40:07 2018 -0400
+
+    updated random_poke()
+
+ pokemon.ml | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit c9e6d23cefb9bfe3631470bac45246f953128098
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 17:33:48 2018 -0400
+
+    Fixed history log
+
+ _build/_digests                 |  42 ++
+ _build/_log                     |   2 +
+ _build/ai.cmi                   | Bin 0 -> 4100 bytes
+ _build/ai.cmo                   | Bin 0 -> 9375 bytes
+ _build/ai.ml                    | 197 +++++++++
+ _build/ai.ml.depends            |   1 +
+ _build/ai.mli                   |  50 +++
+ _build/ai.mli.depends           |   1 +
+ _build/controller.cmi           | Bin 0 -> 3607 bytes
+ _build/controller.cmo           | Bin 0 -> 180 bytes
+ _build/controller.ml            |  34 ++
+ _build/controller.ml.depends    |   1 +
+ _build/controller.mli           |  63 +++
+ _build/controller.mli.depends   |   1 +
+ _build/gui.cmi                  | Bin 0 -> 4609 bytes
+ _build/gui.cmo                  | Bin 0 -> 29648 bytes
+ _build/gui.ml                   | 915 ++++++++++++++++++++++++++++++++++++++++
+ _build/gui.ml.depends           |   1 +
+ _build/gui.mli                  |  87 ++++
+ _build/gui.mli.depends          |   1 +
+ _build/main.cmi                 | Bin 0 -> 265 bytes
+ _build/main.cmo                 | Bin 0 -> 1617 bytes
+ _build/main.ml                  |  47 +++
+ _build/main.ml.depends          |   1 +
+ _build/main.mli                 |   1 +
+ _build/main.mli.depends         |   1 +
+ _build/model.cmi                | Bin 0 -> 946 bytes
+ _build/model.cmo                | Bin 0 -> 11433 bytes
+ _build/model.ml                 | 625 +++++++++++++++++++++++++++
+ _build/model.ml.depends         |   1 +
+ _build/model.mli                |  58 +++
+ _build/model.mli.depends        |   1 +
+ _build/ocamlc.where             |   1 +
+ _build/pokemon.cmi              | Bin 0 -> 3218 bytes
+ _build/pokemon.cmo              | Bin 0 -> 31330 bytes
+ _build/pokemon.ml               | 880 ++++++++++++++++++++++++++++++++++++++
+ _build/pokemon.ml.depends       |   1 +
+ _build/pokemon.mli              |  95 +++++
+ _build/pokemon.mli.depends      |   1 +
+ _build/shared_types.cmi         | Bin 0 -> 2535 bytes
+ _build/shared_types.cmo         | Bin 0 -> 241 bytes
+ _build/shared_types.ml          |  52 +++
+ _build/shared_types.ml.depends  |   1 +
+ _build/shared_types.mli         |  71 ++++
+ _build/shared_types.mli.depends |   1 +
+ gui.ml                          |  23 +-
+ model.ml                        |   1 -
+ 47 files changed, 3244 insertions(+), 14 deletions(-)
+
+commit 18ccb8696840afd34ddb13e2b2570842bde376fe
+Merge: fdd64be 55908f5
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 17:01:19 2018 -0400
+
+    Merge branch 'master' into qh43
+
+commit fdd64bed0de598627440e131fddf70ce13968610
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 17:00:11 2018 -0400
+
+    press_battle to 2,3, and 4
+
+ _build/_digests                 |  42 --
+ _build/_log                     |  26 --
+ _build/ai.cmi                   | Bin 4100 -> 0 bytes
+ _build/ai.cmo                   | Bin 9375 -> 0 bytes
+ _build/ai.ml                    | 197 ---------
+ _build/ai.ml.depends            |   1 -
+ _build/ai.mli                   |  50 ---
+ _build/ai.mli.depends           |   1 -
+ _build/controller.cmi           | Bin 5230 -> 0 bytes
+ _build/controller.cmo           | Bin 180 -> 0 bytes
+ _build/controller.ml            |  70 ----
+ _build/controller.ml.depends    |   1 -
+ _build/controller.mli           |  98 -----
+ _build/controller.mli.depends   |   1 -
+ _build/gui.cmi                  | Bin 4536 -> 0 bytes
+ _build/gui.cmo                  | Bin 27645 -> 0 bytes
+ _build/gui.ml                   | 867 ----------------------------------------
+ _build/gui.ml.depends           |   1 -
+ _build/gui.mli                  |  85 ----
+ _build/gui.mli.depends          |   1 -
+ _build/main.cmi                 | Bin 265 -> 0 bytes
+ _build/main.cmo                 | Bin 1617 -> 0 bytes
+ _build/main.ml                  |  47 ---
+ _build/main.ml.depends          |   1 -
+ _build/main.mli                 |   1 -
+ _build/main.mli.depends         |   1 -
+ _build/model.cmi                | Bin 946 -> 0 bytes
+ _build/model.cmo                | Bin 12797 -> 0 bytes
+ _build/model.ml                 | 661 ------------------------------
+ _build/model.ml.depends         |   1 -
+ _build/model.mli                |  58 ---
+ _build/model.mli.depends        |   1 -
+ _build/ocamlc.where             |   1 -
+ _build/pokemon.cmi              | Bin 2892 -> 0 bytes
+ _build/pokemon.cmo              | Bin 26812 -> 0 bytes
+ _build/pokemon.ml               | 767 -----------------------------------
+ _build/pokemon.ml.depends       |   1 -
+ _build/pokemon.mli              |  86 ----
+ _build/pokemon.mli.depends      |   1 -
+ _build/shared_types.cmi         | Bin 2535 -> 0 bytes
+ _build/shared_types.cmo         | Bin 241 -> 0 bytes
+ _build/shared_types.ml          |  52 ---
+ _build/shared_types.ml.depends  |   1 -
+ _build/shared_types.mli         |  71 ----
+ _build/shared_types.mli.depends |   1 -
+ controller.ml                   |  40 +-
+ controller.mli                  |  37 +-
+ gui.ml                          |  81 +++-
+ gui.mli                         |   6 +-
+ pokemon.ml                      | 251 ++++++++----
+ 50 files changed, 258 insertions(+), 3350 deletions(-)
+
+commit 55908f5c4385e5ca01506a261189cdade33c40a6
+Merge: d7c4301 df0c02c
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Mon May 14 15:24:58 2018 -0400
+
+    Merge pull request #50 from yy545/yy545
+
+    compilable pokemon.ml
+
+commit df0c02cc41eb3188e97f222b0941e738d34f08ce
+Merge: b6fe704 d7c4301
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Mon May 14 15:22:26 2018 -0400
+
+    Merge branch 'master' into yy545
+
+commit b6fe704909cdecb1fc97feb35172673a256a9d77
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Mon May 14 15:22:01 2018 -0400
+
+    compiles
+
+ pokemon.ml  | 66 ++++++++++++++++++++++++++++++-------------------------------
+ pokemon.mli |  2 +-
+ 2 files changed, 34 insertions(+), 34 deletions(-)
+
+commit f1eb66fd28742af5d6029de5bc4f8ed25665b3e0
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Mon May 14 15:12:27 2018 -0400
+
+    changes
+
+ pokemon.ml  | 257 +++++++++++++++++++++++++++++++++++++++++++-----------------
+ pokemon.mli |  19 +++--
+ 2 files changed, 199 insertions(+), 77 deletions(-)
+
+commit d9e9cab65a5b8bc4c10b08c55c4cc556a0b04ee9
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 05:53:14 2018 -0400
+
+    GUI compiles
+
+ gui.ml  | 7 -------
+ gui.mli | 2 --
+ 2 files changed, 9 deletions(-)
+
+commit 22b76a51e89c5ec96c79dd39b11ac0e0843394f6
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Mon May 14 05:48:39 2018 -0400
+
+    Changed gui.ml and gui.mli
+
+ _build/_digests                 |  42 ++
+ _build/_log                     |  26 ++
+ _build/ai.cmi                   | Bin 0 -> 4100 bytes
+ _build/ai.cmo                   | Bin 0 -> 9375 bytes
+ _build/ai.ml                    | 197 +++++++++
+ _build/ai.ml.depends            |   1 +
+ _build/ai.mli                   |  50 +++
+ _build/ai.mli.depends           |   1 +
+ _build/controller.cmi           | Bin 0 -> 5230 bytes
+ _build/controller.cmo           | Bin 0 -> 180 bytes
+ _build/controller.ml            |  70 ++++
+ _build/controller.ml.depends    |   1 +
+ _build/controller.mli           |  98 +++++
+ _build/controller.mli.depends   |   1 +
+ _build/gui.cmi                  | Bin 0 -> 4536 bytes
+ _build/gui.cmo                  | Bin 0 -> 27645 bytes
+ _build/gui.ml                   | 867 ++++++++++++++++++++++++++++++++++++++++
+ _build/gui.ml.depends           |   1 +
+ _build/gui.mli                  |  85 ++++
+ _build/gui.mli.depends          |   1 +
+ _build/main.cmi                 | Bin 0 -> 265 bytes
+ _build/main.cmo                 | Bin 0 -> 1617 bytes
+ _build/main.ml                  |  47 +++
+ _build/main.ml.depends          |   1 +
+ _build/main.mli                 |   1 +
+ _build/main.mli.depends         |   1 +
+ _build/model.cmi                | Bin 0 -> 946 bytes
+ _build/model.cmo                | Bin 0 -> 12797 bytes
+ _build/model.ml                 | 661 ++++++++++++++++++++++++++++++
+ _build/model.ml.depends         |   1 +
+ _build/model.mli                |  58 +++
+ _build/model.mli.depends        |   1 +
+ _build/ocamlc.where             |   1 +
+ _build/pokemon.cmi              | Bin 0 -> 2892 bytes
+ _build/pokemon.cmo              | Bin 0 -> 26812 bytes
+ _build/pokemon.ml               | 767 +++++++++++++++++++++++++++++++++++
+ _build/pokemon.ml.depends       |   1 +
+ _build/pokemon.mli              |  86 ++++
+ _build/pokemon.mli.depends      |   1 +
+ _build/shared_types.cmi         | Bin 0 -> 2535 bytes
+ _build/shared_types.cmo         | Bin 0 -> 241 bytes
+ _build/shared_types.ml          |  52 +++
+ _build/shared_types.ml.depends  |   1 +
+ _build/shared_types.mli         |  71 ++++
+ _build/shared_types.mli.depends |   1 +
+ ash_back.png                    | Bin 8806 -> 0 bytes
+ battleBackground.jpg            | Bin 0 -> 138622 bytes
+ blah.jpeg                       | Bin 53879 -> 0 bytes
+ charizard.png                   | Bin 608 -> 0 bytes
+ gui.ml                          |  59 ++-
+ gui.mli                         |  52 ++-
+ kitten.jpeg                     | Bin 17604 -> 0 bytes
+ pikachu.png                     | Bin 10428 -> 0 bytes
+ pokemon.ml                      | 162 ++++----
+ them.png                        | Bin 4313 -> 0 bytes
+ 55 files changed, 3367 insertions(+), 99 deletions(-)
+
+commit d7c43018b6b5884c50e6c8a73dc8a348366284cf
+Merge: d64a4c3 c384268
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Mon May 14 00:32:48 2018 -0400
+
+    Merge pull request #49 from yy545/tz277_5
+
+    Tz277 minor edits
+
+commit c384268fd3d349e94675f38275cf5d015f83cd82
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Mon May 14 00:31:54 2018 -0400
+
+    minor edit
+
+ model.ml | 36 ------------------------------------
+ 1 file changed, 36 deletions(-)
+
+commit 0d16e7a9d935462e3b38cf7a289468d8c7bf5083
+Merge: c8e608a d64a4c3
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Mon May 14 00:29:52 2018 -0400
+
+    Merge branch 'master' into tz277_5
+
+commit c8e608a8a05a3753847be45333bec9848125836e
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Mon May 14 00:28:49 2018 -0400
+
+    minor edits
+
+ model.ml | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+commit d64a4c3a79a914a5bf8d764060afeb1a24e8d06e
+Merge: 32d3edd ebed4b9
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Mon May 14 00:04:49 2018 -0400
+
+    Merge pull request #48 from yy545/yy545
+
+    deleted special effects
+
+commit ebed4b92144d1b82687d02d28ab0b55d80833582
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Mon May 14 00:03:48 2018 -0400
+
+    deleted special effects and compiles
+
+ pokemon.ml | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
+
+commit f98c4b8842b92c019356b039cc376244007b01fd
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Sun May 13 23:59:50 2018 -0400
+
+    deleted special effects
+
+ controller.ml  | 40 ++-------------------------------------
+ controller.mli | 36 -----------------------------------
+ pokemon.ml     | 59 +++++++++++++++++++++++++++++++++-------------------------
+ 3 files changed, 36 insertions(+), 99 deletions(-)
+
+commit 51eb93e006e4858058df8e6e19c37a72c868f79e
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Sun May 13 23:21:13 2018 -0400
+
+    Many additions
+
+ _build/_digests                 |  14 -
+ _build/_log                     |  30 --
+ _build/controller.cmi           | Bin 5230 -> 0 bytes
+ _build/controller.mli           |  98 -----
+ _build/controller.mli.depends   |   1 -
+ _build/gui.cmi                  | Bin 3003 -> 0 bytes
+ _build/gui.ml                   | 830 ----------------------------------------
+ _build/gui.ml.depends           |   1 -
+ _build/gui.mli                  |  51 ---
+ _build/gui.mli.depends          |   1 -
+ _build/ocamlc.where             |   1 -
+ _build/pokemon.cmi              | Bin 2892 -> 0 bytes
+ _build/pokemon.mli              |  86 -----
+ _build/pokemon.mli.depends      |   1 -
+ _build/shared_types.cmi         | Bin 2535 -> 0 bytes
+ _build/shared_types.mli         |  71 ----
+ _build/shared_types.mli.depends |   1 -
+ 17 files changed, 1186 deletions(-)
+
+commit 605947f0f44e4abc0428ced8b43f2a5b4a42de5f
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Sun May 13 23:20:52 2018 -0400
+
+    Many changes
+
+ _build/_digests                |  63 +---
+ _build/_log                    |  72 ++--
+ _build/ai.cmi                  | Bin 4100 -> 0 bytes
+ _build/ai.cmo                  | Bin 9339 -> 0 bytes
+ _build/ai.ml                   | 197 -----------
+ _build/ai.ml.depends           |   1 -
+ _build/ai.mli                  |  50 ---
+ _build/ai.mli.depends          |   1 -
+ _build/controller.cmi          | Bin 2541 -> 5230 bytes
+ _build/controller.cmo          | Bin 180 -> 0 bytes
+ _build/controller.ml           |  25 --
+ _build/controller.ml.depends   |   1 -
+ _build/controller.mli          |  57 ++-
+ _build/gui.cmi                 | Bin 2919 -> 3003 bytes
+ _build/gui.cmo                 | Bin 9278 -> 0 bytes
+ _build/gui.ml                  | 788 +++++++++++++++++++++++++++++++++--------
+ _build/gui.mli                 |  15 +-
+ _build/guitext.cmi             | Bin 453 -> 0 bytes
+ _build/guitext.cmo             | Bin 8028 -> 0 bytes
+ _build/guitext.ml              | 190 ----------
+ _build/guitext.ml.depends      |   1 -
+ _build/guitext.mli             |  10 -
+ _build/guitext.mli.depends     |   1 -
+ _build/main.byte               | Bin 458425 -> 0 bytes
+ _build/main.cmi                | Bin 265 -> 0 bytes
+ _build/main.cmo                | Bin 1617 -> 0 bytes
+ _build/main.ml                 |  47 ---
+ _build/main.ml.depends         |   1 -
+ _build/main.mli                |   1 -
+ _build/main.mli.depends        |   1 -
+ _build/model.cmi               | Bin 946 -> 0 bytes
+ _build/model.cmo               | Bin 9720 -> 0 bytes
+ _build/model.ml                | 532 ----------------------------
+ _build/model.ml.depends        |   1 -
+ _build/model.mli               |  58 ---
+ _build/model.mli.depends       |   1 -
+ _build/pokemon.cmi             | Bin 2660 -> 2892 bytes
+ _build/pokemon.cmo             | Bin 10164 -> 0 bytes
+ _build/pokemon.ml              | 310 ----------------
+ _build/pokemon.ml.depends      |   1 -
+ _build/pokemon.mli             |  18 +-
+ _build/shared_types.cmi        | Bin 2479 -> 2535 bytes
+ _build/shared_types.cmo        | Bin 241 -> 0 bytes
+ _build/shared_types.ml         |  48 ---
+ _build/shared_types.ml.depends |   1 -
+ _build/shared_types.mli        |  20 +-
+ controller.mli                 |   3 -
+ gui.ml                         | 788 +++++++++++++++++++++++++++++++++--------
+ gui.mli                        |  15 +-
+ model.ml                       |   1 +
+ pokemon.ml                     |  25 +-
+ 51 files changed, 1423 insertions(+), 1921 deletions(-)
+
+commit a5133ad4525bc5769c7795c758aec9adfaf75948
+Merge: 0c8dffe 32d3edd
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Sun May 13 23:15:10 2018 -0400
+
+    merge
+
+commit 0c8dffe6d4c989450c0201ada1600a36ddcbeba0
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Sun May 13 23:08:42 2018 -0400
+
+    png changes
+
+ PokeSpriteFront/14.png | Bin 3456 -> 644 bytes
+ PokeSpriteFront/15.png | Bin 4126 -> 1241 bytes
+ PokeSpriteFront/16.png | Bin 3680 -> 705 bytes
+ PokeSpriteFront/17.png | Bin 3907 -> 914 bytes
+ PokeSpriteFront/18.png | Bin 4272 -> 1243 bytes
+ PokeSpriteFront/19.png | Bin 3545 -> 695 bytes
+ 6 files changed, 0 insertions(+), 0 deletions(-)
+
+commit b147109a9c3e4ff7520496b9b969a568bda3669c
+Merge: 846eaf0 d3df758
+Author: qingyuhe <hecynthia@gmail.com>
+Date:   Sun May 13 23:01:34 2018 -0400
+
+    Merged
+
+commit 32d3edd02e9e0d21279c47aca15890645598c378
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Sun May 13 23:00:02 2018 -0400
+
+    compiling error fix
+
+ controller.mli | 5 -----
+ 1 file changed, 5 deletions(-)
+
+commit 52bf6a76f7b35e290dfcb8dc6f378320d7f94acf
+Merge: d3df758 8fdcd87
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Sun May 13 22:58:25 2018 -0400
+
+    Merge pull request #47 from yy545/yy545
+
+    fixing some compiling errors
+
+commit 8fdcd874c7c39af3b3a8f8f8f7c68f5b5a35572d
+Merge: 87827d0 eb08621
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Sun May 13 22:56:21 2018 -0400
+
+    merge
+
+commit d3df758a9634c3115ca50b6cb5b916612e9986c6
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Sun May 13 22:55:25 2018 -0400
+
+    Delete 19.png
+
+ PokeSpriteFront/19.png | Bin 3545 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 1c2e5e3088fe729963c49e25912c2e0489af691b
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Sun May 13 22:55:11 2018 -0400
+
+    Delete 18.png
+
+ PokeSpriteFront/18.png | Bin 4272 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 7b5cdea09ca612f85bd53a6b62f64773d61170ae
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Sun May 13 22:54:58 2018 -0400
+
+    Delete 17.png
+
+ PokeSpriteFront/17.png | Bin 3907 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 6c04324e7f2472e5b6241e6bacfbd334305ecc70
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Sun May 13 22:54:46 2018 -0400
+
+    Delete 16.png
+
+ PokeSpriteFront/16.png | Bin 3680 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit eeb62994ae217f7dec6ec1f41166889683801e02
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Sun May 13 22:54:37 2018 -0400
+
+    Delete 15.png
+
+ PokeSpriteFront/15.png | Bin 4126 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit dbb170b42f04f1b109d375810c3f6cd2e71fed74
+Author: Cynthia He <qh43@cornell.edu>
+Date:   Sun May 13 22:54:26 2018 -0400
+
+    Delete 14.png
+
+ PokeSpriteFront/14.png | Bin 3456 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 87827d00b566223db5c44de5e77a407007d4ab7a
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Sun May 13 22:53:20 2018 -0400
+
+    compiling
+
+ _build/_digests               |   9 -
+ _build/_log                   |  14 -
+ _build/controller.cmi         | Bin 5230 -> 0 bytes
+ _build/controller.mli         |  97 ------
+ _build/controller.mli.depends |   1 -
+ _build/ocamlc.where           |   1 -
+ _build/pokemon.cmi            | Bin 2892 -> 0 bytes
+ _build/pokemon.cmo            | Bin 26863 -> 0 bytes
+ _build/pokemon.ml             | 759 ------------------------------------------
+ _build/pokemon.ml.depends     |   1 -
+ _build/pokemon.mli            |  86 -----
+ _build/pokemon.mli.depends    |   1 -
+ 12 files changed, 969 deletions(-)
+
+commit ca6640d1a31cc2c1efa138beddf921e14f6aa36d
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Sun May 13 22:53:08 2018 -0400
+
+    compiling
+
+ _build/_digests               |   9 +
+ _build/_log                   |  14 +
+ _build/controller.cmi         | Bin 0 -> 5230 bytes
+ _build/controller.mli         |  97 ++++++
+ _build/controller.mli.depends |   1 +
+ _build/ocamlc.where           |   1 +
+ _build/pokemon.cmi            | Bin 0 -> 2892 bytes
+ _build/pokemon.cmo            | Bin 0 -> 26863 bytes
+ _build/pokemon.ml             | 759 ++++++++++++++++++++++++++++++++++++++++++
+ _build/pokemon.ml.depends     |   1 +
+ _build/pokemon.mli            |  86 +++++
+ _build/pokemon.mli.depends    |   1 +
+ controller.mli                |   5 +-
+ pokemon.ml                    | 104 +++---
+ pokemon.mli                   |   3 -
+ 15 files changed, 1025 insertions(+), 56 deletions(-)
+
+commit 36eb66bc954e0c1c0581b6c656421e102d138bb9
+Merge: 3e40efc eb08621
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Sun May 13 22:43:08 2018 -0400
+
+    Merge pull request #46 from yy545/yy545
+
+    changed controller.ml and controller.mli
+
+commit eb08621c46f541fdddd626fb4599e8892325ca4d
+Merge: 5862f30 3e40efc
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Sun May 13 22:42:51 2018 -0400
+
+    Merge branch 'master' into yy545
+
+commit 3e40efc1556bb13f2e2179ae1f788904c0a233f6
+Merge: c5266e4 4aa866b
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Sun May 13 22:34:21 2018 -0400
+
+    Merge pull request #45 from yy545/tz277_5
+
+    Tz277 updates with special
+
+commit 5862f3076dd314be80daf6bed27bb0727d713e41
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Sun May 13 22:22:39 2018 -0400
+
+    checking compile
+
+ PokeSpriteFront/14.png | Bin 0 -> 3456 bytes
+ PokeSpriteFront/15.png | Bin 0 -> 4126 bytes
+ PokeSpriteFront/16.png | Bin 0 -> 3680 bytes
+ PokeSpriteFront/17.png | Bin 0 -> 3907 bytes
+ PokeSpriteFront/18.png | Bin 0 -> 4272 bytes
+ PokeSpriteFront/19.png | Bin 0 -> 3545 bytes
+ controller.ml          |  25 +--
+ controller.mli         |  21 +--
+ pokemon.ml             | 444 ++++++++++++++++++++++++++++++++++++++++---------
+ 9 files changed, 376 insertions(+), 114 deletions(-)
+
+commit 4aa866b2cd3d4d02ba7804cdeef7b6f7825c91a4
+Merge: 6e5e7de c5266e4
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Sun May 13 22:20:45 2018 -0400
+
+    Merge branch 'master' into tz277_5
+
+commit 6e5e7de3e3affb39390fcede312baee7dd10a558
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Sun May 13 22:20:03 2018 -0400
+
+    working on specials
+
+ controller.ml  | 15 ---------------
+ controller.mli | 15 ---------------
+ model.ml       | 14 --------------
+ 3 files changed, 44 deletions(-)
+
+commit c5266e4d9f6ae78d5dcc73bb1adfb689a4b0a6cc
+Merge: dc24ea3 d7922ed
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Sun May 13 22:01:23 2018 -0400
+
+    Merge pull request #44 from yy545/tz277_5
+
+    finished battle log
+
+commit d7922ed039ca1fb04a8f295f07dd6668808646bc
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Sun May 13 22:00:45 2018 -0400
+
+    finished battle log
+
+ .ocamlinit |  3 ---
+ model.ml   | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 58 insertions(+), 6 deletions(-)
+
+commit dc24ea31895817c27411650ce4e1fb840b6a320a
+Merge: 47615dd 596bf4c
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Sun May 13 21:40:38 2018 -0400
+
+    Merge pull request #43 from yy545/tz277_5
+
+    Tz277 uhhhhhhhh
+
+commit 596bf4cd6919d6e8ba45906e50aa3d17a448044a
+Merge: 41e141b 47615dd
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Sun May 13 21:39:47 2018 -0400
+
+    merge
+
+commit 41e141badfa85dbcbeaf44ffce29753921181926
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Sun May 13 21:37:06 2018 -0400
+
+    working on battle log
+
+ .ocamlinit       |  8 +++--
+ model.ml         | 91 ++++++++++++++++++++++++++++++++++++++++++++++++--------
+ shared_types.ml  |  5 ++--
+ shared_types.mli | 11 ++++---
+ 4 files changed, 92 insertions(+), 23 deletions(-)
+
+commit 47615ddd833a5db18ccd9e2b65c27a20fd4b37cb
+Author: Roque <ras656@cornell.edu>
+Date:   Sun May 13 21:00:28 2018 -0400
+
+    more changes to ai_test
+
+ _build/_digests                                    |  67 ---
+ _build/_log                                        |  76 ---
+ _build/ai.cmi                                      | Bin 4100 -> 0 bytes
+ _build/ai.cmo                                      | Bin 9375 -> 0 bytes
+ _build/ai.ml                                       | 197 --------
+ _build/ai.ml.depends                               |   1 -
+ _build/ai.mli                                      |  50 --
+ _build/ai.mli.depends                              |   1 -
+ _build/ai_test.cmi                                 | Bin 1590 -> 0 bytes
+ _build/ai_test.cmo                                 | Bin 12678 -> 0 bytes
+ _build/ai_test.ml                                  | 234 ---------
+ _build/ai_test.ml.depends                          |   1 -
+ _build/controller.cmi                              | Bin 5796 -> 0 bytes
+ _build/controller.cmo                              | Bin 180 -> 0 bytes
+ _build/controller.ml                               |  85 ----
+ _build/controller.ml.depends                       |   1 -
+ _build/controller.mli                              | 112 -----
+ _build/controller.mli.depends                      |   1 -
+ _build/gui.cmi                                     | Bin 2979 -> 0 bytes
+ _build/gui.cmo                                     | Bin 9121 -> 0 bytes
+ _build/gui.ml                                      | 336 -------------
+ _build/gui.ml.depends                              |   1 -
+ _build/gui.mli                                     |  56 ---
+ _build/gui.mli.depends                             |   1 -
+ _build/main.cmi                                    | Bin 265 -> 0 bytes
+ _build/main.cmo                                    | Bin 1593 -> 0 bytes
+ _build/main.ml                                     |  47 --
+ _build/main.ml.depends                             |   1 -
+ _build/main.mli                                    |   1 -
+ _build/main.mli.depends                            |   1 -
+ _build/model.cmi                                   | Bin 946 -> 0 bytes
+ _build/model.cmo                                   | Bin 9935 -> 0 bytes
+ _build/model.ml                                    | 554 ---------------------
+ _build/model.ml.depends                            |   1 -
+ _build/model.mli                                   |  58 ---
+ _build/model.mli.depends                           |   1 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 367 --------------
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  60 ---
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  60 ---
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 2456 -> 0 bytes
+ _build/ocamlc.where                                |   1 -
+ _build/pokemon.cmi                                 | Bin 2892 -> 0 bytes
+ _build/pokemon.cmo                                 | Bin 15398 -> 0 bytes
+ _build/pokemon.ml                                  | 449 -----------------
+ _build/pokemon.ml.depends                          |   1 -
+ _build/pokemon.mli                                 |  86 ----
+ _build/pokemon.mli.depends                         |   1 -
+ _build/shared_types.cmi                            | Bin 2551 -> 0 bytes
+ _build/shared_types.cmo                            | Bin 241 -> 0 bytes
+ _build/shared_types.ml                             |  53 --
+ _build/shared_types.ml.depends                     |   1 -
+ _build/shared_types.mli                            |  68 ---
+ _build/shared_types.mli.depends                    |   1 -
+ _build/test.byte                                   | Bin 554777 -> 0 bytes
+ _build/test.cmi                                    | Bin 2056 -> 0 bytes
+ _build/test.cmo                                    | Bin 1757 -> 0 bytes
+ _build/test.ml                                     |  31 --
+ _build/test.ml.depends                             |   1 -
+ _build/test_andrea.cmi                             | Bin 1161 -> 0 bytes
+ _build/test_andrea.cmo                             | Bin 5651 -> 0 bytes
+ _build/test_andrea.ml                              | 519 -------------------
+ _build/test_andrea.ml.depends                      |   1 -
+ _build/test_andrea.mli                             |   4 -
+ _build/test_andrea.mli.depends                     |   1 -
+ _build/test_cynthia.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_cynthia.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_cynthia.ml                             | 512 -------------------
+ _build/test_cynthia.ml.depends                     |   1 -
+ _build/test_cynthia.mli                            |   4 -
+ _build/test_cynthia.mli.depends                    |   1 -
+ _build/test_timothy.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_timothy.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_timothy.ml                             | 513 -------------------
+ _build/test_timothy.ml.depends                     |   1 -
+ _build/test_timothy.mli                            |   4 -
+ _build/test_timothy.mli.depends                    |   1 -
+ test.byte                                          |   1 -
+ 77 files changed, 4627 deletions(-)
+
+commit f1ea83cd4ae65779270071db425b59e02248b934
+Author: Roque <ras656@cornell.edu>
+Date:   Sun May 13 21:00:12 2018 -0400
+
+    more changes to ai_test
+
+ _build/_digests                                    |  67 +++
+ _build/_log                                        |  76 +++
+ _build/ai.cmi                                      | Bin 0 -> 4100 bytes
+ _build/ai.cmo                                      | Bin 0 -> 9375 bytes
+ _build/ai.ml                                       | 197 ++++++++
+ _build/ai.ml.depends                               |   1 +
+ _build/ai.mli                                      |  50 ++
+ _build/ai.mli.depends                              |   1 +
+ _build/ai_test.cmi                                 | Bin 0 -> 1590 bytes
+ _build/ai_test.cmo                                 | Bin 0 -> 12678 bytes
+ _build/ai_test.ml                                  | 234 +++++++++
+ _build/ai_test.ml.depends                          |   1 +
+ _build/controller.cmi                              | Bin 0 -> 5796 bytes
+ _build/controller.cmo                              | Bin 0 -> 180 bytes
+ _build/controller.ml                               |  85 ++++
+ _build/controller.ml.depends                       |   1 +
+ _build/controller.mli                              | 112 +++++
+ _build/controller.mli.depends                      |   1 +
+ _build/gui.cmi                                     | Bin 0 -> 2979 bytes
+ _build/gui.cmo                                     | Bin 0 -> 9121 bytes
+ _build/gui.ml                                      | 336 +++++++++++++
+ _build/gui.ml.depends                              |   1 +
+ _build/gui.mli                                     |  56 +++
+ _build/gui.mli.depends                             |   1 +
+ _build/main.cmi                                    | Bin 0 -> 265 bytes
+ _build/main.cmo                                    | Bin 0 -> 1593 bytes
+ _build/main.ml                                     |  47 ++
+ _build/main.ml.depends                             |   1 +
+ _build/main.mli                                    |   1 +
+ _build/main.mli.depends                            |   1 +
+ _build/model.cmi                                   | Bin 0 -> 946 bytes
+ _build/model.cmo                                   | Bin 0 -> 9935 bytes
+ _build/model.ml                                    | 554 +++++++++++++++++++++
+ _build/model.ml.depends                            |   1 +
+ _build/model.mli                                   |  58 +++
+ _build/model.mli.depends                           |   1 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 367 ++++++++++++++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  60 +++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  60 +++
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 0 -> 2456 bytes
+ _build/ocamlc.where                                |   1 +
+ _build/pokemon.cmi                                 | Bin 0 -> 2892 bytes
+ _build/pokemon.cmo                                 | Bin 0 -> 15398 bytes
+ _build/pokemon.ml                                  | 449 +++++++++++++++++
+ _build/pokemon.ml.depends                          |   1 +
+ _build/pokemon.mli                                 |  86 ++++
+ _build/pokemon.mli.depends                         |   1 +
+ _build/shared_types.cmi                            | Bin 0 -> 2551 bytes
+ _build/shared_types.cmo                            | Bin 0 -> 241 bytes
+ _build/shared_types.ml                             |  53 ++
+ _build/shared_types.ml.depends                     |   1 +
+ _build/shared_types.mli                            |  68 +++
+ _build/shared_types.mli.depends                    |   1 +
+ _build/test.byte                                   | Bin 0 -> 554777 bytes
+ _build/test.cmi                                    | Bin 0 -> 2056 bytes
+ _build/test.cmo                                    | Bin 0 -> 1757 bytes
+ _build/test.ml                                     |  31 ++
+ _build/test.ml.depends                             |   1 +
+ _build/test_andrea.cmi                             | Bin 0 -> 1161 bytes
+ _build/test_andrea.cmo                             | Bin 0 -> 5651 bytes
+ _build/test_andrea.ml                              | 519 +++++++++++++++++++
+ _build/test_andrea.ml.depends                      |   1 +
+ _build/test_andrea.mli                             |   4 +
+ _build/test_andrea.mli.depends                     |   1 +
+ _build/test_cynthia.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_cynthia.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_cynthia.ml                             | 512 +++++++++++++++++++
+ _build/test_cynthia.ml.depends                     |   1 +
+ _build/test_cynthia.mli                            |   4 +
+ _build/test_cynthia.mli.depends                    |   1 +
+ _build/test_timothy.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_timothy.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_timothy.ml                             | 513 +++++++++++++++++++
+ _build/test_timothy.ml.depends                     |   1 +
+ _build/test_timothy.mli                            |   4 +
+ _build/test_timothy.mli.depends                    |   1 +
+ ai_test.ml                                         |   2 +-
+ test.byte                                          |   1 +
+ 78 files changed, 4628 insertions(+), 1 deletion(-)
+
+commit 994c3745c5941e1be441fbefb5b4cbf601b212b1
+Merge: 1bcd419 e2d8b52
+Author: Roque <ras656@cornell.edu>
+Date:   Sun May 13 20:58:26 2018 -0400
+
+    Fixed to AI test
+
+commit 1bcd419cf1cd8f2a7e9f9d2e912761f34b16f00c
+Author: Roque <ras656@cornell.edu>
+Date:   Sun May 13 20:50:07 2018 -0400
+
+    Add changes to conttoller and pass make check
+
+ .ocamlinit                                         |   4 -
+ _build/_digests                                    |  74 +-
+ _build/_log                                        |  56 +-
+ _build/ai.cmi                                      | Bin 4100 -> 4100 bytes
+ _build/ai.cmo                                      | Bin 9351 -> 9375 bytes
+ _build/ai.ml                                       |   4 +-
+ _build/ai_test.cmi                                 | Bin 1590 -> 1590 bytes
+ _build/ai_test.cmo                                 | Bin 11850 -> 12438 bytes
+ _build/ai_test.ml                                  |  55 +-
+ _build/controller.cmi                              | Bin 4949 -> 5796 bytes
+ _build/controller.cmo                              | Bin 180 -> 180 bytes
+ _build/controller.ml                               |  10 +-
+ _build/controller.mli                              |  13 +-
+ _build/gui.cmi                                     | Bin 0 -> 2979 bytes
+ _build/gui.cmo                                     | Bin 0 -> 9121 bytes
+ _build/gui.ml                                      | 336 +++++++++
+ _build/gui.ml.depends                              |   1 +
+ _build/gui.mli                                     |  56 ++
+ _build/gui.mli.depends                             |   1 +
+ _build/main.cmi                                    | Bin 0 -> 265 bytes
+ _build/main.cmo                                    | Bin 0 -> 1593 bytes
+ _build/main.ml                                     |  47 ++
+ _build/main.ml.depends                             |   1 +
+ _build/main.mli                                    |   1 +
+ _build/main.mli.depends                            |   1 +
+ _build/model.cmi                                   | Bin 946 -> 946 bytes
+ _build/model.cmo                                   | Bin 9911 -> 9935 bytes
+ _build/model.ml                                    |   9 +-
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 747 ++++++++++-----------
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log | 162 +++--
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  99 +--
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 2786 -> 2876 bytes
+ _build/pokemon.cmi                                 | Bin 2917 -> 2892 bytes
+ _build/pokemon.cmo                                 | Bin 15350 -> 15398 bytes
+ _build/pokemon.ml                                  |  31 +-
+ _build/pokemon.mli                                 |   3 -
+ _build/shared_types.cmi                            | Bin 2551 -> 2551 bytes
+ _build/shared_types.cmo                            | Bin 241 -> 241 bytes
+ _build/test.byte                                   | Bin 554474 -> 554633 bytes
+ _build/test.cmi                                    | Bin 2056 -> 2056 bytes
+ _build/test.cmo                                    | Bin 1757 -> 1757 bytes
+ ai.ml                                              |   4 +-
+ ai_test.ml                                         | 110 +--
+ controller.ml                                      |  10 +-
+ controller.mli                                     |  13 +-
+ model.ml                                           |   9 +-
+ pokemon.ml                                         |  31 +-
+ pokemon.mli                                        |   3 -
+ 48 files changed, 1158 insertions(+), 733 deletions(-)
+
+commit e2d8b5240696e39851a89dd2eb562ab385a8dc36
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Sun May 13 18:32:32 2018 -0400
+
+    cleaned
+
+ _build/_digests                                    |  55 --
+ _build/_log                                        |  76 ---
+ _build/ai.cmi                                      | Bin 4100 -> 0 bytes
+ _build/ai.cmo                                      | Bin 9351 -> 0 bytes
+ _build/ai.ml                                       | 197 --------
+ _build/ai.ml.depends                               |   1 -
+ _build/ai.mli                                      |  50 --
+ _build/ai.mli.depends                              |   1 -
+ _build/ai_test.cmi                                 | Bin 1590 -> 0 bytes
+ _build/ai_test.cmo                                 | Bin 11850 -> 0 bytes
+ _build/ai_test.ml                                  | 207 --------
+ _build/ai_test.ml.depends                          |   1 -
+ _build/controller.cmi                              | Bin 4949 -> 0 bytes
+ _build/controller.cmo                              | Bin 180 -> 0 bytes
+ _build/controller.ml                               |  79 ---
+ _build/controller.ml.depends                       |   1 -
+ _build/controller.mli                              | 105 ----
+ _build/controller.mli.depends                      |   1 -
+ _build/model.cmi                                   | Bin 946 -> 0 bytes
+ _build/model.cmo                                   | Bin 9911 -> 0 bytes
+ _build/model.ml                                    | 553 ---------------------
+ _build/model.ml.depends                            |   1 -
+ _build/model.mli                                   |  58 ---
+ _build/model.mli.depends                           |   1 -
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 398 ---------------
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  66 ---
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  75 ---
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 2786 -> 0 bytes
+ _build/ocamlc.where                                |   1 -
+ _build/pokemon.cmi                                 | Bin 2917 -> 0 bytes
+ _build/pokemon.cmo                                 | Bin 15350 -> 0 bytes
+ _build/pokemon.ml                                  | 448 -----------------
+ _build/pokemon.ml.depends                          |   1 -
+ _build/pokemon.mli                                 |  89 ----
+ _build/pokemon.mli.depends                         |   1 -
+ _build/shared_types.cmi                            | Bin 2551 -> 0 bytes
+ _build/shared_types.cmo                            | Bin 241 -> 0 bytes
+ _build/shared_types.ml                             |  53 --
+ _build/shared_types.ml.depends                     |   1 -
+ _build/shared_types.mli                            |  68 ---
+ _build/shared_types.mli.depends                    |   1 -
+ _build/test.byte                                   | Bin 554474 -> 0 bytes
+ _build/test.cmi                                    | Bin 2056 -> 0 bytes
+ _build/test.cmo                                    | Bin 1757 -> 0 bytes
+ _build/test.ml                                     |  31 --
+ _build/test.ml.depends                             |   1 -
+ _build/test_andrea.cmi                             | Bin 1161 -> 0 bytes
+ _build/test_andrea.cmo                             | Bin 5651 -> 0 bytes
+ _build/test_andrea.ml                              | 519 -------------------
+ _build/test_andrea.ml.depends                      |   1 -
+ _build/test_andrea.mli                             |   4 -
+ _build/test_andrea.mli.depends                     |   1 -
+ _build/test_cynthia.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_cynthia.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_cynthia.ml                             | 512 -------------------
+ _build/test_cynthia.ml.depends                     |   1 -
+ _build/test_cynthia.mli                            |   4 -
+ _build/test_cynthia.mli.depends                    |   1 -
+ _build/test_timothy.cmi                            | Bin 1164 -> 0 bytes
+ _build/test_timothy.cmo                            | Bin 4845 -> 0 bytes
+ _build/test_timothy.ml                             | 513 -------------------
+ _build/test_timothy.ml.depends                     |   1 -
+ _build/test_timothy.mli                            |   4 -
+ _build/test_timothy.mli.depends                    |   1 -
+ 64 files changed, 4183 deletions(-)
+
+commit bb4b3c658a46d85020202dc897531e36e142e9c7
+Merge: 9535077 df8435d
+Author: Roque <ras656@cornell.edu>
+Date:   Sun May 13 18:29:03 2018 -0400
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/yy545/ocamon
+
+commit 95350777790e7f3558f81c1bcd96416e308b84ce
+Author: Roque <ras656@cornell.edu>
+Date:   Sun May 13 18:28:27 2018 -0400
+
+    Fix random_poke
+
+ _build/_digests                                    |  55 ++
+ _build/_log                                        |  76 +++
+ _build/ai.cmi                                      | Bin 0 -> 4100 bytes
+ _build/ai.cmo                                      | Bin 0 -> 9351 bytes
+ _build/ai.ml                                       | 197 ++++++++
+ _build/ai.ml.depends                               |   1 +
+ _build/ai.mli                                      |  50 ++
+ _build/ai.mli.depends                              |   1 +
+ _build/ai_test.cmi                                 | Bin 0 -> 1590 bytes
+ _build/ai_test.cmo                                 | Bin 0 -> 11850 bytes
+ _build/ai_test.ml                                  | 207 ++++++++
+ _build/ai_test.ml.depends                          |   1 +
+ _build/controller.cmi                              | Bin 0 -> 4949 bytes
+ _build/controller.cmo                              | Bin 0 -> 180 bytes
+ _build/controller.ml                               |  79 +++
+ _build/controller.ml.depends                       |   1 +
+ _build/controller.mli                              | 105 ++++
+ _build/controller.mli.depends                      |   1 +
+ _build/model.cmi                                   | Bin 0 -> 946 bytes
+ _build/model.cmo                                   | Bin 0 -> 9911 bytes
+ _build/model.ml                                    | 553 +++++++++++++++++++++
+ _build/model.ml.depends                            |   1 +
+ _build/model.mli                                   |  58 +++
+ _build/model.mli.depends                           |   1 +
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#00.log | 398 +++++++++++++++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#01.log |  66 +++
+ ...FOR OCAMON BY TEAM AWESOME-vm3110-2018sp#02.log |  75 +++
+ ...-TESTING SUITE FOR OCAMON BY TEAM AWESOME.cache | Bin 0 -> 2786 bytes
+ _build/ocamlc.where                                |   1 +
+ _build/pokemon.cmi                                 | Bin 0 -> 2917 bytes
+ _build/pokemon.cmo                                 | Bin 0 -> 15350 bytes
+ _build/pokemon.ml                                  | 448 +++++++++++++++++
+ _build/pokemon.ml.depends                          |   1 +
+ _build/pokemon.mli                                 |  89 ++++
+ _build/pokemon.mli.depends                         |   1 +
+ _build/shared_types.cmi                            | Bin 0 -> 2551 bytes
+ _build/shared_types.cmo                            | Bin 0 -> 241 bytes
+ _build/shared_types.ml                             |  53 ++
+ _build/shared_types.ml.depends                     |   1 +
+ _build/shared_types.mli                            |  68 +++
+ _build/shared_types.mli.depends                    |   1 +
+ _build/test.byte                                   | Bin 0 -> 554474 bytes
+ _build/test.cmi                                    | Bin 0 -> 2056 bytes
+ _build/test.cmo                                    | Bin 0 -> 1757 bytes
+ _build/test.ml                                     |  31 ++
+ _build/test.ml.depends                             |   1 +
+ _build/test_andrea.cmi                             | Bin 0 -> 1161 bytes
+ _build/test_andrea.cmo                             | Bin 0 -> 5651 bytes
+ _build/test_andrea.ml                              | 519 +++++++++++++++++++
+ _build/test_andrea.ml.depends                      |   1 +
+ _build/test_andrea.mli                             |   4 +
+ _build/test_andrea.mli.depends                     |   1 +
+ _build/test_cynthia.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_cynthia.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_cynthia.ml                             | 512 +++++++++++++++++++
+ _build/test_cynthia.ml.depends                     |   1 +
+ _build/test_cynthia.mli                            |   4 +
+ _build/test_cynthia.mli.depends                    |   1 +
+ _build/test_timothy.cmi                            | Bin 0 -> 1164 bytes
+ _build/test_timothy.cmo                            | Bin 0 -> 4845 bytes
+ _build/test_timothy.ml                             | 513 +++++++++++++++++++
+ _build/test_timothy.ml.depends                     |   1 +
+ _build/test_timothy.mli                            |   4 +
+ _build/test_timothy.mli.depends                    |   1 +
+ model.ml                                           |   2 +-
+ pokemon.ml                                         |   5 +-
+ test.byte                                          |   1 +
+ test_andrea.ml                                     |   2 +-
+ 68 files changed, 4189 insertions(+), 4 deletions(-)
+
+commit df8435d42a813918d499103bc94888f90629a7dc
+Merge: 653144e ef1aafa
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Sun May 13 18:27:03 2018 -0400
+
+    Merge pull request #42 from yy545/tz277_5
+
+    added 'make compile_test' to test compilation of test files
+
+commit ef1aafa8a091793d8c3fcc14292b5783b7e10dd9
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Sun May 13 18:26:33 2018 -0400
+
+    added 'make compile_test' to test compilation of test files
+
+ Makefile | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 653144ed41c64290e7d97dd75670f9576eea03b5
+Author: Roque <ras656@cornell.edu>
+Date:   Sun May 13 17:59:54 2018 -0400
+
+    Fix sprites to work with GUI
+
+ PokeSpriteFront/1.PNG         | Bin 0 -> 690 bytes
+ PokeSpriteFront/1.png         | Bin 3611 -> 0 bytes
+ PokeSpriteFront/10.PNG        | Bin 0 -> 685 bytes
+ PokeSpriteFront/10.png        | Bin 3697 -> 0 bytes
+ PokeSpriteFront/100.PNG       | Bin 0 -> 582 bytes
+ PokeSpriteFront/100.png       | Bin 3322 -> 0 bytes
+ PokeSpriteFront/101.PNG       | Bin 0 -> 692 bytes
+ PokeSpriteFront/101.png       | Bin 3450 -> 0 bytes
+ PokeSpriteFront/102.PNG       | Bin 0 -> 1214 bytes
+ PokeSpriteFront/102.png       | Bin 4119 -> 0 bytes
+ PokeSpriteFront/103.PNG       | Bin 0 -> 1077 bytes
+ PokeSpriteFront/103.png       | Bin 4047 -> 0 bytes
+ PokeSpriteFront/104.PNG       | Bin 0 -> 800 bytes
+ PokeSpriteFront/104.png       | Bin 3738 -> 0 bytes
+ PokeSpriteFront/105.PNG       | Bin 0 -> 948 bytes
+ PokeSpriteFront/105.png       | Bin 3966 -> 0 bytes
+ PokeSpriteFront/106.PNG       | Bin 0 -> 1051 bytes
+ PokeSpriteFront/106.png       | Bin 4022 -> 0 bytes
+ PokeSpriteFront/107.PNG       | Bin 0 -> 834 bytes
+ PokeSpriteFront/107.png       | Bin 3770 -> 0 bytes
+ PokeSpriteFront/108.PNG       | Bin 0 -> 1037 bytes
+ PokeSpriteFront/108.png       | Bin 3933 -> 0 bytes
+ PokeSpriteFront/109.PNG       | Bin 0 -> 804 bytes
+ PokeSpriteFront/109.png       | Bin 3688 -> 0 bytes
+ PokeSpriteFront/11.PNG        | Bin 0 -> 581 bytes
+ PokeSpriteFront/11.png        | Bin 3390 -> 0 bytes
+ PokeSpriteFront/110.PNG       | Bin 0 -> 886 bytes
+ PokeSpriteFront/110.png       | Bin 3791 -> 0 bytes
+ PokeSpriteFront/111.PNG       | Bin 0 -> 1046 bytes
+ PokeSpriteFront/111.png       | Bin 4095 -> 0 bytes
+ PokeSpriteFront/112.PNG       | Bin 0 -> 1260 bytes
+ PokeSpriteFront/112.png       | Bin 4317 -> 0 bytes
+ PokeSpriteFront/113.PNG       | Bin 0 -> 848 bytes
+ PokeSpriteFront/113.png       | Bin 3703 -> 0 bytes
+ PokeSpriteFront/114.PNG       | Bin 0 -> 903 bytes
+ PokeSpriteFront/114.png       | Bin 3897 -> 0 bytes
+ PokeSpriteFront/115.PNG       | Bin 0 -> 1335 bytes
+ PokeSpriteFront/115.png       | Bin 4395 -> 0 bytes
+ PokeSpriteFront/116.PNG       | Bin 0 -> 731 bytes
+ PokeSpriteFront/116.png       | Bin 3594 -> 0 bytes
+ PokeSpriteFront/117.PNG       | Bin 0 -> 926 bytes
+ PokeSpriteFront/117.png       | Bin 3796 -> 0 bytes
+ PokeSpriteFront/118.PNG       | Bin 0 -> 960 bytes
+ PokeSpriteFront/118.png       | Bin 3842 -> 0 bytes
+ PokeSpriteFront/119.PNG       | Bin 0 -> 1255 bytes
+ PokeSpriteFront/119.png       | Bin 4209 -> 0 bytes
+ PokeSpriteFront/12.PNG        | Bin 0 -> 1115 bytes
+ PokeSpriteFront/12.png        | Bin 4075 -> 0 bytes
+ PokeSpriteFront/120.PNG       | Bin 0 -> 702 bytes
+ PokeSpriteFront/120.png       | Bin 3476 -> 0 bytes
+ PokeSpriteFront/121.PNG       | Bin 0 -> 930 bytes
+ PokeSpriteFront/121.png       | Bin 3927 -> 0 bytes
+ PokeSpriteFront/122.PNG       | Bin 0 -> 1089 bytes
+ PokeSpriteFront/122.png       | Bin 4061 -> 0 bytes
+ PokeSpriteFront/123.PNG       | Bin 0 -> 1211 bytes
+ PokeSpriteFront/123.png       | Bin 4224 -> 0 bytes
+ PokeSpriteFront/124.PNG       | Bin 0 -> 1118 bytes
+ PokeSpriteFront/124.png       | Bin 1393 -> 0 bytes
+ PokeSpriteFront/125.PNG       | Bin 0 -> 1147 bytes
+ PokeSpriteFront/125.png       | Bin 4096 -> 0 bytes
+ PokeSpriteFront/126.PNG       | Bin 0 -> 1169 bytes
+ PokeSpriteFront/126.png       | Bin 4087 -> 0 bytes
+ PokeSpriteFront/127.PNG       | Bin 0 -> 1208 bytes
+ PokeSpriteFront/127.png       | Bin 4367 -> 0 bytes
+ PokeSpriteFront/128.PNG       | Bin 0 -> 1038 bytes
+ PokeSpriteFront/128.png       | Bin 4009 -> 0 bytes
+ PokeSpriteFront/129.PNG       | Bin 0 -> 997 bytes
+ PokeSpriteFront/129.png       | Bin 3931 -> 0 bytes
+ PokeSpriteFront/13.PNG        | Bin 0 -> 637 bytes
+ PokeSpriteFront/13.png        | Bin 3422 -> 0 bytes
+ PokeSpriteFront/130.PNG       | Bin 0 -> 1321 bytes
+ PokeSpriteFront/130.png       | Bin 4467 -> 0 bytes
+ PokeSpriteFront/131.PNG       | Bin 0 -> 1107 bytes
+ PokeSpriteFront/131.png       | Bin 4110 -> 0 bytes
+ PokeSpriteFront/132.PNG       | Bin 0 -> 525 bytes
+ PokeSpriteFront/132.png       | Bin 3333 -> 0 bytes
+ PokeSpriteFront/133.PNG       | Bin 0 -> 806 bytes
+ PokeSpriteFront/133.png       | Bin 3705 -> 0 bytes
+ PokeSpriteFront/134.PNG       | Bin 0 -> 982 bytes
+ PokeSpriteFront/134.png       | Bin 4012 -> 0 bytes
+ PokeSpriteFront/135.PNG       | Bin 0 -> 1086 bytes
+ PokeSpriteFront/135.png       | Bin 3967 -> 0 bytes
+ PokeSpriteFront/136.PNG       | Bin 0 -> 954 bytes
+ PokeSpriteFront/136.png       | Bin 3861 -> 0 bytes
+ PokeSpriteFront/137.PNG       | Bin 0 -> 708 bytes
+ PokeSpriteFront/137.png       | Bin 3561 -> 0 bytes
+ PokeSpriteFront/138.PNG       | Bin 0 -> 669 bytes
+ PokeSpriteFront/138.png       | Bin 3583 -> 0 bytes
+ PokeSpriteFront/139.PNG       | Bin 0 -> 996 bytes
+ PokeSpriteFront/139.png       | Bin 3975 -> 0 bytes
+ PokeSpriteFront/14.PNG        | Bin 0 -> 644 bytes
+ PokeSpriteFront/140.PNG       | Bin 0 -> 591 bytes
+ PokeSpriteFront/140.png       | Bin 3404 -> 0 bytes
+ PokeSpriteFront/141.PNG       | Bin 0 -> 1037 bytes
+ PokeSpriteFront/141.png       | Bin 4124 -> 0 bytes
+ PokeSpriteFront/142.PNG       | Bin 0 -> 1008 bytes
+ PokeSpriteFront/142.png       | Bin 3997 -> 0 bytes
+ PokeSpriteFront/143.PNG       | Bin 0 -> 1005 bytes
+ PokeSpriteFront/143.png       | Bin 3831 -> 0 bytes
+ PokeSpriteFront/144.PNG       | Bin 0 -> 1271 bytes
+ PokeSpriteFront/144.png       | Bin 4400 -> 0 bytes
+ PokeSpriteFront/145.PNG       | Bin 0 -> 1161 bytes
+ PokeSpriteFront/145.png       | Bin 4058 -> 0 bytes
+ PokeSpriteFront/146.PNG       | Bin 0 -> 1074 bytes
+ PokeSpriteFront/146.png       | Bin 4018 -> 0 bytes
+ PokeSpriteFront/147.PNG       | Bin 0 -> 703 bytes
+ PokeSpriteFront/147.png       | Bin 3565 -> 0 bytes
+ PokeSpriteFront/148.PNG       | Bin 0 -> 861 bytes
+ PokeSpriteFront/148.png       | Bin 3804 -> 0 bytes
+ PokeSpriteFront/149.PNG       | Bin 0 -> 1237 bytes
+ PokeSpriteFront/149.png       | Bin 1571 -> 0 bytes
+ PokeSpriteFront/15.PNG        | Bin 0 -> 1241 bytes
+ PokeSpriteFront/150.PNG       | Bin 0 -> 1184 bytes
+ PokeSpriteFront/150.png       | Bin 4141 -> 0 bytes
+ PokeSpriteFront/151.PNG       | Bin 0 -> 848 bytes
+ PokeSpriteFront/151.png       | Bin 4343 -> 0 bytes
+ PokeSpriteFront/16.PNG        | Bin 0 -> 705 bytes
+ PokeSpriteFront/17.PNG        | Bin 0 -> 914 bytes
+ PokeSpriteFront/18.PNG        | Bin 0 -> 1243 bytes
+ PokeSpriteFront/19.PNG        | Bin 0 -> 695 bytes
+ PokeSpriteFront/2.PNG         | Bin 0 -> 1019 bytes
+ PokeSpriteFront/2.png         | Bin 3981 -> 0 bytes
+ PokeSpriteFront/20.PNG        | Bin 0 -> 1096 bytes
+ PokeSpriteFront/20.png        | Bin 4131 -> 0 bytes
+ PokeSpriteFront/21.PNG        | Bin 0 -> 650 bytes
+ PokeSpriteFront/21.png        | Bin 3564 -> 0 bytes
+ PokeSpriteFront/22.PNG        | Bin 0 -> 1173 bytes
+ PokeSpriteFront/22.png        | Bin 4199 -> 0 bytes
+ PokeSpriteFront/23.PNG        | Bin 0 -> 754 bytes
+ PokeSpriteFront/23.png        | Bin 3677 -> 0 bytes
+ PokeSpriteFront/24.PNG        | Bin 0 -> 1068 bytes
+ PokeSpriteFront/24.png        | Bin 4043 -> 0 bytes
+ PokeSpriteFront/25.PNG        | Bin 0 -> 746 bytes
+ PokeSpriteFront/25.png        | Bin 3579 -> 0 bytes
+ PokeSpriteFront/26.PNG        | Bin 0 -> 1120 bytes
+ PokeSpriteFront/26.png        | Bin 4001 -> 0 bytes
+ PokeSpriteFront/27.PNG        | Bin 0 -> 827 bytes
+ PokeSpriteFront/27.png        | Bin 3834 -> 0 bytes
+ PokeSpriteFront/28.PNG        | Bin 0 -> 1032 bytes
+ PokeSpriteFront/28.png        | Bin 4038 -> 0 bytes
+ PokeSpriteFront/29.PNG        | Bin 0 -> 718 bytes
+ PokeSpriteFront/29.png        | Bin 3643 -> 0 bytes
+ PokeSpriteFront/3.PNG         | Bin 0 -> 1201 bytes
+ PokeSpriteFront/3.png         | Bin 4334 -> 0 bytes
+ PokeSpriteFront/30.PNG        | Bin 0 -> 999 bytes
+ PokeSpriteFront/30.png        | Bin 4077 -> 0 bytes
+ PokeSpriteFront/31.PNG        | Bin 0 -> 1233 bytes
+ PokeSpriteFront/31.png        | Bin 4286 -> 0 bytes
+ PokeSpriteFront/32.PNG        | Bin 0 -> 719 bytes
+ PokeSpriteFront/32.png        | Bin 3580 -> 0 bytes
+ PokeSpriteFront/33.PNG        | Bin 0 -> 931 bytes
+ PokeSpriteFront/33.png        | Bin 3867 -> 0 bytes
+ PokeSpriteFront/34.PNG        | Bin 0 -> 1299 bytes
+ PokeSpriteFront/34.png        | Bin 4434 -> 0 bytes
+ PokeSpriteFront/35.PNG        | Bin 0 -> 774 bytes
+ PokeSpriteFront/35.png        | Bin 3636 -> 0 bytes
+ PokeSpriteFront/36.PNG        | Bin 0 -> 974 bytes
+ PokeSpriteFront/36.png        | Bin 3884 -> 0 bytes
+ PokeSpriteFront/37.PNG        | Bin 0 -> 855 bytes
+ PokeSpriteFront/37.png        | Bin 3745 -> 0 bytes
+ PokeSpriteFront/38.PNG        | Bin 0 -> 1300 bytes
+ PokeSpriteFront/38.png        | Bin 4241 -> 0 bytes
+ PokeSpriteFront/39.PNG        | Bin 0 -> 736 bytes
+ PokeSpriteFront/39.png        | Bin 3640 -> 0 bytes
+ PokeSpriteFront/4.PNG         | Bin 0 -> 797 bytes
+ PokeSpriteFront/4.png         | Bin 3622 -> 0 bytes
+ PokeSpriteFront/40.PNG        | Bin 0 -> 1011 bytes
+ PokeSpriteFront/40.png        | Bin 3957 -> 0 bytes
+ PokeSpriteFront/41.PNG        | Bin 0 -> 680 bytes
+ PokeSpriteFront/41.png        | Bin 3634 -> 0 bytes
+ PokeSpriteFront/42.PNG        | Bin 0 -> 978 bytes
+ PokeSpriteFront/42.png        | Bin 3894 -> 0 bytes
+ PokeSpriteFront/43.PNG        | Bin 0 -> 660 bytes
+ PokeSpriteFront/43.png        | Bin 3534 -> 0 bytes
+ PokeSpriteFront/44.PNG        | Bin 0 -> 802 bytes
+ PokeSpriteFront/44.png        | Bin 3581 -> 0 bytes
+ PokeSpriteFront/45.PNG        | Bin 0 -> 778 bytes
+ PokeSpriteFront/45.png        | Bin 3547 -> 0 bytes
+ PokeSpriteFront/46.PNG        | Bin 0 -> 767 bytes
+ PokeSpriteFront/46.png        | Bin 3611 -> 0 bytes
+ PokeSpriteFront/47.PNG        | Bin 0 -> 975 bytes
+ PokeSpriteFront/47.png        | Bin 3861 -> 0 bytes
+ PokeSpriteFront/48.PNG        | Bin 0 -> 750 bytes
+ PokeSpriteFront/48.png        | Bin 3642 -> 0 bytes
+ PokeSpriteFront/49.PNG        | Bin 0 -> 1040 bytes
+ PokeSpriteFront/49.png        | Bin 4049 -> 0 bytes
+ PokeSpriteFront/5.PNG         | Bin 0 -> 940 bytes
+ PokeSpriteFront/5.png         | Bin 3803 -> 0 bytes
+ PokeSpriteFront/50.PNG        | Bin 0 -> 508 bytes
+ PokeSpriteFront/50.png        | Bin 3306 -> 0 bytes
+ PokeSpriteFront/51.PNG        | Bin 0 -> 887 bytes
+ PokeSpriteFront/51.png        | Bin 3819 -> 0 bytes
+ PokeSpriteFront/52.PNG        | Bin 0 -> 869 bytes
+ PokeSpriteFront/52.png        | Bin 3746 -> 0 bytes
+ PokeSpriteFront/53.PNG        | Bin 0 -> 1121 bytes
+ PokeSpriteFront/53.png        | Bin 4047 -> 0 bytes
+ PokeSpriteFront/54.PNG        | Bin 0 -> 801 bytes
+ PokeSpriteFront/54.png        | Bin 3618 -> 0 bytes
+ PokeSpriteFront/55.PNG        | Bin 0 -> 1105 bytes
+ PokeSpriteFront/55.png        | Bin 4157 -> 0 bytes
+ PokeSpriteFront/56.PNG        | Bin 0 -> 907 bytes
+ PokeSpriteFront/56.png        | Bin 3928 -> 0 bytes
+ PokeSpriteFront/57.PNG        | Bin 0 -> 1145 bytes
+ PokeSpriteFront/57.png        | Bin 4084 -> 0 bytes
+ PokeSpriteFront/58.PNG        | Bin 0 -> 841 bytes
+ PokeSpriteFront/58.png        | Bin 3805 -> 0 bytes
+ PokeSpriteFront/59.PNG        | Bin 0 -> 1237 bytes
+ PokeSpriteFront/59.png        | Bin 4224 -> 0 bytes
+ PokeSpriteFront/6.PNG         | Bin 0 -> 1382 bytes
+ PokeSpriteFront/6.png         | Bin 4313 -> 0 bytes
+ PokeSpriteFront/60.PNG        | Bin 0 -> 697 bytes
+ PokeSpriteFront/60.png        | Bin 3606 -> 0 bytes
+ PokeSpriteFront/61.PNG        | Bin 0 -> 930 bytes
+ PokeSpriteFront/61.png        | Bin 3877 -> 0 bytes
+ PokeSpriteFront/62.PNG        | Bin 0 -> 1114 bytes
+ PokeSpriteFront/62.png        | Bin 4142 -> 0 bytes
+ PokeSpriteFront/63.PNG        | Bin 0 -> 802 bytes
+ PokeSpriteFront/63.png        | Bin 3624 -> 0 bytes
+ PokeSpriteFront/64.PNG        | Bin 0 -> 1115 bytes
+ PokeSpriteFront/64.png        | Bin 4008 -> 0 bytes
+ PokeSpriteFront/65.PNG        | Bin 0 -> 1253 bytes
+ PokeSpriteFront/65.png        | Bin 4179 -> 0 bytes
+ PokeSpriteFront/66.PNG        | Bin 0 -> 789 bytes
+ PokeSpriteFront/66.png        | Bin 3707 -> 0 bytes
+ PokeSpriteFront/67.PNG        | Bin 0 -> 1024 bytes
+ PokeSpriteFront/67.png        | Bin 3993 -> 0 bytes
+ PokeSpriteFront/68.PNG        | Bin 0 -> 1220 bytes
+ PokeSpriteFront/68.png        | Bin 4231 -> 0 bytes
+ PokeSpriteFront/69.PNG        | Bin 0 -> 659 bytes
+ PokeSpriteFront/69.png        | Bin 3494 -> 0 bytes
+ PokeSpriteFront/7.PNG         | Bin 0 -> 703 bytes
+ PokeSpriteFront/7.png         | Bin 3625 -> 0 bytes
+ PokeSpriteFront/70.PNG        | Bin 0 -> 744 bytes
+ PokeSpriteFront/70.png        | Bin 3629 -> 0 bytes
+ PokeSpriteFront/71.PNG        | Bin 0 -> 1112 bytes
+ PokeSpriteFront/71.png        | Bin 4158 -> 0 bytes
+ PokeSpriteFront/72.PNG        | Bin 0 -> 766 bytes
+ PokeSpriteFront/72.png        | Bin 3724 -> 0 bytes
+ PokeSpriteFront/73.PNG        | Bin 0 -> 1026 bytes
+ PokeSpriteFront/73.png        | Bin 4037 -> 0 bytes
+ PokeSpriteFront/74.PNG        | Bin 0 -> 823 bytes
+ PokeSpriteFront/74.png        | Bin 3684 -> 0 bytes
+ PokeSpriteFront/75.PNG        | Bin 0 -> 1057 bytes
+ PokeSpriteFront/75.png        | Bin 4085 -> 0 bytes
+ PokeSpriteFront/76.PNG        | Bin 0 -> 1016 bytes
+ PokeSpriteFront/76.png        | Bin 3940 -> 0 bytes
+ PokeSpriteFront/77.PNG        | Bin 0 -> 1002 bytes
+ PokeSpriteFront/77.png        | Bin 3909 -> 0 bytes
+ PokeSpriteFront/78.PNG        | Bin 0 -> 1266 bytes
+ PokeSpriteFront/78.png        | Bin 4295 -> 0 bytes
+ PokeSpriteFront/79.PNG        | Bin 0 -> 674 bytes
+ PokeSpriteFront/79.png        | Bin 3474 -> 0 bytes
+ PokeSpriteFront/8.PNG         | Bin 0 -> 959 bytes
+ PokeSpriteFront/8.png         | Bin 3948 -> 0 bytes
+ PokeSpriteFront/80.PNG        | Bin 0 -> 1217 bytes
+ PokeSpriteFront/80.png        | Bin 4215 -> 0 bytes
+ PokeSpriteFront/81.PNG        | Bin 0 -> 636 bytes
+ PokeSpriteFront/81.png        | Bin 3538 -> 0 bytes
+ PokeSpriteFront/82.PNG        | Bin 0 -> 978 bytes
+ PokeSpriteFront/82.png        | Bin 3958 -> 0 bytes
+ PokeSpriteFront/83.PNG        | Bin 0 -> 1028 bytes
+ PokeSpriteFront/83.png        | Bin 4023 -> 0 bytes
+ PokeSpriteFront/84.PNG        | Bin 0 -> 873 bytes
+ PokeSpriteFront/84.png        | Bin 3819 -> 0 bytes
+ PokeSpriteFront/85.PNG        | Bin 0 -> 1090 bytes
+ PokeSpriteFront/85.png        | Bin 4121 -> 0 bytes
+ PokeSpriteFront/86.PNG        | Bin 0 -> 878 bytes
+ PokeSpriteFront/86.png        | Bin 3868 -> 0 bytes
+ PokeSpriteFront/87.PNG        | Bin 0 -> 1047 bytes
+ PokeSpriteFront/87.png        | Bin 4100 -> 0 bytes
+ PokeSpriteFront/88.PNG        | Bin 0 -> 797 bytes
+ PokeSpriteFront/88.png        | Bin 3740 -> 0 bytes
+ PokeSpriteFront/89.PNG        | Bin 0 -> 925 bytes
+ PokeSpriteFront/89.png        | Bin 3851 -> 0 bytes
+ PokeSpriteFront/9.PNG         | Bin 0 -> 1280 bytes
+ PokeSpriteFront/9.png         | Bin 4319 -> 0 bytes
+ PokeSpriteFront/90.PNG        | Bin 0 -> 646 bytes
+ PokeSpriteFront/90.png        | Bin 3485 -> 0 bytes
+ PokeSpriteFront/91.PNG        | Bin 0 -> 1175 bytes
+ PokeSpriteFront/91.png        | Bin 4270 -> 0 bytes
+ PokeSpriteFront/92.PNG        | Bin 0 -> 672 bytes
+ PokeSpriteFront/92.png        | Bin 3425 -> 0 bytes
+ PokeSpriteFront/93.PNG        | Bin 0 -> 878 bytes
+ PokeSpriteFront/93.png        | Bin 3743 -> 0 bytes
+ PokeSpriteFront/94.PNG        | Bin 0 -> 789 bytes
+ PokeSpriteFront/94.png        | Bin 3679 -> 0 bytes
+ PokeSpriteFront/95.PNG        | Bin 0 -> 943 bytes
+ PokeSpriteFront/95.png        | Bin 3838 -> 0 bytes
+ PokeSpriteFront/96.PNG        | Bin 0 -> 913 bytes
+ PokeSpriteFront/96.png        | Bin 3771 -> 0 bytes
+ PokeSpriteFront/97.PNG        | Bin 0 -> 1104 bytes
+ PokeSpriteFront/97.png        | Bin 4030 -> 0 bytes
+ PokeSpriteFront/98.PNG        | Bin 0 -> 749 bytes
+ PokeSpriteFront/98.png        | Bin 3627 -> 0 bytes
+ PokeSpriteFront/99.PNG        | Bin 0 -> 1242 bytes
+ PokeSpriteFront/99.png        | Bin 4158 -> 0 bytes
+ TrainerSprite/Player.jpg      | Bin 0 -> 4162 bytes
+ TrainerSprite/Player.png      | Bin 13738 -> 0 bytes
+ TrainerSprite/Player_back.jpg | Bin 0 -> 2548 bytes
+ TrainerSprite/Player_back.png | Bin 826 -> 0 bytes
+ TrainerSprite/Trainer1.jpg    | Bin 0 -> 7597 bytes
+ TrainerSprite/Trainer1.png    | Bin 26955 -> 0 bytes
+ TrainerSprite/Trainer2.jpg    | Bin 0 -> 4000 bytes
+ TrainerSprite/Trainer2.png    | Bin 13366 -> 0 bytes
+ TrainerSprite/Trainer3.jpg    | Bin 0 -> 4362 bytes
+ TrainerSprite/Trainer3.png    | Bin 15038 -> 0 bytes
+ TrainerSprite/Trainer4.jpg    | Bin 0 -> 3787 bytes
+ TrainerSprite/Trainer4.png    | Bin 11418 -> 0 bytes
+ TrainerSprite/Trainer5.jpg    | Bin 0 -> 5402 bytes
+ TrainerSprite/Trainer5.png    | Bin 18841 -> 0 bytes
+ TrainerSprite/Trainer6.jpg    | Bin 0 -> 3966 bytes
+ TrainerSprite/Trainer6.png    | Bin 12993 -> 0 bytes
+ 312 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 32bb4697def88c16ac04e4df8714690197e4ac0e
+Merge: d5bae30 afc50fb
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Fri May 11 19:16:52 2018 -0400
+
+    conflicts
+
+commit d5bae30a1fa9623febbc5ccec74a382993d6e00d
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Fri May 11 19:15:46 2018 -0400
+
+    minor changes
+
+ pokemon.ml | 33 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 32 insertions(+), 1 deletion(-)
+
+commit afc50fb93d1ab458348b5f969b6ef1314b962cba
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Fri May 11 18:53:33 2018 -0400
+
+    Delete .DS_Store
+
+ .DS_Store | Bin 6148 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit cfd6461538ef73e25060236ae98d21af3d794a05
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Fri May 11 18:52:35 2018 -0400
+
+    Delete .DS_Store
+
+ .DS_Store | Bin 6148 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit f514581336455d1ba2ba83ee50e9ecf4c923625b
+Merge: f6a2fd1 9f45056
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Fri May 11 18:52:03 2018 -0400
+
+    Merge branch 'master' into yy545
+
+commit f6a2fd172cfa012ffa120be55e417cfe4a09188c
+Merge: b2f3abd c7341c6
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Fri May 11 18:51:30 2018 -0400
+
+    Merge branch 'yy545' of https://github.coecis.cornell.edu/yy545/ocamon into yy545
+
+commit b2f3abd2c1b7b02fb89a492200069b6db6794142
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Fri May 11 18:51:04 2018 -0400
+
+    some changes
+
+ data/pikachu.png | Bin 2061 -> 0 bytes
+ data/pokemon.csv |   1 -
+ pokemon.ml       |  65 +++++++++++++++++++++++++++----------------------------
+ 3 files changed, 32 insertions(+), 34 deletions(-)
+
+commit 9f4505678a1f3577eac62a08f8efa9134453ceb0
+Merge: 1e14ddf aba4b63
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Fri May 11 18:48:37 2018 -0400
+
+    Merge pull request #41 from yy545/rename_sprites
+
+    Rename sprites
+
+commit aba4b63ad7b8026b459788b04585d3238ff42689
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Fri May 11 18:47:20 2018 -0400
+
+    renamed sprites
+
+ .DS_Store                         | Bin 6148 -> 6148 bytes
+ PokeSpriteFront/1.png             | Bin 0 -> 3611 bytes
+ PokeSpriteFront/10.png            | Bin 0 -> 3697 bytes
+ PokeSpriteFront/100.png           | Bin 0 -> 3322 bytes
+ PokeSpriteFront/101.png           | Bin 0 -> 3450 bytes
+ PokeSpriteFront/102.png           | Bin 0 -> 4119 bytes
+ PokeSpriteFront/103.png           | Bin 0 -> 4047 bytes
+ PokeSpriteFront/104.png           | Bin 0 -> 3738 bytes
+ PokeSpriteFront/105.png           | Bin 0 -> 3966 bytes
+ PokeSpriteFront/106.png           | Bin 0 -> 4022 bytes
+ PokeSpriteFront/107.png           | Bin 0 -> 3770 bytes
+ PokeSpriteFront/108.png           | Bin 0 -> 3933 bytes
+ PokeSpriteFront/109.png           | Bin 0 -> 3688 bytes
+ PokeSpriteFront/11.png            | Bin 0 -> 3390 bytes
+ PokeSpriteFront/110.png           | Bin 0 -> 3791 bytes
+ PokeSpriteFront/111.png           | Bin 0 -> 4095 bytes
+ PokeSpriteFront/112.png           | Bin 0 -> 4317 bytes
+ PokeSpriteFront/113.png           | Bin 0 -> 3703 bytes
+ PokeSpriteFront/114.png           | Bin 0 -> 3897 bytes
+ PokeSpriteFront/115.png           | Bin 0 -> 4395 bytes
+ PokeSpriteFront/116.png           | Bin 0 -> 3594 bytes
+ PokeSpriteFront/117.png           | Bin 0 -> 3796 bytes
+ PokeSpriteFront/118.png           | Bin 0 -> 3842 bytes
+ PokeSpriteFront/119.png           | Bin 0 -> 4209 bytes
+ PokeSpriteFront/12.png            | Bin 0 -> 4075 bytes
+ PokeSpriteFront/120.png           | Bin 0 -> 3476 bytes
+ PokeSpriteFront/121.png           | Bin 0 -> 3927 bytes
+ PokeSpriteFront/122.png           | Bin 0 -> 4061 bytes
+ PokeSpriteFront/123.png           | Bin 0 -> 4224 bytes
+ PokeSpriteFront/124.png           | Bin 0 -> 1393 bytes
+ PokeSpriteFront/125.png           | Bin 0 -> 4096 bytes
+ PokeSpriteFront/126.png           | Bin 0 -> 4087 bytes
+ PokeSpriteFront/127.png           | Bin 0 -> 4367 bytes
+ PokeSpriteFront/128.png           | Bin 0 -> 4009 bytes
+ PokeSpriteFront/129.png           | Bin 0 -> 3931 bytes
+ PokeSpriteFront/13.png            | Bin 0 -> 3422 bytes
+ PokeSpriteFront/130.png           | Bin 0 -> 4467 bytes
+ PokeSpriteFront/131.png           | Bin 0 -> 4110 bytes
+ PokeSpriteFront/132.png           | Bin 0 -> 3333 bytes
+ PokeSpriteFront/133.png           | Bin 0 -> 3705 bytes
+ PokeSpriteFront/134.png           | Bin 0 -> 4012 bytes
+ PokeSpriteFront/135.png           | Bin 0 -> 3967 bytes
+ PokeSpriteFront/136.png           | Bin 0 -> 3861 bytes
+ PokeSpriteFront/137.png           | Bin 0 -> 3561 bytes
+ PokeSpriteFront/138.png           | Bin 0 -> 3583 bytes
+ PokeSpriteFront/139.png           | Bin 0 -> 3975 bytes
+ PokeSpriteFront/140.png           | Bin 0 -> 3404 bytes
+ PokeSpriteFront/141.png           | Bin 0 -> 4124 bytes
+ PokeSpriteFront/142.png           | Bin 0 -> 3997 bytes
+ PokeSpriteFront/143.png           | Bin 0 -> 3831 bytes
+ PokeSpriteFront/144.png           | Bin 0 -> 4400 bytes
+ PokeSpriteFront/145.png           | Bin 0 -> 4058 bytes
+ PokeSpriteFront/146.png           | Bin 0 -> 4018 bytes
+ PokeSpriteFront/147.png           | Bin 0 -> 3565 bytes
+ PokeSpriteFront/148.png           | Bin 0 -> 3804 bytes
+ PokeSpriteFront/149.png           | Bin 0 -> 1571 bytes
+ PokeSpriteFront/150.png           | Bin 0 -> 4141 bytes
+ PokeSpriteFront/151.png           | Bin 0 -> 4343 bytes
+ PokeSpriteFront/2.png             | Bin 0 -> 3981 bytes
+ PokeSpriteFront/20.png            | Bin 0 -> 4131 bytes
+ PokeSpriteFront/21.png            | Bin 0 -> 3564 bytes
+ PokeSpriteFront/22.png            | Bin 0 -> 4199 bytes
+ PokeSpriteFront/23.png            | Bin 0 -> 3677 bytes
+ PokeSpriteFront/24.png            | Bin 0 -> 4043 bytes
+ PokeSpriteFront/25.png            | Bin 0 -> 3579 bytes
+ PokeSpriteFront/26.png            | Bin 0 -> 4001 bytes
+ PokeSpriteFront/27.png            | Bin 0 -> 3834 bytes
+ PokeSpriteFront/28.png            | Bin 0 -> 4038 bytes
+ PokeSpriteFront/29.png            | Bin 0 -> 3643 bytes
+ PokeSpriteFront/3.png             | Bin 0 -> 4334 bytes
+ PokeSpriteFront/30.png            | Bin 0 -> 4077 bytes
+ PokeSpriteFront/31.png            | Bin 0 -> 4286 bytes
+ PokeSpriteFront/32.png            | Bin 0 -> 3580 bytes
+ PokeSpriteFront/33.png            | Bin 0 -> 3867 bytes
+ PokeSpriteFront/34.png            | Bin 0 -> 4434 bytes
+ PokeSpriteFront/35.png            | Bin 0 -> 3636 bytes
+ PokeSpriteFront/36.png            | Bin 0 -> 3884 bytes
+ PokeSpriteFront/37.png            | Bin 0 -> 3745 bytes
+ PokeSpriteFront/38.png            | Bin 0 -> 4241 bytes
+ PokeSpriteFront/39.png            | Bin 0 -> 3640 bytes
+ PokeSpriteFront/4.png             | Bin 0 -> 3622 bytes
+ PokeSpriteFront/40.png            | Bin 0 -> 3957 bytes
+ PokeSpriteFront/41.png            | Bin 0 -> 3634 bytes
+ PokeSpriteFront/42.png            | Bin 0 -> 3894 bytes
+ PokeSpriteFront/43.png            | Bin 0 -> 3534 bytes
+ PokeSpriteFront/44.png            | Bin 0 -> 3581 bytes
+ PokeSpriteFront/45.png            | Bin 0 -> 3547 bytes
+ PokeSpriteFront/46.png            | Bin 0 -> 3611 bytes
+ PokeSpriteFront/47.png            | Bin 0 -> 3861 bytes
+ PokeSpriteFront/48.png            | Bin 0 -> 3642 bytes
+ PokeSpriteFront/49.png            | Bin 0 -> 4049 bytes
+ PokeSpriteFront/5.png             | Bin 0 -> 3803 bytes
+ PokeSpriteFront/50.png            | Bin 0 -> 3306 bytes
+ PokeSpriteFront/51.png            | Bin 0 -> 3819 bytes
+ PokeSpriteFront/52.png            | Bin 0 -> 3746 bytes
+ PokeSpriteFront/53.png            | Bin 0 -> 4047 bytes
+ PokeSpriteFront/54.png            | Bin 0 -> 3618 bytes
+ PokeSpriteFront/55.png            | Bin 0 -> 4157 bytes
+ PokeSpriteFront/56.png            | Bin 0 -> 3928 bytes
+ PokeSpriteFront/57.png            | Bin 0 -> 4084 bytes
+ PokeSpriteFront/58.png            | Bin 0 -> 3805 bytes
+ PokeSpriteFront/59.png            | Bin 0 -> 4224 bytes
+ PokeSpriteFront/6.png             | Bin 0 -> 4313 bytes
+ PokeSpriteFront/60.png            | Bin 0 -> 3606 bytes
+ PokeSpriteFront/61.png            | Bin 0 -> 3877 bytes
+ PokeSpriteFront/62.png            | Bin 0 -> 4142 bytes
+ PokeSpriteFront/63.png            | Bin 0 -> 3624 bytes
+ PokeSpriteFront/64.png            | Bin 0 -> 4008 bytes
+ PokeSpriteFront/65.png            | Bin 0 -> 4179 bytes
+ PokeSpriteFront/66.png            | Bin 0 -> 3707 bytes
+ PokeSpriteFront/67.png            | Bin 0 -> 3993 bytes
+ PokeSpriteFront/68.png            | Bin 0 -> 4231 bytes
+ PokeSpriteFront/69.png            | Bin 0 -> 3494 bytes
+ PokeSpriteFront/7.png             | Bin 0 -> 3625 bytes
+ PokeSpriteFront/70.png            | Bin 0 -> 3629 bytes
+ PokeSpriteFront/71.png            | Bin 0 -> 4158 bytes
+ PokeSpriteFront/72.png            | Bin 0 -> 3724 bytes
+ PokeSpriteFront/73.png            | Bin 0 -> 4037 bytes
+ PokeSpriteFront/74.png            | Bin 0 -> 3684 bytes
+ PokeSpriteFront/75.png            | Bin 0 -> 4085 bytes
+ PokeSpriteFront/76.png            | Bin 0 -> 3940 bytes
+ PokeSpriteFront/77.png            | Bin 0 -> 3909 bytes
+ PokeSpriteFront/78.png            | Bin 0 -> 4295 bytes
+ PokeSpriteFront/79.png            | Bin 0 -> 3474 bytes
+ PokeSpriteFront/8.png             | Bin 0 -> 3948 bytes
+ PokeSpriteFront/80.png            | Bin 0 -> 4215 bytes
+ PokeSpriteFront/81.png            | Bin 0 -> 3538 bytes
+ PokeSpriteFront/82.png            | Bin 0 -> 3958 bytes
+ PokeSpriteFront/83.png            | Bin 0 -> 4023 bytes
+ PokeSpriteFront/84.png            | Bin 0 -> 3819 bytes
+ PokeSpriteFront/85.png            | Bin 0 -> 4121 bytes
+ PokeSpriteFront/86.png            | Bin 0 -> 3868 bytes
+ PokeSpriteFront/87.png            | Bin 0 -> 4100 bytes
+ PokeSpriteFront/88.png            | Bin 0 -> 3740 bytes
+ PokeSpriteFront/89.png            | Bin 0 -> 3851 bytes
+ PokeSpriteFront/9.png             | Bin 0 -> 4319 bytes
+ PokeSpriteFront/90.png            | Bin 0 -> 3485 bytes
+ PokeSpriteFront/91.png            | Bin 0 -> 4270 bytes
+ PokeSpriteFront/92.png            | Bin 0 -> 3425 bytes
+ PokeSpriteFront/93.png            | Bin 0 -> 3743 bytes
+ PokeSpriteFront/94.png            | Bin 0 -> 3679 bytes
+ PokeSpriteFront/95.png            | Bin 0 -> 3838 bytes
+ PokeSpriteFront/96.png            | Bin 0 -> 3771 bytes
+ PokeSpriteFront/97.png            | Bin 0 -> 4030 bytes
+ PokeSpriteFront/98.png            | Bin 0 -> 3627 bytes
+ PokeSpriteFront/99.png            | Bin 0 -> 4158 bytes
+ PokeSpriteFront/Spr_1y_001.png    | Bin 3611 -> 0 bytes
+ PokeSpriteFront/Spr_1y_002.png    | Bin 3981 -> 0 bytes
+ PokeSpriteFront/Spr_1y_003.png    | Bin 4334 -> 0 bytes
+ PokeSpriteFront/Spr_1y_004.png    | Bin 3622 -> 0 bytes
+ PokeSpriteFront/Spr_1y_005.png    | Bin 3803 -> 0 bytes
+ PokeSpriteFront/Spr_1y_006.png    | Bin 4313 -> 0 bytes
+ PokeSpriteFront/Spr_1y_007.png    | Bin 3625 -> 0 bytes
+ PokeSpriteFront/Spr_1y_008.png    | Bin 3948 -> 0 bytes
+ PokeSpriteFront/Spr_1y_009.png    | Bin 4319 -> 0 bytes
+ PokeSpriteFront/Spr_1y_010.png    | Bin 3697 -> 0 bytes
+ PokeSpriteFront/Spr_1y_011.png    | Bin 3390 -> 0 bytes
+ PokeSpriteFront/Spr_1y_012.png    | Bin 4075 -> 0 bytes
+ PokeSpriteFront/Spr_1y_013.png    | Bin 3422 -> 0 bytes
+ PokeSpriteFront/Spr_1y_020.png    | Bin 4131 -> 0 bytes
+ PokeSpriteFront/Spr_1y_021.png    | Bin 3564 -> 0 bytes
+ PokeSpriteFront/Spr_1y_022.png    | Bin 4199 -> 0 bytes
+ PokeSpriteFront/Spr_1y_023.png    | Bin 3677 -> 0 bytes
+ PokeSpriteFront/Spr_1y_024.png    | Bin 4043 -> 0 bytes
+ PokeSpriteFront/Spr_1y_025.png    | Bin 3579 -> 0 bytes
+ PokeSpriteFront/Spr_1y_026.png    | Bin 4001 -> 0 bytes
+ PokeSpriteFront/Spr_1y_027.png    | Bin 3834 -> 0 bytes
+ PokeSpriteFront/Spr_1y_028.png    | Bin 4038 -> 0 bytes
+ PokeSpriteFront/Spr_1y_029.png    | Bin 3643 -> 0 bytes
+ PokeSpriteFront/Spr_1y_030.png    | Bin 4077 -> 0 bytes
+ PokeSpriteFront/Spr_1y_031.png    | Bin 4286 -> 0 bytes
+ PokeSpriteFront/Spr_1y_032.png    | Bin 3580 -> 0 bytes
+ PokeSpriteFront/Spr_1y_033.png    | Bin 3867 -> 0 bytes
+ PokeSpriteFront/Spr_1y_034.png    | Bin 4434 -> 0 bytes
+ PokeSpriteFront/Spr_1y_035.png    | Bin 3636 -> 0 bytes
+ PokeSpriteFront/Spr_1y_036.png    | Bin 3884 -> 0 bytes
+ PokeSpriteFront/Spr_1y_037.png    | Bin 3745 -> 0 bytes
+ PokeSpriteFront/Spr_1y_038.png    | Bin 4241 -> 0 bytes
+ PokeSpriteFront/Spr_1y_039.png    | Bin 3640 -> 0 bytes
+ PokeSpriteFront/Spr_1y_040.png    | Bin 3957 -> 0 bytes
+ PokeSpriteFront/Spr_1y_041.png    | Bin 3634 -> 0 bytes
+ PokeSpriteFront/Spr_1y_042.png    | Bin 3894 -> 0 bytes
+ PokeSpriteFront/Spr_1y_043.png    | Bin 3534 -> 0 bytes
+ PokeSpriteFront/Spr_1y_044.png    | Bin 3581 -> 0 bytes
+ PokeSpriteFront/Spr_1y_045.png    | Bin 3547 -> 0 bytes
+ PokeSpriteFront/Spr_1y_046.png    | Bin 3611 -> 0 bytes
+ PokeSpriteFront/Spr_1y_047.png    | Bin 3861 -> 0 bytes
+ PokeSpriteFront/Spr_1y_048.png    | Bin 3642 -> 0 bytes
+ PokeSpriteFront/Spr_1y_049.png    | Bin 4049 -> 0 bytes
+ PokeSpriteFront/Spr_1y_050.png    | Bin 3306 -> 0 bytes
+ PokeSpriteFront/Spr_1y_051.png    | Bin 3819 -> 0 bytes
+ PokeSpriteFront/Spr_1y_052.png    | Bin 3746 -> 0 bytes
+ PokeSpriteFront/Spr_1y_053.png    | Bin 4047 -> 0 bytes
+ PokeSpriteFront/Spr_1y_054.png    | Bin 3618 -> 0 bytes
+ PokeSpriteFront/Spr_1y_055.png    | Bin 4157 -> 0 bytes
+ PokeSpriteFront/Spr_1y_056.png    | Bin 3928 -> 0 bytes
+ PokeSpriteFront/Spr_1y_057.png    | Bin 4084 -> 0 bytes
+ PokeSpriteFront/Spr_1y_058.png    | Bin 3805 -> 0 bytes
+ PokeSpriteFront/Spr_1y_059.png    | Bin 4224 -> 0 bytes
+ PokeSpriteFront/Spr_1y_060.png    | Bin 3606 -> 0 bytes
+ PokeSpriteFront/Spr_1y_061.png    | Bin 3877 -> 0 bytes
+ PokeSpriteFront/Spr_1y_062.png    | Bin 4142 -> 0 bytes
+ PokeSpriteFront/Spr_1y_063.png    | Bin 3624 -> 0 bytes
+ PokeSpriteFront/Spr_1y_064.png    | Bin 4008 -> 0 bytes
+ PokeSpriteFront/Spr_1y_065.png    | Bin 4179 -> 0 bytes
+ PokeSpriteFront/Spr_1y_066.png    | Bin 3707 -> 0 bytes
+ PokeSpriteFront/Spr_1y_067.png    | Bin 3993 -> 0 bytes
+ PokeSpriteFront/Spr_1y_068.png    | Bin 4231 -> 0 bytes
+ PokeSpriteFront/Spr_1y_069.png    | Bin 3494 -> 0 bytes
+ PokeSpriteFront/Spr_1y_070.png    | Bin 3629 -> 0 bytes
+ PokeSpriteFront/Spr_1y_071.png    | Bin 4158 -> 0 bytes
+ PokeSpriteFront/Spr_1y_072.png    | Bin 3724 -> 0 bytes
+ PokeSpriteFront/Spr_1y_073.png    | Bin 4037 -> 0 bytes
+ PokeSpriteFront/Spr_1y_074.png    | Bin 3684 -> 0 bytes
+ PokeSpriteFront/Spr_1y_075.png    | Bin 4085 -> 0 bytes
+ PokeSpriteFront/Spr_1y_076.png    | Bin 3940 -> 0 bytes
+ PokeSpriteFront/Spr_1y_077.png    | Bin 3909 -> 0 bytes
+ PokeSpriteFront/Spr_1y_078.png    | Bin 4295 -> 0 bytes
+ PokeSpriteFront/Spr_1y_079.png    | Bin 3474 -> 0 bytes
+ PokeSpriteFront/Spr_1y_080.png    | Bin 4215 -> 0 bytes
+ PokeSpriteFront/Spr_1y_081.png    | Bin 3538 -> 0 bytes
+ PokeSpriteFront/Spr_1y_082.png    | Bin 3958 -> 0 bytes
+ PokeSpriteFront/Spr_1y_083.png    | Bin 4023 -> 0 bytes
+ PokeSpriteFront/Spr_1y_084.png    | Bin 3819 -> 0 bytes
+ PokeSpriteFront/Spr_1y_085.png    | Bin 4121 -> 0 bytes
+ PokeSpriteFront/Spr_1y_086.png    | Bin 3868 -> 0 bytes
+ PokeSpriteFront/Spr_1y_087.png    | Bin 4100 -> 0 bytes
+ PokeSpriteFront/Spr_1y_088.png    | Bin 3740 -> 0 bytes
+ PokeSpriteFront/Spr_1y_089.png    | Bin 3851 -> 0 bytes
+ PokeSpriteFront/Spr_1y_090.png    | Bin 3485 -> 0 bytes
+ PokeSpriteFront/Spr_1y_091.png    | Bin 4270 -> 0 bytes
+ PokeSpriteFront/Spr_1y_092.png    | Bin 3425 -> 0 bytes
+ PokeSpriteFront/Spr_1y_093.png    | Bin 3743 -> 0 bytes
+ PokeSpriteFront/Spr_1y_094.png    | Bin 3679 -> 0 bytes
+ PokeSpriteFront/Spr_1y_095.png    | Bin 3838 -> 0 bytes
+ PokeSpriteFront/Spr_1y_096.png    | Bin 3771 -> 0 bytes
+ PokeSpriteFront/Spr_1y_097.png    | Bin 4030 -> 0 bytes
+ PokeSpriteFront/Spr_1y_098.png    | Bin 3627 -> 0 bytes
+ PokeSpriteFront/Spr_1y_099.png    | Bin 4158 -> 0 bytes
+ PokeSpriteFront/Spr_1y_100.png    | Bin 3322 -> 0 bytes
+ PokeSpriteFront/Spr_1y_101.png    | Bin 3450 -> 0 bytes
+ PokeSpriteFront/Spr_1y_102.png    | Bin 4119 -> 0 bytes
+ PokeSpriteFront/Spr_1y_103.png    | Bin 4047 -> 0 bytes
+ PokeSpriteFront/Spr_1y_104.png    | Bin 3738 -> 0 bytes
+ PokeSpriteFront/Spr_1y_105.png    | Bin 3966 -> 0 bytes
+ PokeSpriteFront/Spr_1y_106.png    | Bin 4022 -> 0 bytes
+ PokeSpriteFront/Spr_1y_107.png    | Bin 3770 -> 0 bytes
+ PokeSpriteFront/Spr_1y_108.png    | Bin 3933 -> 0 bytes
+ PokeSpriteFront/Spr_1y_109.png    | Bin 3688 -> 0 bytes
+ PokeSpriteFront/Spr_1y_110.png    | Bin 3791 -> 0 bytes
+ PokeSpriteFront/Spr_1y_111.png    | Bin 4095 -> 0 bytes
+ PokeSpriteFront/Spr_1y_112.png    | Bin 4317 -> 0 bytes
+ PokeSpriteFront/Spr_1y_113.png    | Bin 3703 -> 0 bytes
+ PokeSpriteFront/Spr_1y_114.png    | Bin 3897 -> 0 bytes
+ PokeSpriteFront/Spr_1y_115.png    | Bin 4395 -> 0 bytes
+ PokeSpriteFront/Spr_1y_116.png    | Bin 3594 -> 0 bytes
+ PokeSpriteFront/Spr_1y_117.png    | Bin 3796 -> 0 bytes
+ PokeSpriteFront/Spr_1y_118.png    | Bin 3842 -> 0 bytes
+ PokeSpriteFront/Spr_1y_119.png    | Bin 4209 -> 0 bytes
+ PokeSpriteFront/Spr_1y_120.png    | Bin 3476 -> 0 bytes
+ PokeSpriteFront/Spr_1y_121.png    | Bin 3927 -> 0 bytes
+ PokeSpriteFront/Spr_1y_122.png    | Bin 4061 -> 0 bytes
+ PokeSpriteFront/Spr_1y_123.png    | Bin 4224 -> 0 bytes
+ PokeSpriteFront/Spr_1y_124_vc.png | Bin 1393 -> 0 bytes
+ PokeSpriteFront/Spr_1y_125.png    | Bin 4096 -> 0 bytes
+ PokeSpriteFront/Spr_1y_126.png    | Bin 4087 -> 0 bytes
+ PokeSpriteFront/Spr_1y_127.png    | Bin 4367 -> 0 bytes
+ PokeSpriteFront/Spr_1y_128.png    | Bin 4009 -> 0 bytes
+ PokeSpriteFront/Spr_1y_129.png    | Bin 3931 -> 0 bytes
+ PokeSpriteFront/Spr_1y_130.png    | Bin 4467 -> 0 bytes
+ PokeSpriteFront/Spr_1y_131.png    | Bin 4110 -> 0 bytes
+ PokeSpriteFront/Spr_1y_132.png    | Bin 3333 -> 0 bytes
+ PokeSpriteFront/Spr_1y_133.png    | Bin 3705 -> 0 bytes
+ PokeSpriteFront/Spr_1y_134.png    | Bin 4012 -> 0 bytes
+ PokeSpriteFront/Spr_1y_135.png    | Bin 3967 -> 0 bytes
+ PokeSpriteFront/Spr_1y_136.png    | Bin 3861 -> 0 bytes
+ PokeSpriteFront/Spr_1y_137.png    | Bin 3561 -> 0 bytes
+ PokeSpriteFront/Spr_1y_138.png    | Bin 3583 -> 0 bytes
+ PokeSpriteFront/Spr_1y_139.png    | Bin 3975 -> 0 bytes
+ PokeSpriteFront/Spr_1y_140.png    | Bin 3404 -> 0 bytes
+ PokeSpriteFront/Spr_1y_141.png    | Bin 4124 -> 0 bytes
+ PokeSpriteFront/Spr_1y_142.png    | Bin 3997 -> 0 bytes
+ PokeSpriteFront/Spr_1y_143.png    | Bin 3831 -> 0 bytes
+ PokeSpriteFront/Spr_1y_144.png    | Bin 4400 -> 0 bytes
+ PokeSpriteFront/Spr_1y_145.png    | Bin 4058 -> 0 bytes
+ PokeSpriteFront/Spr_1y_146.png    | Bin 4018 -> 0 bytes
+ PokeSpriteFront/Spr_1y_147.png    | Bin 3565 -> 0 bytes
+ PokeSpriteFront/Spr_1y_148.png    | Bin 3804 -> 0 bytes
+ PokeSpriteFront/Spr_1y_149.png    | Bin 1571 -> 0 bytes
+ PokeSpriteFront/Spr_1y_150.png    | Bin 4141 -> 0 bytes
+ PokeSpriteFront/Spr_1y_151.png    | Bin 4343 -> 0 bytes
+ 291 files changed, 0 insertions(+), 0 deletions(-)
+
+commit c7341c6d27cfe196aa7b44f28b8f541f13410139
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Fri May 11 18:32:30 2018 -0400
+
+    Delete pokemon.csv
+
+ data/pokemon.csv | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit bab349c464d1b9bcdd4599a52aade1130782c9ec
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Fri May 11 18:32:24 2018 -0400
+
+    Delete pikachu.png
+
+ data/pikachu.png | Bin 2061 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 1e14ddfe31c1dff28bc21c63d61579e9196cf8a7
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Fri May 11 18:30:30 2018 -0400
+
+    Delete pokemon.csv
+
+ data/pokemon.csv | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 079520da4a508ce51f985b96f0c11093e6d82411
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Fri May 11 18:30:22 2018 -0400
+
+    Delete pikachu.png
+
+ data/pikachu.png | Bin 2061 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit f401c6f51b7ef6658331ba9b6a2735e3aea6fd6c
+Merge: 944eb16 105c564
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Fri May 11 17:32:33 2018 -0400
+
+    Merge pull request #40 from yy545/yy545
+
+    compilable ver
+
+commit 105c564a536ae654c272a95c7f5c9782488d6bfb
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Fri May 11 17:31:31 2018 -0400
+
+    compilable ver
+
+ controller.ml  |  2 +-
+ controller.mli |  2 +-
+ pokemon.ml     | 67 +++++++++++++++++++++++++++++-----------------------------
+ 3 files changed, 36 insertions(+), 35 deletions(-)
+
+commit 944eb161ee58532436b28deeccba5fb867787130
+Merge: c6548ce ac4aebd
+Author: Andrea Yang <yy545@cornell.edu>
+Date:   Fri May 11 17:23:56 2018 -0400
+
+    Merge pull request #39 from yy545/yy545
+
+    merging a compilable version
+
+commit ac4aebd4ba7b10501d03ea8b26b352a6e52693f2
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Fri May 11 17:05:16 2018 -0400
+
+    compilable version?
+
+ _build/_digests                 |  23 -----
+ _build/_log                     |  39 --------
+ _build/ai.cmi                   | Bin 4100 -> 0 bytes
+ _build/ai.ml                    | 197 ----------------------------------------
+ _build/ai.ml.depends            |   1 -
+ _build/ai.mli                   |  50 ----------
+ _build/ai.mli.depends           |   1 -
+ _build/controller.cmi           | Bin 4946 -> 0 bytes
+ _build/controller.mli           | 105 ---------------------
+ _build/controller.mli.depends   |   1 -
+ _build/guitext.cmi              | Bin 453 -> 0 bytes
+ _build/guitext.cmo              | Bin 8028 -> 0 bytes
+ _build/guitext.ml               | 190 --------------------------------------
+ _build/guitext.ml.depends       |   1 -
+ _build/guitext.mli              |  10 --
+ _build/guitext.mli.depends      |   1 -
+ _build/model.cmi                | Bin 946 -> 0 bytes
+ _build/model.mli                |  58 ------------
+ _build/model.mli.depends        |   1 -
+ _build/ocamlc.where             |   1 -
+ _build/pokemon.cmi              | Bin 2917 -> 0 bytes
+ _build/pokemon.mli              |  89 ------------------
+ _build/pokemon.mli.depends      |   1 -
+ _build/shared_types.cmi         | Bin 2479 -> 0 bytes
+ _build/shared_types.mli         |  63 -------------
+ _build/shared_types.mli.depends |   1 -
+ 26 files changed, 833 deletions(-)
+
+commit 392ea60f91e3edf4aa2d247142286436484255e4
+Author: yy545 <vagrant@vm3110-2018sp>
+Date:   Fri May 11 17:05:10 2018 -0400
+
+    compilable version?
+
+ _build/_digests                 |  23 +++++
+ _build/_log                     |  39 ++++++++
+ _build/ai.cmi                   | Bin 0 -> 4100 bytes
+ _build/ai.ml                    | 197 ++++++++++++++++++++++++++++++++++++++++
+ _build/ai.ml.depends            |   1 +
+ _build/ai.mli                   |  50 ++++++++++
+ _build/ai.mli.depends           |   1 +
+ _build/controller.cmi           | Bin 0 -> 4946 bytes
+ _build/controller.mli           | 105 +++++++++++++++++++++
+ _build/controller.mli.depends   |   1 +
+ _build/guitext.cmi              | Bin 0 -> 453 bytes
+ _build/guitext.cmo              | Bin 0 -> 8028 bytes
+ _build/guitext.ml               | 190 ++++++++++++++++++++++++++++++++++++++
+ _build/guitext.ml.depends       |   1 +
+ _build/guitext.mli              |  10 ++
+ _build/guitext.mli.depends      |   1 +
+ _build/model.cmi                | Bin 0 -> 946 bytes
+ _build/model.mli                |  58 ++++++++++++
+ _build/model.mli.depends        |   1 +
+ _build/ocamlc.where             |   1 +
+ _build/pokemon.cmi              | Bin 0 -> 2917 bytes
+ _build/pokemon.mli              |  89 ++++++++++++++++++
+ _build/pokemon.mli.depends      |   1 +
+ _build/shared_types.cmi         | Bin 0 -> 2479 bytes
+ _build/shared_types.mli         |  63 +++++++++++++
+ _build/shared_types.mli.depends |   1 +
+ controller.ml                   |   4 +-
+ controller.mli                  |  12 ++-
+ pokemon.ml                      | 158 +++++++++++++++++++++++++-------
+ pokemon.mli                     |  10 +-
+ 30 files changed, 978 insertions(+), 39 deletions(-)
+
+commit c6548ce3690d39ad0b737f36e01a250088bba983
+Merge: 2a16058 8689207
+Author: Timothy Zhu <tz277@cornell.edu>
+Date:   Thu May 10 06:32:06 2018 -0400
+
+    Merge pull request #38 from yy545/tz277_5
+
+    addded make compile_name
+
+commit 8689207a0d634ec071554871d3214dd43a0bae75
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Thu May 10 06:29:53 2018 -0400
+
+    next battle for cynthia
+
+ _build/_digests                 |  41 ---
+ _build/_log                     |  26 --
+ _build/ai.cmi                   | Bin 4100 -> 0 bytes
+ _build/ai.cmo                   | Bin 9351 -> 0 bytes
+ _build/ai.ml                    | 197 --------------
+ _build/ai.ml.depends            |   1 -
+ _build/ai.mli                   |  50 ----
+ _build/ai.mli.depends           |   1 -
+ _build/controller.cmi           | Bin 4777 -> 0 bytes
+ _build/controller.cmo           | Bin 180 -> 0 bytes
+ _build/controller.ml            |  77 ------
+ _build/controller.ml.depends    |   1 -
+ _build/controller.mli           | 103 --------
+ _build/controller.mli.depends   |   1 -
+ _build/gui.cmi                  | Bin 2979 -> 0 bytes
+ _build/gui.cmo                  | Bin 9121 -> 0 bytes
+ _build/gui.ml                   | 336 ------------------------
+ _build/gui.ml.depends           |   1 -
+ _build/gui.mli                  |  56 ----
+ _build/gui.mli.depends          |   1 -
+ _build/main.cmi                 | Bin 265 -> 0 bytes
+ _build/main.cmo                 | Bin 1593 -> 0 bytes
+ _build/main.ml                  |  47 ----
+ _build/main.ml.depends          |   1 -
+ _build/main.mli                 |   1 -
+ _build/main.mli.depends         |   1 -
+ _build/model.cmi                | Bin 946 -> 0 bytes
+ _build/model.cmo                | Bin 9902 -> 0 bytes
+ _build/model.ml                 | 553 ----------------------------------------
+ _build/model.ml.depends         |   1 -
+ _build/model.mli                |  58 -----
+ _build/model.mli.depends        |   1 -
+ _build/ocamlc.where             |   1 -
+ _build/pokemon.cmi              | Bin 2660 -> 0 bytes
+ _build/pokemon.ml               | 350 -------------------------
+ _build/pokemon.ml.depends       |   1 -
+ _build/pokemon.mli              |  83 ------
+ _build/pokemon.mli.depends      |   1 -
+ _build/shared_types.cmi         | Bin 2551 -> 0 bytes
+ _build/shared_types.cmo         | Bin 241 -> 0 bytes
+ _build/shared_types.ml          |  53 ----
+ _build/shared_types.ml.depends  |   1 -
+ _build/shared_types.mli         |  68 -----
+ _build/shared_types.mli.depends |   1 -
+ 44 files changed, 2114 deletions(-)
+
+commit a05d28eaf344518e198dbf84ad9442c2a7f958b3
+Author: vagrant <vagrant@vm3110-2018sp>
+Date:   Thu May 10 06:29:42 2018 -0400
