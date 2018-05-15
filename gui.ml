@@ -745,15 +745,15 @@ let draw_battle gui_inf =
   draw_string (name (List.assoc 0 (comb_inf.user_person_info.poke_inv)));
 
   (*HP METER-HP METER-HP METER-HP METER-HP METER-HP METER-HP METER-HP METER*)
-  let max_user = float (maxhp (snd 
-    (List.hd (comb_inf.user_person_info.poke_inv)))) in 
-  let max_opp = float (maxhp (snd 
-    (List.hd (comb_inf.enemy_person_info.poke_inv)))) in 
+  let max_user = float (maxhp  
+    (List.assoc 0 (comb_inf.user_person_info.poke_inv))) in 
+  let max_opp = float (maxhp 
+    (List.assoc 0 (comb_inf.enemy_person_info.poke_inv))) in 
 
-  let user_hp_now = float (hp (snd 
-    (List.hd (comb_inf.user_person_info.poke_inv)))) in 
-  let opp_hp_now = float (hp (snd 
-    (List.hd (comb_inf.enemy_person_info.poke_inv)))) in 
+  let user_hp_now = float (hp
+    (List.assoc 0 (comb_inf.user_person_info.poke_inv))) in 
+  let opp_hp_now = float (hp
+    (List.assoc 0 (comb_inf.enemy_person_info.poke_inv))) in 
 
   let user_health = (user_hp_now /. max_user) *. 100. in 
   let opp_health = (opp_hp_now /. max_opp) *. 100. in 
@@ -957,9 +957,9 @@ let draw_map gui_inf =
         then draw_image s 270 200
         else 
           if gui_inf.history_info.game_stats.next_battle = 4
-          then draw_image s 470 50
+          then draw_image s 470 200
           else 
-            draw_image s 470 200;
+            draw_image s 470 50;
 
   press_map ()
 
