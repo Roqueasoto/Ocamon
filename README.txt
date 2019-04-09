@@ -1,3 +1,7 @@
+This is a final project for the Cornell CS 3110 Data Structures and Functional
+Programming class that I (ras656) made with my group at the time.
+
+-----------------------------------------------------------------------------------
 In order to install and play Ocamon, you must make sure to follow these next
 steps. These will help you get an appropriate installation of Camlimages going
 for use in Ocamon!
