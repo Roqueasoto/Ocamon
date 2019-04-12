@@ -1,5 +1,7 @@
 This is a final project for the Cornell CS 3110 Data Structures and Functional
-Programming class that I (ras656) made with my group at the time.
+Programming class that I (ras656) made with my group at the time. Porting the
+project over from a private repository means that some of the commits by a
+couple of our members (myself and tz277 Timothy Zhu) are not visible.
 
 -----------------------------------------------------------------------------------
 In order to install and play Ocamon, you must make sure to follow these next
